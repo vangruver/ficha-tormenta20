@@ -1,0 +1,17 @@
+{
+  "name": "Ficha de Tormenta 20 automatizada",
+  "short_name": "Ficha T20",
+  "description": "Ficha de personagem de Tormenta 20, 100% editável, com automação a partir de raça + classe + origem + nível — funciona offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#faf3e6",
+  "theme_color": "#7a1f1f",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+ "syncedAt": "2026-08-28T23:50:44.276Z",
+ "counts": {
+  "poderes": 684,
+  "magias": 199,
+  "equipamentos": 165,
+  "panteao": 20,
+  "ameacas": 298
+ },
+ "fontes": [
+  "https://github.com/Kull4ck/tormenta20-compendium (tag 0.7.8 + master)"
+ ]
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "anao", "nome": "Anão",
+    "atributos": { "for": 2, "con": 2, "des": -2 },
+    "deslocamento": "6m", "tamanho": "Médio",
+    "traços": "Viveiro de Ferro (resistência a venenos e magia), Sentidos das Rochas, Devagar e Sempre (não perde deslocamento por carga/armadura pesada).",
+    "poderRacialFixo": "Viveiro de Ferro"
+  },
+  {
+    "id": "dahllan", "nome": "Dahllan",
+    "atributos": { "sab": 2, "car": 2, "for": -2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Metamorfose (forma de planta/humanoide), Filha de Oz (comunhão com a natureza).",
+    "poderRacialFixo": "Metamorfose"
+  },
+  {
+    "id": "elfo", "nome": "Elfo",
+    "atributos": { "des": 2, "int": 2, "con": -2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Graciosos, Visão na Penumbra, Sentidos Aguçados, imunidade a sono e resistência a encantamento.",
+    "poderRacialFixo": "Sentidos Élficos"
+  },
+  {
+    "id": "goblin", "nome": "Goblin",
+    "atributos": { "des": 2, "con": 2, "for": -2 },
+    "deslocamento": "6m", "tamanho": "Pequeno",
+    "traços": "Sortudo (rerrola 1s), Fúria Goblin (bônus quando com poucos PV), Trapaceiro.",
+    "poderRacialFixo": "Sortudo"
+  },
+  {
+    "id": "golem", "nome": "Golem",
+    "atributos": { "for": 2, "int": 2, "car": -2 },
+    "deslocamento": "6m", "tamanho": "Médio",
+    "traços": "Corpo de metal (imune a veneno, doença e crítico), não precisa respirar/comer/dormir, é constructo.",
+    "poderRacialFixo": "Corpo de Metal"
+  },
+  {
+    "id": "hynne", "nome": "Hynne (Hobbit)",
+    "atributos": { "des": 2, "car": 2, "for": -2 },
+    "deslocamento": "6m", "tamanho": "Pequeno",
+    "traços": "Sorte Grande (rerrola falhas críticas), Sensação Ruim (percebe perigo iminente).",
+    "poderRacialFixo": "Sorte Grande"
+  },
+  {
+    "id": "kliren", "nome": "Kliren",
+    "atributos": { "int": 4, "for": -2 },
+    "deslocamento": "6m", "tamanho": "Pequeno",
+    "traços": "Vidraça (menos PV), Inventividade (bônus em Ofícios/criação de itens), curiosidade científica.",
+    "poderRacialFixo": "Vidraça"
+  },
+  {
+    "id": "lefou", "nome": "Lefou",
+    "atributos": { "escolha": 2, "escolha2": 2, "car": -4 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Mutação Caótica (traço aleatório da Tormenta), aparência monstruosa.",
+    "poderRacialFixo": "Mutação"
+  },
+  {
+    "id": "minotauro", "nome": "Minotauro",
+    "atributos": { "for": 4, "int": -2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Fúria Sanguinária, Chifres (ataque natural de chifrada), tino de labirinto.",
+    "poderRacialFixo": "Chifrada"
+  },
+  {
+    "id": "qareen", "nome": "Qareen",
+    "atributos": { "car": 4, "sab": -2 },
+    "deslocamento": "6m", "tamanho": "Médio",
+    "traços": "Sangue Genasi (ligação com um dos planos elementais), Corpo Amaldiçoado (restrição sobrenatural).",
+    "poderRacialFixo": "Sangue Genasi"
+  },
+  {
+    "id": "sereia", "nome": "Sereia/Tritão",
+    "atributos": { "car": 2, "con": 2, "int": -2 },
+    "deslocamento": "6m (9m nadando)", "tamanho": "Médio",
+    "traços": "Metamorfose Aquática (pernas viram cauda na água), respira debaixo d'água, canto de sereia.",
+    "poderRacialFixo": "Metamorfose Aquática"
+  },
+  {
+    "id": "suraggel", "nome": "Suraggel",
+    "atributos": { "escolha": 2, "des": 2, "for": -2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Sangue angelical ou sulfúreo (escolha o legado: Aggelus ou Sulfure) com poder racial próprio.",
+    "poderRacialFixo": "Sangue Angelical"
+  },
+  {
+    "id": "silfide", "nome": "Sílfide",
+    "atributos": { "des": 2, "int": 2, "for": -2 },
+    "deslocamento": "9m (voo curto)", "tamanho": "Médio",
+    "traços": "Filha do Vento (voo por curtos períodos), corpo leve.",
+    "poderRacialFixo": "Filha do Vento"
+  },
+  {
+    "id": "trog", "nome": "Trog",
+    "atributos": { "for": 2, "con": 2, "car": -2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Visão no Escuro, Pele Grossa (RD contra ambiente), instintos primitivos.",
+    "poderRacialFixo": "Pele Grossa"
+  },
+  {
+    "id": "humano", "nome": "Humano",
+    "atributos": { "livre": 2, "livre2": 2 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Determinação (+2 em dois atributos à escolha), versátil (treino extra ou poder geral extra no 1º nível).",
+    "poderRacialFixo": "Determinação"
+  }
+]

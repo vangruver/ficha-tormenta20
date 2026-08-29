@@ -1,0 +1,8 @@
+[
+  { "id": "for", "nome": "Força" },
+  { "id": "des", "nome": "Destreza" },
+  { "id": "con", "nome": "Constituição" },
+  { "id": "int", "nome": "Inteligência" },
+  { "id": "sab", "nome": "Sabedoria" },
+  { "id": "car", "nome": "Carisma" }
+]

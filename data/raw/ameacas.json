@@ -1,0 +1,10118 @@
+[
+ {
+  "id": "0QJaEz9fdHb47RXi",
+  "nome": "Esqueleto de elite",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "pv": 119,
+  "defesa": 24,
+  "deslocamento": "6m (4q)",
+  "resistencias": "resistência a corte, frio e perfuração 5",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 14,
+   "con": 16,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 14
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "1WalURwykNVk3Ahu",
+  "nome": "Sacerdote de Aharadak",
+  "nd": "10",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 136,
+  "defesa": 24,
+  "deslocamento": "9m (6q)",
+  "resistencias": "+5 contra magias divinas, resistência a ácido, eletricidade, fogo, frio, luz e trevas 10",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 20,
+   "int": 14,
+   "sab": 23,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 20
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 21
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 25
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 25
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "2kweWiPEjdPB3zkv",
+  "nome": "Capelão de Guerra",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Elfa",
+  "pv": 66,
+  "defesa": 22,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 10,
+   "con": 18,
+   "int": 12,
+   "sab": 20,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 9
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "3WykqjUvPkcN6PZE",
+  "nome": "Lobo",
+  "nd": "1/2",
+  "tamanho": "Médio",
+  "tipo": "Animal",
+  "pv": 21,
+  "defesa": 16,
+  "deslocamento": "15m (10q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 16,
+   "con": 16,
+   "int": 2,
+   "sab": 14,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 7
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "4bdMgKDWlnZ7SaO1",
+  "nome": "Cavaleiro do Leopardo Negro",
+  "nd": "9",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 162,
+  "defesa": 31,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 12,
+   "con": 22,
+   "int": 18,
+   "sab": 11,
+   "car": 13
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 23
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 15
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 17
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "4zzHSrERPWvDQQav",
+  "nome": "Ogro",
+  "nd": "4",
+  "tamanho": "Grande",
+  "tipo": "Gigante",
+  "pv": 84,
+  "defesa": 21,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 12,
+   "con": 18,
+   "int": 5,
+   "sab": 8,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 16
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "5RX08aG6PDxUcyTC",
+  "nome": "Nagah Guardião",
+  "nd": "3",
+  "tamanho": "Médio",
+  "tipo": "Nagah",
+  "pv": 45,
+  "defesa": 21,
+  "deslocamento": "9m (6q)",
+  "resistencias": "+5 contra venenos, −5 contra efeitos baseados em música",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "78G3E1Qa8T3GuwYn",
+  "nome": "Lobo-das-Cavernas",
+  "nd": "2",
+  "tamanho": "Grande",
+  "tipo": "Animal",
+  "pv": 63,
+  "defesa": 19,
+  "deslocamento": "15m (10q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 15,
+   "con": 21,
+   "int": 2,
+   "sab": 14,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "7TCQN1jw49OLjGb6",
+  "nome": "Arauto de Thwor",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Humano ",
+  "pv": 77,
+  "defesa": 21,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 20,
+   "int": 8,
+   "sab": 22,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 15
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "7kH7Ze9ZyQXkDlhT",
+  "nome": "Glop",
+  "nd": "1/4",
+  "tamanho": "Pequeno",
+  "tipo": "Monstro ",
+  "pv": 10,
+  "defesa": 13,
+  "deslocamento": " 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 10,
+   "con": 10,
+   "int": null,
+   "sab": 1,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": -5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "7mnCbWPNinbZpRwe",
+  "nome": "Otyugh",
+  "nd": "5",
+  "tamanho": "Grande",
+  "tipo": "Monstro",
+  "pv": 126,
+  "defesa": 24,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 21,
+   "des": 8,
+   "con": 19,
+   "int": 6,
+   "sab": 12,
+   "car": 7
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "80PcVRG01HCtaQv0",
+  "nome": "Devorador de Medos",
+  "nd": "8",
+  "tamanho": "Médio",
+  "tipo": "Bugbear",
+  "pv": 75,
+  "defesa": 19,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 23,
+   "des": 17,
+   "con": 17,
+   "int": 10,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 16
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 10
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "A7BX3loo7rrGf1PT",
+  "nome": "Basilisco",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Monstro",
+  "pv": 126,
+  "defesa": 20,
+  "deslocamento": "9m (6q), natação 9m (6q)",
+  "resistencias": "resistência a dano 5",
+  "sentidos": "",
+  "atributos": {
+   "for": 19,
+   "des": 14,
+   "con": 18,
+   "int": 2,
+   "sab": 12,
+   "car": 11
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "BdRSaQ7u74LMUELW",
+  "nome": "Geraktril",
+  "nd": "6",
+  "tamanho": "Médio",
+  "tipo": "Monstro (lefeu)",
+  "pv": 117,
+  "defesa": 25,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 25,
+   "des": 20,
+   "con": 17,
+   "int": 12,
+   "sab": 17,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 13
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 16
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "C5SzE4C5zcu4Y9SJ",
+  "nome": "Sombra de Thwor",
+  "nd": "9",
+  "tamanho": "Médio",
+  "tipo": "Hobgoblin",
+  "pv": 91,
+  "defesa": 22,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 24,
+   "con": 20,
+   "int": 13,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 17
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 19
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "CvA2wgBaDeyhE23C",
+  "nome": "Reishid",
+  "nd": "8",
+  "tamanho": "Médio",
+  "tipo": "Monstro (lefeu) ",
+  "pv": 195,
+  "defesa": 32,
+  "deslocamento": "9m (6q), escalar 9m (6q), voo 15m (10q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 25,
+   "con": 20,
+   "int": 18,
+   "sab": 19,
+   "car": 12
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 15
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 17
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 19
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 21
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 10
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "DmNUlGZn7LP3qJkW",
+  "nome": "Dragão Venerável",
+  "nd": "15",
+  "tamanho": "Enorme",
+  "tipo": "Monstro (dragão)",
+  "pv": 441,
+  "defesa": 43,
+  "deslocamento": "12m (8q), voo 24m (16q)",
+  "resistencias": "imunidade a fogo, resistência a magia +4, vulnerabilidade a frio",
+  "sentidos": "",
+  "atributos": {
+   "for": 45,
+   "des": 11,
+   "con": 33,
+   "int": 24,
+   "sab": 25,
+   "car": 22
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 27
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 23
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 23
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "EN4wvAT5pzljgWch",
+  "nome": "Necromante Veterano",
+  "nd": "7",
+  "tamanho": "Médio",
+  "tipo": "Elfo ",
+  "pv": 64,
+  "defesa": 12,
+  "deslocamento": "12m (8q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 14,
+   "con": 14,
+   "int": 22,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 16
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "FF9PpLugg4L34Jh1",
+  "nome": "Thuwarokk",
+  "nd": "16",
+  "tamanho": "Colossal",
+  "tipo": "Monstro (lefeu)",
+  "pv": 600,
+  "defesa": 38,
+  "deslocamento": "12m (8q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 45,
+   "des": 7,
+   "con": 30,
+   "int": 4,
+   "sab": 8,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 31
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 13
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 19
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 19
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "G7CDTFhKKlvssbYh",
+  "nome": "Goblin Engenhoqueiro",
+  "nd": "3",
+  "tamanho": "Pequeno",
+  "tipo": "Goblin ",
+  "pv": 28,
+  "defesa": 17,
+  "deslocamento": "9m (6q), escalada 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 15,
+   "con": 14,
+   "int": 17,
+   "sab": 8,
+   "car": 7
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 7
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "GjWh5AwsMRMx8yN2",
+  "nome": "Sucuri",
+  "nd": "3",
+  "tamanho": "Grande",
+  "tipo": "Animal",
+  "pv": 88,
+  "defesa": 19,
+  "deslocamento": "6m (4q), escalar 9m (6q), natação 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 29,
+   "des": 15,
+   "con": 19,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 13
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 6
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "HS7RjPi1PNACtHCt",
+  "nome": "Jiboia",
+  "nd": "1/2",
+  "tamanho": "Médio",
+  "tipo": "Animal",
+  "pv": 15,
+  "defesa": 16,
+  "deslocamento": "6m (4q), escalar 6m (4q), natação 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 17,
+   "con": 13,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 4
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "HZ42DL62joiPLBL5",
+  "nome": "Hidra",
+  "nd": "11",
+  "tamanho": "Enorme",
+  "tipo": "Monstro",
+  "pv": 396,
+  "defesa": 35,
+  "deslocamento": "9m (6q), natação 9m (6q)",
+  "resistencias": "cura acelerada 100",
+  "sentidos": "",
+  "atributos": {
+   "for": 34,
+   "des": 11,
+   "con": 35,
+   "int": 2,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 27
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 15
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 15
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "JvLt0xyUsK8xSmbB",
+  "nome": "Mantícora",
+  "nd": "6",
+  "tamanho": "Grande",
+  "tipo": "Monstro ",
+  "pv": 221,
+  "defesa": 22,
+  "deslocamento": "9m (6q), voo 15m (10q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 15,
+   "con": 24,
+   "int": 7,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 17
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 12
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "MKKB4eECVXAjyvRy",
+  "nome": "Aparição",
+  "nd": "5",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "pv": 78,
+  "defesa": 23,
+  "deslocamento": "Voo 18m (12q)",
+  "resistencias": "incorpóreo",
+  "sentidos": "",
+  "atributos": {
+   "for": null,
+   "des": 23,
+   "con": 15,
+   "int": 11,
+   "sab": 14,
+   "car": 15
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 8
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 13
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 12
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "MNRdYO0gwOgkyiCj",
+  "nome": "Orc Chefe",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Orc",
+  "pv": 36,
+  "defesa": 18,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 14,
+   "con": 18,
+   "int": 8,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 9
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "N1zMOukMdldQKz6y",
+  "nome": "Wyvern",
+  "nd": "5",
+  "tamanho": "Grande",
+  "tipo": "Monstro ",
+  "pv": 144,
+  "defesa": 21,
+  "deslocamento": "9m (6q), voo 18m (12q)",
+  "resistencias": "imunidade a paralisia",
+  "sentidos": "",
+  "atributos": {
+   "for": 25,
+   "des": 12,
+   "con": 23,
+   "int": 6,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 14
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "PHQxelq8EGMXXlR8",
+  "nome": "Grifo",
+  "nd": "3",
+  "tamanho": "Grande",
+  "tipo": "Monstro ",
+  "pv": 91,
+  "defesa": 19,
+  "deslocamento": "12m, voo 24m",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 19,
+   "con": 16,
+   "int": 2,
+   "sab": 14,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 11
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "Qk9okLSrfLXz55jd",
+  "nome": "Turba de Zumbis",
+  "nd": "2",
+  "tamanho": "Grande",
+  "tipo": "Morto-vivo (bando) ",
+  "pv": 60,
+  "defesa": 11,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 15,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "QmbDo3LPMBsBDcno",
+  "nome": "Cultista de Sszzaas",
+  "nd": "7",
+  "tamanho": "Médio",
+  "tipo": "Medusa",
+  "pv": 160,
+  "defesa": 19,
+  "deslocamento": "9m (6q)",
+  "resistencias": "resistência a veneno 5",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 18,
+   "con": 12,
+   "int": 18,
+   "sab": 20,
+   "car": 20
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 14
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 17
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 18
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 17
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 18
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "RHLtYwYren3OrRSw",
+  "nome": "Cascavel",
+  "nd": "1/4",
+  "tamanho": "Minúsculo",
+  "tipo": "Animal",
+  "pv": 5,
+  "defesa": 14,
+  "deslocamento": "6m (4q), escalar 6m (4q), natação 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 6,
+   "des": 17,
+   "con": 13,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 1
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "RRa9FDDcVgGAJQXB",
+  "nome": "Naja",
+  "nd": "1",
+  "tamanho": "Pequeno",
+  "tipo": "Animal",
+  "pv": 20,
+  "defesa": 17,
+  "deslocamento": "6m (4q), escalar 6m (4q), natação 6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 19,
+   "con": 13,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 8
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "TI0saf34SrPtJcGk",
+  "nome": "Maníaco Lefou",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Lefou",
+  "pv": 66,
+  "defesa": 18,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 12,
+   "int": 9,
+   "sab": 8,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "Tgy5IZKg9Mt1zgmp",
+  "nome": "Hobgoblin Soldado",
+  "nd": "1",
+  "tamanho": "Médio",
+  "tipo": "Hobgoblin",
+  "pv": 18,
+  "defesa": 18,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 12,
+   "int": 9,
+   "sab": 8,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "Uo4OND7Ih8o4Jh2D",
+  "nome": "Finntroll Feitor",
+  "nd": "6",
+  "tamanho": "Médio",
+  "tipo": "Finntroll",
+  "pv": 78,
+  "defesa": 15,
+  "deslocamento": "9m (6q)",
+  "resistencias": "imunidade a atordoamento e metamorfose, resistência a magia +2",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 18,
+   "con": 18,
+   "int": 21,
+   "sab": 10,
+   "car": 12
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 14
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 14
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 10
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "WMcZXuIIRzCPzr6a",
+  "nome": "Colosso Supremo",
+  "nd": "14",
+  "tamanho": "Colossal",
+  "tipo": "Construto",
+  "pv": 600,
+  "defesa": 35,
+  "deslocamento": "12m (8q)",
+  "resistencias": "cura  acelerada  20,  resistência a dano 10, resistência a magia +5",
+  "sentidos": "",
+  "atributos": {
+   "for": 40,
+   "des": 8,
+   "con": 30,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 30
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 19
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 20
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 19
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 20
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "WUIMRtDAcGN8Y5zn",
+  "nome": "Sargento da Guarda",
+  "nd": "1",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 28,
+  "defesa": 18,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 14,
+   "int": 9,
+   "sab": 10,
+   "car": 13
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 9
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 7
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "X4PPvTakuyBuESbR",
+  "nome": "Urso-Coruja",
+  "nd": "4",
+  "tamanho": "Grande",
+  "tipo": "Monstro ",
+  "pv": 105,
+  "defesa": 18,
+  "deslocamento": "12m (8q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 17,
+   "con": 21,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "XAJNOpuVGZSZpjW7",
+  "nome": "Esqueleto",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "pv": 40,
+  "defesa": 20,
+  "deslocamento": "6m (4q)",
+  "resistencias": "resistência a corte, frio e perfuração 5",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 14,
+   "con": 12,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 10
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "XxD1i2mq6QdiJmzP",
+  "nome": "Engenho de Guerra Goblin",
+  "nd": "6",
+  "tamanho": "Enorme",
+  "tipo": "Construto ",
+  "pv": 144,
+  "defesa": 23,
+  "deslocamento": "12m (8q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 24,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 13
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 6
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "Y2et7W3oI63C9xB9",
+  "nome": "Dragão Ancião",
+  "nd": "20",
+  "tamanho": "Colossal",
+  "tipo": "Monstro (dragão)",
+  "pv": 690,
+  "defesa": 51,
+  "deslocamento": "12m (8q), voo 36m (24q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 49,
+   "des": 11,
+   "con": 37,
+   "int": 26,
+   "sab": 27,
+   "car": 24
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 34
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 21
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 29
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 21
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 29
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "ZjAV3NXuB0ZROCHs",
+  "nome": "Aranha Gigante",
+  "nd": "2",
+  "tamanho": "Grande",
+  "tipo": "Monstro ",
+  "pv": 77,
+  "defesa": 19,
+  "deslocamento": "12m (8q), escalar 12m (8q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 19,
+   "con": 12,
+   "int": 1,
+   "sab": 10,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 8
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "a4o3vOZbpJJdoN1N",
+  "nome": "Uktril",
+  "nd": "3",
+  "tamanho": "Médio",
+  "tipo": "Monstro (lefeu)",
+  "pv": 72,
+  "defesa": 22,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 21,
+   "des": 18,
+   "con": 15,
+   "int": 8,
+   "sab": 14,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 7
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 12
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "aDJoJf7PgQ33UvNA",
+  "nome": "Zumbi",
+  "nd": "1/3",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "pv": 12,
+  "defesa": 11,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 8,
+   "con": 15,
+   "int": null,
+   "sab": 8,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "aJHKa88HMhvaCnE7",
+  "nome": "Troll das Cavernas",
+  "nd": "9",
+  "tamanho": "Enorme",
+  "tipo": "Monstro",
+  "pv": 345,
+  "defesa": 27,
+  "deslocamento": "12m (8q), escalar 9m (6q)",
+  "resistencias": "cura acelerada 20/ácido ou fogo",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 10,
+   "con": 37,
+   "int": 6,
+   "sab": 9,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 26
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 14
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 7
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 6
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "dSZIaFcItcZegLZS",
+  "nome": "Guarda de Cidade",
+  "nd": "1/3",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 8,
+  "defesa": 15,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 12,
+   "con": 14,
+   "int": 9,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "dqnErwWwqO3dmNyS",
+  "nome": "Orc",
+  "nd": "1/3",
+  "tamanho": "Médio",
+  "tipo": "Orc",
+  "pv": 8,
+  "defesa": 14,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 11,
+   "con": 14,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "dtqJL9MBvKQun2LL",
+  "nome": "Lagash",
+  "nd": "13",
+  "tamanho": "Enorme",
+  "tipo": "Monstro",
+  "pv": 475,
+  "defesa": 29,
+  "deslocamento": "12m (8q), escalar 12m (8q), natação 12m (8q)",
+  "resistencias": "imunidade a veneno",
+  "sentidos": "",
+  "atributos": {
+   "for": 39,
+   "des": 19,
+   "con": 29,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 27
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 22
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 19
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 19
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 13
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "eBr5U0NRUIhaz2JM",
+  "nome": "Nagah Mística",
+  "nd": "6",
+  "tamanho": "Médio",
+  "tipo": "Nagah",
+  "pv": 90,
+  "defesa": 14,
+  "deslocamento": "",
+  "resistencias": "+5 contra venenos, −5 contra efeitos baseados em música",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 16,
+   "con": 18,
+   "int": 20,
+   "sab": 14,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 16
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 15
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "eHAHgDlAXql7oMgP",
+  "nome": "Dragão Adulto",
+  "nd": "11",
+  "tamanho": "Enorme",
+  "tipo": "Monstro (dragão)",
+  "pv": 306,
+  "defesa": 37,
+  "deslocamento": "12m (8q), voo 24m (16q)",
+  "resistencias": "imunidade a fogo,, resistência a magia +3, vulnerabilidade a frio",
+  "sentidos": "",
+  "atributos": {
+   "for": 37,
+   "des": 13,
+   "con": 27,
+   "int": 19,
+   "sab": 19,
+   "car": 16
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 22
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 15
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 18
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 15
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 18
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "eqTw16BCIsgXUsnW",
+  "nome": "Sargento-mor",
+  "nd": "3",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 45,
+  "defesa": 24,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 15
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "fK8H5betBV7TQqkq",
+  "nome": "Bandido",
+  "nd": "1/4",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 6,
+  "defesa": 14,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 14,
+   "con": 13,
+   "int": 9,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 1
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "hIieRUWgmv87ExIL",
+  "nome": "Finntroll Caçador",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Finntroll",
+  "pv": 35,
+  "defesa": 19,
+  "deslocamento": "9m (6q)",
+  "resistencias": "imunidade a atordoamento e metamorfose, resistência a magia +2",
+  "sentidos": "",
+  "atributos": {
+   "for": 13,
+   "des": 18,
+   "con": 17,
+   "int": 14,
+   "sab": 14,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "iwhH7ljtDB7JxYSY",
+  "nome": "Cão do Inferno",
+  "nd": "3",
+  "tamanho": "Grande",
+  "tipo": "Espírito",
+  "pv": 56,
+  "defesa": 21,
+  "deslocamento": "12m (8q)",
+  "resistencias": "imunidade  a  fogo,  resistência a dano 10/mágico, vulnerabilidade a frio",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 17,
+   "con": 18,
+   "int": 6,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 10
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "jS2c38gj0TLUuOgr",
+  "nome": "Ganchador",
+  "nd": "5",
+  "tamanho": "Grande",
+  "tipo": "Monstro",
+  "pv": 150,
+  "defesa": 25,
+  "deslocamento": "9m (6q), escalar 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 16,
+   "con": 20,
+   "int": 6,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 14
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 12
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 6
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "jiX0Itt2On27hc30",
+  "nome": "Golem de Ferro",
+  "nd": "10",
+  "tamanho": "Grande",
+  "tipo": "Construto ",
+  "pv": 300,
+  "defesa": 34,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 38,
+   "des": 9,
+   "con": 30,
+   "int": null,
+   "sab": 11,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 26
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 10
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "kxlD9Zh51Iyc0u6C",
+  "nome": "Gárgula",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Construto",
+  "pv": 45,
+  "defesa": 19,
+  "deslocamento": "12m (8q), voo 18m (12q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 14,
+   "con": 19,
+   "int": 6,
+   "sab": 11,
+   "car": 7
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 8
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "nS4HkD02ynlbbtUT",
+  "nome": "Capitão-Baluarte",
+  "nd": "5",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 75,
+  "defesa": 35,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 17,
+   "int": 13,
+   "sab": 10,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 16
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 13
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 7
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 7
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 13
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "nhvQoA8jY5I8stzV",
+  "nome": "Hobgoblin Mago de Batalha",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Hobgoblin",
+  "pv": 45,
+  "defesa": 11,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 17,
+   "int": 21,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "npoNBPUXKVObgYTY",
+  "nome": "Recruta Purista",
+  "nd": "1/2",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 10,
+  "defesa": 16,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "oZgZENn3I6vseSWs",
+  "nome": "Guerreiro de Chifres",
+  "nd": "3",
+  "tamanho": "Médio",
+  "tipo": "Espírito",
+  "pv": 72,
+  "defesa": 21,
+  "deslocamento": "9m (6q)",
+  "resistencias": "  resistência  a  dano  5,  resistência a fogo e frio 10, imunidade a ácido e venenos.",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 16,
+   "con": 19,
+   "int": 6,
+   "sab": 11,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 11
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "pjva1IeZE58nGNxn",
+  "nome": "Centopeia-dragão",
+  "nd": "7",
+  "tamanho": "Enorme",
+  "tipo": "Monstro ",
+  "pv": 247,
+  "defesa": 26,
+  "deslocamento": "15m (10q), escavar 6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 17,
+   "con": 29,
+   "int": 2,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 19
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 13
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 7
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "rUt3QVqY96mvNkhR",
+  "nome": "Trog",
+  "nd": "1",
+  "tamanho": "Médio",
+  "tipo": "Trog",
+  "pv": 26,
+  "defesa": 13,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 16,
+   "int": 7,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 2
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 1
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "sZtq7Z3CrNz856BO",
+  "nome": "Troll",
+  "nd": "4",
+  "tamanho": "Grande",
+  "tipo": "Monstro",
+  "pv": 112,
+  "defesa": 19,
+  "deslocamento": "9m (6q)",
+  "resistencias": "cura acelerada 15/ácido ou fogo",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 14,
+   "con": 23,
+   "int": 6,
+   "sab": 9,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 13
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "tLkQ0pCiVmJcpVwy",
+  "nome": "Kobolds",
+  "nd": "2",
+  "tamanho": "Médio",
+  "tipo": "Kobold",
+  "pv": 20,
+  "defesa": 14,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 17,
+   "con": 10,
+   "int": 8,
+   "sab": 11,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 21
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "uDNjqYx6GWMbKvoA",
+  "nome": "Rato Gigante",
+  "nd": "1/4",
+  "tamanho": "Pequeno",
+  "tipo": "Animal",
+  "pv": 5,
+  "defesa": 13,
+  "deslocamento": "12m (8q), escalar 6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 17,
+   "con": 12,
+   "int": 1,
+   "sab": 12,
+   "car": 4
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "uszc66XsgKPfYtSK",
+  "nome": "Soldado Purista",
+  "nd": "1",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 25,
+  "defesa": 20,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 7
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 1
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "vAEW5YDnI2ECPVRs",
+  "nome": "Necromante",
+  "nd": "4",
+  "tamanho": "Médio",
+  "tipo": "Elfo ",
+  "pv": 27,
+  "defesa": 11,
+  "deslocamento": "9m",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 12,
+   "con": 12,
+   "int": 20,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "vOboZ4AoGFu1xTjh",
+  "nome": "Dragão Jovem",
+  "nd": "7",
+  "tamanho": "Grande",
+  "tipo": "Monstro (dragão)",
+  "pv": 221,
+  "defesa": 32,
+  "deslocamento": "12m (8q), voo 18m (12q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 15,
+   "con": 25,
+   "int": 14,
+   "sab": 15,
+   "car": 14
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 17
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 12
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 12
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 12
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "vZGGIFyhurCYpnNR",
+  "nome": "Tirano do Terceiro",
+  "nd": "10",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 200,
+  "defesa": 31,
+  "deslocamento": "6m (4q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 10,
+   "con": 24,
+   "int": 14,
+   "sab": 12,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 26
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 16
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 12
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 19
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "w0qJgxy3z24Cb34H",
+  "nome": "Dragão Filhote",
+  "nd": "3",
+  "tamanho": "Médio",
+  "tipo": "Monstro (dragão)",
+  "pv": 126,
+  "defesa": 23,
+  "deslocamento": "12m (8q), voo 18m (12q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 21,
+   "des": 17,
+   "con": 18,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 11
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "xMTYBQqQ15QmIqPH",
+  "nome": "Falange",
+  "nd": "4",
+  "tamanho": "Grande",
+  "tipo": "Morto-vivo (bando) ",
+  "pv": 595,
+  "defesa": 24,
+  "deslocamento": "6m (4q)",
+  "resistencias": "resistência a corte, frio e perfuração 5",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 14,
+   "con": 16,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 14
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "xmxJmccLam3QVPAP",
+  "nome": "Goblin Salteador",
+  "nd": "1/3",
+  "tamanho": "Pequeno",
+  "tipo": "Goblin",
+  "pv": 9,
+  "defesa": 15,
+  "deslocamento": "9m (6q), escalada 9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 17,
+   "con": 12,
+   "int": 12,
+   "sab": 8,
+   "car": 7
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "z7K9pfPEVqvKYvBg",
+  "nome": "Chefe Bandido",
+  "nd": "1",
+  "tamanho": "Médio",
+  "tipo": "Humano",
+  "pv": 24,
+  "defesa": 15,
+  "deslocamento": "9m (6q)",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 14,
+   "con": 15,
+   "int": 9,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Tormenta20 Compendium"
+ },
+ {
+  "id": "0gLfmpO7uVhiAvI2",
+  "nome": "Guarda-costas Real",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 128,
+  "defesa": 28,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 11,
+   "con": 20,
+   "int": 10,
+   "sab": 14,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 21
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 8
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 16
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 18
+   }
+  },
+  "equipamento": "Alabarda  aumentada  atroz  maciça  de  adamante, armadura completa reforçada.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0hvCBwN8yzmdWjAC",
+  "nome": "Cavalo",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 18,
+  "defesa": 13,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 15,
+   "int": 2,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0iyTGv74NVgpRhSe",
+  "nome": "Escravagista",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Minatauro",
+  "pv": 40,
+  "defesa": 17,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 10,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "int": {
+    "label": "Intimidação",
+    "valor": 8
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "Algemas, escudo leve, gibão de peles, rede, tridente.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0ymQZe1BeaPDNxe9",
+  "nome": "Assassino",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 40,
+  "defesa": 19,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 18,
+   "con": 16,
+   "int": 14,
+   "sab": 11,
+   "car": 8
+  },
+  "pericias": {
+   "atl": {
+    "label": "Atletismo",
+    "valor": 8
+   },
+   "eng": {
+    "label": "Enganação",
+    "valor": 7
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 7
+   },
+   "fur": {
+    "label": "Furtividade",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 12
+   },
+   "lad": {
+    "label": "Ladinagem",
+    "valor": 12
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 14
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "Adaga, couro batido ajustado, espada curta x2, kit de ladrão, veneno de naja x3",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "1d7CPkJbjQmOwVKZ",
+  "nome": "Sábio",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 9,
+  "defesa": 9,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 7,
+   "des": 8,
+   "con": 9,
+   "int": 16,
+   "sab": 17,
+   "car": 14
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 11
+   }
+  },
+  "equipamento": "Bálsamo restaurador, bordão",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3Mnw8pKQfQslYGpR",
+  "nome": "Falcão",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 4,
+  "defesa": 13,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "resistência a magia +5",
+  "sentidos": "visão na penumbra",
+  "atributos": {
+   "for": 6,
+   "des": 17,
+   "con": 10,
+   "int": 2,
+   "sab": 14,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3caXmQFsvpAKAnMG",
+  "nome": "Mestre Assassino",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "Elfo",
+  "pv": 125,
+  "defesa": 23,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "visão na penumbra",
+  "atributos": {
+   "for": 10,
+   "des": 22,
+   "con": 16,
+   "int": 18,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 19
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 16
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 21
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "Adaga, besta pesada certeira com mira telescópica, cimitarra certeira x2, couraça sob medida, kit de ladrão, veneno morte líquida x5, virote de adamante x10.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3tounPORfxuuvAxY",
+  "nome": "Matuto",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 16,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": "",
+   "value": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 11,
+   "con": 15,
+   "int": 10,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {
+   "atl": {
+    "label": "Atletismo",
+    "valor": 7
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 2
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "Gibão de peles, machado de lenhador.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "4HztSv133I7vzFKY",
+  "nome": "Capitão Pirata",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "Osteon",
+  "pv": 162,
+  "defesa": 28,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "corte, frio, perfuração",
+  "sentidos": "visão no escuro",
+  "atributos": {
+   "for": 12,
+   "des": 22,
+   "con": 16,
+   "int": 12,
+   "sab": 12,
+   "car": 16
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 22
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 22
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 15
+   }
+  },
+  "equipamento": "Cimitarra cruel precisa, couraça sob medida, pistola atroz, munição x10.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "5H9TeYmtFtjxBU21",
+  "nome": "Capitão da Guarda",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "Anão",
+  "pv": 122,
+  "defesa": 27,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "visão no escuro",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 20,
+   "int": 10,
+   "sab": 14,
+   "car": 13
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 13
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 15
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 17
+   }
+  },
+  "equipamento": "Apito, besta pesada atroz, escudo pesado, machado anão certeiro cruel, meia armadura reforçada",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "5dMXH1fn3Mjuk9Jw",
+  "nome": "Capanga",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 15,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 4
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   }
+  },
+  "equipamento": "Couro batido, tacape.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "6PXa3hOIMfNGaqeW",
+  "nome": "Javali",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 21,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 4
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 1
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "7YLh4hmvKdiSYHbd",
+  "nome": "Guarda Palaciano",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 40,
+  "defesa": 26,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 16,
+   "int": 10,
+   "sab": 14,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 13
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 8
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 12
+   }
+  },
+  "equipamento": "Besta pesada certeira, escudo pesado, espada longa certeira, meia armadura, virotes x10",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "8gaBbzvkHGRq0Z4t",
+  "nome": "Cortesão",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 24,
+  "defesa": 15,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 13,
+   "con": 12,
+   "int": 12,
+   "sab": 12,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 9
+   }
+  },
+  "equipamento": "Adaga certeira, traje de cortesão, veneno de cascavel",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "9EH0709xQg19wQAQ",
+  "nome": "Leão",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 49,
+  "defesa": 16,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 21,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ACS0gFRQyMpsuK3Q",
+  "nome": "Cavalo de Guerra",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 24,
+  "defesa": 13,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 20,
+   "des": 13,
+   "con": 15,
+   "int": 2,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AJVgEVlgfyD00k6u",
+  "nome": "Taverneiro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 32,
+  "defesa": 10,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 10,
+   "con": 15,
+   "int": 10,
+   "sab": 12,
+   "car": 12
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "intu": {
+    "label": "Intuição",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "Caneco de cerveja, clava.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ALreXDRr6CFeCmkY",
+  "nome": "Milícia Arcana",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 44,
+  "defesa": 18,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "imunidade a encantamento e ilusão",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 16,
+   "con": 14,
+   "int": 17,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 12
+   },
+   "mis": {
+    "label": "Misticismo",
+    "valor": 12
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 10
+   }
+  },
+  "equipamento": "Espada longa certeira, uniforme místico",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AScRVfqPEpuP2vXq",
+  "nome": "Mago da Corte",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 140,
+  "defesa": 18,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 12,
+   "con": 16,
+   "int": 24,
+   "sab": 14,
+   "car": 13
+  },
+  "pericias": {
+   "con": {
+    "label": "Conhecimento",
+    "valor": 22
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 21
+   },
+   "mis": {
+    "label": "Misticismo",
+    "valor": 22
+   },
+   "nob": {
+    "label": "Nobreza",
+    "valor": 22
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 22
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 17
+   }
+  },
+  "equipamento": "Anel de proteção, bordão, essência de mana, poção de curar ferimentos (7d8+7 PV).",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AZqVF9vAgdogh9WX",
+  "nome": "Golem Guardião",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "Construto",
+  "pv": 150,
+  "defesa": 25,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "visão no escuro",
+  "atributos": {
+   "for": 28,
+   "des": 8,
+   "con": 20,
+   "int": null,
+   "sab": 12,
+   "car": 1
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 14
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "BoOMErV5zXaEUBHt",
+  "nome": "Menestrel",
+  "nd": "1/4",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 8,
+  "defesa": 12,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": "",
+   "value": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 14,
+   "con": 10,
+   "int": 12,
+   "sab": 10,
+   "car": 15
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "Adaga x2, instrumento musical.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "CN4G7ojqRjBB6qi2",
+  "nome": "Milícia da Capital",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 18,
+  "defesa": 19,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {
+   "atl": {
+    "label": "Atletismo",
+    "valor": 10
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "intu": {
+    "label": "Intuição",
+    "valor": 8
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "Algemas, apito, cota de malha, espada longa, escudo leve, lampião",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "DHgbNo4a027hnW8Z",
+  "nome": "Pirata",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 15,
+  "defesa": 16,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 18,
+   "con": 12,
+   "int": 10,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {
+   "acr": {
+    "label": "Acrobacia",
+    "valor": 8
+   },
+   "atl": {
+    "label": "Atletismo",
+    "valor": 4
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "Armadura de couro, cimitarra.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "DboZwIWYJ9PkYuRk",
+  "nome": "Cão de Guarda",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 12,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 15,
+   "des": 15,
+   "con": 15,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "sob": {
+    "label": "Sobrevivência",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "FHuaCBVVdlA0ZIhF",
+  "nome": "Ferreiro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 21,
+  "defesa": 12,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": "",
+   "value": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 8
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 8
+   }
+  },
+  "equipamento": "Avental de couro (conta como armadura de couro), kit de ferreiro, martelo de ferreiro.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "GMntsIEgDSr0h1tN",
+  "nome": "Pungista",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Goblin",
+  "pv": 6,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "visão no escuro",
+  "atributos": {
+   "for": 10,
+   "des": 19,
+   "con": 10,
+   "int": 14,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {
+   "acr": {
+    "label": "Acrobacia",
+    "valor": 7
+   },
+   "atl": {
+    "label": "Atletismo",
+    "valor": 5
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "fur": {
+    "label": "Furtividade",
+    "valor": 9
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 7
+   },
+   "lad": {
+    "label": "Ladinagem",
+    "valor": 7
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "Adaga",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Hp2DqpBs26zuHrfh",
+  "nome": "Tigre",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 56,
+  "defesa": 16,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 23,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Lu1DlF39Dpu4ManM",
+  "nome": "Urso",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 72,
+  "defesa": 15,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 27,
+   "des": 13,
+   "con": 21,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 13
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 9
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 9
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "McPV6P1T20o7zkrS",
+  "nome": "Mercador",
+  "nd": "1/4",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 12,
+  "defesa": 10,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 10,
+   "con": 12,
+   "int": 12,
+   "sab": 12,
+   "car": 13
+  },
+  "pericias": {
+   "dip": {
+    "label": "Diplomacia",
+    "valor": 5
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 2
+   },
+   "intu": {
+    "label": "Intuição",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 2
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "Besta leve, clava, virotes x10",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Mn2XNTHN3AGfl7Gj",
+  "nome": "Acólito",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 12,
+  "defesa": 10,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 8,
+   "con": 14,
+   "int": 10,
+   "sab": 14,
+   "car": 11
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "rel": {
+    "label": "Religião",
+    "valor": 5
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 5
+   }
+  },
+  "equipamento": "Maça, símbolo sagrado, túnica eclesiástica (conta como armadura acolchoada)",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "NKMmw3i9dpQ89qiV",
+  "nome": "Cavaleiro da Luz, veterano",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 176,
+  "defesa": 38,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 10,
+   "con": 20,
+   "int": 11,
+   "sab": 14,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 25
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 15
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 11
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 14
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 22
+   }
+  },
+  "equipamento": "armadura  completa  reforçada  guardiã,  es-cudo pesado reforçado, lâmina da luz, túnica da Ordem da Luz (+2 em Diplomacia).",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "NQ9viC8tcjqASudb",
+  "nome": "Onça",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 42,
+  "defesa": 16,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "faro, visão na penumbra",
+  "atributos": {
+   "for": 19,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 8
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ODkmHVgpF0ZnBtuU",
+  "nome": "Mestre Mercador",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 70,
+  "defesa": 20,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 13,
+   "con": 16,
+   "int": 18,
+   "sab": 14,
+   "car": 17
+  },
+  "pericias": {
+   "ade": {
+    "label": "Adestramento",
+    "valor": 14
+   },
+   "con": {
+    "label": "Conhecimento",
+    "valor": 15
+   },
+   "dip": {
+    "label": "Diplomacia",
+    "valor": 14
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 10
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 14
+   },
+   "intu": {
+    "label": "Intuição",
+    "valor": 13
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 13
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 14
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 13
+   }
+  },
+  "equipamento": "Adaga, besta pesada certeira e precisa, couro batido ajustado e reforçado, virotes de adamante x10.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "OJUpPobQ27w970Ey",
+  "nome": "Sacerdote",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 21,
+  "defesa": 12,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 8,
+   "con": 12,
+   "int": 14,
+   "sab": 17,
+   "car": 16
+  },
+  "pericias": {
+   "con": {
+    "label": "Conhecimento",
+    "valor": 9
+   },
+   "cur": {
+    "label": "Cura",
+    "valor": 10
+   },
+   "dip": {
+    "label": "Diplomacia",
+    "valor": 10
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 2
+   },
+   "mis": {
+    "label": "Misticismo",
+    "valor": 9
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 4
+   },
+   "rel": {
+    "label": "Religião",
+    "valor": 10
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 12
+   }
+  },
+  "equipamento": "Bordão, símbolo sagrado, túnica eclesiástica (conta como armadura acolchoada)",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ONxPL7zvzdZgG4wB",
+  "nome": "Besteiro Veterano",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 18,
+  "defesa": 18,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 6
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "Besta pesada, couraça, espada longa, virotes x10",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "PLWQNK7kVNy3DjEz",
+  "nome": "Barão",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 112,
+  "defesa": 28,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 18,
+   "int": 13,
+   "sab": 14,
+   "car": 17
+  },
+  "pericias": {
+   "dip": {
+    "label": "Diplomacia",
+    "valor": 22
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 22
+   },
+   "gue": {
+    "label": "Guerra",
+    "valor": 15
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 9
+   },
+   "int": {
+    "label": "Intimidação",
+    "valor": 17
+   },
+   "intu": {
+    "label": "Intuição",
+    "valor": 21
+   },
+   "nob": {
+    "label": "Nobreza",
+    "valor": 20
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 10
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 11
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 12
+   }
+  },
+  "equipamento": "Armadura  completa  delicada  de  adamante,  escudo  pesado  reforçado,  espada  bastarda  atroz  pun-gente formidável.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "TuR4rcVRX582HPg5",
+  "nome": "Alto Sacerdote",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 75,
+  "defesa": 16,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 8,
+   "con": 16,
+   "int": 16,
+   "sab": 20,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 12
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 12
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 20
+   }
+  },
+  "equipamento": "Báculo da fé (bordão banhado a ouro magnífico que causa +1d6 pontos de dano da energia canalizada pela divindade do alto sacerdote), batina consagrada (armadura acolchoada guardiã refletora), símbolo sagrado",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "UD5us9owPb55lJrT",
+  "nome": "Cavaleiro da Luz",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 65,
+  "defesa": 29,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 17,
+   "int": 11,
+   "sab": 13,
+   "car": 16
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 15
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 10
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 7
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 13
+   }
+  },
+  "equipamento": "Armadura completa reforçada e polida, escudo pesado,   espada   bastarda   pungente,   lança   montada.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "cdcMQFlNWcKD6krN",
+  "nome": "Trobo",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 20,
+  "defesa": 14,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "resistência a magia +5",
+  "sentidos": "visão na penumbra",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 13,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 5
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 5
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "dAcnU21eDqzGvrn1",
+  "nome": "Charlatão",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "Hynne",
+  "pv": 7,
+  "defesa": 13,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 16,
+   "con": 8,
+   "int": 13,
+   "sab": 9,
+   "car": 18
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 2
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 6
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 2
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 6
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 2
+   }
+  },
+  "equipamento": "Adaga, balas x20, colar cravejado de gemas (+2 em Enganação), funda, kit de ladrão, poção de curar ferimentos (2d8+2), poção falsa.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "dIWRfCw6swNZilGR",
+  "nome": "Camponês",
+  "nd": "1/6",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 3,
+  "defesa": 10,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": "",
+   "value": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 13,
+   "des": 11,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {
+   "ade": {
+    "label": "Adestramento",
+    "valor": 2
+   },
+   "for": {
+    "label": "Fortitude",
+    "valor": 3
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "Bordão",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "mRYK7ymBZu5QmWB9",
+  "nome": "Saqueador",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "Humano",
+  "pv": 20,
+  "defesa": 15,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 19,
+   "des": 12,
+   "con": 14,
+   "int": 9,
+   "sab": 9,
+   "car": 7
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 6
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 5
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 1
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 3
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 1
+   }
+  },
+  "equipamento": "Brunea, machado de guerra.",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "s7WcMwWaX3BnSZ7t",
+  "nome": "Crocodilo",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "Animal",
+  "pv": 56,
+  "defesa": 17,
+  "deslocamento": {
+   "base": 9,
+   "bonus": 0,
+   "penalidade": 0,
+   "total": 9,
+   "cond": "nao",
+   "subst": 0,
+   "descricao": ""
+  },
+  "resistencias": "",
+  "sentidos": "visão na penumbra",
+  "atributos": {
+   "for": 25,
+   "des": 12,
+   "con": 19,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {
+   "for": {
+    "label": "Fortitude",
+    "valor": 11
+   },
+   "ini": {
+    "label": "Iniciativa",
+    "valor": 4
+   },
+   "per": {
+    "label": "Percepção",
+    "valor": 4
+   },
+   "ref": {
+    "label": "Reflexos",
+    "valor": 8
+   },
+   "von": {
+    "label": "Vontade",
+    "valor": 4
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Mn2XNTHN3AGfl7Gj",
+  "nome": "Acólito",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 12,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 8,
+   "con": 14,
+   "int": 10,
+   "sab": 14,
+   "car": 11
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "TuR4rcVRX582HPg5",
+  "nome": "Alto Sacerdote",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 75,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 8,
+   "con": 16,
+   "int": 16,
+   "sab": 20,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0ymQZe1BeaPDNxe9",
+  "nome": "Assassino",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 40,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 18,
+   "con": 16,
+   "int": 14,
+   "sab": 11,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "PLWQNK7kVNy3DjEz",
+  "nome": "Barão",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 112,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 18,
+   "int": 13,
+   "sab": 14,
+   "car": 17
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 21
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ONxPL7zvzdZgG4wB",
+  "nome": "Besteiro Veterano",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 18,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "dIWRfCw6swNZilGR",
+  "nome": "Camponês",
+  "nd": "1/6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 3,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 13,
+   "des": 11,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "DboZwIWYJ9PkYuRk",
+  "nome": "Cão de Guarda",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 12,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 15,
+   "con": 15,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "5dMXH1fn3Mjuk9Jw",
+  "nome": "Capanga",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 15,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "5H9TeYmtFtjxBU21",
+  "nome": "Capitão da Guarda",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 122,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 20,
+   "int": 10,
+   "sab": 14,
+   "car": 13
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "4HztSv133I7vzFKY",
+  "nome": "Capitão Pirata",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 162,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 22,
+   "con": 16,
+   "int": 12,
+   "sab": 12,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "UD5us9owPb55lJrT",
+  "nome": "Cavaleiro da Luz",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 65,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 17,
+   "int": 11,
+   "sab": 13,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "NKMmw3i9dpQ89qiV",
+  "nome": "Cavaleiro da Luz, veterano",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 176,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 10,
+   "con": 20,
+   "int": 11,
+   "sab": 14,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0hvCBwN8yzmdWjAC",
+  "nome": "Cavalo",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 18,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 15,
+   "int": 2,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ACS0gFRQyMpsuK3Q",
+  "nome": "Cavalo de Guerra",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 13,
+   "con": 15,
+   "int": 2,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "dAcnU21eDqzGvrn1",
+  "nome": "Charlatão",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 7,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 16,
+   "con": 8,
+   "int": 13,
+   "sab": 9,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "8gaBbzvkHGRq0Z4t",
+  "nome": "Cortesão",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 13,
+   "con": 12,
+   "int": 12,
+   "sab": 12,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "s7WcMwWaX3BnSZ7t",
+  "nome": "Crocodilo",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 56,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 25,
+   "des": 12,
+   "con": 19,
+   "int": 1,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0iyTGv74NVgpRhSe",
+  "nome": "Escravagista",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 40,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 10,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3Mnw8pKQfQslYGpR",
+  "nome": "Falcão",
+  "nd": "1/3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 4,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 6,
+   "des": 17,
+   "con": 10,
+   "int": 2,
+   "sab": 14,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "FHuaCBVVdlA0ZIhF",
+  "nome": "Ferreiro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 21,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AZqVF9vAgdogh9WX",
+  "nome": "Golem Guardião",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 150,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 28,
+   "des": 8,
+   "con": 20,
+   "int": null,
+   "sab": 12,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "7YLh4hmvKdiSYHbd",
+  "nome": "Guarda Palaciano",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 40,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 16,
+   "int": 10,
+   "sab": 14,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0gLfmpO7uVhiAvI2",
+  "nome": "Guarda-costas Real",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 128,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 11,
+   "con": 20,
+   "int": 10,
+   "sab": 14,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "6PXa3hOIMfNGaqeW",
+  "nome": "Javali",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 21,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 4
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "9EH0709xQg19wQAQ",
+  "nome": "Leão",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 49,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 21,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AScRVfqPEpuP2vXq",
+  "nome": "Mago da Corte",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 140,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 12,
+   "con": 16,
+   "int": 24,
+   "sab": 14,
+   "car": 13
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3tounPORfxuuvAxY",
+  "nome": "Matuto",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 16,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 11,
+   "con": 15,
+   "int": 10,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "BoOMErV5zXaEUBHt",
+  "nome": "Menestrel",
+  "nd": "1/4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 8,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 14,
+   "con": 10,
+   "int": 12,
+   "sab": 10,
+   "car": 15
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "McPV6P1T20o7zkrS",
+  "nome": "Mercador",
+  "nd": "1/4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 12,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 10,
+   "con": 12,
+   "int": 12,
+   "sab": 12,
+   "car": 13
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 5
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "3caXmQFsvpAKAnMG",
+  "nome": "Mestre Assassino",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 125,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 22,
+   "con": 16,
+   "int": 18,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ODkmHVgpF0ZnBtuU",
+  "nome": "Mestre Mercador",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 70,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 13,
+   "con": 16,
+   "int": 18,
+   "sab": 14,
+   "car": 17
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 13
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ALreXDRr6CFeCmkY",
+  "nome": "Milícia Arcana",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 44,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 16,
+   "con": 14,
+   "int": 17,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "CN4G7ojqRjBB6qi2",
+  "nome": "Milícia da Capital",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 18,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 8
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "NQ9viC8tcjqASudb",
+  "nome": "Onça",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 42,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 19,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "DHgbNo4a027hnW8Z",
+  "nome": "Pirata",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 15,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 18,
+   "con": 12,
+   "int": 10,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "GMntsIEgDSr0h1tN",
+  "nome": "Pungista",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 6,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 19,
+   "con": 10,
+   "int": 14,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "1d7CPkJbjQmOwVKZ",
+  "nome": "Sábio",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 9,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 7,
+   "des": 8,
+   "con": 9,
+   "int": 16,
+   "sab": 17,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "OJUpPobQ27w970Ey",
+  "nome": "Sacerdote",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 21,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 8,
+   "con": 12,
+   "int": 14,
+   "sab": 17,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "mRYK7ymBZu5QmWB9",
+  "nome": "Saqueador",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 20,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 19,
+   "des": 12,
+   "con": 14,
+   "int": 9,
+   "sab": 9,
+   "car": 7
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "AJVgEVlgfyD00k6u",
+  "nome": "Taverneiro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 32,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 10,
+   "con": 15,
+   "int": 10,
+   "sab": 12,
+   "car": 12
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Hp2DqpBs26zuHrfh",
+  "nome": "Tigre",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 56,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 23,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "cdcMQFlNWcKD6krN",
+  "nome": "Trobo",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 20,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 13,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "Lu1DlF39Dpu4ManM",
+  "nome": "Urso",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 72,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 13,
+   "con": 21,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "NQ9viC8tcjqASudb",
+  "nome": "Onça",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 42,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 19,
+   "des": 17,
+   "con": 17,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "ONxPL7zvzdZgG4wB",
+  "nome": "Besteiro Veterano",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 18,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 13,
+   "int": 10,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (guia-de-npcs)"
+ },
+ {
+  "id": "0KGLNHA8IbKwepaj",
+  "nome": "Ber'baram",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 144,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 20,
+   "con": 20,
+   "int": 6,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "0PbzyMNzSBu3eiyy",
+  "nome": "Pudim Alvinegro",
+  "nd": "13",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 400,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 30,
+   "int": 6,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "1wk0e9G69kuiD2Bz",
+  "nome": "Revoada de Wyverns",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 720,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 25,
+   "des": 12,
+   "con": 23,
+   "int": 6,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "2Fn8toBj0syTG24H",
+  "nome": "Anão Veterano",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 42,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 8,
+   "con": 15,
+   "int": 10,
+   "sab": 14,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "3vItPPTixGVE0M1s",
+  "nome": "\"Goblin\"",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 114,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 26,
+   "con": 16,
+   "int": 14,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4ddw2mozIfJfUbqj",
+  "nome": "Stella, a anã aventureira",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 72,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 11,
+   "con": 19,
+   "int": 12,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "6cF0X9gQwx1GziIp",
+  "nome": "Kaminari & Raijin",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 112,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 13,
+   "des": 24,
+   "con": 20,
+   "int": 13,
+   "sab": 15,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "73DBm2co1T0kmfEv",
+  "nome": "Zéfiro, o espadachim supremacista",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 45,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 16,
+   "con": 16,
+   "int": 13,
+   "sab": 15,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "7CrMNQjKQ2EeTsai",
+  "nome": "Reator de Tormenta",
+  "nd": "18",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 600,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 20,
+   "con": 30,
+   "int": 6,
+   "sab": 20,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "7sJy879HVAEUEgef",
+  "nome": "Simplicio & Sinfronio, os gêmeos elfos",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 70,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 24,
+   "con": 16,
+   "int": 16,
+   "sab": 8,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "8TwL6ml2iFaNrgLl",
+  "nome": "Hashmalan, O Cardeal da Assimilação",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 384,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 22,
+   "con": 25,
+   "int": 34,
+   "sab": 30,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "8WX7uzbcUXyDDCBu",
+  "nome": "Queklain, Cardeal da Devoção",
+  "nd": "19",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 800,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 36,
+   "des": 10,
+   "con": 40,
+   "int": 13,
+   "sab": 20,
+   "car": 24
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 26
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "8YsPfcfpmcKe4LWo",
+  "nome": "Guardião de Rubi",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 150,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 20,
+   "int": null,
+   "sab": 16,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Bf0mDP1J69y7YStc",
+  "nome": "Rhond",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 999,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 40,
+   "des": 14,
+   "con": 36,
+   "int": 18,
+   "sab": 22,
+   "car": 20
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Bn7wcadpWZgwS6rV",
+  "nome": "Glop, mamãe",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 48,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 8,
+   "con": 14,
+   "int": null,
+   "sab": 1,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Bv7gx3cqDeUAdG5n",
+  "nome": "Humano Mercenário",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 15,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 12,
+   "int": 8,
+   "sab": 8,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "C3RMyoUec75bwXjs",
+  "nome": "Ginete de Wyvern",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 162,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 12,
+   "con": 22,
+   "int": 10,
+   "sab": 11,
+   "car": 13
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "CMjMva8GYbQ0SlOz",
+  "nome": "Russel, o atirador",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 28,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 19,
+   "con": 15,
+   "int": 10,
+   "sab": 15,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "COY1VsvEiRUXlPQW",
+  "nome": "Ezzayn (Esquadrão Veridak)",
+  "nd": "17",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 260,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 30,
+   "con": 16,
+   "int": 10,
+   "sab": 16,
+   "car": 5
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "DLn2m3qU1O2KbE08",
+  "nome": "Rachael, a mimetista",
+  "nd": "11",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 90,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 22,
+   "con": 16,
+   "int": 18,
+   "sab": 12,
+   "car": 22
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "DvjdQURlaejmvDav",
+  "nome": "Capitã Alurra",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 90,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 24,
+   "con": 18,
+   "int": 15,
+   "sab": 10,
+   "car": 20
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "FDh3dLwZv7V3Wt03",
+  "nome": "Aaron Sauer",
+  "nd": "11",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 152,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 22,
+   "con": 20,
+   "int": 18,
+   "sab": 10,
+   "car": 19
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 15
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Geck9IozUBhlQGz2",
+  "nome": "Bateria de artilharia",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 180,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 6,
+   "con": 20,
+   "int": null,
+   "sab": 30,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "H9tCQemEZxjXV3qc",
+  "nome": "Estátua Animada",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 72,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 8,
+   "con": 18,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "JFjKgjtF9REG2pdH",
+  "nome": "Bhalorg",
+  "nd": "14",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 420,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 45,
+   "des": 11,
+   "con": 33,
+   "int": 14,
+   "sab": 25,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "K7SpoKp3xyhhqLSO",
+  "nome": "Turba de Zumbis do Pântano",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 200,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 9,
+   "con": 10,
+   "int": null,
+   "sab": 9,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "KQYLhZMzLkmqnukE",
+  "nome": "Elemental Corrompido",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 476,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 34,
+   "des": 20,
+   "con": 36,
+   "int": 10,
+   "sab": 11,
+   "car": 11
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "L75IJSXaKK1beFwo",
+  "nome": "Príncipe Conrad Kor Kovith",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 220,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 24,
+   "con": 24,
+   "int": 18,
+   "sab": 10,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "M5lc6j7RHgsD1iX3",
+  "nome": "Hidra Helicoide",
+  "nd": "15",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 600,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 30,
+   "int": null,
+   "sab": 10,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "MR6uWO6x7WVZ5OgN",
+  "nome": "Miria, a maga mercenária",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 14,
+   "con": 14,
+   "int": 18,
+   "sab": 10,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "PFPA6MefNOiILmFG",
+  "nome": "Síria, a bruxa",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 64,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 20,
+   "con": 14,
+   "int": 24,
+   "sab": 10,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "PURTEoSJ1DXytFbf",
+  "nome": "Golem de reconhecimento",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 135,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 20,
+   "con": 18,
+   "int": 10,
+   "sab": 20,
+   "car": 3
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "PZZTU25QWdMEdVMX",
+  "nome": "Guardião de Aço",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 60,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 10,
+   "con": 20,
+   "int": null,
+   "sab": 12,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "QOFpvj5mlZZ2KU44",
+  "nome": "Ezzayn (Cavalaria Hurobakk)",
+  "nd": "17",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 360,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 20,
+   "con": 26,
+   "int": 10,
+   "sab": 16,
+   "car": 5
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "QqI6wBLbrlqsUN2v",
+  "nome": "Aranha de Gelo",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 63,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 18,
+   "con": 16,
+   "int": 6,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Qrp8FLHqpRKlpdmb",
+  "nome": "Sarektril",
+  "nd": "14",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 336,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 29,
+   "des": 24,
+   "con": 19,
+   "int": 16,
+   "sab": 20,
+   "car": 14
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 23
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "SJbrpOzK0lQEvQeo",
+  "nome": "Bando Pirata",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 80,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 18,
+   "con": 11,
+   "int": 11,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "SbEOykyH0scxi55e",
+  "nome": "Ezzayn (Batalhão Burodron)",
+  "nd": "17",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 260,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 45,
+   "des": 20,
+   "con": 16,
+   "int": 10,
+   "sab": 16,
+   "car": 5
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "Tnc9QqaROieYiAYJ",
+  "nome": "Jacó, o oportunista",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 84,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 13,
+   "des": 22,
+   "con": 18,
+   "int": 15,
+   "sab": 8,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "UGAnwNPireYXJGFu",
+  "nome": "Troll Rubi",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 144,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 14,
+   "con": 23,
+   "int": 6,
+   "sab": 7,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "UtlnvwkjCn7EaAAW",
+  "nome": "Eridibus, Forma de Bisão da Montanha",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 780,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 40,
+   "des": 30,
+   "con": 50,
+   "int": 20,
+   "sab": 25,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "VRds6I6SnqtD8WjE",
+  "nome": "Verme do Gelo",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 336,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 37,
+   "des": 10,
+   "con": 32,
+   "int": 2,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "WjWtjcCp6buNZzpJ",
+  "nome": "Zhoa, a anã ferreira",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 98,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 10,
+   "con": 20,
+   "int": 12,
+   "sab": 10,
+   "car": 13
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "XUmypogUDF7CutCY",
+  "nome": "Verme do Pântano",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 260,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 13,
+   "con": 30,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "ZNEr53bPaHJAtHOg",
+  "nome": "Esmagador Coletivo",
+  "nd": "15",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 570,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 39,
+   "des": 9,
+   "con": 39,
+   "int": null,
+   "sab": 11,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "b6MX0zJEV9qzD98F",
+  "nome": "Eridibus, Forma de Lula Abissal",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 520,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 40,
+   "des": 40,
+   "con": 30,
+   "int": 20,
+   "sab": 25,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "gbPfOBrpEuDmLxEl",
+  "nome": "Humano Matador",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 15,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 12,
+   "int": 8,
+   "sab": 8,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "hsPvw3DZZaMWl7Mx",
+  "nome": "Zirradak",
+  "nd": "18",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 442,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 25,
+   "con": 25,
+   "int": 18,
+   "sab": 19,
+   "car": 16
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 23
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "huH667fVE8Iwjntx",
+  "nome": "Eridibus, Forma de Centopéia-Dragão",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 520,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 50,
+   "des": 30,
+   "con": 30,
+   "int": 20,
+   "sab": 25,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "j5ZFrtvkK0aLjrhI",
+  "nome": "Iggy, o clérigo do mestre",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 36,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 10,
+   "con": 18,
+   "int": 13,
+   "sab": 18,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "mThCQ9DKWzV4VfR5",
+  "nome": "Diligência Dracocérbera",
+  "nd": "15",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 600,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 30,
+   "int": null,
+   "sab": 10,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "nmBP1i324srTHXSa",
+  "nome": "Corvo de Krauser",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 600,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 18,
+   "con": 30,
+   "int": null,
+   "sab": 10,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "odS4fTVE5FkY5NzF",
+  "nome": "Enxame de Papa-dim",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 150,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 14,
+   "con": 20,
+   "int": 6,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "of4plAQ5a7N1oMm6",
+  "nome": "Esqueleto de Elite de Aslavi",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 119,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 14,
+   "con": 16,
+   "int": null,
+   "sab": 10,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "p57ujyqweC7BPLjD",
+  "nome": "Thalliathos",
+  "nd": "14",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 160,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 14,
+   "con": 20,
+   "int": 22,
+   "sab": 10,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "pZMD2Zl1NHAku5tK",
+  "nome": "Anão Capanga",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 22,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 8,
+   "con": 15,
+   "int": 10,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "r4EvkBoQJpu13ZLJ",
+  "nome": "Mago Mercenário",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 36,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 9,
+   "des": 12,
+   "con": 12,
+   "int": 18,
+   "sab": 8,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "sq65lBp3EiCR8Yha",
+  "nome": "Adramalek, O Cardeal da Dominação",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 768,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 42,
+   "des": 36,
+   "con": 38,
+   "int": 13,
+   "sab": 14,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "tOIgHoSlLjuW5ox5",
+  "nome": "Ezzayn",
+  "nd": "17",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 260,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 20,
+   "con": 16,
+   "int": 10,
+   "sab": 16,
+   "car": 5
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "tnCUmdLRwOl5bVXb",
+  "nome": "Assassino Putrefato",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 78,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 24,
+   "con": 14,
+   "int": 13,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "tqHGsfR7xOghK9W1",
+  "nome": "Ezequias Heldred (Sumo-Sacerdote)",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 510,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 20,
+   "con": 20,
+   "int": 30,
+   "sab": 26,
+   "car": 20
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 29
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "vSWIccgaulplFgx6",
+  "nome": "Grupo de assalto de elite",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 525,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 15,
+   "con": 20,
+   "int": 12,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "xC1m4tx97sqaVFrO",
+  "nome": "Thuwarokk",
+  "nd": "16",
+  "tamanho": "Colossal",
+  "tipo": "",
+  "pv": 600,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 45,
+   "des": 7,
+   "con": 30,
+   "int": 4,
+   "sab": 8,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "y269k1jz4sesUbYD",
+  "nome": "Arquemis-B",
+  "nd": "18",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 765,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 50,
+   "des": 10,
+   "con": 35,
+   "int": null,
+   "sab": 14,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "z3fTklfBrwkgeMIy",
+  "nome": "Manada de Ber'baram",
+  "nd": "12",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 720,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 20,
+   "con": 20,
+   "int": 6,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "73DBm2co1T0kmfEv",
+  "nome": "Zéfiro, o espadachim supremacista",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 45,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 16,
+   "con": 16,
+   "int": 13,
+   "sab": 15,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "4BDU71I3wgQwce18",
+  "nome": "Abominação rubi",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 216,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 32,
+   "des": 14,
+   "con": 24,
+   "int": 8,
+   "sab": 12,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (jornada-heroica)"
+ },
+ {
+  "id": "0SVBaNYuGHvd6WUH",
+  "nome": "Centopeia-múmia",
+  "nd": "7",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 169,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 17,
+   "con": 29,
+   "int": 2,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "19oSnyivAwNEo0ZI",
+  "nome": "Minotauro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 48,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 10,
+   "con": 15,
+   "int": 8,
+   "sab": 10,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "1uBuKtdsfmM5w9H8",
+  "nome": "Sargento Mercenário",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 92,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 22,
+   "int": 10,
+   "sab": 14,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "2LCdTe3DQ4pWlGRM",
+  "nome": "A \"Arquimaga\"",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 14,
+   "int": 14,
+   "sab": 10,
+   "car": 19
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "2XlEmODsp0jYGxTM",
+  "nome": "Centopeia-zumbi",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 169,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 17,
+   "con": 29,
+   "int": null,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "2f6UAEPzdEUxJ1VM",
+  "nome": "Guerreiro Zumbi",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 63,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 16,
+   "int": null,
+   "sab": 9,
+   "car": 1
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "5v0zNVrQeP48F0jP",
+  "nome": "Líder Cultista dos Massacres",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 368,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 22,
+   "con": 22,
+   "int": 12,
+   "sab": 13,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "7zmGEFTFEUAgaqAg",
+  "nome": "O Sacerdote da traição",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 144,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 16,
+   "con": 15,
+   "int": 19,
+   "sab": 18,
+   "car": 17
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "8To5EhWTbT0aj23M",
+  "nome": "Alucard",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 240,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 23,
+   "con": 23,
+   "int": 15,
+   "sab": 14,
+   "car": 24
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "AyRcNyXXn50QaIl3",
+  "nome": "Soldado Mercenário",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 20,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "BR304rXi73ZawIpI",
+  "nome": "Rainha dos Massacres",
+  "nd": "22",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 646,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 40,
+   "des": 22,
+   "con": 40,
+   "int": 20,
+   "sab": 19,
+   "car": 14
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 26
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "BmoUZ7Opi2WjwopS",
+  "nome": "Lobo-Crocodilo de Estimação",
+  "nd": "",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 70,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 23,
+   "des": 14,
+   "con": 22,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "BwdZGCr3kilObOWW",
+  "nome": "Bando de Duendes",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 25,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 10,
+   "con": 12,
+   "int": 9,
+   "sab": 10,
+   "car": 15
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "E596Kzddb6t2KjZU",
+  "nome": "Cultista dos Massacres",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 168,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 18,
+   "int": 10,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "HJIt2UCRN2gIznOr",
+  "nome": "Golem Danificado (Segunda Forma)",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 18,
+   "con": 16,
+   "int": 14,
+   "sab": 10,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "Ih6aK4guLVmI5kaz",
+  "nome": "Bando de Kobolds Cozinheiros",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 10,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 15,
+   "con": 10,
+   "int": 8,
+   "sab": 11,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "IxuBg9Dm9VFW2IOo",
+  "nome": "O Alto-Sacerdote da traição",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 144,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 16,
+   "con": 15,
+   "int": 19,
+   "sab": 18,
+   "car": 17
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 14
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "KO3hHScg24NWNHKP",
+  "nome": "Carniçal",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 54,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 16,
+   "con": 14,
+   "int": 8,
+   "sab": 10,
+   "car": 2
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "KT5hwL197Vf8tCnv",
+  "nome": "Tosco",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 48,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 14,
+   "con": 16,
+   "int": null,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "KTokTPMgQfibLowl",
+  "nome": "Sephiroth",
+  "nd": "20",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 235,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 24,
+   "con": 20,
+   "int": 16,
+   "sab": 16,
+   "car": 18
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "KkTk6RcpAVF4NVpP",
+  "nome": "Lívia, Clériga do Panteão",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 12,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 12,
+   "con": 13,
+   "int": 15,
+   "sab": 17,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "OFkpqotfReaVa12v",
+  "nome": "O Mestre",
+  "nd": "12",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 10,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 28,
+   "des": 16,
+   "con": 16,
+   "int": 18,
+   "sab": 20,
+   "car": 16
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 22
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "PHBKNAG27cQYmDiK",
+  "nome": "Dragão de Cobre Adulto",
+  "nd": "10",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 221,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 23,
+   "des": 14,
+   "con": 19,
+   "int": 18,
+   "sab": 17,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "QhmLZ93ADMpf8nip",
+  "nome": "Golem Danificado (Primeira Forma)",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 10,
+   "con": 16,
+   "int": 16,
+   "sab": 12,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "RbxzLP4STtp1uPJ0",
+  "nome": "Centopeia-carniçal",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 169,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 35,
+   "des": 17,
+   "con": 29,
+   "int": 2,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "RjtTVeMaA9f10hbR",
+  "nome": "O “Ladrão”",
+  "nd": "",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 36,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 18,
+   "con": 15,
+   "int": 10,
+   "sab": 8,
+   "car": 15
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "UZqPkWIFNHS4WIBp",
+  "nome": "Nádia, a \"Arquimaga\"",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 14,
+   "int": 14,
+   "sab": 10,
+   "car": 19
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "VaUPXgUnFHSB6Gdd",
+  "nome": "Soldado Mercenário Abissal",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 40,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "WMlbtQV6rUT9IOnC",
+  "nome": "Xamã Centaura",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 33,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 11,
+   "des": 9,
+   "con": 13,
+   "int": 15,
+   "sab": 16,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "YHsG8GZJjBH5kcN0",
+  "nome": "Vidente Mercenário",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 60,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 18,
+   "con": 16,
+   "int": 20,
+   "sab": 12,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "Z6YifxrR6Kn5DgwC",
+  "nome": "Guarda do Portão",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 122,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 26,
+   "des": 12,
+   "con": 20,
+   "int": 5,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 3
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "ZNp0sPUwQ3B4TJ5q",
+  "nome": "Levinho, o esqueleto",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 20,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 18,
+   "con": 12,
+   "int": 10,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "ZcHuc4RuUS20S6td",
+  "nome": "Tosco menor",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 21,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 14,
+   "con": 14,
+   "int": null,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "aolWhs3duXMrJZPC",
+  "nome": "Troglodita anão",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 45,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 16,
+   "con": 18,
+   "int": 12,
+   "sab": 9,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "apvQPhK3N6fL1a0f",
+  "nome": "O Caçador de Recompensas",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 74,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 10,
+   "des": 20,
+   "con": 12,
+   "int": 13,
+   "sab": 15,
+   "car": 24
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "bI2e8wvxH8kYC2id",
+  "nome": "Cabeças Voadoras",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 130,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 16,
+   "int": 7,
+   "sab": 12,
+   "car": 9
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "eJNZ4tJ0NbHDl4kK",
+  "nome": "Sombra",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 54,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": null,
+   "des": 18,
+   "con": 14,
+   "int": 9,
+   "sab": 12,
+   "car": 13
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "ek2F9UYS9NDvQw3Z",
+  "nome": "Verme gigante",
+  "nd": "6",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 221,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 34,
+   "des": 10,
+   "con": 25,
+   "int": 2,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "en7LKJFGrswNfqH6",
+  "nome": "Urso branco",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 64,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 13,
+   "con": 19,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "gfrSt3P3XSEeSFt6",
+  "nome": "Guerreiro Mumificado",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 88,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 22,
+   "des": 16,
+   "con": 18,
+   "int": 10,
+   "sab": 15,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "hGrb1A7k9CbICaBw",
+  "nome": "Mordomo zumbi",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 81,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 20,
+   "int": 14,
+   "sab": 12,
+   "car": 11
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "iFspKLRHgPsa26Rf",
+  "nome": "Unidade de Soldados Mercenários",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 100,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "iHSrUvVn7VHlHnNI",
+  "nome": "O Mandaloriano",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 176,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 18,
+   "con": 18,
+   "int": 13,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "k6uQN7o0vI1l8Orc",
+  "nome": "Esqueleto Demônio",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 80,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 15,
+   "con": 19,
+   "int": 14,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "kAjHHke88hTl2l0p",
+  "nome": "Lobo das uivantes",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 91,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 16,
+   "int": 9,
+   "sab": 13,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "kLfHWOTVKSl1dG0a",
+  "nome": "O Paladino",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 351,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 27,
+   "des": 19,
+   "con": 22,
+   "int": 19,
+   "sab": 24,
+   "car": 22
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 25
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "kVyrQHD2LJnAh8ZF",
+  "nome": "Espião Mercenário",
+  "nd": "2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 72,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 23,
+   "con": 20,
+   "int": 8,
+   "sab": 13,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "lrDIsmH7hKHAnQ2B",
+  "nome": "Rei Kong",
+  "nd": "16",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 1000,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 50,
+   "des": 14,
+   "con": 30,
+   "int": 6,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "luueRsgKn9NqWvw2",
+  "nome": "Dahllan Druida",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 30,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 15,
+   "des": 17,
+   "con": 14,
+   "int": 12,
+   "sab": 13,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "mWH9F1lghzEkaOer",
+  "nome": "Guerreiro do Braço Metálico",
+  "nd": "9",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 150,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 24,
+   "des": 16,
+   "con": 16,
+   "int": 13,
+   "sab": 13,
+   "car": 14
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "noKgGYXSvKYRCDgW",
+  "nome": "Bando de Fadas",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 15,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 4,
+   "des": 15,
+   "con": 9,
+   "int": 10,
+   "sab": 11,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "o7Sj9MAXmk4Wseeq",
+  "nome": "Centopeia-sombra",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 169,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": null,
+   "des": 17,
+   "con": 29,
+   "int": 2,
+   "sab": 12,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "okqRxkP1AKwnCJqz",
+  "nome": "Enzo, Aprendiz de Mago",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 3,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 8,
+   "des": 14,
+   "con": 13,
+   "int": 15,
+   "sab": 9,
+   "car": 10
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "oyGs2X2YPBY9ZUOA",
+  "nome": "Capitão Mercenário",
+  "nd": "8",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 156,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 31,
+   "des": 15,
+   "con": 29,
+   "int": 12,
+   "sab": 14,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "qJamGUk3j1VXzGkS",
+  "nome": "Kevin, Líder dos Kobolds Cozinheiros",
+  "nd": "1/2",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 14,
+   "int": 8,
+   "sab": 11,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "rfc2vvSjMnFwGiYG",
+  "nome": "Carcereiro Mercenário",
+  "nd": "5",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 55,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 18,
+   "con": 16,
+   "int": 10,
+   "sab": 12,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "t7TAGdVwY6wd2qwd",
+  "nome": "Jonathan, o Prefeito",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 24,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 13,
+   "con": 12,
+   "int": 12,
+   "sab": 12,
+   "car": 18
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "uS7LJOmaAZ00ceQS",
+  "nome": "Emilly, dona de Taverna",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 32,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 12,
+   "des": 13,
+   "con": 12,
+   "int": 12,
+   "sab": 13,
+   "car": 13
+  },
+  "pericias": {
+   "intu": {
+    "label": "Intuição",
+    "valor": 9
+   }
+  },
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "vGKF9hPpl9AwYH3j",
+  "nome": "Ethan, o Ferreiro",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 28,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 15,
+   "int": 12,
+   "sab": 13,
+   "car": 12
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "wSdwrL61MmRuEoz3",
+  "nome": "Arlong",
+  "nd": "",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 160,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 30,
+   "des": 14,
+   "con": 26,
+   "int": 12,
+   "sab": 14,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "xi5MDiJot8sdio8c",
+  "nome": "Eco",
+  "nd": "3",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 63,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 14,
+   "des": 22,
+   "con": 17,
+   "int": 12,
+   "sab": 14,
+   "car": 16
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "yilj5GoHV4LPYDYg",
+  "nome": "Serpente Guardiã",
+  "nd": "4",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 104,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 18,
+   "int": 10,
+   "sab": 17,
+   "car": 15
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "AyRcNyXXn50QaIl3",
+  "nome": "Soldado Mercenário",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 20,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 8,
+   "sab": 9,
+   "car": 8
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ },
+ {
+  "id": "KT5hwL197Vf8tCnv",
+  "nome": "Tosco",
+  "nd": "1",
+  "tamanho": "",
+  "tipo": "",
+  "pv": 48,
+  "defesa": null,
+  "deslocamento": "",
+  "resistencias": "",
+  "sentidos": "",
+  "atributos": {
+   "for": 20,
+   "des": 14,
+   "con": 16,
+   "int": null,
+   "sab": 10,
+   "car": 6
+  },
+  "pericias": {},
+  "equipamento": "",
+  "descricao": "",
+  "fonte": "Compendium Extra T20 (dragao-brasil)"
+ }
+]

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ficha de Tormenta 20</title>
+<meta name="theme-color" content="#7a1f1f" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="assets/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<header class="topo">
+  <h1>⚔️ Ficha de Tormenta 20</h1>
+  <div class="topo-acoes">
+    <button id="btn-personagens" title="Meus Personagens">🗂️ Personagens</button>
+    <button id="btn-novo" title="Novo personagem">➕ Novo</button>
+    <button id="btn-importar" title="Importar JSON">📥 Importar</button>
+    <button id="btn-exportar" title="Exportar JSON">📤 Exportar</button>
+    <button id="btn-pdf" title="Ficha em PDF">🖨️ PDF</button>
+    <button id="btn-atualizar-dados" title="Atualizar banco de dados">🔄 Dados</button>
+  </div>
+  <input type="file" id="input-importar" accept="application/json" hidden />
+</header>
+
+<div id="aviso-dados" class="aviso" hidden></div>
+
+<main>
+  <!-- Dashboard fixo -->
+  <section id="dashboard" class="dashboard">
+    <div class="dash-item dash-pv">
+      <label>PV</label>
+      <div class="dash-barra"><div id="barra-pv" class="dash-barra-fill"></div></div>
+      <div class="dash-valores">
+        <input id="pv-atual" type="number" /> / <span id="pv-max">0</span>
+        <input id="pv-temp" type="number" title="PV temporário" placeholder="temp" />
+      </div>
+      <div class="dash-botoes">
+        <button data-dano="1">-1</button><button data-dano="5">-5</button>
+        <button data-cura="1">+1</button><button data-cura="5">+5</button>
+      </div>
+    </div>
+    <div class="dash-item dash-pm">
+      <label>PM</label>
+      <div class="dash-valores">
+        <input id="pm-atual" type="number" /> / <span id="pm-max">0</span>
+      </div>
+      <div class="dash-botoes">
+        <button data-pm="-1">-1 PM</button><button data-pm="1">+1 PM</button>
+        <button id="btn-descanso">😴 Descanso</button>
+      </div>
+    </div>
+    <div class="dash-item">
+      <label>Defesa</label>
+      <div id="dash-defesa" class="dash-numero">10</div>
+    </div>
+    <div class="dash-item">
+      <label>Iniciativa</label>
+      <div id="dash-iniciativa" class="dash-numero">+0</div>
+    </div>
+    <div class="dash-item">
+      <label>Deslocamento</label>
+      <div id="dash-deslocamento" class="dash-numero">9m</div>
+    </div>
+    <div class="dash-item">
+      <label>Nível</label>
+      <input id="nivel" type="number" min="1" max="20" value="1" />
+    </div>
+  </section>
+
+  <nav class="abas">
+    <button class="aba-btn ativo" data-aba="ficha">Ficha</button>
+    <button class="aba-btn" data-aba="pericias">Perícias</button>
+    <button class="aba-btn" data-aba="poderes">Poderes</button>
+    <button class="aba-btn" data-aba="magias">Magias</button>
+    <button class="aba-btn" data-aba="combate">Combate</button>
+    <button class="aba-btn" data-aba="equipamentos">Equipamentos</button>
+    <button class="aba-btn" data-aba="compendio">Compêndio</button>
+    <button class="aba-btn" data-aba="notas">Notas</button>
+  </nav>
+
+  <!-- ABA FICHA -->
+  <section id="aba-ficha" class="aba ativo">
+    <div class="cartao">
+      <h2>Identidade</h2>
+      <div class="grade-campos">
+        <label>Nome <input id="nome" type="text" placeholder="Nome do personagem" /></label>
+        <label>Jogador <input id="jogador" type="text" /></label>
+        <label>Raça
+          <select id="raca"></select>
+        </label>
+        <label>Classe
+          <select id="classe"></select>
+        </label>
+        <label>Origem
+          <select id="origem"></select>
+        </label>
+        <label>Divindade
+          <select id="divindade"><option value="">— nenhuma —</option></select>
+        </label>
+      </div>
+      <details id="racaInfo" class="info-auto"></details>
+      <details id="classeInfo" class="info-auto"></details>
+    </div>
+
+    <div class="cartao">
+      <h2>Atributos</h2>
+      <div id="atributos" class="grade-atributos"></div>
+      <p class="dica">Os valores já incluem os bônus/penalidades raciais aplicados automaticamente ao trocar de raça. Ajuste livremente.</p>
+    </div>
+
+    <div class="cartao">
+      <h2>Carga e Dinheiro</h2>
+      <div class="grade-campos">
+        <label>Carga máx. <span id="carga-max">-</span></label>
+        <label>T$ <input id="dinheiro-tt" type="number" value="0" /></label>
+        <label>TO$ <input id="dinheiro-to" type="number" value="0" /></label>
+        <label>TP$ <input id="dinheiro-tp" type="number" value="0" /></label>
+        <label>TC$ <input id="dinheiro-tc" type="number" value="0" /></label>
+      </div>
+    </div>
+
+    <div class="cartao">
+      <h2>Biografia e Aparência</h2>
+      <textarea id="biografia" rows="4" placeholder="História, personalidade, objetivos..."></textarea>
+      <textarea id="aparencia" rows="2" placeholder="Aparência física..."></textarea>
+    </div>
+  </section>
+
+  <!-- ABA PERICIAS -->
+  <section id="aba-pericias" class="aba">
+    <div class="cartao">
+      <h2>Perícias</h2>
+      <p class="dica">Treinos usados: <span id="treinos-usados">0</span> / sugerido <span id="treinos-sugeridos">2</span> (classe + Inteligência). Marque livremente — o número é só um guia.</p>
+      <table class="tabela-pericias">
+        <thead><tr><th></th><th>Perícia</th><th>Atributo</th><th>Bônus</th><th></th></tr></thead>
+        <tbody id="lista-pericias"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ABA PODERES -->
+  <section id="aba-poderes" class="aba">
+    <div class="cartao">
+      <h2>Poderes do personagem</h2>
+      <p class="dica">Poderes esperados neste nível: <span id="poderes-esperados">0</span> · Escolhidos: <span id="poderes-escolhidos-n">0</span></p>
+      <ul id="lista-poderes-personagem" class="lista-poderes"></ul>
+    </div>
+    <div class="cartao">
+      <h2>Adicionar poder</h2>
+      <div class="filtro-linha">
+        <select id="poderes-filtro-categoria">
+          <option value="">Todas as categorias</option>
+          <option value="classe">De classe</option>
+          <option value="racial">Racial</option>
+          <option value="origem">De origem</option>
+          <option value="geral">Geral</option>
+          <option value="concedido">Concedido</option>
+        </select>
+        <input id="poderes-busca" type="search" placeholder="Buscar poder..." />
+      </div>
+      <ul id="lista-poderes-catalogo" class="lista-poderes"></ul>
+    </div>
+  </section>
+
+  <!-- ABA MAGIAS -->
+  <section id="aba-magias" class="aba">
+    <div id="magias-sem-conjuracao" class="dica" hidden>Esta classe não conjura magias.</div>
+    <div id="magias-conteudo">
+      <div class="cartao">
+        <h2>Magias conhecidas</h2>
+        <ul id="lista-magias-personagem" class="lista-poderes"></ul>
+      </div>
+      <div class="cartao">
+        <h2>Grimório / adicionar magia</h2>
+        <div class="filtro-linha">
+          <select id="magias-filtro-circulo"><option value="">Todos os círculos</option></select>
+          <input id="magias-busca" type="search" placeholder="Buscar magia..." />
+        </div>
+        <ul id="lista-magias-catalogo" class="lista-poderes"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABA COMBATE -->
+  <section id="aba-combate" class="aba">
+    <div class="cartao">
+      <h2>Testes de resistência</h2>
+      <div id="lista-resistencias" class="grade-resistencias"></div>
+    </div>
+    <div class="cartao">
+      <h2>Ataques</h2>
+      <button id="btn-add-ataque">➕ Adicionar ataque</button>
+      <table class="tabela-ataques">
+        <thead><tr><th>Arma</th><th>Perícia</th><th>Dano</th><th>Crítico</th><th></th><th></th></tr></thead>
+        <tbody id="lista-ataques"></tbody>
+      </table>
+    </div>
+    <div class="cartao">
+      <h2>Condições</h2>
+      <div class="filtro-linha">
+        <select id="condicao-select"></select>
+        <button id="btn-add-condicao">Aplicar</button>
+      </div>
+      <ul id="lista-condicoes"></ul>
+    </div>
+  </section>
+
+  <!-- ABA EQUIPAMENTOS -->
+  <section id="aba-equipamentos" class="aba">
+    <div class="cartao">
+      <h2>Inventário</h2>
+      <table class="tabela-equip">
+        <thead><tr><th>Item</th><th>Qtd</th><th>Peso</th><th></th></tr></thead>
+        <tbody id="lista-inventario"></tbody>
+      </table>
+    </div>
+    <div class="cartao">
+      <h2>Catálogo de equipamentos</h2>
+      <div class="filtro-linha">
+        <select id="equip-filtro-tipo">
+          <option value="">Todos os tipos</option>
+          <option value="arma">Armas</option>
+          <option value="tesouro">Armaduras/Tesouros</option>
+          <option value="consumivel">Consumíveis</option>
+        </select>
+        <input id="equip-busca" type="search" placeholder="Buscar item..." />
+      </div>
+      <ul id="lista-equip-catalogo" class="lista-poderes"></ul>
+    </div>
+  </section>
+
+  <!-- ABA COMPENDIO -->
+  <section id="aba-compendio" class="aba">
+    <div class="cartao">
+      <h2>Compêndio</h2>
+      <div class="filtro-linha">
+        <select id="compendio-tipo">
+          <option value="poderes">Poderes</option>
+          <option value="magias">Magias</option>
+          <option value="equipamentos">Equipamentos</option>
+          <option value="ameacas">Ameaças (bestiário)</option>
+          <option value="panteao">Panteão</option>
+        </select>
+        <input id="compendio-busca" type="search" placeholder="Buscar..." />
+      </div>
+      <div id="compendio-resultado" class="lista-compendio"></div>
+    </div>
+  </section>
+
+  <!-- ABA NOTAS -->
+  <section id="aba-notas" class="aba">
+    <div class="cartao">
+      <h2>Notas de sessão</h2>
+      <textarea id="nova-nota" rows="3" placeholder="Escreva uma nota..."></textarea>
+      <button id="btn-add-nota">Adicionar nota</button>
+      <ul id="lista-notas"></ul>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL: Meus Personagens -->
+<div id="modal-personagens" class="modal" hidden>
+  <div class="modal-conteudo">
+    <button class="modal-fechar" data-fechar="modal-personagens">✕</button>
+    <h2>Meus Personagens</h2>
+    <ul id="lista-personagens-salvos"></ul>
+  </div>
+</div>
+
+<!-- MODAL: Detalhe genérico -->
+<div id="modal-detalhe" class="modal" hidden>
+  <div class="modal-conteudo">
+    <button class="modal-fechar" data-fechar="modal-detalhe">✕</button>
+    <div id="modal-detalhe-corpo"></div>
+  </div>
+</div>
+
+<footer class="rodape">
+  <span id="rodape-fonte">Dados: Tormenta 20 (regras centrais) + Tormenta20 Compendium.</span>
+  <span id="rodape-versao"></span>
+</footer>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
