@@ -425,9 +425,15 @@ function abrirDetalheItem(e) {
 }
 function abrirDetalheAmeaca(a) {
   const atrs = Object.entries(a.atributos).map(([k, v]) => `${k.toUpperCase()} ${v ?? "-"}`).join(" · ");
-  abrirDetalheTexto(a.nome, `<em>ND ${a.nd} · ${a.tamanho} · ${a.tipo}</em><br>
-    PV ${a.pv ?? "?"} · Defesa ${a.defesa ?? "?"} · Deslocamento ${a.deslocamento || "-"}<br>
-    ${atrs}<br>${a.resistencias ? `<br>Resistências: ${a.resistencias}` : ""}<br><br>${a.descricao || ""}`);
+  const poderes = (a.poderes || []).length
+    ? `<br><strong>Poderes e habilidades</strong><ul>${a.poderes.map((p) => `<li><strong>${p.nome}</strong>${p.descricao ? ` — ${p.descricao}` : ""}</li>`).join("")}</ul>`
+    : "";
+  const magias = (a.magias || []).length
+    ? `<br><strong>Magias</strong><ul>${a.magias.map((m) => `<li><strong>${m.nome}</strong>${m.circulo ? ` (${m.circulo}º círc.)` : ""}${m.descricao ? ` — ${m.descricao}` : ""}</li>`).join("")}</ul>`
+    : "";
+  abrirDetalheTexto(a.nome, `<em>ND ${a.nd} · ${a.tamanho} · ${a.tipo}</em>${a.fonte ? `<br><small>${a.fonte}</small>` : ""}<br>
+    PV ${a.pv ?? "?"}${a.pm ? ` · PM ${a.pm}` : ""} · Defesa ${a.defesa ?? "?"} · Deslocamento ${a.deslocamento || "-"}<br>
+    ${atrs}<br>${a.resistencias ? `<br>Resistências: ${a.resistencias}` : ""}${a.sentidos ? `<br>Sentidos: ${a.sentidos}` : ""}${a.equipamento ? `<br>Equipamento: ${a.equipamento}` : ""}<br><br>${a.descricao || ""}${poderes}${magias}`);
 }
 
 // ---------- Meus personagens ----------
