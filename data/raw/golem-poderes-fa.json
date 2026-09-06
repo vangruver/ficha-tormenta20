@@ -1,0 +1,122 @@
+[
+  {
+    "id": "golemfa-chassi-modificado",
+    "nome": "Chassi Modificado",
+    "categoria": "geral",
+    "subtipo": "Combate",
+    "tipoOriginal": "P. Geral - Combate (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Raça Golem.",
+    "descricao": "O construto passa por reconstrução. Benefício: o construto recebe um aprimoramento da tabela para armaduras superiores (Manual T20, p.155), exceto materiais especiais. Este poder pode ser comprado até 6 vezes e pode ser somado ao bônus de uma armadura encantada. Obs.: a personagem não é limitada a um único item embutido (diferente da regra normal, em que só um escudo com o poder Armamento Embutido pode receber modificações de armadura — DB nº 147, p.47).",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-protese-extra",
+    "nome": "Prótese Extra",
+    "categoria": "geral",
+    "subtipo": "Combate",
+    "tipoOriginal": "P. Geral - Combate (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Raça Golem.",
+    "descricao": "Uma prótese mecânica adicional. Benefício: pode escolher um efeito bônus na cena, como +1 dado de dano corpo-a-corpo, +2 em Atletismo ou Defesa+1. Obs.: pode ser escolhido várias vezes e se considera parte do projeto do chassi. Normal: personagens podem ter múltiplos membros, mas isso é apenas um adereço cosmético; inventores podem produzir próteses.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-foco-em-protese",
+    "nome": "Foco em Prótese",
+    "categoria": "geral",
+    "subtipo": "Combate",
+    "tipoOriginal": "P. Geral - Combate (Golem, fã)",
+    "oficial": false,
+    "custo": 1,
+    "requisito": "Prótese Extra.",
+    "descricao": "A coordenação da prótese melhora, podendo atacar e segurar armas. Benefício: pode equipar armas na prótese extra e fazer um ataque extra por 1 PM por membro. Atacar com todos os membros reduz a eficiência em -4 (Ambidestria e Estilo de Duas Armas reduzem essa penalidade em -2). Obs.: um membro usado para atacar não concede quaisquer bônus.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-chassi-especial",
+    "nome": "Chassi Especial",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Raça Golem; cumprir uma busca para concluir o chassi.",
+    "descricao": "O golem conclui o seu projeto de autoconstrução, podendo escolher um novo chassi. Benefício: substitui a qualidade racial Chassi por Barro, Bronze ou Pedra (DB nº148, p.46), ou outro material aprovado pelo mestre — incluindo qualquer um dos chassis deste manual. Obs.: essa escolha substitui a característica racial Chassi e só pode ser feita uma vez.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-controlar-lacaio",
+    "nome": "Controlar Lacaio",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Nenhum.",
+    "descricao": "Tendo uma criatura sem vontade sob o seu poder ao alcance visual, você comanda um servo de forma mais eficiente. Benefício: por uma ação de movimento, o bônus oferecido por um Aliado aumenta em +1 naquela rodada.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-corpo-taurico",
+    "nome": "Corpo Táurico",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Raça Golem.",
+    "descricao": "Substitui a parte inferior do chassi. Benefício: dobra a capacidade de carga, aumenta o deslocamento em 3m e o tamanho em uma categoria. Obs.: alterar o corpo exige a habilidade Autômato, 1 semana de trabalho e 1/3 do custo do chassi.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-parceiro-mecanico",
+    "nome": "Parceiro Mecânico",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Treinado em Ofício ou Misticismo.",
+    "descricao": "Um construto obediente que cumpre a função de um aliado iniciante. Benefício: escolha um aliado atirador, destruidor, fortão, montaria ou vigilante (Manual T20, p.318). Este autômato exige uma hora de manutenção cuidadosa diária; sem ela, o bônus que concede sofre, cumulativamente, penalidade -1 a cada novo dia (uma única manutenção restaura as condições). É uma engenhoca básica (T$100).",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-meio-golem",
+    "nome": "Meio-Golem",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": null,
+    "requisito": "Não pertencer à raça golem nem ao tipo espírito.",
+    "descricao": "Uma peça de golem guardando um elemental foi implantada em você. Benefício: com uma ação completa, você pode devorar um tipo de energia para evitar dano; se for dano mágico, converte 1/3 do dano em PV. Além disso, pode adquirir poderes exclusivos da raça golem. Normal: no livro básico, jogadores só podem ser meio-golens pela opção Origem Própria (Manual T20, p.95); veja também a origem homebrew Meio-Golem deste manual.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-poder-de-voo",
+    "nome": "Poder de Voo",
+    "categoria": "geral",
+    "subtipo": "Destino",
+    "tipoOriginal": "P. Geral - Destino (Golem, fã)",
+    "oficial": false,
+    "custo": 1,
+    "requisito": "Raça Golem.",
+    "descricao": "O construto desperta um sistema de propulsão, ativa um selo mágico ou acopla um par de asas, ganhando a habilidade de voo. Benefício: passa a planar (9m), caindo lentamente; pode optar por voar livremente por 1 PM por rodada (dobro do deslocamento).",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "golemfa-grafar-sigilo",
+    "nome": "Grafar Sigilo",
+    "categoria": "geral",
+    "subtipo": "Magia",
+    "tipoOriginal": "P. Geral - Magia (Golem, fã)",
+    "oficial": false,
+    "custo": 1,
+    "requisito": "Lançar magias; Escrever Pergaminho.",
+    "descricao": "Você aprende a grafar sigilos (DB nº 148, p.47) — um tipo de segredo escrito pelo autor, seja uma runa, entalhe, caixa-enigma ou placa eletrônica. Benefício: escolha uma magia de 1º círculo que possa lançar; grafá-la leva o mesmo tempo e custo de confeccionar um foco. Há vários tipos de sigilo (arcanos, sagrados, aberrantes, entre outros). Uma criatura sem mana não pode receber um sigilo, e cada ser só pode receber um. Ativar o sigilo consome 1 PM.",
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  }
+]

@@ -41,6 +41,19 @@ adaptado para as regras de Tormenta 20.
   original antes de usar em mesa.** Os campos de perícias sugeridas por origem também são um
   palpite razoável, não a lista oficial exata.
 
+### Conteúdo de fã (opcional)
+
+- **`data/raw/golem-chassis.json`, `data/raw/golem-poderes-fa.json`, `data/raw/golem-origens-fa.json`**:
+  conteúdo extra para a raça Golem (chassis, poderes/talentos e origens) extraído do *Manual do
+  Golem T20 (BETA 6, playtest)*, um material de **fã, não-oficial**, sem qualquer vínculo com a
+  Jambô Editora. Fica em arquivos e chaves (`golemChassis`, `golemPoderesFa`, `golemOrigensFa`)
+  separados de tudo o que vem do livro básico ou do compêndio oficial — nada aqui é misturado às
+  listas oficiais de poderes/origens (`data/raw/poderes.json`, `data/core/origens.json`), e todo
+  registro carrega um campo `fonte` deixando essa origem clara. Use com o aval do mestre da sua
+  mesa. A lista de chassis extraída cobre só uma parte do que o manual descreve (a extração do PDF
+  usada aqui se interrompeu no chassi "de Couro"); veja `data/raw/golem-chassis.json` para o que já
+  está digitalizado.
+
 ## Publicar no GitHub Pages
 
 1. Em **Settings → Pages → Build and deployment**, selecione **GitHub Actions**.
@@ -77,6 +90,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
+| `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
 
 ## Limitações conhecidas (v1)
 

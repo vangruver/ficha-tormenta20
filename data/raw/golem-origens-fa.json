@@ -1,0 +1,52 @@
+[
+  {
+    "id": "Aprendiz de Golenomacchia",
+    "periciasSugeridas": ["ofi", "mis"],
+    "oficial": false,
+    "descricao": "Você aprendeu o ofício da golenomacchia (a arte de fabricar e manter construtos) como aprendiz em alguma guilda, academia ou ordem que fabrica golens — de Wynlla a Doherimm, da Igreja de Tanna-Toh às ruínas de Moreania.",
+    "beneficiosEscolha": {
+      "escolha": 2,
+      "opcoes": [
+        "Perícia: Ofícios",
+        "Perícia: Misticismo",
+        "Poder: Controlar Lacaio (golem-fa)",
+        "Poder: Parceiro Mecânico (golem-fa)",
+        "Conhecimento de Golenomacchia: se puder consultar o golemnomicon (1 rodada), recebe +1 em testes de perícia envolvendo construtos até o fim da cena; o bônus aumenta em +1 a cada 5 níveis, até +5."
+      ]
+    },
+    "itens": ["Golemnomicon (foco)", "Traje de artesão", "Kit de ofício"],
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "Arqueologista Darash",
+    "periciasSugeridas": ["con", "inv"],
+    "oficial": false,
+    "descricao": "Você pesquisa os segredos da tecnologia do extinto povo Darash, que empregava maquinário fantástico movido por pedras elementares. Osteons, golens e monstros aberrantes darash ainda se dividem em territórios, tentando se reerguer.",
+    "beneficiosEscolha": {
+      "escolha": 2,
+      "opcoes": [
+        "Perícia: Conhecimento",
+        "Perícia: Investigação",
+        "Poder: Investigador",
+        "Poder: Lobo Solitário",
+        "Pedra elementar (foco): um espírito elemental processado; fornece 1 PM a cada 24 horas e pode ativar engenhos darash."
+      ]
+    },
+    "itens": ["Picareta", "Traje de viajante", "Rações para uma semana (1 pessoa)"],
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  },
+  {
+    "id": "Meio-Golem",
+    "periciasSugeridas": ["mis"],
+    "oficial": false,
+    "descricao": "Você é um ser vivo que recebeu partes artificiais de algum tipo de golem. Diferente de próteses mecânicas e itens mágicos comuns, as peças implantadas são habitadas por um elemental nem sempre cooperativo. Alternativa homebrew ao meio-golem de Origem Própria do livro básico (p.95).",
+    "beneficios": [
+      "Perícia: Misticismo.",
+      "Poderes de Construto (DB nº148): recebe um poder de construto e pode adquirir outros.",
+      "Chassi: Defesa+2, como se vestisse armadura leve.",
+      "Constituição Reforçada: +2 em testes de Constituição.",
+      "Espírito Elemental: ficando vulnerável, devora dano do seu elemento para recuperar PV à taxa de 1/2 do dano."
+    ],
+    "fonte": "Manual do Golem T20 (BETA 6, fã-feito, não-oficial)"
+  }
+]

@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, version] =
+  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -30,9 +30,15 @@ export async function carregarBanco() {
       // oficiais, curado à mão — não vem do sync-data.mjs, então sobrevive a
       // uma resincronização do compêndio).
       carregarJSON("data/raw/ameacas-extra.json").catch(() => []),
+      // Conteúdo de FÃ (não-oficial) do "Manual do Golem T20 (BETA 6)": chassis,
+      // poderes e origens extras para a raça golem. Fica em arquivos e chaves
+      // separados dos dados oficiais — nunca é misturado a `poderes`/`origens`.
+      carregarJSON("data/raw/golem-chassis.json").catch(() => []),
+      carregarJSON("data/raw/golem-poderes-fa.json").catch(() => []),
+      carregarJSON("data/raw/golem-origens-fa.json").catch(() => []),
       carregarJSON("data/version.json").catch(() => null),
     ]);
-  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], version };
+  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, version };
   return cache;
 }
 
