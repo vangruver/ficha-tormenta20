@@ -8,17 +8,37 @@ adaptado para as regras de Tormenta 20.
 
 ## O que ela faz
 
-- **Automação da ficha** a partir de raça, classe, origem e nível:
-  - **PV e PM máximos** por classe/nível (fórmula inicial + por nível, ajustada por Constituição/atributo-chave);
-  - **Defesa, iniciativa, deslocamento e carga máxima** calculados a partir dos atributos finais (base + bônus racial);
-  - **Atributos raciais** aplicados automaticamente ao trocar de raça (mostra o valor final e o bônus separadamente, sem sobrescrever o que você digitou);
-  - **Perícias** (as 29 do sistema, incluindo Fortitude/Reflexos/Vontade como perícias) com bônus calculado e marcação de "só treinado";
-  - **Testes de resistência** e **ataques** com botão de rolagem (1d20 + perícia).
+- **Painel de automação** (aba Construção): cada benefício que raça, classe, origem e nível concedem
+  vira um bloco. O que é fixo já vem aplicado; o que o livro manda escolher fica marcado como
+  pendência até você decidir — e o topo do painel conta quantas pendências sobraram:
+  - **atributos raciais à escolha** (o "+1 em três atributos" do humano, do lefou, do osteon e da
+    sereia) e o **legado** do suraggel (Aggelus/Sulfure), com os bônus entrando na hora;
+  - **perícias treinadas**: as fixas da classe entram sozinhas, o "Luta **ou** Pontaria" vira uma
+    escolha, as livres são *número da classe + modificador de Inteligência*, a origem treina 2 e
+    algumas raças treinam mais. Perícia concedida por duas fontes aparece marcada como repetida;
+  - **poder de origem** e **poderes por nível** (um poder de classe no 2º nível e um a cada nível
+    seguinte), com contador de quantos ainda faltam;
+  - **traços raciais numéricos** aplicados sem você fazer nada: +2 em Misticismo/Percepção do elfo,
+    +3/+1 PV do anão, +1 PM por nível do elfo, +2 de Defesa do golem, e por aí.
+- **Contas do sistema** feitas pela ficha:
+  - **PV e PM máximos** por classe/nível (PV soma Constituição, PM não soma atributo nenhum);
+  - **Defesa** com armadura e escudo **equipados**, **penalidade de armadura** descontada de
+    Acrobacia, Furtividade e Ladinagem, **iniciativa** como perícia, deslocamento e carga carregada;
+  - **Perícias** (as 29 do sistema, incluindo Fortitude/Reflexos/Vontade) com o bônus do livro:
+    *metade do nível + atributo + treino (+2, +4 no 7º nível, +6 no 15º)*;
+  - **Compra de atributos**: mostra quantos dos 10 pontos iniciais você usou.
+- **Rolagens**: perícias, atributos, testes de resistência, ataques (com margem de crítico da arma) e
+  **dano** (com o multiplicador aplicado no crítico), além de um **rolador de dados** no menu
+  Ferramentas — expressões livres (`2d6+3`) e os testes da ficha a um clique, com ou sem sala.
+- **Equipamento com efeito**: equipar armadura/escudo entra na Defesa e na penalidade; uma arma
+  vira linha de ataque pronta, com dano, margem e multiplicador de crítico.
+- **Subir de nível** com um botão que aplica o nível e lista o que mudou (PV, PM, poder novo,
+  metade do nível, bônus de treino) e o que ficou pendente.
 - **Compêndio completo pesquisável**: poderes (de classe, raciais, de origem, gerais e concedidos),
   magias (por círculo/tipo), equipamentos, **ameaças** (bestiário com ND, PV, Defesa, atributos) e
   panteão — mais de 1.400 registros ao todo.
-- **PV/PM com dashboard fixo**: barra de PV colorida, botões de dano/cura, gasto de PM, botão de
-  descanso que restaura tudo.
+- **PV/PM com dashboard fixo**: barra de PV colorida, botões de dano/cura, gasto de PM, penalidade
+  de armadura, botão de descanso que restaura tudo e botão de subir de nível.
 - **Condições de combate**: as condições oficiais de T20, com efeito descrito.
 - **Múltiplos personagens salvos**, **importar/exportar em JSON** e **ficha em PDF** (via impressão
   do navegador).
@@ -57,10 +77,16 @@ adaptado para as regras de Tormenta 20.
   (480 páginas) foi coberto.
 - **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: digitados à mão a partir
   do livro Tormenta 20 - Jogo Básico, porque não existe uma fonte de dados aberta e "viva" como o
-  5etools para D&D. **Os números de progressão de classe (PV/PM por nível) são uma estimativa
-  revisada com cuidado, mas não conferida linha a linha com o livro — vale a pena revisar contra o
-  original antes de usar em mesa.** Os campos de perícias sugeridas por origem também são um
+  5etools para D&D. As **perícias iniciais das 14 classes** (as fixas, o "uma ou outra" e quantas
+  ficam à escolha) e os **PV/PM por nível** foram conferidos contra o SRD de T20; ainda assim vale
+  revisar contra o livro antes de usar em mesa. Os campos de perícias sugeridas por origem são um
   palpite razoável, não a lista oficial exata.
+- **Escala de atributos**: a ficha usa a escala de Tormenta 20, em que **o valor do atributo já é o
+  modificador** (Força 2 soma +2) — não existe a conversão `(valor − 10) ÷ 2` do d20. Fichas salvas
+  antes dessa correção são convertidas automaticamente na primeira vez que abrem.
+- **Atributos das ameaças**: o compêndio traz o bestiário com atributos na escala d20 (8–20), e não
+  na de T20. A ficha mostra os dois lado a lado no bloco da ameaça (`FOR 16 (+3)`) em vez de fingir
+  que o número já é o modificador.
 
 ### Conteúdo de fã (opcional)
 
@@ -105,21 +131,29 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 |---|---|
 | `index.html` / `assets/style.css` | interface e tema "papel" |
 | `src/database.js` | carrega `data/core` + `data/raw` e expõe as consultas (poderes, magias, equipamentos, ameaças, panteão) |
-| `src/rules.js` | atributos, perícias, PV/PM, defesa — fórmulas de Tormenta 20 |
-| `src/app.js` | interface, abas, automação da ficha |
+| `src/rules.js` | atributos, perícias, PV/PM, defesa, compra de atributos, leitura de armadura — fórmulas de Tormenta 20 |
+| `src/app.js` | interface, abas, painel de automação, rolagens e sala |
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
 
-## Limitações conhecidas (v1)
+## Limitações conhecidas
 
-- Os números de PV/PM por classe e os traços raciais em `data/core/` foram digitados de memória a
-  partir do livro básico — revise antes de usar em mesa (veja "Fonte dos dados" acima).
+- Os traços raciais em `data/core/racas.json` foram digitados a partir do livro básico — revise
+  antes de usar em mesa (veja "Fonte dos dados" acima).
 - Perícias sugeridas por origem são um palpite temático, não a lista oficial fixa do livro.
 - Equipamento inicial de classe/origem não é adicionado automaticamente ao inventário.
-- Bônus de armadura/escudo na Defesa é manual (campo "outros") — não é extraído automaticamente da
-  descrição em texto livre dos itens do compêndio.
-- Escolhas específicas (ex.: esfera de milagres do Clérigo, escola do Arcanista, forma selvagem do
+- **Traços raciais condicionais** (o +2 do anão só no subterrâneo, o +5 de Furtividade do trog só
+  sem armadura, o +2 num Ofício à escolha do kliren) não entram sozinhos — o painel de automação
+  avisa e você soma no campo "outros" da perícia quando valer.
+- **Requisitos de poder** são texto livre no compêndio: a ficha só consegue conferir requisito de
+  nível, de atributo e de "treinado em X"; o resto passa sem checagem.
+- **Limite de magias conhecidas/preparadas por círculo e nível** ainda não é calculado — a aba
+  Magias deixa escolher livremente.
+- Escolhas específicas (ex.: esfera de milagres do Clérigo, caminho do Arcanista, forma selvagem do
   Druida) ainda não têm seletor dedicado — use as Notas ou o campo de biografia.
+- **Bestiário do compêndio na escala d20**: PV, Defesa e atributos das ameaças vêm do material
+  antigo e não batem com a escala de T20; a ficha mostra o modificador equivalente, mas não
+  reescreve as fichas de ameaça.

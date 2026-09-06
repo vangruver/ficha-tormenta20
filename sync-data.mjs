@@ -81,7 +81,9 @@ function normalizarPoder(raw, fonte) {
   let subtipo = tipoRaw;
   if (/^Classe -/.test(tipoRaw)) { categoria = "classe"; subtipo = tipoRaw.replace(/^Classe -\s*/, "").trim(); }
   else if (/^Racial -/.test(tipoRaw)) { categoria = "racial"; subtipo = tipoRaw.replace(/^Racial -\s*/, "").trim(); }
-  else if (/^Origem -/.test(tipoRaw)) { categoria = "origem"; subtipo = tipoRaw.replace(/^Origem -\s*/, "").trim(); }
+  // Alguns registros do compêndio perdem o espaço antes da preposição
+  // ("Assistentede Laboratório") — repomos aqui pra bater com data/core/origens.json.
+  else if (/^Origem -/.test(tipoRaw)) { categoria = "origem"; subtipo = tipoRaw.replace(/^Origem -\s*/, "").replace(/([a-zà-ÿ])(de|da|do|dos|das) /g, "$1 $2 ").trim(); }
   else if (/^P\.?\s*Geral -/.test(tipoRaw)) { categoria = "geral"; subtipo = tipoRaw.replace(/^P\.?\s*Geral -\s*/, "").trim(); }
   else if (/^P\.?\s*Concedido/.test(tipoRaw)) { categoria = "concedido"; subtipo = "Concedido"; }
   // Packs mais novos (Foundry 0.8+) usam tipo/subtipo já separados em minúsculo.

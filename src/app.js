@@ -52,6 +52,7 @@ async function iniciar() {
   renderizarTudo();
   if (!compartilhado) verificarAtualizacaoDados();
   registrarEventos();
+  registrarEventosAutomacao();
   registrarEventosSala();
   registrarEventosExtra();
   registrarServiceWorker();
@@ -83,7 +84,10 @@ function preencherSelectsEstáticos() {
   classe.innerHTML = '<option value="">— escolha —</option>' + db.classes.map((c) => `<option value="${c.id}">${c.nome}</option>`).join("");
 
   const origem = document.getElementById("origem");
-  origem.innerHTML = '<option value="">— escolha —</option>' + db.origens.map((o) => `<option value="${o.id}">${o.id}</option>`).join("");
+  const regionais = db.origensRegionais || [];
+  origem.innerHTML = '<option value="">— escolha —</option>'
+    + `<optgroup label="Origens do livro básico">${db.origens.map((o) => `<option value="${esc(o.id)}">${esc(o.id)}</option>`).join("")}</optgroup>`
+    + (regionais.length ? `<optgroup label="Origens regionais (Atlas de Arton)">${regionais.map((o) => `<option value="${esc(o.id)}">${esc(o.id)} — ${esc(o.regiao || "")}</option>`).join("")}</optgroup>` : "");
 
   const condSel = document.getElementById("condicao-select");
   condSel.innerHTML = CONDICOES.map((c) => `<option value="${c.id}">${c.nome}</option>`).join("");
@@ -101,15 +105,37 @@ function preencherSelectsEstáticos() {
 
 function racaAtual() { return porId(db.racas, personagem.raca); }
 function classeAtual() { return porId(db.classes, personagem.classe); }
+function origemAtual() { return porId(db.origens, personagem.origem) || porId(db.origensRegionais, personagem.origem); }
+// Bloco "auto" da raça: tudo que a ficha consegue aplicar sozinha (bônus de
+// Defesa, PV/PM extras, perícias concedidas) ou precisa perguntar (atributos
+// à escolha, legado do suraggel). Ver data/core/racas.json.
+function racaAuto() { return racaAtual()?.auto || {}; }
+function escolhas() { return (personagem.escolhas = personagem.escolhas || storage.escolhasVazias()); }
+function legadoAtual() {
+  const legados = racaAuto().legados;
+  if (!legados?.length) return null;
+  return legados.find((l) => l.id === escolhas().legadoRacial) || null;
+}
 
 function bonusRacial(atributoId) {
   const r = racaAtual();
-  const v = r?.atributos?.[atributoId];
-  return typeof v === "number" ? v : 0;
+  if (!r) return 0;
+  let total = 0;
+  // Raças com "+1 em três atributos à escolha" guardam escolha1/2/3 no lugar de
+  // ids de atributo, e o suraggel guarda um objeto por legado — só somamos aqui
+  // o que já vem como número pronto.
+  const v = r.atributos?.[atributoId];
+  if (typeof v === "number") total += v;
+  const leg = legadoAtual();
+  if (typeof leg?.atributos?.[atributoId] === "number") total += leg.atributos[atributoId];
+  if (racaAuto().atributosEscolha) {
+    total += (escolhas().atributosRaciais || []).filter((a) => a === atributoId).length;
+  }
+  return total;
 }
 
 function atributoFinal(id) {
-  const base = personagem.atributos[id] ?? 10;
+  const base = personagem.atributos[id] ?? 0;
   const temp = personagem.atributosTemp?.[id] ?? 0;
   return base + bonusRacial(id) + temp;
 }
@@ -120,18 +146,116 @@ function atributosFinais() {
   return out;
 }
 
+// ---------- Automação: perícias treinadas concedidas ----------
+
+// Perícias que o personagem tem treinadas *por causa* de classe/origem/raça —
+// a ficha marca sozinha e diz de onde veio. O jogador ainda pode marcar
+// perícias extras à mão (personagem.periciasTreinadas).
+function treinosAutomaticos() {
+  const mapa = new Map();
+  const add = (id, fonte) => {
+    if (!id) return;
+    const fontes = mapa.get(id) || [];
+    if (!fontes.includes(fonte)) fontes.push(fonte);
+    mapa.set(id, fontes);
+  };
+  const c = classeAtual();
+  const e = escolhas();
+  if (c) {
+    const rotulo = `Classe (${c.nome})`;
+    for (const id of c.periciasFixas || []) add(id, rotulo);
+    (c.periciasFixasEscolha || []).forEach((_, i) => add(e.periciasClasseFixa?.[i], rotulo));
+    for (const id of e.periciasClasse || []) if ((c.periciasDeClasse || []).includes(id)) add(id, rotulo);
+  }
+  if (personagem.origem) for (const id of e.periciasOrigem || []) add(id, `Origem (${personagem.origem})`);
+  const r = racaAtual();
+  if (r) for (const id of e.periciasRaciais || []) add(id, `Raça (${r.nome})`);
+  return mapa;
+}
+
+// Bônus numéricos de perícia vindos da raça (+2 em Misticismo do elfo etc.).
+function bonusRacialPericias() {
+  const out = {};
+  const somar = (obj) => { for (const [k, v] of Object.entries(obj || {})) out[k] = (out[k] || 0) + v; };
+  somar(racaAuto().bonusPericias);
+  somar(legadoAtual()?.bonusPericias);
+  const esc = racaAuto().bonusPericiasEscolha;
+  if (esc) for (const id of (escolhas().bonusPericiasRaciais || []).slice(0, esc.quantidade)) out[id] = (out[id] || 0) + esc.valor;
+  return out;
+}
+
+// ---------- Automação: equipamento vestido ----------
+
+function registroDoItem(item) { return db.equipamentos.find((e) => e.id === item.id) || item; }
+
+// Defesa e penalidade de armadura da armadura/escudo efetivamente equipados.
+// Só a melhor armadura e o melhor escudo contam (não empilham).
+function defesaDoEquipamento() {
+  let armadura = 0, escudo = 0, penalidade = 0;
+  for (const item of personagem.equipamentos) {
+    if (!item.equipado) continue;
+    const info = regras.lerArmadura(registroDoItem(item));
+    if (!info) continue;
+    if (info.tipo === "escudo") escudo = Math.max(escudo, info.defesa);
+    else if (info.defesa > armadura) { armadura = info.defesa; penalidade = info.penalidade; }
+  }
+  if (armadura > 0) penalidade += racaAuto().penalidadeArmaduraExtra || 0;
+  return { armadura, escudo, penalidade };
+}
+
+function cargaAtual() {
+  return personagem.equipamentos.reduce((soma, item) => soma + (Number(registroDoItem(item).peso) || 0) * (Number(item.qtd) || 1), 0);
+}
+
 function calcularDerivados() {
   const classe = classeAtual();
   const atrs = atributosFinais();
   const nivel = personagem.nivel || 1;
+  const auto = racaAuto();
+  const treinos = treinosAutomaticos();
+  const bonusPericiasRacial = bonusRacialPericias();
+  const equip = defesaDoEquipamento();
 
-  const pvMax = classe ? regras.pvMaximo({ classe, nivel, modCon: regras.mod(atrs.con) }) : null;
-  const pmMax = classe ? regras.pmMaximo({ classe, nivel, atributos: atrs }) : 0;
-  const defesa = regras.defesaTotal({ modDes: regras.mod(atrs.des), outros: personagem.defesaOutros || 0 });
-  const iniciativa = regras.iniciativa({ modDes: regras.mod(atrs.des) });
+  const pvMax = classe ? regras.pvMaximo({
+    classe, nivel, modCon: regras.mod(atrs.con),
+    extraNivel1: auto.pvNivel1 || 0, extraPorNivel: auto.pvPorNivel || 0,
+  }) : null;
+  const pmMax = classe ? regras.pmMaximo({ classe, nivel, extraPorNivel: auto.pmPorNivel || 0 }) : 0;
+  const defesa = regras.defesaTotal({
+    modDes: regras.mod(atrs.des), armadura: equip.armadura, escudo: equip.escudo,
+    outros: (personagem.defesaOutros || 0) + (auto.defesa || 0),
+  });
   const cargaMax = regras.cargaMaxima(regras.mod(atrs.for));
 
-  return { classe, atrs, nivel, pvMax, pmMax, defesa, iniciativa, cargaMax };
+  const d = { classe, atrs, nivel, pvMax, pmMax, defesa, cargaMax, carga: cargaAtual(), treinos, bonusPericiasRacial, equip, penalidadeArmadura: equip.penalidade };
+  // Iniciativa é uma perícia em T20: entra metade do nível e o bônus de treino.
+  d.iniciativa = bonusDePericia(porId(db.pericias, "ini"), d);
+  return d;
+}
+
+function estaTreinado(id, d) {
+  return (d?.treinos || treinosAutomaticos()).has(id) || personagem.periciasTreinadas.includes(id);
+}
+
+function bonusDePericia(p, d) {
+  if (!p) return 0;
+  const outros = (personagem.periciasOutros?.[p.id] ?? 0) + (d.bonusPericiasRacial[p.id] || 0);
+  return regras.bonusPericia({
+    nivel: d.nivel,
+    treinado: estaTreinado(p.id, d),
+    modAtributo: regras.mod(d.atrs[p.atributo]),
+    outros,
+    penalidadeArmadura: p.penalidadeArmadura ? d.penalidadeArmadura : 0,
+  });
+}
+
+// Quantos poderes o personagem pode ter neste nível, separados por origem.
+function poderesEsperados() {
+  const nivel = personagem.nivel || 1;
+  const daClasse = classeAtual() ? regras.poderesDeClassePorNivel(nivel) : 0;
+  const daOrigem = personagem.origem && !racaAuto().semOrigem ? 1 : 0;
+  const geraisExtra = racaAuto().poderesGeraisExtra || 0;
+  return { daClasse, daOrigem, geraisExtra, escolhiveis: daClasse + geraisExtra, total: daClasse + daOrigem + geraisExtra };
 }
 
 // ---------- Render geral ----------
@@ -139,6 +263,7 @@ function calcularDerivados() {
 function renderizarTudo() {
   renderIdentidade();
   renderConstrucao();
+  renderAutomacao();
   renderAtributos();
   renderDashboard();
   renderPericias();
@@ -190,11 +315,22 @@ function renderAtributos() {
     return `
       <div class="atributo-caixa">
         <label>${a.nome}</label>
-        <input type="number" data-atributo="${a.id}" value="${personagem.atributos[a.id] ?? 10}" />
-        <div class="mod">${formatarMod(regras.mod(final))}</div>
-        <div class="dica">final ${final}${b ? ` (${b > 0 ? "+" : ""}${b} racial)` : ""}</div>
+        <input type="number" data-atributo="${a.id}" min="-2" max="8" step="1" value="${personagem.atributos[a.id] ?? 0}" />
+        <div class="mod">${formatarMod(final)}</div>
+        <div class="dica">base ${formatarMod(personagem.atributos[a.id] ?? 0)}${b ? ` ${b > 0 ? "+" : ""}${b} racial` : ""}${personagem.atributosTemp?.[a.id] ? ` ${formatarMod(personagem.atributosTemp[a.id])} temp` : ""}</div>
+        <button type="button" class="secundario rolar-atributo" data-rolar-atributo="${a.id}" title="Rolar 1d20 + modificador de ${a.nome}">🎲</button>
       </div>`;
   }).join("");
+
+  const resumo = document.getElementById("resumo-atributos");
+  if (resumo) {
+    const gasto = regras.custoTotalAtributos(personagem.atributos);
+    const sobra = regras.PONTOS_ATRIBUTOS - gasto;
+    resumo.innerHTML = `
+      <div class="resumo-treinos-linha">Compra de atributos: <b>${gasto}</b> de <b>${regras.PONTOS_ATRIBUTOS}</b> pontos usados${sobra > 0 ? ` — sobram <b>${sobra}</b>` : sobra < 0 ? ` — <b>${-sobra}</b> acima do orçamento inicial` : ""}.</div>
+      <div class="resumo-treinos-conta">Custo por valor: ${[-1, 0, 1, 2, 3, 4].map((v) => `${formatarMod(v)} = ${regras.CUSTO_ATRIBUTO[v]}`).join(" · ")}. Baixar um atributo para −1 devolve 1 ponto.</div>
+      <p class="dica">O orçamento vale só para a criação em 1º nível — a ficha nunca trava o valor, então itens, poderes e níveis podem passar dele.</p>`;
+  }
 }
 
 function formatarMod(m) { return m >= 0 ? `+${m}` : `${m}`; }
@@ -207,10 +343,28 @@ function renderDashboard() {
   document.getElementById("pv-temp").value = personagem.pv.temp || "";
   document.getElementById("pm-atual").value = personagem.pm.atual ?? 0;
   document.getElementById("pm-max").textContent = d.pmMax ?? "-";
-  document.getElementById("dash-defesa").textContent = d.defesa;
+  const dashDefesa = document.getElementById("dash-defesa");
+  dashDefesa.textContent = d.defesa;
+  const partesDefesa = ["10 base", `${formatarMod(regras.mod(d.atrs.des))} Des`];
+  if (d.equip.armadura) partesDefesa.push(`+${d.equip.armadura} armadura`);
+  if (d.equip.escudo) partesDefesa.push(`+${d.equip.escudo} escudo`);
+  if (racaAuto().defesa) partesDefesa.push(`+${racaAuto().defesa} racial`);
+  if (personagem.defesaOutros) partesDefesa.push(`${formatarMod(personagem.defesaOutros)} outros`);
+  dashDefesa.title = partesDefesa.join(" · ");
   document.getElementById("dash-iniciativa").textContent = formatarMod(d.iniciativa);
   document.getElementById("dash-deslocamento").textContent = (racaAtual()?.deslocamento || "9m") + (personagem.deslocamentoExtra ? ` (${personagem.deslocamentoExtra})` : "");
-  document.getElementById("carga-max").textContent = `${d.cargaMax} kg`;
+  const cargaEl = document.getElementById("carga-max");
+  if (cargaEl) {
+    cargaEl.textContent = `${(Math.round(d.carga * 10) / 10)} / ${d.cargaMax} kg`;
+    cargaEl.classList.toggle("carga-excedida", d.carga > d.cargaMax);
+  }
+  const penEl = document.getElementById("dash-penalidade");
+  if (penEl) {
+    penEl.textContent = d.penalidadeArmadura ? `−${d.penalidadeArmadura}` : "0";
+    penEl.title = d.penalidadeArmadura
+      ? "Penalidade de armadura: desconta de Acrobacia, Furtividade e Ladinagem."
+      : "Nenhuma armadura equipada com penalidade.";
+  }
 
   const barra = document.getElementById("barra-pv");
   const faixa = regras.faixaPV(personagem.pv.atual ?? 0, d.pvMax || 1);
@@ -223,29 +377,98 @@ function renderDashboard() {
 
 function renderPericias() {
   const d = calcularDerivados();
+  const busca = (document.getElementById("pericias-busca")?.value || "").trim().toLowerCase();
+  const soClasse = document.getElementById("pericias-so-classe")?.checked;
+  const periciasDaClasse = new Set(d.classe?.periciasDeClasse || []);
   const tbody = document.getElementById("lista-pericias");
-  tbody.innerHTML = db.pericias.map((p) => {
-    const treinado = personagem.periciasTreinadas.includes(p.id);
+
+  const lista = db.pericias.filter((p) => {
+    if (busca && !p.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(busca.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) return false;
+    if (soClasse && !periciasDaClasse.has(p.id)) return false;
+    return true;
+  });
+
+  tbody.innerHTML = lista.map((p) => {
+    const fontes = d.treinos.get(p.id);
+    const automatica = !!fontes;
+    const treinado = automatica || personagem.periciasTreinadas.includes(p.id);
     const outros = personagem.periciasOutros?.[p.id] ?? 0;
-    const bonus = regras.bonusPericia({
-      nivel: d.nivel, treinado, modAtributo: regras.mod(d.atrs[p.atributo]),
-      outros, penalidadeArmadura: 0,
-    });
+    const racial = d.bonusPericiasRacial[p.id] || 0;
+    const pen = p.penalidadeArmadura ? d.penalidadeArmadura : 0;
+    const bonus = bonusDePericiaSeguro(p, d);
+    const partes = [`${regras.metadeNivel(d.nivel)} ½ nível`, `${formatarMod(regras.mod(d.atrs[p.atributo]))} ${p.atributo.toUpperCase()}`];
+    if (treinado) partes.push(`+${regras.bonusTreino(d.nivel, true)} treino`);
+    if (racial) partes.push(`${formatarMod(racial)} racial`);
+    if (outros) partes.push(`${formatarMod(outros)} outros`);
+    if (pen) partes.push(`−${pen} armadura`);
+    const bloqueada = p.somenteTreinado && !treinado;
     return `
-      <tr class="${treinado ? "treinada" : ""}">
-        <td><input type="checkbox" data-pericia-treino="${p.id}" ${treinado ? "checked" : ""} /></td>
-        <td>${p.nome}${p.somenteTreinado ? ' <span class="tag">só treinado</span>' : ""}${p.salvamento ? ' <span class="tag">resistência</span>' : ""}</td>
+      <tr class="${treinado ? "treinada" : ""}${bloqueada ? " bloqueada" : ""}">
+        <td><input type="checkbox" data-pericia-treino="${p.id}" ${treinado ? "checked" : ""} ${automatica ? "disabled" : ""} title="${automatica ? esc(`Treinada automaticamente por: ${fontes.join(", ")}`) : "Marcar como treinada"}" /></td>
+        <td>${p.nome}
+          ${automatica ? `<span class="tag auto" title="${esc(fontes.join(" · "))}">auto</span>` : ""}
+          ${periciasDaClasse.has(p.id) ? '<span class="tag classe">de classe</span>' : ""}
+          ${p.somenteTreinado ? ' <span class="tag">só treinado</span>' : ""}${p.salvamento ? ' <span class="tag">resistência</span>' : ""}
+          ${bloqueada ? '<small class="dica-inline">precisa ser treinada para usar</small>' : ""}
+        </td>
         <td>${p.atributo.toUpperCase()}</td>
-        <td><strong>${formatarMod(bonus)}</strong>
+        <td><strong title="${esc(partes.join(" · "))}">${formatarMod(bonus)}</strong>
           <input type="number" class="mod-outros" data-pericia-outros="${p.id}" value="${outros}" title="Outros modificadores" style="width:3.5em" />
         </td>
         <td><button class="secundario" data-rolar-pericia="${p.id}">🎲</button></td>
       </tr>`;
-  }).join("");
+  }).join("") || '<tr><td colspan="5" class="dica">Nenhuma perícia com esse filtro.</td></tr>';
 
-  document.getElementById("treinos-usados").textContent = personagem.periciasTreinadas.length;
-  const c = classeAtual();
-  document.getElementById("treinos-sugeridos").textContent = c ? regras.treinosIniciaisTotal({ classe: c, modInt: regras.mod(d.atrs.int) }) : "-";
+  renderResumoTreinos(d);
+}
+
+// Wrapper defensivo: uma perícia com atributo desconhecido não pode derrubar a aba.
+function bonusDePericiaSeguro(p, d) {
+  try { return bonusDePericia(p, d); } catch { return 0; }
+}
+
+// "Treinos usados X / Y" com a conta aberta: fixas da classe + escolhas da
+// classe (número da classe + Inteligência) + as da origem + as raciais.
+// ["Guerreiro", "origem", "raça"] → "Guerreiro, origem e raça"
+function listaLegivel(itens) {
+  if (itens.length <= 1) return itens[0] || "";
+  return `${itens.slice(0, -1).join(", ")} e ${itens[itens.length - 1]}`;
+}
+
+function renderResumoTreinos(d) {
+  const alvo = document.getElementById("resumo-treinos");
+  if (!alvo) return;
+  const c = d.classe;
+  if (!c) { alvo.innerHTML = '<span class="dica">Escolha uma classe na aba <b>Construção</b> para a ficha calcular quantas perícias você treina.</span>'; return; }
+  const modInt = regras.mod(d.atrs.int);
+  const e = escolhas();
+  const auto = racaAuto();
+
+  const vagas = [
+    { rotulo: "fixas da classe", total: (c.periciasFixas || []).length, usadas: (c.periciasFixas || []).length, automatica: true },
+    { rotulo: `"uma ou outra" da classe`, total: (c.periciasFixasEscolha || []).length, usadas: (c.periciasFixasEscolha || []).filter((_, i) => e.periciasClasseFixa?.[i]).length },
+    { rotulo: `à escolha da classe (${c.treinosIniciais} ${formatarMod(modInt)} Int)`, total: regras.escolhasDePericiaDaClasse({ classe: c, modInt }), usadas: (e.periciasClasse || []).filter((id) => (c.periciasDeClasse || []).includes(id)).length },
+    { rotulo: "da origem", total: personagem.origem && !auto.semOrigem ? Math.min(2, (origemAtual()?.periciasSugeridas || []).length || 2) : 0, usadas: (e.periciasOrigem || []).length },
+    { rotulo: "da raça", total: auto.treinosEscolha || 0, usadas: (e.periciasRaciais || []).length },
+  ].filter((v) => v.total > 0);
+
+  const total = vagas.reduce((n, v) => n + v.total, 0);
+  const usadas = vagas.reduce((n, v) => n + Math.min(v.usadas, v.total), 0);
+  const extras = personagem.periciasTreinadas.filter((id) => !d.treinos.has(id)).length;
+  const pendentes = vagas.filter((v) => v.usadas < v.total);
+
+  alvo.innerHTML = `
+    <div class="resumo-treinos-linha">
+      <b>${usadas}</b> de <b>${total}</b> perícias concedidas por ${listaLegivel([esc(c.nome), personagem.origem && !auto.semOrigem ? "origem" : "", auto.treinosEscolha ? "raça" : ""].filter(Boolean))} já foram escolhidas —
+      resultando em <b>${d.treinos.size}</b> perícia(s) treinada(s) na ficha.
+      ${extras ? `<span class="tag">+${extras} marcada(s) à mão</span>` : ""}
+    </div>
+    <div class="resumo-treinos-conta">${vagas.map((v) => `${v.usadas}/${v.total} ${v.rotulo}`).join(" · ")}</div>
+    ${pendentes.length
+      ? `<div class="alerta-automacao">Faltam escolher: ${pendentes.map((v) => `${v.total - v.usadas} ${v.rotulo}`).join(", ")}. <button type="button" class="link-btn" data-ir-automacao="1">Abrir automação →</button></div>`
+      : '<div class="ok-automacao">✓ Todas as perícias concedidas já foram escolhidas.</div>'}
+    ${usadas > d.treinos.size ? '<div class="alerta-automacao">Duas fontes concederam a mesma perícia — o livro manda trocar por outra. As repetidas aparecem marcadas no painel de automação.</div>' : ""}
+    <p class="dica">O bônus segue a regra do livro: <b>metade do nível + atributo + treino (+2, +4 no 7º, +6 no 15º)</b>. Perícias marcadas <b>auto</b> vêm de classe/origem/raça e não dá pra desmarcar — mude a escolha no painel de automação.</p>`;
 }
 
 // ---------- Poderes ----------
@@ -264,31 +487,88 @@ function poolPoderesDisponiveis() {
 }
 
 function renderPoderes() {
-  const escolhidos = personagem.poderes;
-  const listaEsc = document.getElementById("lista-poderes-personagem");
-  listaEsc.innerHTML = escolhidos.map((id) => {
-    const p = db.poderes.find((x) => x.id === id);
-    if (!p) return "";
-    return `<li data-abrir-poder="${p.id}"><span>${p.nome} <span class="tag">${p.subtipo}</span>${p.custo ? ` <span class="tag">${p.custo} PM</span>` : ""}</span><button class="perigo" data-remover-poder="${p.id}">Remover</button></li>`;
-  }).join("") || "<li>Nenhum poder escolhido ainda.</li>";
+  const d = calcularDerivados();
+  const esperados = poderesEsperados();
+  const e = escolhas();
+  const poderOrigem = e.poderOrigem ? db.poderes.find((x) => x.id === e.poderOrigem) : null;
 
-  document.getElementById("poderes-escolhidos-n").textContent = escolhidos.length;
-  document.getElementById("poderes-esperados").textContent = Math.max(0, (personagem.nivel || 1) - 1);
+  const listaEsc = document.getElementById("lista-poderes-personagem");
+  const linhaOrigem = poderOrigem
+    ? `<li class="poder-auto" data-abrir-poder="${poderOrigem.id}"><span>${esc(poderOrigem.nome)} <span class="tag">${esc(poderOrigem.subtipo)}</span> <span class="tag auto">da origem</span></span><span class="dica-inline">escolhido na automação</span></li>`
+    : "";
+  listaEsc.innerHTML = linhaOrigem + (personagem.poderes.map((id) => {
+    const poder = db.poderes.find((x) => x.id === id);
+    if (!poder) return "";
+    const requisitoOk = requisitoAtendido(poder, d);
+    return `<li data-abrir-poder="${poder.id}">
+      <span>${esc(poder.nome)} <span class="tag">${esc(poder.subtipo)}</span>${poder.custo ? ` <span class="tag">${poder.custo} PM</span>` : ""}${requisitoOk === false ? ' <span class="tag alerta" title="Requisito do poder não parece atendido">requisito?</span>' : ""}</span>
+      <button class="perigo" data-remover-poder="${poder.id}">Remover</button></li>`;
+  }).join("") || (linhaOrigem ? "" : "<li>Nenhum poder escolhido ainda.</li>"));
+
+  const escolhidos = personagem.poderes.length;
+  document.getElementById("poderes-escolhidos-n").textContent = escolhidos;
+  document.getElementById("poderes-esperados").textContent = esperados.escolhiveis;
+
+  const resumo = document.getElementById("resumo-poderes");
+  if (resumo) {
+    const faltam = esperados.escolhiveis - escolhidos;
+    const partes = [];
+    if (d.classe) partes.push(`<b>${esperados.daClasse}</b> poder(es) de ${esc(d.classe.nome)} (um no 2º nível e um a cada nível seguinte)`);
+    if (esperados.daOrigem) partes.push(`<b>1</b> poder de origem${poderOrigem ? ` — ${esc(poderOrigem.nome)} ✓` : " — <b>ainda não escolhido</b>"}`);
+    if (esperados.geraisExtra) partes.push(`<b>${esperados.geraisExtra}</b> poder geral extra (traço racial)`);
+    resumo.innerHTML = `
+      <div class="resumo-treinos-linha">Neste nível (${d.nivel}) você tem direito a <b>${esperados.total}</b> poder(es) no total.</div>
+      <div class="resumo-treinos-conta">${partes.join(" · ") || "Escolha uma classe para a ficha calcular seus poderes."}</div>
+      ${faltam > 0
+        ? `<div class="alerta-automacao">Você ainda pode escolher <b>${faltam}</b> poder(es) na lista abaixo.</div>`
+        : faltam < 0
+          ? `<div class="alerta-automacao">Você escolheu <b>${-faltam}</b> poder(es) a mais do que o nível ${d.nivel} concede.</div>`
+          : '<div class="ok-automacao">✓ Todos os poderes deste nível já foram escolhidos.</div>'}`;
+  }
 
   renderCatalogoPoderes();
 }
 
+// O compêndio guarda o requisito como texto livre ("Força 1", "treinado em
+// Luta", "4º nível"...). Só checamos o que dá pra ler com segurança —
+// requisito de nível e de atributo — e devolvemos null quando não sabemos.
+function requisitoAtendido(poder, d) {
+  const txt = String(poder?.requisito || "").trim();
+  if (!txt) return null;
+  const nivel = txt.match(/(\d+)\s*º?\s*n[ií]vel/i);
+  if (nivel && d.nivel < Number(nivel[1])) return false;
+  const ATRS = { for: "for", des: "des", con: "con", int: "int", sab: "sab", car: "car" };
+  const NOMES = { "força": "for", "destreza": "des", "constituição": "con", "inteligência": "int", "sabedoria": "sab", "carisma": "car" };
+  const atr = txt.match(/(For[çc]a|Destreza|Constitui[çc][ãa]o|Intelig[êe]ncia|Sabedoria|Carisma)\s+(\d+)/i);
+  if (atr) {
+    const chave = NOMES[atr[1].toLowerCase().normalize("NFC")] || ATRS[atr[1].slice(0, 3).toLowerCase()];
+    if (chave && regras.mod(d.atrs[chave]) < Number(atr[2])) return false;
+  }
+  const treino = txt.match(/treinad[oa]\s+em\s+([A-Za-zÀ-ÿ]+)/i);
+  if (treino) {
+    const pericia = db.pericias.find((x) => x.nome.toLowerCase().startsWith(treino[1].toLowerCase().slice(0, 4)));
+    if (pericia && !estaTreinado(pericia.id, d)) return false;
+  }
+  return true;
+}
+
 function renderCatalogoPoderes() {
+  const d = calcularDerivados();
   const categoria = document.getElementById("poderes-filtro-categoria").value;
   const busca = document.getElementById("poderes-busca").value;
+  const soDisponiveis = document.getElementById("poderes-so-disponiveis")?.checked;
   let lista = categoria || busca ? poderesDe(db, { categoria: categoria || undefined, busca: busca || undefined }) : poolPoderesDisponiveis();
+  if (soDisponiveis) lista = lista.filter((poder) => requisitoAtendido(poder, d) !== false);
   lista = lista.slice(0, 200);
   const catalogo = document.getElementById("lista-poderes-catalogo");
-  catalogo.innerHTML = lista.map((p) => `
-    <li data-abrir-poder="${p.id}">
-      <span>${p.nome} <span class="tag">${p.subtipo}</span>${p.custo ? ` <span class="tag">${p.custo} PM</span>` : ""}</span>
-      <button data-add-poder="${p.id}">${personagem.poderes.includes(p.id) ? "✓" : "➕"}</button>
-    </li>`).join("");
+  catalogo.innerHTML = lista.map((poder) => {
+    const ok = requisitoAtendido(poder, d);
+    return `
+    <li data-abrir-poder="${poder.id}"${ok === false ? ' class="requisito-nao-atendido"' : ""}>
+      <span>${esc(poder.nome)} <span class="tag">${esc(poder.subtipo)}</span>${poder.custo ? ` <span class="tag">${poder.custo} PM</span>` : ""}${ok === false ? ` <span class="tag alerta" title="${esc(poder.requisito)}">requisito</span>` : ""}</span>
+      <button data-add-poder="${poder.id}">${personagem.poderes.includes(poder.id) ? "✓" : "➕"}</button>
+    </li>`;
+  }).join("") || '<li class="dica">Nenhum poder com esse filtro.</li>';
 }
 
 // ---------- Magias ----------
@@ -336,58 +616,157 @@ function renderCombate() {
   const d = calcularDerivados();
   const resist = document.getElementById("lista-resistencias");
   resist.innerHTML = db.pericias.filter((p) => p.salvamento).map((p) => {
-    const treinado = personagem.periciasTreinadas.includes(p.id);
-    const bonus = regras.bonusPericia({ nivel: d.nivel, treinado, modAtributo: regras.mod(d.atrs[p.atributo]) });
-    return `<div class="resistencia-caixa"><label>${p.nome}</label><div class="valor">${formatarMod(bonus)}</div></div>`;
+    const bonus = bonusDePericiaSeguro(p, d);
+    return `<div class="resistencia-caixa">
+      <label>${esc(p.nome)}</label>
+      <div class="valor">${formatarMod(bonus)}</div>
+      <small>${p.atributo.toUpperCase()}${estaTreinado(p.id, d) ? " · treinada" : ""}</small>
+      <button type="button" class="secundario" data-rolar-resistencia="${p.id}">🎲 Rolar</button>
+    </div>`;
   }).join("");
 
   const tbody = document.getElementById("lista-ataques");
   tbody.innerHTML = personagem.ataques.map((at, i) => {
-    const periciaObj = db.pericias.find((p) => p.id === at.pericia);
-    const treinado = personagem.periciasTreinadas.includes(at.pericia);
-    const bonus = periciaObj ? regras.bonusPericia({ nivel: d.nivel, treinado, modAtributo: regras.mod(d.atrs[periciaObj.atributo]) }) : 0;
+    const bonus = bonusDeAtaque(at, d);
+    const crit = parseCritico(at.critico);
     return `<tr>
-      <td><input data-ataque-campo="nome" data-ataque-idx="${i}" value="${at.nome || ""}" placeholder="Arma" /></td>
+      <td><input data-ataque-campo="nome" data-ataque-idx="${i}" value="${esc(at.nome || "")}" placeholder="Arma" /></td>
       <td><select data-ataque-campo="pericia" data-ataque-idx="${i}">
         <option value="lut" ${at.pericia === "lut" ? "selected" : ""}>Luta</option>
         <option value="pon" ${at.pericia === "pon" ? "selected" : ""}>Pontaria</option>
       </select></td>
-      <td><input data-ataque-campo="dano" data-ataque-idx="${i}" value="${at.dano || ""}" placeholder="1d8+for" /></td>
-      <td><input data-ataque-campo="critico" data-ataque-idx="${i}" value="${at.critico || "20/x2"}" /></td>
-      <td><button data-rolar-ataque="${i}">🎲 ${formatarMod(bonus)}</button></td>
+      <td><input data-ataque-campo="dano" data-ataque-idx="${i}" value="${esc(at.dano || "")}" placeholder="1d8+for" title="Aceita os apelidos for/des/con/int/sab/car — a ficha troca pelo modificador na hora de rolar." /></td>
+      <td><input data-ataque-campo="critico" data-ataque-idx="${i}" value="${esc(at.critico || "20/x2")}" title="margem/multiplicador — ex.: 19/x3" /></td>
+      <td class="col-rolagens">
+        <button data-rolar-ataque="${i}" title="Rolar ataque (crítico a partir de ${crit.margem})">🎲 ${formatarMod(bonus)}</button>
+        <button class="secundario" data-rolar-dano="${i}" title="Rolar dano">🩸 dano</button>
+      </td>
       <td><button class="perigo" data-remover-ataque="${i}">✕</button></td>
     </tr>`;
-  }).join("");
+  }).join("") || '<tr><td colspan="6" class="dica">Nenhum ataque ainda. Equipe uma arma na aba <b>Equipamentos</b> para a ficha montar o ataque sozinha.</td></tr>';
 
   const listaCond = document.getElementById("lista-condicoes");
   listaCond.innerHTML = personagem.condicoes.map((cid, i) => {
     const c = CONDICOES.find((x) => x.id === cid);
     if (!c) return "";
-    return `<li><strong>${c.nome}</strong> — ${c.efeito} <button class="perigo" data-remover-condicao="${i}">remover</button></li>`;
+    return `<li><strong>${esc(c.nome)}</strong> — ${esc(c.efeito)} <button class="perigo" data-remover-condicao="${i}">remover</button></li>`;
   }).join("") || "<li>Nenhuma condição ativa.</li>";
+}
+
+function bonusDeAtaque(at, d) {
+  const pericia = db.pericias.find((p) => p.id === at.pericia);
+  return pericia ? bonusDePericiaSeguro(pericia, d) + (Number(at.bonusExtra) || 0) : 0;
+}
+
+// "19/x3" → { margem: 19, multiplicador: 3 }. Um campo vazio ou estranho cai
+// no crítico padrão de T20 (20/x2).
+function parseCritico(texto) {
+  const t = String(texto || "").trim();
+  const margem = t.match(/(\d{1,2})/);
+  const mult = t.match(/x\s*(\d)/i);
+  return {
+    margem: margem ? Math.min(20, Math.max(2, Number(margem[1]))) : 20,
+    multiplicador: mult ? Math.max(2, Number(mult[1])) : 2,
+  };
+}
+
+// Nas expressões de dano os apelidos for/des/con/int/sab/car viram o
+// modificador do atributo — "1d8+for" numa personagem com Força 3 rola 1d8+3.
+function expandirAtributosNoDano(expr, d) {
+  return String(expr || "").replace(/\b(for|des|con|int|sab|car)\b/gi, (m) => {
+    const v = regras.mod(d.atrs[m.toLowerCase()]);
+    return v >= 0 ? `+${v}` : `${v}`;
+  }).replace(/\+\s*\+/g, "+").replace(/\+\s*-/g, "-");
+}
+
+function rolarDanoDoAtaque(i, critico = false) {
+  const d = calcularDerivados();
+  const at = personagem.ataques[i];
+  if (!at) return;
+  const expr = expandirAtributosNoDano(at.dano, d);
+  const parsed = regras.parseDiceExpr(expr);
+  if (!parsed) { toast("Preencha o dano da arma (ex.: 1d8+for) para rolar."); return; }
+  const { multiplicador } = parseCritico(at.critico);
+  const vezes = critico ? multiplicador : 1;
+  const { rolls, total } = regras.rollDice(parsed.n * vezes, parsed.faces);
+  const totalFinal = total + parsed.bonus * vezes;
+  const rotulo = `Dano: ${at.nome || "ataque"}${critico ? ` (crítico ×${multiplicador})` : ""}`;
+  const detalhe = `${parsed.n * vezes}d${parsed.faces} [${rolls.join(", ")}] ${formatarMod(parsed.bonus * vezes)}`;
+  toast(`${rotulo}: ${detalhe} = ${totalFinal}`);
+  registrarNoHistorico(rotulo, detalhe, totalFinal);
+  broadcastRoll(rotulo, detalhe, totalFinal, { type: "dano", amount: totalFinal });
+  return totalFinal;
 }
 
 // ---------- Equipamentos ----------
 
+function ehArma(rec) { return rec?.tipoItem === "arma" || !!rec?.dano; }
+function armaEhDistancia(rec) {
+  const alcance = String(rec?.alcance || "").trim();
+  return /dist[âa]ncia/i.test(rec?.descricao || "") || (alcance && alcance !== "-");
+}
+
+// Monta a linha de ataque a partir do item do compêndio: perícia (Luta para
+// corpo a corpo, Pontaria para armas de ataque à distância), dano com o
+// modificador de atributo certo, margem e multiplicador de crítico.
+function ataqueDaArma(rec) {
+  const distancia = armaEhDistancia(rec);
+  const dano = rec.dano ? `${rec.dano}${distancia ? "" : "+for"}` : "";
+  return {
+    nome: rec.nome,
+    pericia: distancia ? "pon" : "lut",
+    dano,
+    critico: `${rec.criticoM || 20}/x${rec.criticoX || 2}`,
+    itemId: rec.id,
+  };
+}
+
 function renderEquipamentos() {
+  const d = calcularDerivados();
   const tbody = document.getElementById("lista-inventario");
-  tbody.innerHTML = personagem.equipamentos.map((item, i) => `
-    <tr>
-      <td>${item.nome}</td>
+  tbody.innerHTML = personagem.equipamentos.map((item, i) => {
+    const rec = registroDoItem(item);
+    const armadura = regras.lerArmadura(rec);
+    const arma = ehArma(rec);
+    const vestivel = !!armadura;
+    const jaTemAtaque = personagem.ataques.some((a) => a.itemId === rec.id);
+    const marcadores = [];
+    if (armadura) marcadores.push(`<span class="tag">${esc(armadura.tipo)} +${armadura.defesa} Defesa${armadura.penalidade ? ` / −${armadura.penalidade} penalidade` : ""}</span>`);
+    if (arma) marcadores.push(`<span class="tag">${esc(rec.dano || "")} ${rec.criticoM || 20}/x${rec.criticoX || 2}</span>`);
+    return `
+    <tr class="${item.equipado ? "equipado" : ""}">
+      <td>${esc(item.nome)} ${marcadores.join(" ")}</td>
       <td><input type="number" min="1" data-inv-qtd="${i}" value="${item.qtd || 1}" style="width:4em" /></td>
-      <td>${item.peso ?? "-"}</td>
-      <td><button class="perigo" data-remover-item="${i}">✕</button></td>
-    </tr>`).join("") || "";
+      <td>${rec.peso ?? "-"}</td>
+      <td class="col-rolagens">
+        ${vestivel ? `<button data-equipar-item="${i}" class="${item.equipado ? "" : "secundario"}" title="${item.equipado ? "Tirar" : "Vestir/empunhar — entra na Defesa e na penalidade de armadura"}">${item.equipado ? "✓ equipado" : "Equipar"}</button>` : ""}
+        ${arma ? `<button class="secundario" data-criar-ataque="${i}" title="Cria a linha de ataque desta arma na aba Combate">${jaTemAtaque ? "⚔️ já na lista" : "⚔️ virar ataque"}</button>` : ""}
+        <button class="perigo" data-remover-item="${i}">✕</button>
+      </td>
+    </tr>`;
+  }).join("") || '<tr><td colspan="4" class="dica">Inventário vazio — adicione itens no catálogo abaixo.</td></tr>';
+
+  const resumo = document.getElementById("resumo-carga");
+  if (resumo) {
+    const excedeu = d.carga > d.cargaMax;
+    resumo.innerHTML = `
+      <div class="resumo-treinos-linha">Carga: <b class="${excedeu ? "carga-excedida" : ""}">${Math.round(d.carga * 10) / 10}</b> de <b>${d.cargaMax}</b> (Força ${formatarMod(regras.mod(d.atrs.for))}).</div>
+      <div class="resumo-treinos-conta">Defesa vinda do equipamento: ${d.equip.armadura ? `+${d.equip.armadura} de armadura` : "nenhuma armadura equipada"}${d.equip.escudo ? ` · +${d.equip.escudo} de escudo` : ""}${d.equip.penalidade ? ` · penalidade de armadura −${d.equip.penalidade} em Acrobacia, Furtividade e Ladinagem` : ""}.</div>
+      ${excedeu ? '<div class="alerta-automacao">Você está carregando mais que a carga máxima — combine a penalidade com o mestre.</div>' : ""}`;
+  }
 
   const tipo = document.getElementById("equip-filtro-tipo").value;
   const busca = document.getElementById("equip-busca").value;
   const catalogo = document.getElementById("lista-equip-catalogo");
   const lista = equipamentosFiltrados(db, { tipoItem: tipo || undefined, busca: busca || undefined }).slice(0, 200);
-  catalogo.innerHTML = lista.map((e) => `
+  catalogo.innerHTML = lista.map((e) => {
+    const armadura = regras.lerArmadura(e);
+    return `
     <li data-abrir-equip="${e.id}">
-      <span>${e.nome} ${e.dano ? `<span class="tag">${e.dano}</span>` : ""} ${e.peso ? `<span class="tag">${e.peso}kg</span>` : ""}</span>
+      <span>${esc(e.nome)} ${e.dano ? `<span class="tag">${esc(e.dano)}</span>` : ""} ${armadura ? `<span class="tag">+${armadura.defesa} Defesa</span>` : ""} ${e.peso ? `<span class="tag">${e.peso}kg</span>` : ""}</span>
       <button data-add-item="${e.id}">➕</button>
-    </li>`).join("");
+    </li>`;
+  }).join("") || '<li class="dica">Nenhum item com esse filtro.</li>';
 }
 
 // ---------- Notas ----------
@@ -438,7 +817,12 @@ function abrirDetalheItem(e) {
   abrirDetalheTexto(e.nome, `<em>${e.tipoItem}${e.dano ? ` · dano ${e.dano}` : ""}${e.peso ? ` · ${e.peso}kg` : ""}</em><br><br>${e.descricao}`);
 }
 function abrirDetalheAmeaca(a) {
-  const atrs = Object.entries(a.atributos).map(([k, v]) => `${k.toUpperCase()} ${v ?? "-"}`).join(" · ");
+  // As ameaças do compêndio vieram com atributos na escala d20 (3–20). Como a
+  // ficha usa a escala de T20 (o valor já é o modificador), mostramos os dois.
+  const atrs = Object.entries(a.atributos).map(([k, v]) => {
+    if (typeof v !== "number") return `${k.toUpperCase()} -`;
+    return v >= 6 ? `${k.toUpperCase()} ${v} (${formatarMod(regras.modDeEscalaD20(v))})` : `${k.toUpperCase()} ${formatarMod(v)}`;
+  }).join(" · ");
   const poderes = (a.poderes || []).length
     ? `<br><strong>Poderes e habilidades</strong><ul>${a.poderes.map((p) => `<li><strong>${p.nome}</strong>${p.descricao ? ` — ${p.descricao}` : ""}</li>`).join("")}</ul>`
     : "";
@@ -486,6 +870,26 @@ function registrarServiceWorker() {
   }
 }
 
+// Trocar de raça/classe/origem invalida as escolhas que dependiam da opção
+// antiga (um humano que vira anão não fica com "+1 em três atributos").
+function limparEscolhasInvalidas(oQueMudou) {
+  const e = escolhas();
+  if (oQueMudou === "raca") {
+    e.atributosRaciais = [];
+    e.legadoRacial = "";
+    e.periciasRaciais = [];
+    e.bonusPericiasRaciais = [];
+  }
+  if (oQueMudou === "classe") {
+    e.periciasClasseFixa = {};
+    e.periciasClasse = [];
+  }
+  if (oQueMudou === "origem") {
+    e.periciasOrigem = [];
+    e.poderOrigem = "";
+  }
+}
+
 function salvar() { storage.salvarPersonagem(personagem); }
 function salvarERenderizar() { salvar(); renderizarTudo(); }
 
@@ -505,9 +909,21 @@ function registrarEventos() {
   // Identidade
   document.getElementById("nome").addEventListener("input", (e) => { personagem.nome = e.target.value; salvar(); });
   document.getElementById("jogador").addEventListener("input", (e) => { personagem.jogador = e.target.value; salvar(); });
-  document.getElementById("raca").addEventListener("change", (e) => { personagem.raca = e.target.value; salvarERenderizar(); });
-  document.getElementById("classe").addEventListener("change", (e) => { personagem.classe = e.target.value; salvarERenderizar(); });
-  document.getElementById("origem").addEventListener("change", (e) => { personagem.origem = e.target.value; salvarERenderizar(); });
+  document.getElementById("raca").addEventListener("change", (e) => {
+    personagem.raca = e.target.value;
+    limparEscolhasInvalidas("raca");
+    salvarERenderizar();
+  });
+  document.getElementById("classe").addEventListener("change", (e) => {
+    personagem.classe = e.target.value;
+    limparEscolhasInvalidas("classe");
+    salvarERenderizar();
+  });
+  document.getElementById("origem").addEventListener("change", (e) => {
+    personagem.origem = e.target.value;
+    limparEscolhasInvalidas("origem");
+    salvarERenderizar();
+  });
   document.getElementById("divindade").addEventListener("change", (e) => { personagem.divindade = e.target.value; salvar(); });
   document.getElementById("biografia").addEventListener("input", (e) => { personagem.biografia = e.target.value; salvar(); });
   document.getElementById("aparencia").addEventListener("input", (e) => { personagem.aparencia = e.target.value; salvar(); });
@@ -525,6 +941,12 @@ function registrarEventos() {
     if (!id) return;
     personagem.atributos[id] = Number(e.target.value) || 0;
     salvarERenderizar();
+  });
+  document.getElementById("atributos").addEventListener("click", (e) => {
+    const id = e.target.dataset.rolarAtributo;
+    if (!id) return;
+    const atributo = db.atributos.find((a) => a.id === id);
+    rolarDado(20, regras.mod(atributoFinal(id)), `Teste de ${atributo?.nome || id.toUpperCase()}`);
   });
 
   // Dashboard PV/PM
@@ -569,14 +991,22 @@ function registrarEventos() {
     if (!id) return;
     const d = calcularDerivados();
     const p = db.pericias.find((x) => x.id === id);
-    const treinado = personagem.periciasTreinadas.includes(id);
-    const bonus = regras.bonusPericia({ nivel: d.nivel, treinado, modAtributo: regras.mod(d.atrs[p.atributo]), outros: personagem.periciasOutros?.[id] ?? 0 });
-    rolarDado(20, bonus, `${p.nome}`, { type: "outro" });
+    if (p.somenteTreinado && !estaTreinado(p.id, d)) {
+      toast(`${p.nome} só pode ser usada por quem é treinado nela.`);
+      return;
+    }
+    rolarDado(20, bonusDePericiaSeguro(p, d), `${p.nome}`, { type: "outro" });
+  });
+  document.getElementById("pericias-busca")?.addEventListener("input", renderPericias);
+  document.getElementById("pericias-so-classe")?.addEventListener("change", renderPericias);
+  document.getElementById("resumo-treinos")?.addEventListener("click", (e) => {
+    if (e.target.dataset.irAutomacao) irParaAba("construcao");
   });
 
   // Poderes
   document.getElementById("poderes-filtro-categoria").addEventListener("change", renderCatalogoPoderes);
   document.getElementById("poderes-busca").addEventListener("input", renderCatalogoPoderes);
+  document.getElementById("poderes-so-disponiveis")?.addEventListener("change", renderCatalogoPoderes);
   document.getElementById("lista-poderes-catalogo").addEventListener("click", (e) => {
     const add = e.target.dataset.addPoder;
     if (add) { if (!personagem.poderes.includes(add)) personagem.poderes.push(add); salvarERenderizar(); return; }
@@ -630,15 +1060,30 @@ function registrarEventos() {
   document.getElementById("lista-ataques").addEventListener("click", (e) => {
     const rem = e.target.dataset.removerAtaque;
     if (rem !== undefined) { personagem.ataques.splice(Number(rem), 1); salvarERenderizar(); return; }
+    const dano = e.target.dataset.rolarDano;
+    if (dano !== undefined) { rolarDanoDoAtaque(Number(dano)); return; }
     const rolar = e.target.dataset.rolarAtaque;
     if (rolar !== undefined) {
       const d = calcularDerivados();
       const at = personagem.ataques[rolar];
       const p = db.pericias.find((x) => x.id === at.pericia);
-      const treinado = personagem.periciasTreinadas.includes(at.pericia);
-      const bonus = regras.bonusPericia({ nivel: d.nivel, treinado, modAtributo: regras.mod(d.atrs[p.atributo]) });
-      rolarDado(20, bonus, `Ataque: ${at.nome || p.nome}`, { type: "ataque" });
+      const { margem } = parseCritico(at.critico);
+      const bruto = regras.rollDie(20);
+      const total = bruto + bonusDeAtaque(at, d);
+      const critico = bruto >= margem;
+      const rotulo = `Ataque: ${at.nome || p?.nome || "arma"}`;
+      toast(`${rotulo}: d20 (${bruto}) ${formatarMod(bonusDeAtaque(at, d))} = ${total}${critico ? " 🎉 AMEAÇA DE CRÍTICO!" : bruto === 1 ? " 💥 falha crítica" : ""}`);
+      broadcastRoll(rotulo, `d20 (${bruto}) ${formatarMod(bonusDeAtaque(at, d))}${critico ? " 🎉 crítico" : ""}`, total, { type: "ataque" });
+      if (critico) rolarDanoDoAtaque(Number(rolar), true);
     }
+  });
+
+  document.getElementById("lista-resistencias").addEventListener("click", (e) => {
+    const id = e.target.dataset.rolarResistencia;
+    if (!id) return;
+    const d = calcularDerivados();
+    const p = db.pericias.find((x) => x.id === id);
+    rolarDado(20, bonusDePericiaSeguro(p, d), `Resistência: ${p.nome}`, { type: "outro" });
   });
 
   document.getElementById("btn-add-condicao").addEventListener("click", () => {
@@ -659,7 +1104,7 @@ function registrarEventos() {
       const item = db.equipamentos.find((x) => x.id === add);
       const existente = personagem.equipamentos.find((x) => x.id === add);
       if (existente) existente.qtd = (existente.qtd || 1) + 1;
-      else personagem.equipamentos.push({ id: item.id, nome: item.nome, peso: item.peso, qtd: 1 });
+      else personagem.equipamentos.push({ id: item.id, nome: item.nome, peso: item.peso, qtd: 1, equipado: false });
       salvarERenderizar(); return;
     }
     const abrir = e.target.closest("[data-abrir-equip]")?.dataset.abrirEquip;
@@ -673,7 +1118,33 @@ function registrarEventos() {
   });
   document.getElementById("lista-inventario").addEventListener("click", (e) => {
     const rem = e.target.dataset.removerItem;
-    if (rem !== undefined) { personagem.equipamentos.splice(Number(rem), 1); salvarERenderizar(); }
+    if (rem !== undefined) { personagem.equipamentos.splice(Number(rem), 1); salvarERenderizar(); return; }
+
+    const equipar = e.target.dataset.equiparItem;
+    if (equipar !== undefined) {
+      const item = personagem.equipamentos[Number(equipar)];
+      const info = regras.lerArmadura(registroDoItem(item));
+      // Só uma armadura e um escudo por vez — equipar outro tira o anterior.
+      if (!item.equipado && info) {
+        for (const outro of personagem.equipamentos) {
+          if (outro === item || !outro.equipado) continue;
+          const infoOutro = regras.lerArmadura(registroDoItem(outro));
+          if (infoOutro && (infoOutro.tipo === "escudo") === (info.tipo === "escudo")) outro.equipado = false;
+        }
+      }
+      item.equipado = !item.equipado;
+      salvarERenderizar();
+      return;
+    }
+
+    const criar = e.target.dataset.criarAtaque;
+    if (criar !== undefined) {
+      const rec = registroDoItem(personagem.equipamentos[Number(criar)]);
+      if (personagem.ataques.some((a) => a.itemId === rec.id)) { toast(`${rec.nome} já está na lista de ataques.`); return; }
+      personagem.ataques.push(ataqueDaArma(rec));
+      salvarERenderizar();
+      toast(`Ataque de ${rec.nome} criado na aba Combate.`);
+    }
   });
 
   // Compêndio
@@ -1694,24 +2165,88 @@ function syncMusicPlayer() {
 // embutido no chat da sala. Histórico é só da sessão atual.
 // ==============================================================
 let diceHistory = [];
+
+// Todo lugar da ficha que rola dado passa por aqui, então o histórico do
+// rolador mostra tanto "2d6+3" digitado à mão quanto perícias, ataques,
+// resistências e dano.
+function registrarNoHistorico(rotulo, detalhe, resultado) {
+  diceHistory.unshift({ rotulo, detalhe, resultado, ts: Date.now() });
+  diceHistory = diceHistory.slice(0, 20);
+  renderDiceHistory();
+}
+
 function rollExpression(expr, type) {
   const parsed = regras.parseDiceExpr(expr);
   if (!parsed || !parsed.faces) { toast("Expressão inválida. Use algo como 2d6+3, 1d20 ou d8."); return null; }
   const { n, faces, bonus } = parsed;
   const { rolls, total } = regras.rollDice(n, faces);
   const result = total + bonus;
-  diceHistory.unshift({ n, faces, bonus, rolls, result });
-  diceHistory = diceHistory.slice(0, 12);
-  renderDiceHistory();
+  const rotulo = `${n}d${faces}${bonus ? regras.fmt(bonus) : ""}`;
+  registrarNoHistorico(rotulo, `[${rolls.join(", ")}]${bonus ? ` ${regras.fmt(bonus)}` : ""}`, result);
   const t = type || $("dice-roll-type")?.value || "outro";
-  broadcastRoll(`${n}d${faces}${bonus ? regras.fmt(bonus) : ""}`, `[${rolls.join(", ")}]${bonus ? ` ${regras.fmt(bonus)}` : ""}`, result, { type: t, amount: (t === "cura" || t === "dano") ? result : null });
+  broadcastRoll(rotulo, `[${rolls.join(", ")}]${bonus ? ` ${regras.fmt(bonus)}` : ""}`, result, { type: t, amount: (t === "cura" || t === "dano") ? result : null });
+  toast(`${rotulo}: [${rolls.join(", ")}]${bonus ? ` ${regras.fmt(bonus)}` : ""} = ${result}`);
   return result;
 }
+
 function renderDiceHistory() {
-  const box = $("dice-history");
-  if (!box) return;
-  box.innerHTML = diceHistory.length ? diceHistory.map((h) => `<div class="dice-history-row"><span class="dice-history-expr">${h.n}d${h.faces}${h.bonus ? regras.fmt(h.bonus) : ""}</span><span class="dice-history-rolls">[${h.rolls.join(", ")}]</span><b class="dice-history-total">${h.result}</b></div>`).join("")
+  const html = diceHistory.length
+    ? diceHistory.map((h) => `<div class="dice-history-row"><span class="dice-history-expr">${esc(h.rotulo)}</span><span class="dice-history-rolls">${esc(h.detalhe)}</span><b class="dice-history-total">${esc(h.resultado)}</b></div>`).join("")
     : `<div class="empty">Nenhuma rolagem ainda.</div>`;
+  for (const id of ["dice-history", "dice-history-modal"]) {
+    const box = $(id);
+    if (box) box.innerHTML = html;
+  }
+}
+
+// ==============================================================
+// Rolador de dados avulso — o mesmo rolador do chat da sala, disponível pelo
+// menu Ferramentas mesmo sem sala configurada, com os testes da ficha
+// (atributos, perícias e resistências) a um clique.
+// ==============================================================
+const DADOS_RAPIDOS = [4, 6, 8, 10, 12, 20, 100];
+
+function renderDiceRollerModal() {
+  const d = calcularDerivados();
+  const resistencias = db.pericias.filter((p) => p.salvamento);
+  abrirModalGenerico(`
+    <div class="modal-title"><div><span class="eyebrow">FERRAMENTAS</span><h2>🎲 Rolador de dados</h2>
+      <p class="muted">Rola qualquer expressão e também os testes da ficha aberta. Se você estiver numa sala de rolagens ou com o Discord configurado, a rolagem vai junto.</p></div></div>
+    <div class="modal-body">
+      <div class="dice-quick-row">${DADOS_RAPIDOS.map((f) => `<button type="button" data-dado-modal="${f}">d${f}</button>`).join("")}</div>
+      <div class="dice-expr-row">
+        <input id="dice-expr-modal" placeholder="2d6+3" autocomplete="off">
+        <button type="button" id="dice-roll-modal">Rolar</button>
+      </div>
+      <h3>Atributos</h3>
+      <div class="chip-lista">${db.atributos.map((a) => `<button type="button" class="chip" data-dado-atributo="${a.id}">${esc(a.nome)}<small>${formatarMod(regras.mod(d.atrs[a.id]))}</small></button>`).join("")}</div>
+      <h3>Resistências</h3>
+      <div class="chip-lista">${resistencias.map((p) => `<button type="button" class="chip" data-dado-resistencia="${p.id}">${esc(p.nome)}<small>${formatarMod(bonusDePericiaSeguro(p, d))}</small></button>`).join("")}</div>
+      <h3>Perícias treinadas</h3>
+      <div class="chip-lista">${db.pericias.filter((p) => estaTreinado(p.id, d) && !p.salvamento).map((p) => `<button type="button" class="chip" data-dado-pericia="${p.id}">${esc(p.nome)}<small>${formatarMod(bonusDePericiaSeguro(p, d))}</small></button>`).join("") || '<span class="dica">Nenhuma perícia treinada ainda.</span>'}</div>
+      <h3>Histórico da sessão</h3>
+      <div id="dice-history-modal" class="dice-history"></div>
+    </div>`);
+
+  renderDiceHistory();
+  const rolarExpressao = () => rollExpression($("dice-expr-modal").value, "outro");
+  $("dice-roll-modal")?.addEventListener("click", rolarExpressao);
+  $("dice-expr-modal")?.addEventListener("keydown", (ev) => { if (ev.key === "Enter") rolarExpressao(); });
+  $("modal-content").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button");
+    if (!b) return;
+    const atual = calcularDerivados();
+    if (b.dataset.dadoModal) return void rollExpression(`1d${b.dataset.dadoModal}`, "outro");
+    if (b.dataset.dadoAtributo) {
+      const a = db.atributos.find((x) => x.id === b.dataset.dadoAtributo);
+      return void rolarDado(20, regras.mod(atual.atrs[a.id]), `Teste de ${a.nome}`);
+    }
+    if (b.dataset.dadoResistencia || b.dataset.dadoPericia) {
+      const id = b.dataset.dadoResistencia || b.dataset.dadoPericia;
+      const p = db.pericias.find((x) => x.id === id);
+      return void rolarDado(20, bonusDePericiaSeguro(p, atual), `${b.dataset.dadoResistencia ? "Resistência: " : ""}${p.nome}`);
+    }
+  });
 }
 
 // ==============================================================
@@ -1766,14 +2301,24 @@ function renderSupportModal() {
 function renderHelpModal() {
   abrirModalGenerico(`<div class="modal-title"><div><span class="eyebrow">GUIA</span><h2>Como a ficha funciona</h2><p class="muted">Um resumo de cada aba e botão. Tudo fica salvo neste navegador (sem conta nem servidor) — veja "🗂️ Personagens" pra alternar entre fichas salvas, e "📤 Exportar"/"📥 Importar" pra levar uma ficha pra outro navegador.</p></div></div>
     <div class="modal-body">
+      <h3>Como a automação funciona</h3>
+      <p>A aba <strong>Construção</strong> tem o painel <strong>Automação da ficha</strong>: cada benefício que raça, classe, origem e nível concedem vira um bloco. O que é fixo já vem aplicado (marcado como <em>aplicado</em>); o que o livro manda escolher fica <em>falta escolher</em> até você decidir — atributos do humano, legado do suraggel, "Luta ou Pontaria" do guerreiro, perícias da classe e da origem, poder de origem. O contador do topo diz quantas pendências sobraram.</p>
+      <ul>
+        <li><strong>Perícias treinadas</strong> — as fixas da classe entram sozinhas; as à escolha são <em>número da classe + modificador de Inteligência</em>; a origem treina 2; algumas raças treinam mais. Perícias que vieram da automação aparecem marcadas <strong>auto</strong> e só mudam pelo painel.</li>
+        <li><strong>Poderes</strong> — um poder de classe no 2º nível e um a cada nível seguinte, mais o poder da origem. A aba Poderes mostra quantos faltam e pode filtrar só os que você tem requisito pra pegar.</li>
+        <li><strong>Atributos</strong> — em T20 o valor <em>é</em> o modificador (Força 2 soma +2). A ficha mostra quantos dos 10 pontos de compra você usou.</li>
+        <li><strong>Equipamento</strong> — equipar armadura ou escudo entra sozinho na Defesa e na penalidade de armadura; equipar uma arma cria a linha de ataque com dano e crítico prontos.</li>
+        <li><strong>⬆️ Subir de nível</strong> — aplica o nível e lista o que mudou (PV, PM, poder novo, metade do nível, bônus de treino).</li>
+      </ul>
       <h3>Abas</h3>
       <ul>
-        <li><strong>Ficha</strong> — identidade, raça, classe, origem, divindade, atributos e biografia.</li>
-        <li><strong>Perícias</strong> — todas as perícias com bônus calculado (treino + atributo + outros), com botão de rolagem (🎲) em cada uma.</li>
-        <li><strong>Poderes</strong> — poderes escolhidos e catálogo filtrável por categoria (classe/racial/origem/geral/concedido).</li>
+        <li><strong>Construção</strong> — raça, classe, origem e divindade (modo livre ou assistente guiado) + o painel de automação.</li>
+        <li><strong>Ficha</strong> — identidade, atributos, carga, dinheiro e biografia.</li>
+        <li><strong>Perícias</strong> — todas as perícias com o bônus calculado (metade do nível + atributo + treino + outros − penalidade de armadura), com busca, filtro por perícias de classe e botão de rolagem (🎲) em cada uma.</li>
+        <li><strong>Poderes</strong> — poderes escolhidos, quantos o nível concede e catálogo filtrável por categoria (classe/racial/origem/geral/concedido).</li>
         <li><strong>Magias</strong> — só aparece pra classes conjuradoras; grimório/lista de magias conhecidas e catálogo por círculo.</li>
-        <li><strong>Combate</strong> — testes de resistência, tabela de ataques (com rolagem) e condições ativas.</li>
-        <li><strong>Equipamentos</strong> — inventário e catálogo de itens do compêndio.</li>
+        <li><strong>Combate</strong> — testes de resistência (com rolagem), tabela de ataques com rolagem de ataque e de dano, e condições ativas.</li>
+        <li><strong>Equipamentos</strong> — inventário com equipar/desequipar e peso carregado, e catálogo de itens do compêndio.</li>
         <li><strong>Compêndio</strong> — busca em poderes, magias, equipamentos, ameaças (bestiário) e panteão.</li>
         <li><strong>Notas</strong> — anotações de sessão.</li>
       </ul>
@@ -1790,8 +2335,8 @@ function renderHelpModal() {
         <li><strong>Aba Iniciativa</strong> — rastreador de combate compartilhado; o anfitrião é sempre a autoridade. Criaturas podem ser marcadas como "🎭 misteriosas" (nome/PV ocultos dos jogadores até o mestre revelar).</li>
         <li><strong>Aba Música</strong> — cole um link do YouTube ou SoundCloud; só o anfitrião controla, os jogadores recebem a mesma faixa sincronizada.</li>
       </ul>
-      <h3>🎲 Rolador de dados (dentro da Sala)</h3>
-      <p>Digite uma expressão como "2d6+3" e role. O histórico é só da sessão atual. Marcar o tipo como <strong>Cura</strong> ou <strong>Dano</strong> antes de rolar habilita o botão de ajustar PV no chat da sala.</p>
+      <h3>🎲 Rolador de dados</h3>
+      <p>Fica em <strong>Ferramentas → 🎲 Rolador de dados</strong> e também dentro do chat da sala. Digite uma expressão como "2d6+3", ou clique num atributo, resistência ou perícia treinada pra rolar o teste já com o bônus da ficha. O histórico junta tudo que a ficha rolou na sessão. Marcar o tipo como <strong>Cura</strong> ou <strong>Dano</strong> antes de rolar habilita o botão de ajustar PV no chat da sala.</p>
       <h3>💛 Sobre ser gratuito</h3>
       <p>A ficha é 100% gratuita — conteúdo de fã, feito por fãs de Tormenta 20. Quem quiser apoiar pode clicar em "💛 Apoiar o projeto" no aviso do topo — isso é opcional e nunca destrava nada.</p>
     </div>`);
@@ -1801,6 +2346,19 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-07", items: [
+    "<b>Atributos na escala de Tormenta 20</b>: o valor do atributo agora <em>é</em> o modificador (Força 2 = +2), como manda o livro — a ficha vinha usando a escala do d20 (base 10). Fichas antigas são convertidas sozinhas ao abrir.",
+    "<b>Bônus de perícia correto</b>: metade do nível em toda perícia + treino de +2 (+4 no 7º nível, +6 no 15º). Antes o treino escalava errado e as perícias não-treinadas não somavam metade do nível.",
+    "<b>Painel de automação de verdade</b> na aba Construção: mostra tudo que raça/classe/origem/nível concedem e pede as escolhas que faltam (atributos do humano, legado do suraggel, perícias da classe e da origem, poder de origem), marcando as pendências.",
+    "<b>Contagem de poderes por nível</b>: um poder de classe no 2º nível e a cada nível seguinte, mais o poder de origem e os poderes gerais extras de traço racial.",
+    "<b>Perícias treinadas automáticas</b>: as fixas da classe entram sozinhas, as escolhas ganham contador (número da classe + Inteligência), e perícias concedidas duas vezes por fontes diferentes ficam marcadas.",
+    "<b>Rolador de dados no menu Ferramentas</b>, fora da sala: expressões livres, atributos, resistências e perícias treinadas a um clique, com histórico de tudo que a ficha rolou.",
+    "<b>Equipar armadura e escudo</b>: entram sozinhos na Defesa e na penalidade de armadura (que desconta de Acrobacia, Furtividade e Ladinagem); armas viram linha de ataque pronta com dano, margem e multiplicador de crítico.",
+    "<b>Rolagem de dano</b> nos ataques, com crítico aplicando o multiplicador da arma, e rolagem de atributos e de testes de resistência.",
+    "<b>Assistente de subida de nível</b> mostrando o que mudou (PV, PM, poderes, metade do nível, bônus de treino).",
+    "PM não soma mais atributo (regra de T20) e o Caçador voltou a ter 4 PM por nível; perícias iniciais de todas as 14 classes conferidas com o livro.",
+    "As 66 origens regionais do Atlas de Arton passaram a aparecer no seletor de origem.",
+  ] },
   { date: "2026-09-06", items: [
     "Sala de rolagens compartilhada em tempo real (WebRTC, sem servidor): chat com texto/imagem/GIF, rolagens com botão de aplicar cura/dano direto no PV.",
     "Rastreador de iniciativa da sala, com criaturas \"misteriosas\" (nome/PV ocultos dos jogadores até o mestre revelar).",
@@ -1856,7 +2414,10 @@ function nomePericia(id) { return db.pericias.find((p) => p.id === id)?.nome || 
 function pickerOptionsFor(kind) {
   if (kind === "raca") return db.racas.map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}`, desc: r.traços }));
   if (kind === "classe") return db.classes.map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}`, desc: c.iniciais }));
-  if (kind === "origem") return db.origens.map((o) => ({ id: o.id, nome: o.id, meta: "Origem", desc: `Perícias sugeridas: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}` }));
+  if (kind === "origem") return [
+    ...db.origens.map((o) => ({ id: o.id, nome: o.id, meta: "Origem do livro básico", desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.nota ? ` · ${o.nota}` : ""}` })),
+    ...(db.origensRegionais || []).map((o) => ({ id: o.id, nome: o.id, meta: `Atlas de Arton · ${o.regiao || ""}`, desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.beneficio ? ` · ${o.beneficio}` : ""}` })),
+  ];
   if (kind === "divindade") return db.panteao.map((d) => ({ id: d.nome, nome: d.nome, meta: "Divindade", desc: (d.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220) }));
   return [];
 }
@@ -1958,6 +2519,407 @@ const CHOICE_INFO = {
 };
 
 // ==============================================================
+// Subir de nível — em vez de digitar o número novo e adivinhar o que mudou,
+// a ficha aplica o nível e lista o que veio junto (PV, PM, poder, bônus de
+// treino) e o que ainda falta escolher.
+// ==============================================================
+function resumoDeNivel(nivel) {
+  const guardado = personagem.nivel;
+  personagem.nivel = nivel;
+  const d = calcularDerivados();
+  personagem.nivel = guardado;
+  return {
+    pv: d.pvMax, pm: d.pmMax,
+    metadeNivel: regras.metadeNivel(nivel),
+    treino: regras.bonusTreino(nivel, true),
+    poderes: regras.poderesDeClassePorNivel(nivel),
+  };
+}
+
+function subirDeNivel() {
+  const de = personagem.nivel || 1;
+  if (de >= 20) { toast("O personagem já está no 20º nível."); return; }
+  if (!classeAtual()) { toast("Escolha uma classe antes de subir de nível."); return; }
+  const para = de + 1;
+  const antes = resumoDeNivel(de);
+  const depois = resumoDeNivel(para);
+
+  personagem.nivel = para;
+  // PV e PM ganhos no nível já entram no valor atual, senão a ficha sobe o
+  // máximo e deixa o personagem "ferido" de graça.
+  personagem.pv.atual = Math.max(0, (personagem.pv.atual ?? 0) + (depois.pv - antes.pv));
+  personagem.pm.atual = Math.max(0, (personagem.pm.atual ?? 0) + (depois.pm - antes.pm));
+  salvarERenderizar();
+
+  const ganhos = [
+    `PV máximo <b>${antes.pv} → ${depois.pv}</b> (e o PV atual subiu junto)`,
+    `PM máximo <b>${antes.pm} → ${depois.pm}</b>`,
+    `Poderes de classe a que você tem direito: <b>${antes.poderes} → ${depois.poderes}</b>`,
+  ];
+  if (depois.metadeNivel !== antes.metadeNivel) ganhos.push(`Metade do nível em todas as perícias: <b>${formatarMod(antes.metadeNivel)} → ${formatarMod(depois.metadeNivel)}</b>`);
+  if (depois.treino !== antes.treino) ganhos.push(`Bônus de treino: <b>${formatarMod(antes.treino)} → ${formatarMod(depois.treino)}</b>`);
+
+  const pendentes = blocosDeAutomacao().filter((b) => b.includes('class="auto-bloco pendente"')).length;
+  abrirModalGenerico(`
+    <div class="modal-title"><div><span class="eyebrow">PROGRESSÃO</span><h2>Nível ${de} → ${para}</h2></div></div>
+    <div class="modal-body">
+      <ul class="lista-ganhos">${ganhos.map((g) => `<li>${g}</li>`).join("")}</ul>
+      ${pendentes
+        ? `<div class="alerta-automacao">Você tem <b>${pendentes}</b> escolha(s) pendente(s) no painel de automação — inclusive o poder novo deste nível.</div>`
+        : '<div class="ok-automacao">✓ Nada pendente no painel de automação.</div>'}
+      <div class="linha-botoes-modal">
+        <button type="button" class="add-btn" id="nivel-ir-poderes">Escolher poderes →</button>
+        <button type="button" id="nivel-ir-automacao">Abrir automação</button>
+      </div>
+    </div>`);
+  $("nivel-ir-poderes")?.addEventListener("click", () => { $("modal").classList.add("hidden"); irParaAba("poderes"); });
+  $("nivel-ir-automacao")?.addEventListener("click", () => { $("modal").classList.add("hidden"); irParaAba("construcao"); });
+}
+
+// ==============================================================
+// AUTOMAÇÃO DA FICHA — o painel da aba "Construção" que mostra, um por um,
+// todos os benefícios que raça/classe/origem/nível concedem e pede as
+// escolhas que o livro manda fazer (atributos do humano, perícias da classe,
+// poder da origem...). O que é fixo já vem aplicado; o que é escolha fica
+// marcado como pendência até o jogador decidir.
+// ==============================================================
+
+// `jaTreinadas` é o mapa de perícias que outras fontes já concederam: em T20,
+// se você ganharia de novo uma perícia que já tem, o livro manda escolher
+// outra — então elas aparecem marcadas para não desperdiçar a escolha.
+function chipsDePericia(pericias, selecionadas, attr, jaTreinadas = new Map()) {
+  return `<div class="chip-lista">${pericias.map((id) => {
+    const p = db.pericias.find((x) => x.id === id);
+    if (!p) return "";
+    const ativo = selecionadas.includes(id);
+    const repetida = !ativo && jaTreinadas.has(id);
+    return `<button type="button" class="chip${ativo ? " ativo" : ""}${repetida ? " repetida" : ""}" ${attr}="${esc(id)}"${repetida ? ` title="${esc(`Você já é treinado em ${p.nome} por: ${jaTreinadas.get(id).join(", ")}. Escolha outra para não desperdiçar.`)}"` : ""}>${esc(p.nome)}<small>${repetida ? "já treinada" : p.atributo.toUpperCase()}</small></button>`;
+  }).join("")}</div>`;
+}
+
+// Perícias já concedidas por outras fontes que não a que está sendo escolhida
+// agora — usado para marcar as repetidas nos chips.
+function treinosDeOutrasFontes(exceto) {
+  const mapa = new Map();
+  for (const [id, fontes] of treinosAutomaticos()) {
+    const restantes = fontes.filter((f) => !f.startsWith(exceto));
+    if (restantes.length) mapa.set(id, restantes);
+  }
+  return mapa;
+}
+
+function blocoHtml({ id, titulo, fonte, estado, texto, corpo = "" }) {
+  const rotulos = { ok: "✓ pronto", pendente: "• falta escolher", info: "aplicado" };
+  return `<article class="auto-bloco ${estado}" data-bloco="${id}">
+    <header><b>${esc(titulo)}</b><span class="auto-chip ${estado}">${rotulos[estado]}</span></header>
+    <small class="auto-fonte">${esc(fonte)}</small>
+    <p>${texto}</p>${corpo}</article>`;
+}
+
+function blocosDeAutomacao() {
+  const d = calcularDerivados();
+  const e = escolhas();
+  const raca = racaAtual();
+  const classe = classeAtual();
+  const auto = racaAuto();
+  const blocos = [];
+
+  if (!raca && !classe) return blocos;
+
+  // --- Raça: atributos à escolha ---
+  if (auto.atributosEscolha) {
+    const { quantidade, excluir = [] } = auto.atributosEscolha;
+    const escolhidos = (e.atributosRaciais || []).slice(0, quantidade);
+    const disponiveis = db.atributos.filter((a) => !excluir.includes(a.id));
+    blocos.push(blocoHtml({
+      id: "atributos-raciais",
+      titulo: `Atributos de ${raca.nome}`,
+      fonte: "Raça",
+      estado: escolhidos.length === quantidade ? "ok" : "pendente",
+      texto: `+1 em <b>${quantidade}</b> atributos diferentes${excluir.length ? ` (não pode ser ${excluir.map((x) => x.toUpperCase()).join("/")})` : ""}. Escolhidos: <b>${escolhidos.length}/${quantidade}</b>.`,
+      corpo: `<div class="chip-lista">${disponiveis.map((a) => `
+        <button type="button" class="chip${escolhidos.includes(a.id) ? " ativo" : ""}" data-auto-atributo="${a.id}">${esc(a.nome)}<small>${escolhidos.includes(a.id) ? "+1" : ""}</small></button>`).join("")}</div>`,
+    }));
+  }
+
+  // --- Raça: legado (suraggel) ---
+  if (auto.legados?.length) {
+    const atual = legadoAtual();
+    blocos.push(blocoHtml({
+      id: "legado",
+      titulo: `Legado de ${raca.nome}`,
+      fonte: "Raça",
+      estado: atual ? "ok" : "pendente",
+      texto: atual
+        ? `Legado <b>${esc(atual.nome)}</b>: ${Object.entries(atual.atributos).map(([k, v]) => `${formatarMod(v)} ${k.toUpperCase()}`).join(", ")}${atual.bonusPericias ? `; ${Object.entries(atual.bonusPericias).map(([k, v]) => `${formatarMod(v)} em ${nomePericia(k)}`).join(", ")}` : ""}.`
+        : "Escolha um legado — ele define os bônus de atributo e de perícia da raça.",
+      corpo: `<div class="chip-lista">${auto.legados.map((l) => `
+        <button type="button" class="chip${l.id === e.legadoRacial ? " ativo" : ""}" data-auto-legado="${esc(l.id)}">${esc(l.nome)}<small>${Object.entries(l.atributos).map(([k, v]) => `${formatarMod(v)} ${k.toUpperCase()}`).join(" ")}</small></button>`).join("")}</div>`,
+    }));
+  }
+
+  // --- Raça: bônus fixos já aplicados ---
+  const bonusFixos = { ...(auto.bonusPericias || {}) };
+  const infoRacial = [];
+  if (Object.keys(bonusFixos).length) infoRacial.push(Object.entries(bonusFixos).map(([k, v]) => `${formatarMod(v)} em ${nomePericia(k)}`).join(", "));
+  if (auto.defesa) infoRacial.push(`${formatarMod(auto.defesa)} na Defesa`);
+  if (auto.pvNivel1 || auto.pvPorNivel) infoRacial.push(`${formatarMod(auto.pvNivel1 || 0)} PV no 1º nível e ${formatarMod(auto.pvPorNivel || 0)} PV por nível`);
+  if (auto.pmPorNivel) infoRacial.push(`${formatarMod(auto.pmPorNivel)} PM por nível`);
+  if (auto.penalidadeArmaduraExtra) infoRacial.push(`−${auto.penalidadeArmaduraExtra} extra de penalidade de armadura`);
+  if (raca && infoRacial.length) {
+    blocos.push(blocoHtml({
+      id: "racial-fixo",
+      titulo: `Traços de ${raca.nome} já aplicados`,
+      fonte: "Raça · automático",
+      estado: "info",
+      texto: `${infoRacial.join(" · ")}.${auto.nota ? ` <em>${esc(auto.nota)}</em>` : ""}`,
+    }));
+  } else if (raca && auto.nota) {
+    blocos.push(blocoHtml({ id: "racial-nota", titulo: `Traços de ${raca.nome}`, fonte: "Raça", estado: "info", texto: esc(auto.nota) }));
+  }
+
+  // --- Raça: bônus de perícia à escolha (lefou) ---
+  if (auto.bonusPericiasEscolha) {
+    const { quantidade, valor } = auto.bonusPericiasEscolha;
+    const escolhidas = (e.bonusPericiasRaciais || []).slice(0, quantidade);
+    blocos.push(blocoHtml({
+      id: "bonus-racial",
+      titulo: `Bônus de perícia de ${raca.nome}`,
+      fonte: "Raça",
+      estado: escolhidas.length === quantidade ? "ok" : "pendente",
+      texto: `${formatarMod(valor)} em <b>${quantidade}</b> perícias à escolha. Escolhidas: <b>${escolhidas.length}/${quantidade}</b>.`,
+      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-bonus-racial"),
+    }));
+  }
+
+  // --- Raça: perícias treinadas à escolha (humano, kliren, osteon) ---
+  if (auto.treinosEscolha) {
+    const escolhidas = (e.periciasRaciais || []).slice(0, auto.treinosEscolha);
+    const opcional = !!auto.treinosEscolhaOpcional;
+    blocos.push(blocoHtml({
+      id: "pericias-raciais",
+      titulo: `Perícias de ${raca.nome}`,
+      fonte: "Raça",
+      estado: escolhidas.length === auto.treinosEscolha ? "ok" : opcional ? "info" : "pendente",
+      texto: `Treinado em <b>${auto.treinosEscolha}</b> perícia(s) à escolha${opcional ? " (ou troque por um poder geral)" : ""}. Escolhidas: <b>${escolhidas.length}/${auto.treinosEscolha}</b>.`,
+      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-pericia-racial", treinosDeOutrasFontes("Raça")),
+    }));
+  }
+
+  // --- Classe: perícias fixas ---
+  if (classe) {
+    const fixas = classe.periciasFixas || [];
+    const grupos = classe.periciasFixasEscolha || [];
+    const escolhidasGrupo = grupos.map((_, i) => e.periciasClasseFixa?.[i] || "");
+    if (fixas.length || grupos.length) {
+      blocos.push(blocoHtml({
+        id: "pericias-classe-fixas",
+        titulo: `Perícias garantidas de ${classe.nome}`,
+        fonte: "Classe · automático",
+        estado: escolhidasGrupo.every(Boolean) ? "ok" : "pendente",
+        texto: `${fixas.length ? `Já treinado em <b>${fixas.map(nomePericia).join(", ")}</b>.` : ""}${grupos.length ? ` Escolha ${grupos.length === 1 ? "uma" : `${grupos.length}`}: ` : ""}`,
+        corpo: grupos.map((grupo, i) => `<div class="chip-lista">${grupo.map((id) => `
+          <button type="button" class="chip${escolhidasGrupo[i] === id ? " ativo" : ""}" data-auto-classe-fixa="${i}" data-valor="${esc(id)}">${esc(nomePericia(id))}</button>`).join("")}</div>`).join(""),
+      }));
+    }
+
+    // --- Classe: perícias à escolha ---
+    const modInt = regras.mod(d.atrs.int);
+    const cotaClasse = regras.escolhasDePericiaDaClasse({ classe, modInt });
+    const jaFixas = new Set([...fixas, ...escolhidasGrupo.filter(Boolean)]);
+    const opcoes = (classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id));
+    const escolhidasClasse = (e.periciasClasse || []).filter((id) => opcoes.includes(id));
+    blocos.push(blocoHtml({
+      id: "pericias-classe",
+      titulo: `Perícias à escolha de ${classe.nome}`,
+      fonte: "Classe",
+      estado: escolhidasClasse.length >= cotaClasse ? "ok" : "pendente",
+      texto: `<b>${classe.treinosIniciais}</b> da classe ${formatarMod(modInt)} de Inteligência = <b>${cotaClasse}</b> perícia(s) à escolha na lista de ${esc(classe.nome)}. Escolhidas: <b>${escolhidasClasse.length}/${cotaClasse}</b>.`,
+      corpo: chipsDePericia(opcoes, escolhidasClasse, "data-auto-pericia-classe", treinosDeOutrasFontes("Classe")),
+    }));
+  }
+
+  // --- Origem ---
+  if (auto.semOrigem) {
+    blocos.push(blocoHtml({
+      id: "sem-origem", titulo: "Sem origem", fonte: "Raça", estado: "info",
+      texto: `${esc(raca.nome)} não tem origem: em vez das perícias e do poder de origem, ganha <b>${auto.poderesGeraisExtra || 1}</b> poder(es) geral(is) à escolha, na aba <b>Poderes</b>.`,
+    }));
+  } else if (personagem.origem) {
+    const origem = origemAtual();
+    const listaOrigem = origem?.periciasSugeridas || [];
+    const cotaOrigem = Math.min(2, listaOrigem.length || 2);
+    const escolhidasOrigem = (e.periciasOrigem || []).slice(0, cotaOrigem);
+    blocos.push(blocoHtml({
+      id: "pericias-origem",
+      titulo: `Perícias de ${personagem.origem}`,
+      fonte: "Origem",
+      estado: escolhidasOrigem.length >= cotaOrigem ? "ok" : "pendente",
+      texto: listaOrigem.length
+        ? `A origem treina <b>${cotaOrigem}</b> perícia(s) da lista dela. Escolhidas: <b>${escolhidasOrigem.length}/${cotaOrigem}</b>.`
+        : "Esta origem não tem lista fixa de perícias — combine com o mestre e marque à mão na aba Perícias.",
+      corpo: listaOrigem.length ? chipsDePericia(listaOrigem, escolhidasOrigem, "data-auto-pericia-origem", treinosDeOutrasFontes("Origem")) : "",
+    }));
+
+    const poderesOrigem = poderesDaOrigem(db, personagem.origem);
+    const beneficio = origem?.beneficio;
+    if (poderesOrigem.length || beneficio) {
+      const atual = e.poderOrigem ? db.poderes.find((x) => x.id === e.poderOrigem) : null;
+      blocos.push(blocoHtml({
+        id: "poder-origem",
+        titulo: `Poder de ${personagem.origem}`,
+        fonte: "Origem",
+        estado: atual ? "ok" : poderesOrigem.length ? "pendente" : "info",
+        texto: beneficio
+          ? `<em>${esc(beneficio)}</em>`
+          : atual ? `Poder escolhido: <b>${esc(atual.nome)}</b>.` : "A origem concede um poder — escolha abaixo.",
+        corpo: poderesOrigem.length ? `<div class="chip-lista">${poderesOrigem.map((poder) => `
+          <button type="button" class="chip${poder.id === e.poderOrigem ? " ativo" : ""}" data-auto-poder-origem="${esc(poder.id)}" title="${esc((poder.descricao || "").slice(0, 200))}">${esc(poder.nome)}</button>`).join("")}
+          ${e.poderOrigem ? '<button type="button" class="chip limpar" data-auto-poder-origem="">✕ limpar</button>' : ""}</div>` : "",
+      }));
+    }
+  } else {
+    blocos.push(blocoHtml({
+      id: "origem-vazia", titulo: "Origem", fonte: "Origem", estado: "pendente",
+      texto: "Escolha uma origem acima: ela treina 2 perícias e concede um poder.",
+    }));
+  }
+
+  // --- Poderes por nível ---
+  const esperados = poderesEsperados();
+  const escolhidosPoderes = personagem.poderes.length;
+  blocos.push(blocoHtml({
+    id: "poderes-nivel",
+    titulo: "Poderes por nível",
+    fonte: "Classe · nível",
+    estado: escolhidosPoderes >= esperados.escolhiveis ? "ok" : "pendente",
+    texto: classe
+      ? `No nível <b>${d.nivel}</b> você escolhe <b>${esperados.daClasse}</b> poder(es) de ${esc(classe.nome)} — um no 2º nível e um a cada nível seguinte${esperados.geraisExtra ? `, mais ${esperados.geraisExtra} poder geral do traço racial` : ""}. Escolhidos: <b>${escolhidosPoderes}/${esperados.escolhiveis}</b>.`
+      : "Escolha uma classe para a ficha calcular quantos poderes você pode pegar.",
+    corpo: '<div class="chip-lista"><button type="button" class="chip acao" data-ir-aba="poderes">Abrir aba Poderes →</button></div>',
+  }));
+
+  // --- Progressão do nível ---
+  if (classe) {
+    blocos.push(blocoHtml({
+      id: "progressao",
+      titulo: `Progressão até o nível ${d.nivel}`,
+      fonte: "Nível · automático",
+      estado: "info",
+      texto: `PV <b>${d.pvMax}</b> (${classe.pvInicial}${formatarMod(regras.mod(d.atrs.con))} no 1º nível, ${classe.pvPorNivel}${formatarMod(regras.mod(d.atrs.con))} por nível${auto.pvNivel1 || auto.pvPorNivel ? " + traço racial" : ""}) ·
+        PM <b>${d.pmMax}</b> (${classe.pmPorNivel} por nível${auto.pmPorNivel ? " + traço racial" : ""}) ·
+        bônus de treino atual <b>${formatarMod(regras.bonusTreino(d.nivel, true))}</b>${d.nivel < 7 ? " (vira +4 no 7º nível)" : d.nivel < 15 ? " (vira +6 no 15º nível)" : " (máximo)"} ·
+        metade do nível <b>${formatarMod(regras.metadeNivel(d.nivel))}</b> em toda perícia.`,
+    }));
+  }
+
+  return blocos;
+}
+
+function renderAutomacao() {
+  const box = $("auto-blocos");
+  if (!box) return;
+  const blocos = blocosDeAutomacao();
+  box.innerHTML = blocos.join("");
+  const pendentes = (box.querySelectorAll(".auto-bloco.pendente") || []).length;
+  const status = $("auto-status");
+  if (status) {
+    const temEscolhas = !!(personagem.raca || personagem.classe);
+    status.textContent = !temEscolhas ? "Aguardando seleção" : pendentes ? `${pendentes} pendência(s)` : "Automação completa";
+    status.classList.toggle("pendente", pendentes > 0);
+  }
+  $("auto-empty")?.classList.toggle("hidden", blocos.length > 0);
+}
+
+// Marca/desmarca um item numa lista de escolhas respeitando o limite: quando
+// a lista já está cheia, a escolha mais antiga sai para a nova entrar.
+function alternarEscolha(campo, valor, limite) {
+  const e = escolhas();
+  const lista = Array.isArray(e[campo]) ? e[campo].slice() : [];
+  const i = lista.indexOf(valor);
+  if (i >= 0) lista.splice(i, 1);
+  else {
+    lista.push(valor);
+    while (lista.length > limite) lista.shift();
+  }
+  e[campo] = lista;
+  salvarERenderizar();
+}
+
+function registrarEventosAutomacao() {
+  $("auto-blocos")?.addEventListener("click", (ev) => {
+    const alvo = ev.target.closest("button");
+    if (!alvo) return;
+    const e = escolhas();
+    const auto = racaAuto();
+    const dataset = alvo.dataset;
+
+    if (dataset.autoAtributo) return alternarEscolha("atributosRaciais", dataset.autoAtributo, auto.atributosEscolha?.quantidade || 3);
+    if (dataset.autoBonusRacial) return alternarEscolha("bonusPericiasRaciais", dataset.autoBonusRacial, auto.bonusPericiasEscolha?.quantidade || 2);
+    if (dataset.autoPericiaRacial) return alternarEscolha("periciasRaciais", dataset.autoPericiaRacial, auto.treinosEscolha || 1);
+    if (dataset.autoPericiaOrigem) {
+      const origem = origemAtual();
+      return alternarEscolha("periciasOrigem", dataset.autoPericiaOrigem, Math.min(2, (origem?.periciasSugeridas || []).length || 2));
+    }
+    if (dataset.autoPericiaClasse) {
+      const classe = classeAtual();
+      const cota = regras.escolhasDePericiaDaClasse({ classe, modInt: regras.mod(atributoFinal("int")) });
+      return alternarEscolha("periciasClasse", dataset.autoPericiaClasse, Math.max(1, cota));
+    }
+    if (dataset.autoClasseFixa !== undefined) {
+      e.periciasClasseFixa = { ...(e.periciasClasseFixa || {}), [dataset.autoClasseFixa]: dataset.valor };
+      return salvarERenderizar();
+    }
+    if (dataset.autoLegado) { e.legadoRacial = dataset.autoLegado; return salvarERenderizar(); }
+    if (dataset.autoPoderOrigem !== undefined) {
+      e.poderOrigem = e.poderOrigem === dataset.autoPoderOrigem ? "" : dataset.autoPoderOrigem;
+      return salvarERenderizar();
+    }
+    if (dataset.irAba) return irParaAba(dataset.irAba);
+  });
+}
+
+function irParaAba(aba) {
+  const btn = document.querySelector(`.aba-btn[data-aba="${aba}"]`);
+  if (!btn) return;
+  btn.click();
+  document.querySelector(`#aba-${aba}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Preenche as escolhas de automação com uma opção válida — usado pelo
+// "Personagem aleatório", que precisa entregar uma ficha jogável e não uma
+// pilha de pendências.
+function aplicarAutomacaoAleatoria(raca, classe, origem) {
+  const e = (personagem.escolhas = storage.escolhasVazias());
+  const auto = raca?.auto || {};
+  const sorteio = (lista, n) => {
+    const copia = lista.slice();
+    const out = [];
+    while (out.length < n && copia.length) out.push(...copia.splice(Math.floor(Math.random() * copia.length), 1));
+    return out;
+  };
+  if (auto.legados?.length) e.legadoRacial = auto.legados[Math.floor(Math.random() * auto.legados.length)].id;
+  if (auto.atributosEscolha) {
+    const { quantidade, excluir = [] } = auto.atributosEscolha;
+    e.atributosRaciais = sorteio(db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), quantidade);
+  }
+  if (auto.bonusPericiasEscolha) e.bonusPericiasRaciais = sorteio(db.pericias.map((p) => p.id), auto.bonusPericiasEscolha.quantidade);
+  if (auto.treinosEscolha) e.periciasRaciais = sorteio(db.pericias.map((p) => p.id), auto.treinosEscolha);
+  if (classe) {
+    (classe.periciasFixasEscolha || []).forEach((grupo, i) => { e.periciasClasseFixa[i] = grupo[Math.floor(Math.random() * grupo.length)]; });
+    const jaFixas = new Set([...(classe.periciasFixas || []), ...Object.values(e.periciasClasseFixa)]);
+    const cota = regras.escolhasDePericiaDaClasse({ classe, modInt: regras.mod(atributoFinal("int")) });
+    e.periciasClasse = sorteio((classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id)), cota);
+  }
+  if (origem && !auto.semOrigem) {
+    e.periciasOrigem = sorteio(origem.periciasSugeridas || [], Math.min(2, (origem.periciasSugeridas || []).length));
+    e.poderOrigem = poderesDaOrigem(db, origem.id)[0]?.id || "";
+  }
+  const poderes = poolPoderesDisponiveis();
+  personagem.poderes = sorteio(poderes.map((x) => x.id), poderesEsperados().escolhiveis);
+}
+
+// ==============================================================
 // Modelos de personagem — construções (raça/classe/origem/divindade/
 // nível/atributos) salvas pra reaproveitar em personagens novos.
 // ==============================================================
@@ -2012,9 +2974,22 @@ const NOMES_ALEATORIOS = [
   "Aldrin", "Bran", "Cassia", "Doriel", "Elenwe", "Fenris", "Galadur", "Helvi", "Ithir", "Jarik",
   "Kaelen", "Liora", "Morwen", "Nerion", "Orwin", "Perah", "Quenna", "Rhandir", "Selune", "Torvald",
 ];
-function rolarAtributoUnico() {
-  const rolls = Array.from({ length: 4 }, () => regras.rollDie(6)).sort((a, b) => b - a);
-  return rolls[0] + rolls[1] + rolls[2];
+// Distribuição de atributos válida em T20 (10 pontos de compra, escala de
+// modificadores): embaralhamos um arranjo pronto em vez de rolar 4d6, que é
+// a escala do d20 e não vale mais nesta ficha.
+const ARRANJOS_ATRIBUTOS = [
+  [3, 2, 2, 1, 0, 0],   // 4+2+2+1 = 9 pontos
+  [4, 2, 1, 1, 0, -1],  // 7+2+1+1+0-1 = 10 pontos
+  [3, 3, 1, 1, 0, -1],  // 4+4+1+1+0-1 = 9 pontos
+  [2, 2, 2, 2, 1, -1],  // 2+2+2+2+1-1 = 8 pontos
+];
+function arranjoAleatorioDeAtributos() {
+  const base = ARRANJOS_ATRIBUTOS[Math.floor(Math.random() * ARRANJOS_ATRIBUTOS.length)].slice();
+  for (let i = base.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [base[i], base[j]] = [base[j], base[i]];
+  }
+  return base;
 }
 function gerarPersonagemAleatorio() {
   const raca = db.racas[Math.floor(Math.random() * db.racas.length)];
@@ -2026,8 +3001,11 @@ function gerarPersonagemAleatorio() {
   personagem.classe = classe.id;
   personagem.origem = origem.id;
   personagem.divindade = divindade ? divindade.nome : "";
-  for (const a of db.atributos) personagem.atributos[a.id] = rolarAtributoUnico();
-  personagem.periciasTreinadas = (origem.periciasSugeridas || []).slice();
+  const arranjo = arranjoAleatorioDeAtributos();
+  db.atributos.forEach((a, i) => { personagem.atributos[a.id] = arranjo[i]; });
+  personagem.escalaAtributos = "t20";
+  personagem.periciasTreinadas = [];
+  aplicarAutomacaoAleatoria(raca, classe, origem);
   salvarERenderizar();
   toast(`Personagem aleatório gerado: ${personagem.nome}.`);
 }
@@ -2424,6 +3402,8 @@ function registrarEventosExtra() {
   });
 
   $("btn-pdf-topo")?.addEventListener("click", () => window.print());
+  $("btn-dados")?.addEventListener("click", renderDiceRollerModal);
+  $("btn-subir-nivel")?.addEventListener("click", subirDeNivel);
 
   // Construção
   document.querySelectorAll("#creation-mode-toggle [data-modo]").forEach((b) => b.addEventListener("click", () => setCreationMode(b.dataset.modo)));
@@ -2492,8 +3472,10 @@ function rolarDado(lados, bonus, rotulo, opts = {}) {
   const bruto = regras.rollDie(lados);
   const total = bruto + bonus;
   const critico = bruto === lados ? " 🎉 CRÍTICO!" : bruto === 1 ? " 💥 falha crítica" : "";
-  toast(`${rotulo}: d${lados} (${bruto}) ${formatarMod(bonus)} = ${total}${critico}`);
-  broadcastRoll(rotulo, `d${lados} (${bruto}) ${formatarMod(bonus)}${critico}`, total, opts);
+  const detalhe = `d${lados} (${bruto}) ${formatarMod(bonus)}${critico}`;
+  toast(`${rotulo}: ${detalhe} = ${total}`);
+  registrarNoHistorico(rotulo, detalhe, total);
+  broadcastRoll(rotulo, detalhe, total, opts);
   return total;
 }
 

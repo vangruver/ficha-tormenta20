@@ -1,9 +1,44 @@
 // Fórmulas do sistema Tormenta 20 (Jogo Básico).
-// Números de progressão de classe (PV/PM) são estimativas revisadas manualmente — ver README.
+//
+// As fórmulas abaixo seguem o livro básico:
+//   • Perícia   = metade do nível (arred. baixo) + mod. do atributo-chave
+//                 + bônus de treino (+2; +4 no 7º nível; +6 no 15º)
+//                 + outros − penalidade de armadura.
+//   • PV        = (PV inicial + mod. Con) + (PV por nível + mod. Con) × (nível − 1).
+//   • PM        = PM inicial + PM por nível × (nível − 1). PM NÃO soma atributo.
+//   • Defesa    = 10 + mod. Des + armadura + escudo + outros.
+//   • Poderes   = um poder de classe no 2º nível e a cada nível seguinte.
 
+// Em Tormenta 20 o valor do atributo JÁ É o modificador: um personagem tem
+// "Força 2", não "Força 14". Não existe a conversão (valor − 10) ÷ 2 do d20.
+// A função continua existindo (e é usada em toda a ficha) só para deixar
+// explícito, em cada conta, que ali entra o modificador.
 export function mod(valor) {
-  if (valor === null || valor === undefined || Number.isNaN(valor)) return 0;
-  return Math.floor((valor - 10) / 2);
+  const n = Number(valor);
+  return Number.isFinite(n) ? n : 0;
+}
+
+// Conversão de fichas/estatísticas antigas escritas na escala d20 (3–20) para
+// a escala de T20. Usada na migração de personagens salvos e para mostrar o
+// modificador equivalente das ameaças do compêndio, que vieram em escala d20.
+export function modDeEscalaD20(valor) {
+  const n = Number(valor);
+  return Number.isFinite(n) ? Math.floor((n - 10) / 2) : 0;
+}
+
+// Compra de atributos do livro básico: todos começam em 0, você tem 10 pontos,
+// e pode baixar um atributo para −1 para ganhar 1 ponto extra.
+export const PONTOS_ATRIBUTOS = 10;
+export const CUSTO_ATRIBUTO = { "-1": -1, 0: 0, 1: 1, 2: 2, 3: 4, 4: 7 };
+export function custoDoAtributo(valor) {
+  const n = Math.round(Number(valor) || 0);
+  if (CUSTO_ATRIBUTO[n] !== undefined) return CUSTO_ATRIBUTO[n];
+  // Acima de +4 a tabela não vai: cada ponto extra custa 4 (extrapolação, e a
+  // ficha nunca impede — o número é só um guia de criação).
+  return n > 4 ? CUSTO_ATRIBUTO[4] + (n - 4) * 4 : n;
+}
+export function custoTotalAtributos(atributos) {
+  return Object.values(atributos || {}).reduce((soma, v) => soma + custoDoAtributo(v), 0);
 }
 
 export function fmt(n) { n = Number(n || 0); return n >= 0 ? `+${n}` : `${n}`; }
@@ -21,31 +56,38 @@ export function parseDiceExpr(expr) {
   return { n: Number(m[1] || 1), faces: Number(m[2]), bonus: m[3] ? Number(m[3].replace(/\s+/g, "")) : 0 };
 }
 
-// Bônus de treino de perícia: metade do nível (arred. p/ cima) + 2, mínimo +2, só se treinado.
+// Metade do nível (arredondada para baixo) — entra em TODO teste de perícia,
+// treinada ou não.
+export function metadeNivel(nivel) { return Math.floor(Math.max(1, Number(nivel) || 1) / 2); }
+
+// Bônus de treino: +2 do 1º ao 6º nível, +4 do 7º ao 14º, +6 a partir do 15º.
 export function bonusTreino(nivel, treinado) {
   if (!treinado) return 0;
-  const n = Math.max(1, nivel || 1);
-  return Math.ceil(n / 2) + 2;
+  const n = Math.max(1, Number(nivel) || 1);
+  if (n >= 15) return 6;
+  if (n >= 7) return 4;
+  return 2;
 }
 
 export function bonusPericia({ nivel, treinado, modAtributo, outros = 0, penalidadeArmadura = 0 }) {
-  return bonusTreino(nivel, treinado) + (modAtributo || 0) + (outros || 0) - (penalidadeArmadura || 0);
+  return metadeNivel(nivel) + bonusTreino(nivel, treinado) + (modAtributo || 0) + (outros || 0) - (penalidadeArmadura || 0);
 }
 
-export function pvMaximo({ classe, nivel, modCon, extra = 0 }) {
+export function pvMaximo({ classe, nivel, modCon, extraNivel1 = 0, extraPorNivel = 0, extra = 0 }) {
   if (!classe) return null;
-  const n = Math.max(1, nivel || 1);
-  const inicial = (classe.pvInicial ?? 0) + modCon;
-  const porNivel = (classe.pvPorNivel ?? 0) + modCon;
+  const n = Math.max(1, Number(nivel) || 1);
+  const inicial = (classe.pvInicial ?? 0) + modCon + extraNivel1;
+  const porNivel = (classe.pvPorNivel ?? 0) + modCon + extraPorNivel;
   return Math.max(1, inicial + porNivel * (n - 1) + extra);
 }
 
-export function pmMaximo({ classe, nivel, atributos, extra = 0 }) {
-  if (!classe || !classe.pmAtributo) return extra;
-  const n = Math.max(1, nivel || 1);
-  const modChave = mod(atributos?.[classe.pmAtributo]);
-  const inicial = (classe.pmInicial ?? 0) + modChave;
-  const porNivel = (classe.pmPorNivel ?? 0) + modChave;
+// PM em T20 é um valor fixo por classe/nível — nenhum atributo entra na conta.
+// Traços raciais (Sangue Mágico do elfo, por exemplo) entram por extraPorNivel.
+export function pmMaximo({ classe, nivel, extraPorNivel = 0, extra = 0 }) {
+  if (!classe) return extra;
+  const n = Math.max(1, Number(nivel) || 1);
+  const inicial = (classe.pmInicial ?? 0) + extraPorNivel;
+  const porNivel = (classe.pmPorNivel ?? 0) + extraPorNivel;
   return Math.max(0, inicial + porNivel * (n - 1) + extra);
 }
 
@@ -54,11 +96,7 @@ export function defesaTotal({ modDes, armadura = 0, escudo = 0, outros = 0, temp
   return 10 + des + armadura + escudo + outros + temp;
 }
 
-export function iniciativa({ modDes, outros = 0 }) {
-  return modDes + outros;
-}
-
-// Deslocamento reduzido pela carga (regra simplificada de "carga máxima").
+// Carga máxima em espaços/quilos suportados sem penalidade.
 export function cargaMaxima(modFor) {
   const base = [1, 3, 6, 10, 15, 20, 25, 30, 40, 50];
   const f = Math.max(-5, Math.min(4, modFor));
@@ -66,9 +104,16 @@ export function cargaMaxima(modFor) {
   return base[idx] ?? 50 + (f - 4) * 10;
 }
 
-export function treinosIniciaisTotal({ classe, modInt }) {
+// Perícias treinadas iniciais: as fixas da classe + as escolhidas na lista da
+// classe (número da classe + mod. Inteligência) + as 2 da origem + as raciais.
+export function escolhasDePericiaDaClasse({ classe, modInt }) {
   if (!classe) return 0;
-  return Math.max(1, (classe.treinosIniciais ?? 2) + modInt);
+  return Math.max(0, (classe.treinosIniciais ?? 2) + (modInt || 0));
+}
+
+// Poderes de classe: um no 2º nível e um a cada nível seguinte.
+export function poderesDeClassePorNivel(nivel) {
+  return Math.max(0, (Math.max(1, Number(nivel) || 1)) - 1);
 }
 
 // "PV alto/médio/baixo" para a barra colorida do dashboard.
@@ -83,4 +128,22 @@ export function faixaPV(atual, maximo) {
 
 export const CIRCULOS_MAGIA = ["1", "2", "3", "4", "5"];
 
-export const NIVEIS_ATRIBUTO = [1, 4, 8, 12, 16, 19]; // níveis em que T20 concede pontos de atributo (regra da "melhoria de atributo")
+// Escudos não vêm com bônus de Defesa no compêndio (eles estão catalogados
+// como armas); os valores do livro básico ficam aqui.
+export const BONUS_ESCUDO = { "escudo leve": 1, "escudo pesado": 2 };
+
+// Lê "Armadura Leve/Pesada", "+X Defesa" e "-Y Penalidade de Armadura" do texto
+// descritivo dos itens do compêndio, que é onde esses números vivem.
+export function lerArmadura(item) {
+  const txt = `${item?.nome || ""}\n${item?.descricao || ""}`;
+  const escudo = BONUS_ESCUDO[String(item?.nome || "").trim().toLowerCase()];
+  if (escudo) return { tipo: "escudo", defesa: escudo, penalidade: 0 };
+  if (!/armadura\s+(leve|pesada)/i.test(txt)) return null;
+  const def = txt.match(/\+\s*(\d+)\s*Defesa/i);
+  const pen = txt.match(/[-–—]\s*(\d+)\s*Penalidade/i);
+  return {
+    tipo: /armadura\s+pesada/i.test(txt) ? "armadura pesada" : "armadura leve",
+    defesa: def ? Number(def[1]) : 0,
+    penalidade: pen ? Number(pen[1]) : 0,
+  };
+}

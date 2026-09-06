@@ -16,6 +16,23 @@ function salvarLista(lista) {
   localStorage.setItem(KEY_LISTA, JSON.stringify(lista));
 }
 
+// Escolhas que a automação da ficha precisa guardar: tudo que o livro manda
+// *escolher* (atributos raciais do humano, perícias da classe/origem, poder de
+// origem...) e que, por isso, a ficha não consegue deduzir sozinha a partir de
+// raça/classe/origem/nível.
+export function escolhasVazias() {
+  return {
+    atributosRaciais: [],        // humano/lefou/osteon/sereia: 3 atributos +1
+    legadoRacial: "",            // suraggel: "aggelus" | "sulfure"
+    periciasClasseFixa: {},      // grupo "Luta ou Pontaria" → id escolhido
+    periciasClasse: [],          // perícias escolhidas na lista da classe
+    periciasOrigem: [],          // 2 perícias da lista da origem
+    periciasRaciais: [],         // humano (2), kliren (1), osteon (1)
+    bonusPericiasRaciais: [],    // lefou: 2 perícias com +2
+    poderOrigem: "",             // poder concedido pela origem
+  };
+}
+
 export function novoPersonagem(nome = "Novo Herói") {
   return {
     id: crypto.randomUUID(),
@@ -23,7 +40,10 @@ export function novoPersonagem(nome = "Novo Herói") {
     jogador: "",
     raca: "", classe: "", origem: "", divindade: "",
     nivel: 1,
-    atributos: { for: 10, des: 10, con: 10, int: 10, sab: 10, car: 10 },
+    escolhas: escolhasVazias(),
+    // Escala de T20: o valor do atributo já é o modificador e começa em 0.
+    escalaAtributos: "t20",
+    atributos: { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 },
     atributosTemp: { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 },
     pv: { atual: 0, maximo: null, temp: 0 },
     pm: { atual: 0, maximo: null, temp: 0 },
@@ -49,11 +69,45 @@ export function novoPersonagem(nome = "Novo Herói") {
 
 export function listarPersonagens() {
   const lista = lerLista();
-  return Object.values(lista).sort((a, b) => (a.atualizadoEm < b.atualizadoEm ? 1 : -1));
+  return Object.values(lista).map(migrarPersonagem).sort((a, b) => (a.atualizadoEm < b.atualizadoEm ? 1 : -1));
 }
 
 export function carregarPersonagem(id) {
-  return lerLista()[id] ?? null;
+  const p = lerLista()[id];
+  return p ? migrarPersonagem(p) : null;
+}
+
+// Fichas salvas antes de um campo existir continuam abrindo: o migrador só
+// preenche o que falta, nunca sobrescreve o que já está lá.
+export function migrarPersonagem(p) {
+  if (!p || typeof p !== "object") return p;
+  const base = escolhasVazias();
+  p.escolhas = { ...base, ...(p.escolhas || {}) };
+  for (const k of Object.keys(base)) {
+    if (Array.isArray(base[k]) && !Array.isArray(p.escolhas[k])) p.escolhas[k] = [];
+    if (base[k] && typeof base[k] === "object" && !Array.isArray(base[k]) && typeof p.escolhas[k] !== "object") p.escolhas[k] = {};
+  }
+  p.atributos = p.atributos || { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 };
+  // Fichas criadas quando a ficha ainda usava a escala d20 (atributos 8–18 com
+  // modificador (valor − 10) ÷ 2) são convertidas uma única vez para a escala
+  // de T20, em que o valor já é o modificador.
+  if (p.escalaAtributos !== "t20") {
+    const precisaConverter = Object.values(p.atributos).some((v) => Number(v) >= 6);
+    if (precisaConverter) {
+      for (const k of Object.keys(p.atributos)) p.atributos[k] = Math.floor(((Number(p.atributos[k]) || 10) - 10) / 2);
+    }
+    p.escalaAtributos = "t20";
+  }
+  p.atributosTemp = p.atributosTemp || { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 };
+  p.periciasOutros = p.periciasOutros || {};
+  for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp"]) {
+    if (!Array.isArray(p[k])) p[k] = [];
+  }
+  for (const item of p.equipamentos) if (item && item.equipado === undefined) item.equipado = false;
+  p.pv = p.pv || { atual: 0, maximo: null, temp: 0 };
+  p.pm = p.pm || { atual: 0, maximo: null, temp: 0 };
+  p.dinheiro = p.dinheiro || { to: 0, tp: 0, tc: 0, tt: 0 };
+  return p;
 }
 
 export function salvarPersonagem(personagem) {
@@ -93,7 +147,7 @@ export function exportarJSON(personagem) {
 }
 
 export function importarJSON(texto) {
-  const dados = JSON.parse(texto);
+  const dados = migrarPersonagem(JSON.parse(texto));
   if (!dados.id) dados.id = crypto.randomUUID();
   salvarPersonagem(dados);
   return dados;

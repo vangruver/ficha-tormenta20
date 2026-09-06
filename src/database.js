@@ -81,8 +81,15 @@ export function poderesDaRaca(db, racaId) {
   return poderesDe(db, { categoria: "racial", subtipo: raca.nome.split(" ")[0] });
 }
 
+// O compêndio traz o subtipo do poder de origem com o nome da origem, mas
+// alguns vêm com espaço faltando ("Assistentede Laboratório") — por isso a
+// comparação ignora espaços além de acentos e caixa.
+function semEspacos(txt) { return normalizar(txt).replace(/\s+/g, ""); }
+
 export function poderesDaOrigem(db, origemId) {
-  return poderesDe(db, { categoria: "origem", subtipo: origemId });
+  const alvo = semEspacos(origemId);
+  if (!alvo) return [];
+  return db.poderes.filter((p) => p.categoria === "origem" && semEspacos(p.subtipo) === alvo);
 }
 
 export function poderesGerais(db, subtipo) {

@@ -591,6 +591,11 @@ body.view-only .toolbar > button:not(#btn-pdf):not(.link-btn), body.view-only .m
   .aba { display: block !important; }
   main { max-width: 100%; }
   .cartao { box-shadow: none; break-inside: avoid; }
+  /* O painel de automação e os contadores são guias de construção, não fazem
+     parte da ficha impressa — o resultado deles (perícias, poderes, Defesa)
+     já aparece nas tabelas. */
+  .auto-blocos, .chip-lista, .alerta-automacao, .ok-automacao, .filtro-linha, .wizard, .creation-mode-toggle { display: none !important; }
+  .resumo-treinos-conta, .dica-inline { color: #444; }
 }
 
 @media (max-width: 640px) {
@@ -598,3 +603,65 @@ body.view-only .toolbar > button:not(#btn-pdf):not(.link-btn), body.view-only .m
   .brand h1 { font-size: 1rem; }
   .brand-mark { display: none; }
 }
+
+/* ============================================================
+   Automação da ficha — painel de escolhas da aba Construção, resumos
+   ("X de Y perícias", "faltam N poderes") e marcações do que veio de
+   raça/classe/origem. Ver blocosDeAutomacao() em src/app.js.
+   ============================================================ */
+.auto-blocos { display: grid; gap: 0.6em; margin: 0.6em 0; }
+.auto-bloco {
+  border: 1px solid var(--linha); border-left: 3px solid var(--border-2);
+  background: var(--surface); border-radius: var(--radius-xs); padding: 0.6em 0.75em;
+}
+.auto-bloco.pendente { border-left-color: var(--vinho); background: var(--red-soft); }
+.auto-bloco.ok { border-left-color: var(--verde); }
+.auto-bloco.info { border-left-color: var(--ouro); }
+.auto-bloco header { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5em; }
+.auto-bloco header b { color: var(--vinho); }
+.auto-bloco p { margin: 0.35em 0 0; font-size: 0.85rem; color: var(--text-dim); }
+.auto-fonte { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-mut); }
+.auto-chip { font-size: 0.68rem; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
+.auto-chip.pendente { color: var(--vinho); }
+.auto-chip.ok { color: var(--verde); }
+.auto-chip.info { color: var(--text-mut); }
+.auto-status.pendente { color: var(--vinho); }
+
+.chip-lista { display: flex; flex-wrap: wrap; gap: 0.35em; margin-top: 0.5em; }
+.chip {
+  display: inline-flex; align-items: baseline; gap: 0.35em;
+  border: 1px solid var(--linha); background: var(--inset); color: var(--tinta);
+  border-radius: 999px; padding: 0.25em 0.7em; font-size: 0.8rem; cursor: pointer;
+}
+.chip:hover { border-color: var(--vinho); }
+.chip.ativo { background: var(--vinho); border-color: var(--vinho); color: #fff; }
+.chip.ativo small { color: rgba(255,255,255,.85); }
+.chip small { font-size: 0.68rem; color: var(--text-mut); }
+.chip.limpar, .chip.acao { border-style: dashed; }
+
+.resumo-automacao { margin-bottom: 0.7em; font-size: 0.85rem; }
+.resumo-treinos-linha { color: var(--tinta); }
+.resumo-treinos-conta { font-size: 0.78rem; color: var(--text-mut); margin-top: 0.15em; }
+.alerta-automacao {
+  margin-top: 0.4em; padding: 0.4em 0.6em; border-radius: var(--radius-xs);
+  background: var(--red-soft); color: var(--vinho); font-size: 0.82rem;
+}
+.ok-automacao { margin-top: 0.4em; font-size: 0.82rem; color: var(--verde); }
+.lista-ganhos { margin: 0.4em 0 0.8em 1.1em; font-size: 0.9rem; }
+.lista-ganhos li { margin-bottom: 0.25em; }
+
+.tag.auto { background: var(--vinho); color: #fff; }
+.tag.classe { background: var(--surface-3); color: var(--text-dim); }
+.tag.alerta { background: var(--vermelho); color: #fff; }
+.dica-inline { display: block; font-size: 0.7rem; color: var(--text-mut); }
+.filtro-check { display: inline-flex; align-items: center; gap: 0.35em; font-size: 0.82rem; white-space: nowrap; }
+.tabela-pericias tr.bloqueada td { opacity: 0.65; }
+.requisito-nao-atendido { opacity: 0.6; }
+.poder-auto { background: var(--surface-3); }
+
+.atributo-caixa .rolar-atributo { margin-top: 0.3em; font-size: 0.8rem; padding: 0.15em 0.5em; }
+.col-rolagens { display: flex; gap: 0.3em; flex-wrap: wrap; align-items: center; }
+.tabela-equip tr.equipado { background: var(--red-soft); }
+.carga-excedida { color: var(--vermelho); font-weight: bold; }
+.chip.repetida { border-style: dashed; opacity: 0.7; }
+.chip.repetida small { color: var(--vermelho); }

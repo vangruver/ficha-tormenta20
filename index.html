@@ -41,6 +41,7 @@
     <details class="menu" id="menu-ferramentas">
       <summary data-i18n="menu.tools">Ferramentas</summary>
       <div class="menu-body">
+        <button id="btn-dados" data-i18n="menu.diceRoller" data-i18n-title="menu.diceRoller.title" title="Rolador de dados: expressões livres e os testes da ficha, com ou sem sala">🎲 Rolador de dados</button>
         <button id="btn-discord" data-i18n="menu.discordSettings" data-i18n-title="menu.discordSettings.title" title="Enviar rolagens pro Discord">🔗 Discord</button>
         <button id="btn-sala" data-i18n="menu.roomSettings" data-i18n-title="menu.roomSettings.title" title="Configurar a sala de rolagens compartilhada com o grupo">💬 Sala de rolagens</button>
         <button id="btn-mestre" data-i18n="menu.mestreMode" data-i18n-title="menu.mestreMode.title" title="Ambiente do mestre: listas de ameaças, bestiário oficial e criação de ameaças">🐉 Ambiente do Mestre</button>
@@ -124,8 +125,13 @@
       <div id="dash-deslocamento" class="dash-numero">9m</div>
     </div>
     <div class="dash-item">
+      <label>Penal. armadura</label>
+      <div id="dash-penalidade" class="dash-numero">0</div>
+    </div>
+    <div class="dash-item">
       <label>Nível</label>
       <input id="nivel" type="number" min="1" max="20" value="1" />
+      <div class="dash-botoes"><button id="btn-subir-nivel" title="Sobe um nível e mostra o que mudou">⬆️ Subir de nível</button></div>
     </div>
   </div>
   </section>
@@ -200,6 +206,7 @@
       <div class="auto-panel-title"><div><span>AUTOMAÇÃO DA FICHA</span><small>Traços e habilidades iniciais vindos da raça/classe escolhidas, aplicados automaticamente.</small></div><span id="auto-status" class="auto-status">Aguardando seleção</span></div>
       <div id="auto-choices" class="auto-choices">
         <p id="auto-empty" class="dica">Escolha uma raça e uma classe para ver as automações aqui.</p>
+        <div id="auto-blocos" class="auto-blocos"></div>
         <details id="racaInfo" class="info-auto"></details>
         <details id="classeInfo" class="info-auto"></details>
       </div>
@@ -226,7 +233,8 @@
     <div class="cartao">
       <h2>Atributos</h2>
       <div id="atributos" class="grade-atributos"></div>
-      <p class="dica">Os valores já incluem os bônus/penalidades raciais aplicados automaticamente ao trocar de raça. Ajuste livremente.</p>
+      <div id="resumo-atributos" class="resumo-automacao"></div>
+      <p class="dica">Em Tormenta 20 <b>o valor do atributo já é o modificador</b> — um herói com Força 2 soma +2, não existe "Força 14". Os bônus raciais entram sozinhos ao escolher a raça.</p>
     </div>
 
     <div class="cartao">
@@ -251,7 +259,11 @@
   <section id="aba-pericias" class="aba">
     <div class="cartao">
       <h2>Perícias</h2>
-      <p class="dica">Treinos usados: <span id="treinos-usados">0</span> / sugerido <span id="treinos-sugeridos">2</span> (classe + Inteligência). Marque livremente — o número é só um guia.</p>
+      <div id="resumo-treinos" class="resumo-automacao"></div>
+      <div class="filtro-linha">
+        <input id="pericias-busca" type="search" placeholder="Buscar perícia..." />
+        <label class="filtro-check"><input type="checkbox" id="pericias-so-classe" /> Só perícias da minha classe</label>
+      </div>
       <table class="tabela-pericias">
         <thead><tr><th></th><th>Perícia</th><th>Atributo</th><th>Bônus</th><th></th></tr></thead>
         <tbody id="lista-pericias"></tbody>
@@ -263,7 +275,8 @@
   <section id="aba-poderes" class="aba">
     <div class="cartao">
       <h2>Poderes do personagem</h2>
-      <p class="dica">Poderes esperados neste nível: <span id="poderes-esperados">0</span> · Escolhidos: <span id="poderes-escolhidos-n">0</span></p>
+      <p class="dica">Poderes que este nível concede: <span id="poderes-esperados">0</span> · Escolhidos: <span id="poderes-escolhidos-n">0</span></p>
+      <div id="resumo-poderes" class="resumo-automacao"></div>
       <ul id="lista-poderes-personagem" class="lista-poderes"></ul>
     </div>
     <div class="cartao">
@@ -278,6 +291,7 @@
           <option value="concedido">Concedido</option>
         </select>
         <input id="poderes-busca" type="search" placeholder="Buscar poder..." />
+        <label class="filtro-check"><input type="checkbox" id="poderes-so-disponiveis" /> Só os que eu posso pegar</label>
       </div>
       <ul id="lista-poderes-catalogo" class="lista-poderes"></ul>
     </div>
@@ -330,6 +344,7 @@
   <section id="aba-equipamentos" class="aba">
     <div class="cartao">
       <h2>Inventário</h2>
+      <div id="resumo-carga" class="resumo-automacao"></div>
       <table class="tabela-equip">
         <thead><tr><th>Item</th><th>Qtd</th><th>Peso</th><th></th></tr></thead>
         <tbody id="lista-inventario"></tbody>
