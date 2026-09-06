@@ -1,6 +1,7 @@
 import { carregarBanco, porId, poderesDe, poderesDaClasse, poderesDaRaca, poderesDaOrigem, poderesGerais, magiasFiltradas, equipamentosFiltrados, ameacasFiltradas, panteaoFiltrado } from "./database.js";
 import * as regras from "./rules.js";
 import * as storage from "./storage.js";
+import { applyI18n, setLang, getLang, t } from "./i18n.js";
 
 const CONDICOES = [
   { id: "abalado", nome: "Abalado", efeito: "-2 em testes de perícia, de resistência e de ataque." },
@@ -32,21 +33,31 @@ let db = null;
 let personagem = null;
 
 async function iniciar() {
+  applySkin(storage.getSavedSkin());
   db = await carregarBanco();
   preencherDivindades();
   preencherSelectsEstáticos();
 
-  const ativoId = storage.getPersonagemAtivoId();
-  personagem = (ativoId && storage.carregarPersonagem(ativoId)) || storage.listarPersonagens()[0] || storage.novoPersonagem();
-  storage.setPersonagemAtivoId(personagem.id);
-  storage.salvarPersonagem(personagem);
+  const compartilhado = await decodeShareHash(location.hash);
+  if (compartilhado) {
+    personagem = compartilhado;
+    personagem.notas = personagem.notas || []; // fora do link de propósito (privacidade) — ver shareSnapshot()
+  } else {
+    const ativoId = storage.getPersonagemAtivoId();
+    personagem = (ativoId && storage.carregarPersonagem(ativoId)) || storage.listarPersonagens()[0] || storage.novoPersonagem();
+    storage.setPersonagemAtivoId(personagem.id);
+    storage.salvarPersonagem(personagem);
+  }
 
   renderizarTudo();
-  verificarAtualizacaoDados();
+  if (!compartilhado) verificarAtualizacaoDados();
   registrarEventos();
   registrarEventosSala();
+  registrarEventosExtra();
   registrarServiceWorker();
   atualizarBannerDisclaimer();
+  if (compartilhado) enterViewOnlyMode();
+  applyI18n();
 }
 
 function atualizarBannerDisclaimer() {
@@ -127,6 +138,7 @@ function calcularDerivados() {
 
 function renderizarTudo() {
   renderIdentidade();
+  renderConstrucao();
   renderAtributos();
   renderDashboard();
   renderPericias();
@@ -160,12 +172,14 @@ function renderIdentidade() {
   racaInfo.innerHTML = r
     ? `<summary>Traços de ${r.nome}</summary><p>${r.traços}</p><p><em>Deslocamento: ${r.deslocamento} · Tamanho: ${r.tamanho}</em></p>`
     : "";
+  racaInfo.classList.toggle("hidden", !r);
 
   const c = classeAtual();
   const classeInfo = document.getElementById("classeInfo");
   classeInfo.innerHTML = c
     ? `<summary>Habilidades iniciais de ${c.nome}</summary><p>${c.iniciais}</p><p><em>Atributo-chave: ${c.atributoChave.toUpperCase()} · Conjuração: ${c.conjuracao ?? "nenhuma"}</em></p>`
     : "";
+  classeInfo.classList.toggle("hidden", !c);
 }
 
 function renderAtributos() {
@@ -1823,6 +1837,506 @@ function renderDisclaimerModal() {
 }
 
 // ==============================================================
+// Construção do personagem (aba "Construção") — cartões de escolha pra
+// raça/classe/origem/divindade (em vez de <select> nu), com um modo
+// "guiado" (passo a passo) além do modo livre (os 4 cartões de uma vez).
+// Os <select> originais (#raca/#classe/#origem/#divindade, agora ocultos
+// na aba Ficha) continuam sendo a fonte da verdade — os cartões só leem o
+// valor deles e, ao escolher algo no seletor, mudam o <select> e disparam
+// "change" nele, reaproveitando os listeners já registrados em
+// registrarEventos().
+// ==============================================================
+const CHOICE_KINDS = ["raca", "classe", "origem", "divindade"];
+let creationMode = "livre"; // "livre" | "guiado"
+let wizardStepIndex = 0;
+const WIZARD_STEPS = ["raca", "classe", "origem", "divindade"];
+
+function nomePericia(id) { return db.pericias.find((p) => p.id === id)?.nome || id; }
+
+function pickerOptionsFor(kind) {
+  if (kind === "raca") return db.racas.map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}`, desc: r.traços }));
+  if (kind === "classe") return db.classes.map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}`, desc: c.iniciais }));
+  if (kind === "origem") return db.origens.map((o) => ({ id: o.id, nome: o.id, meta: "Origem", desc: `Perícias sugeridas: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}` }));
+  if (kind === "divindade") return db.panteao.map((d) => ({ id: d.nome, nome: d.nome, meta: "Divindade", desc: (d.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220) }));
+  return [];
+}
+function valorAtualDoCampo(kind) { return document.getElementById(kind).value; }
+function definirCampo(kind, id) {
+  const sel = document.getElementById(kind);
+  sel.value = id;
+  sel.dispatchEvent(new Event("change"));
+}
+function labelDoCampo(kind, id) {
+  if (!id) return null;
+  return pickerOptionsFor(kind).find((o) => o.id === id) || null;
+}
+
+const CHOICE_DESC_VAZIO = {
+  raca: "Escolha uma raça para começar.",
+  classe: "Escolha uma classe para começar.",
+  origem: "Escolha uma origem.",
+  divindade: "Escolha uma divindade do panteão (opcional).",
+};
+function renderConstrucao() {
+  for (const kind of CHOICE_KINDS) {
+    const valor = valorAtualDoCampo(kind);
+    const opt = labelDoCampo(kind, valor);
+    const card = $(`choice-${kind}`);
+    if (!card) continue;
+    card.classList.toggle("selected", !!opt);
+    $(`choice-${kind}-value`).textContent = opt ? opt.nome : (kind === "divindade" ? "Nenhuma" : "Escolher…");
+    $(`choice-${kind}-meta`).textContent = opt ? opt.meta : (kind === "divindade" ? "Opcional" : "Nenhuma opção selecionada");
+    $(`choice-${kind}-desc`).textContent = opt ? (opt.desc || "").replace(/<[^>]+>/g, "").slice(0, 240) : CHOICE_DESC_VAZIO[kind];
+  }
+  const feitas = ["raca", "classe"].filter((k) => valorAtualDoCampo(k)).length;
+  $("auto-status").textContent = feitas === 2 ? "Construção completa" : `${feitas}/2 escolhas principais feitas`;
+  $("auto-empty")?.classList.toggle("hidden", feitas > 0);
+}
+
+function openPickerModal(kind) {
+  const titulos = { raca: "Escolher raça", classe: "Escolher classe", origem: "Escolher origem", divindade: "Escolher divindade" };
+  const opts = pickerOptionsFor(kind);
+  const atual = valorAtualDoCampo(kind);
+  $("modal-content").innerHTML = `<div class="modal-title"><div><span class="eyebrow">CONSTRUÇÃO</span><h2>${esc(titulos[kind])}</h2></div></div>
+    <div class="modal-body">
+      ${kind === "divindade" ? `<button type="button" class="change-choice" data-pick-opt="" style="margin-bottom:8px">— Nenhuma —</button>` : ""}
+      <div class="pick-list">${opts.map((o) => `
+        <button type="button" class="pick-card${o.id === atual ? " selected" : ""}" data-pick-opt="${esc(o.id)}">
+          <b>${esc(o.nome)}</b><small>${esc(o.meta)}</small>
+        </button>`).join("")}</div>
+    </div>`;
+  $("modal").classList.remove("hidden");
+  $("modal-content").querySelectorAll("[data-pick-opt]").forEach((b) => b.addEventListener("click", () => {
+    definirCampo(kind, b.dataset.pickOpt);
+    $("modal").classList.add("hidden");
+    if (creationMode === "guiado") avancarWizardSeSelecionado();
+  }));
+}
+
+function wizardStepBodyHtml(kind) {
+  const opts = pickerOptionsFor(kind);
+  const atual = valorAtualDoCampo(kind);
+  const titulos = { raca: "Escolha uma raça", classe: "Escolha uma classe", origem: "Escolha uma origem", divindade: "Escolha uma divindade (opcional)" };
+  return `<p class="dica">${esc(titulos[kind])}</p>
+    ${kind === "divindade" ? `<button type="button" class="change-choice" data-wiz-opt="" style="margin-bottom:8px">— Nenhuma —</button>` : ""}
+    <div class="pick-list">${opts.map((o) => `
+      <button type="button" class="pick-card${o.id === atual ? " selected" : ""}" data-wiz-opt="${esc(o.id)}">
+        <b>${esc(o.nome)}</b><small>${esc(o.meta)}</small>
+      </button>`).join("")}</div>`;
+}
+function renderWizard() {
+  const kind = WIZARD_STEPS[wizardStepIndex];
+  $("wizard-steps").innerHTML = WIZARD_STEPS.map((k, i) => {
+    const done = !!valorAtualDoCampo(k);
+    return `<span class="wizard-step-chip${i === wizardStepIndex ? " active" : ""}${done ? " done" : ""}">${i + 1}. ${k[0].toUpperCase()}${k.slice(1)}${done ? " ✓" : ""}</span>`;
+  }).join("");
+  $("wizard-body").innerHTML = wizardStepBodyHtml(kind);
+  $("wizard-body").querySelectorAll("[data-wiz-opt]").forEach((b) => b.addEventListener("click", () => {
+    definirCampo(kind, b.dataset.wizOpt);
+    renderWizard();
+  }));
+  $("wizard-progress").textContent = `Passo ${wizardStepIndex + 1} de ${WIZARD_STEPS.length}`;
+  $("wizard-back").disabled = wizardStepIndex === 0;
+  $("wizard-next").textContent = wizardStepIndex === WIZARD_STEPS.length - 1 ? "Concluir ✓" : "Próximo →";
+}
+function avancarWizardSeSelecionado() {
+  if (wizardStepIndex < WIZARD_STEPS.length - 1) { wizardStepIndex++; renderWizard(); }
+}
+function setCreationMode(mode) {
+  creationMode = mode;
+  document.querySelectorAll("#creation-mode-toggle [data-modo]").forEach((b) => b.classList.toggle("active", b.dataset.modo === mode));
+  $("wizard").classList.toggle("hidden", mode !== "guiado");
+  $("modo-livre-conteudo").classList.toggle("hidden", mode === "guiado");
+  if (mode === "guiado") { wizardStepIndex = 0; renderWizard(); }
+}
+
+const CHOICE_INFO = {
+  raca: "A raça define atributos, tamanho, deslocamento e traços iniciais do personagem.",
+  classe: "A classe define PV/PM iniciais, perícias de classe, atributo-chave e se o personagem conjura magias.",
+  origem: "A origem representa a vida do personagem antes da aventura — sugere perícias treinadas e concede um poder de origem.",
+  divindade: "Divindade opcional — relevante sobretudo pra Clérigos e Paladinos, e pra perícia de Religião.",
+};
+
+// ==============================================================
+// Modelos de personagem — construções (raça/classe/origem/divindade/
+// nível/atributos) salvas pra reaproveitar em personagens novos.
+// ==============================================================
+function templateSnapshot() {
+  return {
+    raca: personagem.raca, classe: personagem.classe, origem: personagem.origem, divindade: personagem.divindade,
+    nivel: personagem.nivel, atributos: { ...personagem.atributos },
+  };
+}
+function templateSummary(t) {
+  return `${porId(db.racas, t.raca)?.nome ?? "—"} · ${porId(db.classes, t.classe)?.nome ?? "—"} · nível ${t.nivel || 1}`;
+}
+function openTemplatesModal() {
+  const list = storage.getTemplates();
+  $("modal-content").innerHTML = `<div class="modal-title"><div><span class="eyebrow">MODELOS</span><h2>Meus Modelos</h2><p class="muted">Salve a construção atual (raça, classe, origem, divindade, nível e atributos) como modelo reaproveitável — não inclui nome, PV atual nem inventário.</p></div></div>
+    <div class="modal-body">
+      <div class="template-grid" id="template-grid">${list.length ? list.map((tp) => `<div class="template-card" data-template-id="${esc(tp.id)}"><b>${esc(tp.name)}</b><p>${esc(templateSummary(tp))}</p><div class="template-card-actions"><button type="button" class="primary" data-use-template="${esc(tp.id)}">Usar</button><button type="button" class="perigo" data-delete-template="${esc(tp.id)}">Apagar</button></div></div>`).join("") : `<div class="template-empty">Nenhum modelo salvo ainda.</div>`}</div>
+      <div class="template-save-row"><input id="template-name" placeholder="Nome do novo modelo (ex.: Guerreiro Básico)"><button type="button" class="primary" id="template-save">💾 Salvar como modelo</button></div>
+    </div>`;
+  $("modal").classList.remove("hidden");
+  $("template-save").addEventListener("click", () => {
+    const name = $("template-name").value.trim();
+    if (!name) { toast("Dê um nome ao modelo."); return; }
+    const arr = storage.getTemplates();
+    arr.push({ id: `tpl-${Date.now()}`, name, ...templateSnapshot() });
+    storage.saveTemplates(arr);
+    toast(`Modelo "${name}" salvo.`);
+    openTemplatesModal();
+  });
+  $("modal-content").querySelectorAll("[data-use-template]").forEach((b) => b.addEventListener("click", () => {
+    const tp = storage.getTemplates().find((x) => x.id === b.dataset.useTemplate);
+    if (!tp) return;
+    personagem.raca = tp.raca; personagem.classe = tp.classe; personagem.origem = tp.origem; personagem.divindade = tp.divindade;
+    personagem.nivel = tp.nivel || 1; personagem.atributos = { ...personagem.atributos, ...(tp.atributos || {}) };
+    salvarERenderizar();
+    $("modal").classList.add("hidden");
+    toast(`Modelo "${tp.name}" aplicado.`);
+  }));
+  $("modal-content").querySelectorAll("[data-delete-template]").forEach((b) => b.addEventListener("click", () => {
+    if (!confirm("Apagar este modelo?")) return;
+    storage.saveTemplates(storage.getTemplates().filter((x) => x.id !== b.dataset.deleteTemplate));
+    openTemplatesModal();
+  }));
+}
+
+// ==============================================================
+// Personagem aleatório — sorteia raça, classe, origem, divindade e
+// atributos (4d6, descarta o menor, seis vezes) pra um personagem
+// pronto pra jogar.
+// ==============================================================
+const NOMES_ALEATORIOS = [
+  "Aldrin", "Bran", "Cassia", "Doriel", "Elenwe", "Fenris", "Galadur", "Helvi", "Ithir", "Jarik",
+  "Kaelen", "Liora", "Morwen", "Nerion", "Orwin", "Perah", "Quenna", "Rhandir", "Selune", "Torvald",
+];
+function rolarAtributoUnico() {
+  const rolls = Array.from({ length: 4 }, () => regras.rollDie(6)).sort((a, b) => b - a);
+  return rolls[0] + rolls[1] + rolls[2];
+}
+function gerarPersonagemAleatorio() {
+  const raca = db.racas[Math.floor(Math.random() * db.racas.length)];
+  const classe = db.classes[Math.floor(Math.random() * db.classes.length)];
+  const origem = db.origens[Math.floor(Math.random() * db.origens.length)];
+  const divindade = Math.random() < 0.5 ? db.panteao[Math.floor(Math.random() * db.panteao.length)] : null;
+  personagem.nome = `${NOMES_ALEATORIOS[Math.floor(Math.random() * NOMES_ALEATORIOS.length)]} de ${raca.nome}`;
+  personagem.raca = raca.id;
+  personagem.classe = classe.id;
+  personagem.origem = origem.id;
+  personagem.divindade = divindade ? divindade.nome : "";
+  for (const a of db.atributos) personagem.atributos[a.id] = rolarAtributoUnico();
+  personagem.periciasTreinadas = (origem.periciasSugeridas || []).slice();
+  salvarERenderizar();
+  toast(`Personagem aleatório gerado: ${personagem.nome}.`);
+}
+
+// ==============================================================
+// Link somente-leitura — codifica o personagem inteiro (sem notas) num
+// hash de URL (#share=gz:<dados>). Sem servidor: quem abre roda o mesmo
+// app; a ficha vira read-only até salvar uma cópia editável.
+// ==============================================================
+let viewOnlyMode = false;
+function base64UrlEncode(bytes) {
+  let bin = "";
+  bytes.forEach((b) => { bin += String.fromCharCode(b); });
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function base64UrlDecode(str) {
+  const b64 = str.replace(/-/g, "+").replace(/_/g, "/");
+  const bin = atob(b64 + (b64.length % 4 ? "=".repeat(4 - (b64.length % 4)) : ""));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+async function gzipEncode(text) {
+  const bytes = new TextEncoder().encode(text);
+  if (typeof CompressionStream === "undefined") return `raw:${base64UrlEncode(bytes)}`;
+  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream("gzip"));
+  return `gz:${base64UrlEncode(new Uint8Array(await new Response(stream).arrayBuffer()))}`;
+}
+async function gzipDecode(payload) {
+  const sep = payload.indexOf(":");
+  const mode = payload.slice(0, sep), bytes = base64UrlDecode(payload.slice(sep + 1));
+  if (mode === "raw") return new TextDecoder().decode(bytes);
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return new TextDecoder().decode(await new Response(stream).arrayBuffer());
+}
+function shareSnapshot(p) { const out = { ...p }; delete out.notas; return out; }
+async function buildShareUrl() {
+  const payload = await gzipEncode(JSON.stringify(shareSnapshot(personagem)));
+  const url = new URL(location.href);
+  url.hash = `share=${payload}`;
+  return url.toString();
+}
+async function decodeShareHash(hash) {
+  const m = /^#?share=(.+)$/.exec(hash || "");
+  if (!m) return null;
+  try { return JSON.parse(await gzipDecode(decodeURIComponent(m[1]))); }
+  catch (err) { console.error("Link somente-leitura inválido ou corrompido:", err); return null; }
+}
+const VIEW_ONLY_SAFE_IDS = new Set(["skin-select", "lang-select", "compendio-busca", "compendio-tipo", "poderes-busca", "poderes-filtro-categoria", "magias-busca", "magias-filtro-circulo", "equip-busca", "equip-filtro-tipo", "dashboard-toggle", "view-only-copy", "btn-pdf", "btn-pdf-topo"]);
+function lockViewOnlyControls() {
+  if (!viewOnlyMode) return;
+  document.querySelectorAll("main input, main textarea, main select").forEach((el) => { if (!VIEW_ONLY_SAFE_IDS.has(el.id)) el.disabled = true; });
+  document.querySelectorAll("main button").forEach((el) => { if (el.classList.contains("aba-btn") || VIEW_ONLY_SAFE_IDS.has(el.id)) return; el.disabled = true; });
+}
+function enterViewOnlyMode() {
+  viewOnlyMode = true;
+  document.body.classList.add("view-only");
+  document.querySelector('.aba-btn[data-aba="construcao"]')?.classList.add("hidden");
+  document.querySelectorAll(".aba-btn").forEach((b) => b.classList.remove("ativo"));
+  document.querySelectorAll(".aba").forEach((a) => a.classList.remove("ativo"));
+  document.querySelector('.aba-btn[data-aba="ficha"]')?.classList.add("ativo");
+  $("aba-ficha")?.classList.add("ativo");
+  ["btn-personagens", "btn-novo", "btn-templates", "btn-aleatorio", "input-importar", "btn-link-leitura"].forEach((id) => { const el = $(id); if (el) el.disabled = true; });
+  lockViewOnlyControls();
+  const banner = $("view-only-banner");
+  if (banner) {
+    banner.classList.remove("hidden");
+    $("view-only-text").textContent = `📖 Modo visualização — esta é a ficha de ${personagem.nome || "um personagem"}, aberta por um link somente-leitura. Nada é salvo neste navegador enquanto estiver assim.`;
+  }
+}
+
+// ==============================================================
+// Ambiente do Mestre — kit independente do personagem aberto: listas de
+// ameaças por mesa/campanha (bestiário oficial + criadas na mão), busca
+// no bestiário completo (298 ameaças centrais + 1850 da Coleção Arton) e
+// um jeito rápido de mandar uma ameaça pra iniciativa da sala com as
+// estatísticas reais dela (em vez de digitar tudo na mão em "Iniciativa").
+// ==============================================================
+let monsterState = { view: "roster", listId: "", fonte: "" };
+function genMonsterEntryId() { return `mon-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`; }
+// A "fonte" bruta de cada ameaça vem cheia de detalhe (capítulo/seção do
+// livro entre parênteses) — só o prefixo antes do "(" já separa as 3
+// origens reais dos dados (regras centrais, Compendium Extra, Coleção
+// Arton), o suficiente pra filtrar sem virar uma lista de 350+ opções.
+function fontePrincipal(a) { return (a.fonte || "").split(" (")[0]; }
+function ensureMonsterListsState() {
+  let lists = storage.getMonsterLists();
+  if (!lists.length) {
+    lists = [{ id: storage.newMonsterListId(), name: "Meus Monstros", monsters: [] }];
+    storage.saveMonsterLists(lists);
+  }
+  if (!monsterState.listId || !lists.some((l) => l.id === monsterState.listId)) {
+    monsterState.listId = storage.getActiveMonsterListId();
+    if (!lists.some((l) => l.id === monsterState.listId)) monsterState.listId = lists[0].id;
+    storage.setActiveMonsterListId(monsterState.listId);
+  }
+  return lists;
+}
+function activeMonsterList(lists) {
+  lists = lists || ensureMonsterListsState();
+  return lists.find((l) => l.id === monsterState.listId) || lists[0];
+}
+function renderMonsterListSelect(lists) {
+  lists = lists || ensureMonsterListsState();
+  const sel = $("monster-list-select");
+  if (!sel) return;
+  sel.innerHTML = lists.map((l) => `<option value="${esc(l.id)}"${l.id === monsterState.listId ? " selected" : ""}>${esc(l.name)} (${l.monsters.length})</option>`).join("");
+}
+function openMonsterListNameModal(mode) {
+  const lists = ensureMonsterListsState();
+  const current = mode === "rename" ? activeMonsterList(lists) : null;
+  $("modal-content").innerHTML = `<div class="modal-title"><div><span class="eyebrow">LISTA DE AMEAÇAS</span><h2>${mode === "rename" ? "Renomear lista" : "Nova lista"}</h2></div></div>
+    <div class="modal-body">
+      <label>Nome da lista<br><input id="ml-name" style="width:100%" value="${esc(current?.name || "")}" placeholder="Ex.: Mesa de sexta"></label>
+      <div class="linha-botoes-modal"><button type="button" id="ml-cancel">Cancelar</button><button type="button" class="primary" id="ml-save">${mode === "rename" ? "Renomear" : "Criar"}</button></div>
+    </div>`;
+  $("modal").classList.remove("hidden");
+  $("ml-name").focus();
+  $("ml-cancel").addEventListener("click", () => $("modal").classList.add("hidden"));
+  $("ml-save").addEventListener("click", () => {
+    const name = $("ml-name").value.trim();
+    if (!name) { toast("Dê um nome pra lista."); return; }
+    const freshLists = ensureMonsterListsState();
+    if (mode === "rename") { activeMonsterList(freshLists).name = name; }
+    else {
+      const nl = { id: storage.newMonsterListId(), name, monsters: [] };
+      freshLists.push(nl);
+      monsterState.listId = nl.id;
+      storage.setActiveMonsterListId(nl.id);
+    }
+    storage.saveMonsterLists(freshLists);
+    $("modal").classList.add("hidden");
+    renderMonsters();
+  });
+}
+function deleteActiveMonsterList() {
+  const lists = ensureMonsterListsState();
+  const target = activeMonsterList(lists);
+  if (!confirm(`Excluir a lista "${target.name}" e ${target.monsters.length} ameaça(s) nela?`)) return;
+  const remaining = lists.filter((l) => l.id !== target.id);
+  const finalLists = remaining.length ? remaining : [{ id: storage.newMonsterListId(), name: "Meus Monstros", monsters: [] }];
+  storage.saveMonsterLists(finalLists);
+  monsterState.listId = finalLists[0].id;
+  storage.setActiveMonsterListId(monsterState.listId);
+  renderMonsters();
+}
+function addMonsterToRoster(m) {
+  const lists = ensureMonsterListsState();
+  const target = activeMonsterList(lists);
+  const exists = target.monsters.some((x) => x.nome === m.nome && (x.fonte || "") === (m.fonte || ""));
+  if (!exists) target.monsters.push({ ...m, _id: genMonsterEntryId() });
+  storage.saveMonsterLists(lists);
+  toast(exists ? `"${m.nome}" já está em "${target.name}".` : `"${m.nome}" adicionado a "${target.name}".`);
+}
+function removeMonsterFromRoster(id) {
+  const lists = ensureMonsterListsState();
+  const target = activeMonsterList(lists);
+  target.monsters = target.monsters.filter((x) => x._id !== id);
+  storage.saveMonsterLists(lists);
+  renderMonsters();
+}
+function monsterCardHtml(m, opts = {}) {
+  return `<article class="catalog-card">
+    <div class="pick-top"><strong>${esc(m.nome || "Sem nome")}</strong><span class="tag ${m.custom ? "brew" : "official"}">${m.custom ? "CRIADA" : "OFICIAL"}${m.nd != null ? ` · ND ${esc(String(m.nd))}` : ""}</span></div>
+    <div class="pick-meta">${esc(m.tipo || "—")} · PV ${esc(String(m.pv ?? "?"))} · Defesa ${esc(String(m.defesa ?? "?"))}</div>
+    <div class="catalog-actions">
+      <button type="button" data-mon-view="${esc(opts.viewKey)}">ⓘ Ver detalhes</button>
+      ${opts.addable ? `<button type="button" class="add-btn" data-mon-add="${esc(opts.viewKey)}">+ Adicionar à lista</button>` : ""}
+      ${opts.removable ? `<button type="button" data-mon-init="${esc(m._id)}">⚔️ Add à iniciativa</button><button type="button" class="perigo" data-mon-remove="${esc(m._id)}">🗑️ Remover</button>` : ""}
+    </div>
+  </article>`;
+}
+function addMonsterToIniciativa(m) {
+  // m.atributos guarda o modificador de Tormenta 20 direto (não uma "pontuação"
+  // de atributo à moda d20 — ao contrário dos atributos do personagem nesta
+  // ficha, que passam por regras.mod()), então soma-se direto na iniciativa.
+  const init = regras.rollDie(20) + (Number(m.atributos?.des) || 0);
+  sendCombatAction("addManual", { name: m.nome, init, ac: Number(m.defesa) || 10, hpMax: Number(m.pv) || 1 });
+  toggleRoomChat(true);
+  document.querySelectorAll("#room-chat-tabs [data-roomtab]").forEach((x) => x.classList.toggle("active", x.dataset.roomtab === "combat"));
+  $("room-chat-list")?.classList.add("hidden");
+  $("room-chat-compose")?.classList.add("hidden");
+  $("room-combat-panel")?.classList.remove("hidden");
+  renderCombatTracker();
+  toast(`"${m.nome}" adicionado à iniciativa da sala (${regras.fmt(init)}).`);
+}
+function renderMonsters() {
+  const lists = ensureMonsterListsState();
+  renderMonsterListSelect(lists);
+  $("monster-browse-toolbar")?.classList.toggle("hidden", monsterState.view !== "browse");
+  const box = $("monster-results");
+  if (!box) return;
+  if (monsterState.view === "roster") {
+    const active = activeMonsterList(lists);
+    box.innerHTML = active.monsters.length
+      ? active.monsters.map((m) => monsterCardHtml(m, { viewKey: `roster:${m._id}`, removable: true })).join("")
+      : `<div class="empty">A lista "${esc(active.name)}" ainda está vazia. Adicione ameaças na aba "Bestiário Oficial" ou clique em "+ Criar ameaça".</div>`;
+    box.querySelectorAll("[data-mon-view]").forEach((b) => b.addEventListener("click", () => {
+      const id = b.dataset.monView.slice("roster:".length);
+      const m = activeMonsterList(ensureMonsterListsState()).monsters.find((x) => x._id === id);
+      if (m) abrirDetalheAmeaca(m);
+    }));
+    box.querySelectorAll("[data-mon-init]").forEach((b) => b.addEventListener("click", () => {
+      const m = activeMonsterList(ensureMonsterListsState()).monsters.find((x) => x._id === b.dataset.monInit);
+      if (m) addMonsterToIniciativa(m);
+    }));
+    box.querySelectorAll("[data-mon-remove]").forEach((b) => b.addEventListener("click", () => { if (confirm("Remover esta ameaça da lista?")) removeMonsterFromRoster(b.dataset.monRemove); }));
+    return;
+  }
+  // view === "browse"
+  const fonteSel = $("monster-fonte");
+  if (fonteSel && !fonteSel.dataset.filled) {
+    const fontes = [...new Set(db.ameacas.map(fontePrincipal).filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    fonteSel.insertAdjacentHTML("beforeend", fontes.map((f) => `<option value="${esc(f)}">${esc(f)}</option>`).join(""));
+    fonteSel.dataset.filled = "1";
+  }
+  const q = ($("monster-search")?.value || "").trim().toLowerCase();
+  const fonte = $("monster-fonte")?.value || "";
+  const pool = db.ameacas.filter((a) => (!fonte || fontePrincipal(a) === fonte) && (!q || a.nome.toLowerCase().includes(q)));
+  const filtered = pool.slice(0, 240);
+  box.innerHTML = filtered.length
+    ? filtered.map((m) => monsterCardHtml(m, { viewKey: JSON.stringify([m.nome, m.fonte]), addable: true })).join("")
+    : `<div class="empty">Nenhum resultado — ${pool.length === 0 ? "tente outro filtro" : "muitos resultados, refine a busca"}.</div>`;
+  box.querySelectorAll("[data-mon-view]").forEach((b) => b.addEventListener("click", () => {
+    const [nome, fonteM] = JSON.parse(b.dataset.monView);
+    const m = pool.find((x) => x.nome === nome && x.fonte === fonteM);
+    if (m) abrirDetalheAmeaca(m);
+  }));
+  box.querySelectorAll("[data-mon-add]").forEach((b) => b.addEventListener("click", () => {
+    const [nome, fonteM] = JSON.parse(b.dataset.monAdd);
+    const m = pool.find((x) => x.nome === nome && x.fonte === fonteM);
+    if (m) { addMonsterToRoster(m); renderMonsterListSelect(); }
+  }));
+  const addAllBtn = $("monster-add-all-fonte");
+  if (addAllBtn) addAllBtn.textContent = `📦 Adicionar os ${pool.length} resultado(s) à lista ativa`;
+}
+function addAllFilteredMonstersToActiveList() {
+  const q = ($("monster-search")?.value || "").trim().toLowerCase();
+  const fonte = $("monster-fonte")?.value || "";
+  const pool = db.ameacas.filter((a) => (!fonte || fontePrincipal(a) === fonte) && (!q || a.nome.toLowerCase().includes(q)));
+  if (!pool.length) { toast("Nenhuma ameaça encontrada com esse filtro."); return; }
+  if (!confirm(`Adicionar ${pool.length} ameaça(s) à lista ativa?`)) return;
+  const lists = ensureMonsterListsState();
+  const target = activeMonsterList(lists);
+  let added = 0;
+  for (const m of pool) {
+    const exists = target.monsters.some((x) => x.nome === m.nome && (x.fonte || "") === (m.fonte || ""));
+    if (!exists) { target.monsters.push({ ...m, _id: genMonsterEntryId() }); added++; }
+  }
+  storage.saveMonsterLists(lists);
+  toast(`${added} ameaça(s) adicionada(s) a "${target.name}".`);
+  renderMonsters();
+}
+function openMonsterCreateModal() {
+  $("modal-content").innerHTML = `<div class="modal-title"><div><span class="eyebrow">AMEAÇA</span><h2>Criar ameaça</h2></div></div>
+    <div class="modal-body monster-create-form">
+      <div class="two-input"><label>Nome<input id="mc-nome" placeholder="Ex.: Bandido veterano"></label><label>ND<input id="mc-nd" placeholder="Ex.: 3"></label></div>
+      <div class="two-input"><label>Tamanho<input id="mc-tamanho" value="Médio"></label><label>Tipo<input id="mc-tipo" placeholder="Ex.: Humanoide"></label></div>
+      <div class="two-input"><label>PV<input id="mc-pv" type="number" value="10"></label><label>Defesa<input id="mc-defesa" type="number" value="12"></label></div>
+      <label class="buff-field">Atributos
+        <div class="buff-abilities">${db.atributos.map((a) => `<label>${a.nome}<input type="number" id="mc-${a.id}" value="0"></label>`).join("")}</div>
+      </label>
+      <label>Deslocamento<input id="mc-deslocamento" value="9m"></label>
+      <label>Descrição<textarea id="mc-descricao" rows="3"></textarea></label>
+      <div class="modal-actions"><button type="button" id="mc-cancel">Cancelar</button><button type="button" class="primary" id="mc-save">Criar</button></div>
+    </div>`;
+  $("modal").classList.remove("hidden");
+  $("mc-cancel").addEventListener("click", () => $("modal").classList.add("hidden"));
+  $("mc-save").addEventListener("click", () => {
+    const nome = $("mc-nome").value.trim();
+    if (!nome) { toast("Dê um nome pra ameaça."); return; }
+    const m = {
+      nome, custom: true, nd: $("mc-nd").value.trim() || "—", tamanho: $("mc-tamanho").value.trim(), tipo: $("mc-tipo").value.trim(),
+      pv: Number($("mc-pv").value) || 1, defesa: Number($("mc-defesa").value) || 10, deslocamento: $("mc-deslocamento").value.trim(),
+      atributos: Object.fromEntries(db.atributos.map((a) => [a.id, Number($(`mc-${a.id}`).value) || 0])),
+      descricao: $("mc-descricao").value.trim(), fonte: "Criado no navegador",
+    };
+    addMonsterToRoster(m);
+    $("modal").classList.add("hidden");
+    renderMonsters();
+  });
+}
+
+// ==============================================================
+// Tema (skin) e idioma da casca do app, e menus agrupados no topo
+// (Personagem/Arquivo/Ferramentas/Ajustes) — comportamento de abrir um
+// por vez e fechar ao clicar fora/Escape/num item.
+// ==============================================================
+const SKIN_THEME_COLOR = { pergaminho: "#7a1f1f", noite: "#2a1a12", papel: "#8e2a2a" };
+function applySkin(skin) {
+  const v = storage.SKINS.includes(skin) ? skin : "pergaminho";
+  document.documentElement.setAttribute("data-skin", v);
+  storage.saveSkin(v);
+  const sel = $("skin-select");
+  if (sel && sel.value !== v) sel.value = v;
+  const meta = $("meta-theme-color");
+  if (meta) meta.setAttribute("content", SKIN_THEME_COLOR[v]);
+}
+function wireMenus() {
+  const menus = [...document.querySelectorAll(".appbar .menu")];
+  for (const m of menus) {
+    m.addEventListener("toggle", () => { if (m.open) menus.forEach((o) => { if (o !== m) o.open = false; }); });
+    m.querySelector(".menu-body")?.addEventListener("click", (e) => { if (e.target.closest("button")) m.open = false; });
+  }
+  document.addEventListener("click", (e) => { if (!e.target.closest(".appbar .menu")) menus.forEach((m) => { m.open = false; }); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") menus.forEach((m) => { m.open = false; }); });
+}
+
+// ==============================================================
 // Eventos dos novos recursos (sala, discord, apoio, ajuda, novidades,
 // aviso legal, relatar bug) — tudo isolado aqui pra não mexer em
 // registrarEventos() já existente.
@@ -1883,6 +2397,95 @@ function registrarEventosSala() {
     $("dice-expr-input").value = `1d${b.dataset.diceQuick}`;
     rollExpression($("dice-expr-input").value);
   }));
+}
+
+// ==============================================================
+// Eventos: menus agrupados, tema/idioma, dashboard recolhível,
+// construção do personagem, modelos, personagem aleatório, link
+// somente-leitura e Ambiente do Mestre.
+// ==============================================================
+function registrarEventosExtra() {
+  wireMenus();
+
+  $("skin-select")?.addEventListener("change", (e) => applySkin(e.target.value));
+  $("skin-select") && ($("skin-select").value = storage.getSavedSkin());
+  const langSel = $("lang-select");
+  if (langSel) langSel.value = getLang();
+  langSel?.addEventListener("change", (e) => { setLang(e.target.value); });
+
+  if (storage.isDashboardCollapsed()) {
+    $("dashboard")?.classList.add("collapsed");
+    $("dashboard-toggle") && ($("dashboard-toggle").textContent = t("dashboard.expand"));
+  }
+  $("dashboard-toggle")?.addEventListener("click", () => {
+    const collapsed = $("dashboard").classList.toggle("collapsed");
+    $("dashboard-toggle").textContent = collapsed ? t("dashboard.expand") : t("dashboard.collapse");
+    storage.setDashboardCollapsed(collapsed);
+  });
+
+  $("btn-pdf-topo")?.addEventListener("click", () => window.print());
+
+  // Construção
+  document.querySelectorAll("#creation-mode-toggle [data-modo]").forEach((b) => b.addEventListener("click", () => setCreationMode(b.dataset.modo)));
+  document.querySelectorAll(".change-choice[data-pick]").forEach((b) => b.addEventListener("click", () => openPickerModal(b.dataset.pick)));
+  const CHOICE_TITULOS = { raca: "Raça", classe: "Classe", origem: "Origem", divindade: "Divindade" };
+  document.querySelectorAll(".tiny-info[data-info]").forEach((b) => b.addEventListener("click", () => abrirDetalheTexto(CHOICE_TITULOS[b.dataset.info] || b.dataset.info, CHOICE_INFO[b.dataset.info])));
+  $("wizard-back")?.addEventListener("click", () => { if (wizardStepIndex > 0) { wizardStepIndex--; renderWizard(); } });
+  $("wizard-next")?.addEventListener("click", () => {
+    if (wizardStepIndex < WIZARD_STEPS.length - 1) { wizardStepIndex++; renderWizard(); }
+    else { setCreationMode("livre"); toast("Construção concluída — revise na aba Construção ou siga pra Ficha."); }
+  });
+
+  // Personagem/Arquivo
+  $("btn-templates")?.addEventListener("click", openTemplatesModal);
+  $("btn-aleatorio")?.addEventListener("click", () => { if (confirm("Sortear um novo personagem? Isso substitui as escolhas do personagem atualmente aberto.")) gerarPersonagemAleatorio(); });
+  $("btn-link-leitura")?.addEventListener("click", async () => {
+    try {
+      const url = await buildShareUrl();
+      await navigator.clipboard.writeText(url);
+      toast("Link somente-leitura copiado!");
+    } catch (err) {
+      console.error(err);
+      toast("Não deu pra gerar o link — seu navegador pode não suportar compressão nativa.");
+    }
+  });
+  $("view-only-copy")?.addEventListener("click", () => {
+    storage.setPersonagemAtivoId(null);
+    personagem.id = crypto.randomUUID();
+    storage.salvarPersonagem(personagem);
+    storage.setPersonagemAtivoId(personagem.id);
+    location.hash = "";
+    location.reload();
+  });
+
+  // Ambiente do Mestre
+  $("btn-mestre")?.addEventListener("click", () => {
+    document.querySelector("main.ficha-shell")?.classList.add("hidden");
+    $("mestre-shell")?.classList.remove("hidden");
+    renderMonsters();
+  });
+  $("mestre-sair")?.addEventListener("click", () => {
+    $("mestre-shell")?.classList.add("hidden");
+    document.querySelector("main.ficha-shell")?.classList.remove("hidden");
+  });
+  document.querySelectorAll("#monster-view-tabs [data-monview]").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("#monster-view-tabs [data-monview]").forEach((x) => x.classList.remove("active"));
+    b.classList.add("active");
+    monsterState.view = b.dataset.monview;
+    renderMonsters();
+  }));
+  $("monster-search")?.addEventListener("input", () => { if (monsterState.view === "browse") renderMonsters(); });
+  $("monster-fonte")?.addEventListener("change", () => { if (monsterState.view === "browse") renderMonsters(); });
+  $("monster-add-all-fonte")?.addEventListener("click", addAllFilteredMonstersToActiveList);
+  $("monster-create-btn")?.addEventListener("click", openMonsterCreateModal);
+  $("monster-list-select")?.addEventListener("change", () => {
+    monsterState.listId = $("monster-list-select").value;
+    storage.setActiveMonsterListId(monsterState.listId);
+    renderMonsters();
+  });
+  $("monster-list-new")?.addEventListener("click", () => openMonsterListNameModal("new"));
+  $("monster-list-rename")?.addEventListener("click", () => openMonsterListNameModal("rename"));
+  $("monster-list-delete")?.addEventListener("click", deleteActiveMonsterList);
 }
 
 function rolarDado(lados, bonus, rotulo, opts = {}) {

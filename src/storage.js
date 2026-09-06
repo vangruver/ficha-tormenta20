@@ -156,3 +156,49 @@ export function markDamageApplied(rollId) {
 const DISCLAIMER_DISMISSED_KEY = "t20.disclaimerDismissed";
 export function isDisclaimerDismissed() { try { return localStorage.getItem(DISCLAIMER_DISMISSED_KEY) === "1"; } catch { return false; } }
 export function dismissDisclaimer() { try { localStorage.setItem(DISCLAIMER_DISMISSED_KEY, "1"); } catch { /* modo privado */ } }
+
+// Tema visual da ficha na tela: "pergaminho" (padrão) | "noite" | "papel".
+const SKIN_KEY = "t20.skin";
+export const SKINS = ["pergaminho", "noite", "papel"];
+export function getSavedSkin() {
+  try { const v = localStorage.getItem(SKIN_KEY); return SKINS.includes(v) ? v : "pergaminho"; } catch { return "pergaminho"; }
+}
+export function saveSkin(v) { try { localStorage.setItem(SKIN_KEY, SKINS.includes(v) ? v : "pergaminho"); } catch { /* modo privado */ } }
+
+// Idioma da INTERFACE (menus, abas, rótulos fixos da própria ficha) — não
+// traduz o conteúdo do compêndio (poderes, magias, ameaças...), só a casca
+// do app. "pt" é o padrão e não depende de dicionário nenhum.
+const LANG_KEY = "t20.lang";
+export const LANGS = ["pt", "en", "es"];
+export function getSavedLang() {
+  try { const v = localStorage.getItem(LANG_KEY); return LANGS.includes(v) ? v : "pt"; } catch { return "pt"; }
+}
+export function saveLang(v) { try { localStorage.setItem(LANG_KEY, LANGS.includes(v) ? v : "pt"); } catch { /* modo privado */ } }
+
+// Listas de ameaças do mestre — à parte de qualquer personagem salvo neste
+// navegador. Várias listas nomeadas (ex.: "Mesa de sexta", "Encontros
+// aleatórios"), cada uma com sua própria coleção de ameaças do bestiário
+// oficial e/ou criadas na mão. Formato: [{ id, name, monsters: [...] }, ...]
+const MONSTER_LISTS_KEY = "t20.monsterLists";
+const MONSTER_ACTIVE_LIST_KEY = "t20.monsterActiveList";
+function genMonsterListId() { return `mlist-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`; }
+
+export function getMonsterLists() {
+  try { const v = localStorage.getItem(MONSTER_LISTS_KEY); const arr = v ? JSON.parse(v) : []; return Array.isArray(arr) ? arr : []; }
+  catch { return []; }
+}
+export function saveMonsterLists(arr) { try { localStorage.setItem(MONSTER_LISTS_KEY, JSON.stringify(arr || [])); } catch { /* modo privado */ } }
+export function newMonsterListId() { return genMonsterListId(); }
+export function getActiveMonsterListId() { try { return localStorage.getItem(MONSTER_ACTIVE_LIST_KEY) || ""; } catch { return ""; } }
+export function setActiveMonsterListId(id) { try { localStorage.setItem(MONSTER_ACTIVE_LIST_KEY, id || ""); } catch { /* modo privado */ } }
+
+// Modelos de personagem salvos — construções (raça/classe/origem/divindade/
+// atributos) reaproveitáveis, sem nome nem estado de jogo específico.
+const TEMPLATES_KEY = "t20.templates";
+export function getTemplates() { try { const v = localStorage.getItem(TEMPLATES_KEY); const arr = v ? JSON.parse(v) : []; return Array.isArray(arr) ? arr : []; } catch { return []; } }
+export function saveTemplates(arr) { try { localStorage.setItem(TEMPLATES_KEY, JSON.stringify(arr || [])); } catch { /* modo privado */ } }
+
+// Estado (aberto/recolhido) do dashboard fixo — preferência de navegador, não do personagem.
+const DASHBOARD_COLLAPSED_KEY = "t20.dashboardCollapsed";
+export function isDashboardCollapsed() { try { return localStorage.getItem(DASHBOARD_COLLAPSED_KEY) === "1"; } catch { return false; } }
+export function setDashboardCollapsed(v) { try { localStorage.setItem(DASHBOARD_COLLAPSED_KEY, v ? "1" : "0"); } catch { /* modo privado */ } }

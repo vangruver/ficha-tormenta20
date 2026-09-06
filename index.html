@@ -4,7 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ficha de Tormenta 20</title>
-<meta name="theme-color" content="#7a1f1f" />
+<meta name="theme-color" content="#7a1f1f" id="meta-theme-color" />
+<script>(function(){try{
+  var s=localStorage.getItem('t20.skin');
+  document.documentElement.setAttribute('data-skin', ['pergaminho','noite','papel'].includes(s)?s:'pergaminho');
+}catch(e){document.documentElement.setAttribute('data-skin','pergaminho');}})();</script>
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="assets/icons/icon-192.png" />
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
@@ -12,22 +16,57 @@
 </head>
 <body>
 
-<header class="topo">
-  <h1>⚔️ Ficha de Tormenta 20</h1>
-  <div class="topo-acoes">
-    <button id="btn-personagens" title="Meus Personagens">🗂️ Personagens</button>
-    <button id="btn-novo" title="Novo personagem">➕ Novo</button>
-    <button id="btn-importar" title="Importar JSON">📥 Importar</button>
-    <button id="btn-exportar" title="Exportar JSON">📤 Exportar</button>
-    <button id="btn-pdf" title="Ficha em PDF">🖨️ PDF</button>
-    <button id="btn-atualizar-dados" title="Atualizar banco de dados">🔄 Dados</button>
-    <button id="btn-discord" title="Enviar rolagens pro Discord">🔗 Discord</button>
-    <button id="btn-sala" title="Configurar a sala de rolagens compartilhada com o grupo">💬 Sala</button>
-    <button id="btn-novidades" title="O que mudou recentemente na ficha">📰 Novidades</button>
-    <button id="btn-relatar-bug" title="Achou um bug ou tem uma sugestão? Manda pra mim">🐛 Relatar bug</button>
-    <button id="btn-ajuda" title="Guia detalhado de tudo que a ficha faz">❓ Ajuda</button>
+<header class="appbar">
+  <div class="brand"><h1 data-i18n="app.title">⚔️ Ficha de Tormenta 20</h1></div>
+  <div class="toolbar">
+    <details class="menu" id="menu-personagem">
+      <summary data-i18n="menu.character">Personagem</summary>
+      <div class="menu-body">
+        <button id="btn-personagens" data-i18n="menu.charactersBtn">🗂️ Meus Personagens</button>
+        <button id="btn-novo" data-i18n="menu.newCharacter">➕ Novo</button>
+        <button id="btn-templates" data-i18n="menu.templatesBtn">📐 Modelos</button>
+        <button id="btn-aleatorio" data-i18n="menu.randomCharacter" data-i18n-title="menu.randomCharacter.title" title="Sorteia raça, classe, origem, divindade e atributos">🎲 Personagem aleatório</button>
+      </div>
+    </details>
+    <details class="menu" id="menu-arquivo">
+      <summary data-i18n="menu.file">Arquivo</summary>
+      <div class="menu-body">
+        <button id="btn-exportar" data-i18n="menu.exportJson">📤 Exportar JSON</button>
+        <button id="btn-importar" data-i18n="menu.importJson">📥 Importar JSON</button>
+        <input type="file" id="input-importar" accept="application/json" hidden />
+        <button id="btn-link-leitura" data-i18n="menu.shareLink" data-i18n-title="menu.shareLink.title" title="Gera um link somente-leitura com o personagem inteiro codificado nele">🔗 Link somente-leitura</button>
+        <button id="btn-pdf" data-i18n="menu.printCharacter">🖨️ Imprimir ficha</button>
+      </div>
+    </details>
+    <details class="menu" id="menu-ferramentas">
+      <summary data-i18n="menu.tools">Ferramentas</summary>
+      <div class="menu-body">
+        <button id="btn-discord" data-i18n="menu.discordSettings" data-i18n-title="menu.discordSettings.title" title="Enviar rolagens pro Discord">🔗 Discord</button>
+        <button id="btn-sala" data-i18n="menu.roomSettings" data-i18n-title="menu.roomSettings.title" title="Configurar a sala de rolagens compartilhada com o grupo">💬 Sala de rolagens</button>
+        <button id="btn-mestre" data-i18n="menu.mestreMode" data-i18n-title="menu.mestreMode.title" title="Ambiente do mestre: listas de ameaças, bestiário oficial e criação de ameaças">🐉 Ambiente do Mestre</button>
+        <button id="btn-atualizar-dados" data-i18n="menu.refreshData">🔄 Atualizar banco de dados</button>
+      </div>
+    </details>
+    <details class="menu" id="menu-ajustes">
+      <summary data-i18n="menu.prefs">Ajustes</summary>
+      <div class="menu-body menu-fields">
+        <label><span data-i18n="prefs.skin">Tema</span><select id="skin-select">
+          <option value="pergaminho" data-i18n="prefs.skin.pergaminho">Pergaminho (padrão)</option>
+          <option value="noite" data-i18n="prefs.skin.noite">Noite (escuro)</option>
+          <option value="papel" data-i18n="prefs.skin.papel">Papel Branco (claro)</option>
+        </select></label>
+        <label><span data-i18n="prefs.lang">Idioma</span><select id="lang-select">
+          <option value="pt">Português</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select></label>
+      </div>
+    </details>
+    <button id="btn-novidades" data-i18n="menu.updates" data-i18n-title="menu.updates.title" title="O que mudou recentemente na ficha">📰 Novidades</button>
+    <button id="btn-relatar-bug" data-i18n="menu.reportBug" data-i18n-title="menu.reportBug.title" title="Achou um bug ou tem uma sugestão? Manda pra mim">🐛 Relatar bug</button>
+    <button id="btn-ajuda" data-i18n="menu.help" data-i18n-title="menu.help.title" title="Guia detalhado de tudo que a ficha faz">❓ Ajuda</button>
+    <button id="btn-pdf-topo" class="primary" data-i18n="previewPdf">🖨️ PDF</button>
   </div>
-  <input type="file" id="input-importar" accept="application/json" hidden />
 </header>
 
 <div id="fan-disclaimer-banner" class="fan-disclaimer-banner hidden" role="status">
@@ -38,11 +77,18 @@
   </div>
 </div>
 
+<div id="view-only-banner" class="view-only-banner hidden" role="status">
+  <span id="view-only-text"></span>
+  <button type="button" id="view-only-copy" class="link-btn">💾 Salvar uma cópia editável</button>
+</div>
+
 <div id="aviso-dados" class="aviso" hidden></div>
 
-<main>
+<main class="ficha-shell">
   <!-- Dashboard fixo -->
   <section id="dashboard" class="dashboard">
+  <div class="dashboard-head"><span>Resumo de combate</span><button type="button" id="dashboard-toggle" class="link-btn" data-i18n="dashboard.collapse">Recolher</button></div>
+  <div class="dashboard-body" id="dashboard-body">
     <div class="dash-item dash-pv">
       <label>PV</label>
       <div class="dash-barra"><div id="barra-pv" class="dash-barra-fill"></div></div>
@@ -81,41 +127,100 @@
       <label>Nível</label>
       <input id="nivel" type="number" min="1" max="20" value="1" />
     </div>
+  </div>
   </section>
 
   <nav class="abas">
-    <button class="aba-btn ativo" data-aba="ficha">Ficha</button>
-    <button class="aba-btn" data-aba="pericias">Perícias</button>
-    <button class="aba-btn" data-aba="poderes">Poderes</button>
-    <button class="aba-btn" data-aba="magias">Magias</button>
-    <button class="aba-btn" data-aba="combate">Combate</button>
-    <button class="aba-btn" data-aba="equipamentos">Equipamentos</button>
-    <button class="aba-btn" data-aba="compendio">Compêndio</button>
-    <button class="aba-btn" data-aba="notas">Notas</button>
+    <button class="aba-btn ativo" data-aba="construcao" data-i18n="tab.build">Construção</button>
+    <button class="aba-btn" data-aba="ficha" data-i18n="tab.sheet">Ficha</button>
+    <button class="aba-btn" data-aba="pericias" data-i18n="tab.pericias">Perícias</button>
+    <button class="aba-btn" data-aba="poderes" data-i18n="tab.poderes">Poderes</button>
+    <button class="aba-btn" data-aba="magias" data-i18n="tab.magias">Magias</button>
+    <button class="aba-btn" data-aba="combate" data-i18n="tab.combate">Combate</button>
+    <button class="aba-btn" data-aba="equipamentos" data-i18n="tab.equipamentos">Equipamentos</button>
+    <button class="aba-btn" data-aba="compendio" data-i18n="tab.compendio">Compêndio</button>
+    <button class="aba-btn" data-aba="notas" data-i18n="tab.notas">Notas</button>
   </nav>
 
+  <!-- ABA CONSTRUÇÃO -->
+  <section id="aba-construcao" class="aba ativo">
+    <div class="cartao">
+      <div class="creator-title">
+        <span>Escolhas</span>
+        <div>
+          <div class="creation-mode-toggle" id="creation-mode-toggle" role="group" aria-label="Modo de criação do personagem">
+            <button type="button" data-modo="livre" class="active">Modo livre</button>
+            <button type="button" data-modo="guiado">Assistente guiado</button>
+          </div>
+          <small>Escolha uma opção. Os dados vêm direto do compêndio de Tormenta 20.</small>
+        </div>
+      </div>
+
+      <div class="wizard hidden" id="wizard">
+        <div class="wizard-steps" id="wizard-steps"></div>
+        <div class="wizard-body" id="wizard-body"></div>
+        <div class="wizard-nav">
+          <button type="button" id="wizard-back">← Voltar</button>
+          <span class="wizard-progress" id="wizard-progress"></span>
+          <button type="button" class="primary" id="wizard-next">Próximo →</button>
+        </div>
+      </div>
+
+      <div id="modo-livre-conteudo">
+        <div class="choice-grid">
+          <article class="choice-card" id="choice-raca">
+            <div class="choice-label">Raça <button type="button" class="tiny-info" data-info="raca">ⓘ</button></div>
+            <div class="choice-value" id="choice-raca-value">Escolher…</div><div class="choice-meta" id="choice-raca-meta">Nenhuma opção selecionada</div>
+            <p class="choice-desc" id="choice-raca-desc">Escolha uma raça para começar.</p>
+            <button type="button" class="change-choice" data-pick="raca">Escolher raça</button>
+          </article>
+          <article class="choice-card" id="choice-classe">
+            <div class="choice-label">Classe <button type="button" class="tiny-info" data-info="classe">ⓘ</button></div>
+            <div class="choice-value" id="choice-classe-value">Escolher…</div><div class="choice-meta" id="choice-classe-meta">Nenhuma opção selecionada</div>
+            <p class="choice-desc" id="choice-classe-desc">Escolha uma classe para começar.</p>
+            <button type="button" class="change-choice" data-pick="classe">Escolher classe</button>
+          </article>
+          <article class="choice-card" id="choice-origem">
+            <div class="choice-label">Origem <button type="button" class="tiny-info" data-info="origem">ⓘ</button></div>
+            <div class="choice-value" id="choice-origem-value">Escolher…</div><div class="choice-meta" id="choice-origem-meta">Nenhuma opção selecionada</div>
+            <p class="choice-desc" id="choice-origem-desc">Escolha uma origem.</p>
+            <button type="button" class="change-choice" data-pick="origem">Escolher origem</button>
+          </article>
+          <article class="choice-card" id="choice-divindade">
+            <div class="choice-label">Divindade <button type="button" class="tiny-info" data-info="divindade">ⓘ</button></div>
+            <div class="choice-value" id="choice-divindade-value">Nenhuma</div><div class="choice-meta" id="choice-divindade-meta">Opcional</div>
+            <p class="choice-desc" id="choice-divindade-desc">Escolha uma divindade do panteão (opcional).</p>
+            <button type="button" class="change-choice" data-pick="divindade">Escolher divindade</button>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <section class="cartao auto-panel" id="auto-panel">
+      <div class="auto-panel-title"><div><span>AUTOMAÇÃO DA FICHA</span><small>Traços e habilidades iniciais vindos da raça/classe escolhidas, aplicados automaticamente.</small></div><span id="auto-status" class="auto-status">Aguardando seleção</span></div>
+      <div id="auto-choices" class="auto-choices">
+        <p id="auto-empty" class="dica">Escolha uma raça e uma classe para ver as automações aqui.</p>
+        <details id="racaInfo" class="info-auto"></details>
+        <details id="classeInfo" class="info-auto"></details>
+      </div>
+    </section>
+  </section>
+
   <!-- ABA FICHA -->
-  <section id="aba-ficha" class="aba ativo">
+  <section id="aba-ficha" class="aba">
     <div class="cartao">
       <h2>Identidade</h2>
       <div class="grade-campos">
         <label>Nome <input id="nome" type="text" placeholder="Nome do personagem" /></label>
         <label>Jogador <input id="jogador" type="text" /></label>
-        <label>Raça
-          <select id="raca"></select>
-        </label>
-        <label>Classe
-          <select id="classe"></select>
-        </label>
-        <label>Origem
-          <select id="origem"></select>
-        </label>
-        <label>Divindade
-          <select id="divindade"><option value="">— nenhuma —</option></select>
-        </label>
       </div>
-      <details id="racaInfo" class="info-auto"></details>
-      <details id="classeInfo" class="info-auto"></details>
+      <div class="grade-campos hidden" aria-hidden="true">
+        <label>Raça <select id="raca"></select></label>
+        <label>Classe <select id="classe"></select></label>
+        <label>Origem <select id="origem"></select></label>
+        <label>Divindade <select id="divindade"><option value="">— nenhuma —</option></select></label>
+      </div>
+      <p class="dica">Raça, classe, origem e divindade agora se escolhem na aba <b>Construção</b>.</p>
     </div>
 
     <div class="cartao">
@@ -274,6 +379,35 @@
   </section>
 </main>
 
+<section class="mestre-shell hidden" id="mestre-shell">
+  <div class="mestre-head">
+    <div><h2>🐉 Mestre</h2><p>Kit do mestre: puxe qualquer ameaça do bestiário oficial (298 ameaças das regras centrais + 1850 da Coleção Arton), pegue várias de uma vez, ou crie as suas. Independe do personagem aberto na ficha. Cada ameaça pode ser adicionada direto na iniciativa da sala.</p></div>
+    <button type="button" id="mestre-sair" class="link-btn">← Voltar para a ficha</button>
+  </div>
+  <div class="cartao">
+    <div class="monster-list-row">
+      <label>Lista ativa <select id="monster-list-select"></select></label>
+      <button type="button" id="monster-list-new">+ Nova lista</button>
+      <button type="button" id="monster-list-rename">✎ Renomear</button>
+      <button type="button" id="monster-list-delete">🗑️ Excluir lista</button>
+    </div>
+    <p class="dica">Toda ameaça adicionada (individual ou "adicionar todas") vai pra <b>lista ativa</b> acima — crie uma lista por mesa/campanha pra separar os monstros.</p>
+    <div class="segmented" id="monster-view-tabs">
+      <button class="active" data-monview="roster">Minhas Ameaças</button>
+      <button data-monview="browse">Bestiário Oficial</button>
+    </div>
+    <div id="monster-browse-toolbar" class="hidden">
+      <div class="filtro-linha">
+        <input id="monster-search" type="search" placeholder="Pesquisar ameaça pelo nome…">
+        <select id="monster-fonte"><option value="">Todas as fontes</option></select>
+      </div>
+      <button type="button" class="add-btn" id="monster-add-all-fonte">📦 Adicionar todos os resultados à lista ativa</button>
+    </div>
+    <button type="button" class="add-btn" id="monster-create-btn">+ Criar ameaça</button>
+  </div>
+  <div id="monster-results" class="catalog-grid"></div>
+</section>
+
 <!-- MODAL: Meus Personagens -->
 <div id="modal-personagens" class="modal" hidden>
   <div class="modal-conteudo">
@@ -345,7 +479,7 @@
 
 <footer class="rodape">
   <span id="rodape-fonte">Dados: Tormenta 20 (regras centrais) + Tormenta20 Compendium.</span>
-  <button type="button" id="disclaimer-link" class="link-btn" title="Ler o aviso legal completo">Aviso legal completo</button>
+  <button type="button" id="disclaimer-link" class="link-btn" data-i18n="footer.disclaimerLink" data-i18n-title="footer.disclaimerLink.title" title="Ler o aviso legal completo">Aviso legal completo</button>
   <span id="rodape-versao"></span>
 </footer>
 
