@@ -1,0 +1,602 @@
+[
+  {
+    "id": "Agricultor Sambur",
+    "regiao": "Repúblicas Livres de Sambúrdia",
+    "periciasSugeridas": [
+      "ade",
+      "sob"
+    ],
+    "beneficio": "Treinado em Adestramento e Sobrevivência; uma vez por cena pode gastar 1 PM para +1d6 em um teste de perícia.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Amazona de Hippion",
+    "regiao": "Deheon, Namalkah",
+    "periciasSugeridas": [
+      "cav"
+    ],
+    "beneficio": "Treinada em Cavalgar; se não estiver usando armadura pesada, soma o Carisma aos PM (limitado pelo nível, só após um dia).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Amoque Púrpura",
+    "regiao": "Ermos Púrpuras",
+    "periciasSugeridas": [
+      "int"
+    ],
+    "beneficio": "Treinado em Intimidação; sob efeito de Fúria, Fúria Divina ou Poder Oculto, recebe +2 em rolagens de dano.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Anão de Armas",
+    "regiao": "Doherimm",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "beneficio": "Treinado em Ofício (armeiro); recebe +2 em rolagens de dano com armas tradicionais anãs (machados, martelos, marretas e picaretas).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Andarilho Ubaneri",
+    "regiao": "Ubani",
+    "periciasSugeridas": [],
+    "nota": "Sem lista fixa de perícia: ganha um alikunhá (parceiro elemental iniciante que não conta no limite de parceiros) e proficiência com escudos (ou +1 na Defesa do escudo se já for proficiente).",
+    "beneficio": "Recebe um alikunhá (parceiro elemental iniciante fora do limite normal) e proficiência com escudos, ou +1 na Defesa dada pelo escudo se já era proficiente.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Aprendiz de Dragoeiro",
+    "regiao": "Sckharshantallas",
+    "periciasSugeridas": [
+      "ref"
+    ],
+    "beneficio": "Recebe +2 na Defesa contra criaturas maiores e +2 em Reflexos; ao passar em teste de Reflexos, ataques contra a fonte do efeito causam +1d8 de dano até o fim da cena.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Aprendiz de Drogadora",
+    "regiao": "Galrasia",
+    "periciasSugeridas": [
+      "cur",
+      "ofi"
+    ],
+    "beneficio": "Treinada em Cura e Ofício (alquimista); gasta apenas 1/4 do preço em matérias-primas para fabricar itens alquímicos.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Aristocrata Dai'zenshi",
+    "regiao": "Tamu-ra",
+    "periciasSugeridas": [
+      "nob"
+    ],
+    "beneficio": "Treinado em Nobreza; ao completar um descanso sem ter feito testes de Enganação, Furtividade ou Ladinagem desde o último, recebe +1 PM temporário a cada dois níveis.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Armeiro Armado",
+    "regiao": "Zakharov",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "beneficio": "Treinado em Ofício (armeiro) e pode fabricar armas com uma melhoria; ao aprender a fabricar armas superiores por outro meio, paga só 1/4 do preço das melhorias.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Aspirante a Herói",
+    "regiao": "Deheon",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede +1 em um atributo à escolha.",
+    "beneficio": "Recebe +1 em um atributo à sua escolha.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Assistente Forense",
+    "regiao": "Salistick",
+    "periciasSugeridas": [
+      "inv"
+    ],
+    "beneficio": "Treinado em Investigação, podendo usá-la para necropsia, identificar itens alquímicos, rastrear e identificar criaturas numa cena de crime mesmo ausentes (com penalidade por dia decorrido).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Bandoleiro da Fortaleza",
+    "regiao": "Khalifor",
+    "periciasSugeridas": [
+      "fur",
+      "int"
+    ],
+    "beneficio": "Treinado em Furtividade e Intimidação; recebe resistência a medo +5.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Barão Arruinado",
+    "regiao": "Feudos de Trebuck",
+    "periciasSugeridas": [
+      "nob"
+    ],
+    "beneficio": "Treinado em Nobreza; sempre que falha em um teste de perícia com consequência negativa, recebe +2 na mesma perícia até o fim da cena.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Catador da Cidade Velha",
+    "regiao": "Nova Malpetrim",
+    "periciasSugeridas": [
+      "for",
+      "per"
+    ],
+    "beneficio": "Treinado em Fortitude e Percepção; pode gastar 1 PM por uma cena para obter (ou aumentar) deslocamento de natação e dobra o tempo que consegue prender a respiração.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Cativo das Fadas",
+    "regiao": "Pondsmânia",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede resistência a espíritos e magia +2 e +1 PV por nível.",
+    "beneficio": "Recebe resistência a espíritos e magia +2 e +1 PV por nível de personagem.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Competidor do Circuito",
+    "regiao": "Feudos de Trebuck",
+    "periciasSugeridas": [],
+    "nota": "Concede o poder Torcida; sob seu efeito, reduzir um inimigo a 0 PV em corpo a corpo recupera 1 PM.",
+    "beneficio": "Recebe o poder Torcida; enquanto sob seu efeito, reduzir um inimigo a 0 PV em combate corpo a corpo recupera 1 PM.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Cosmopolita",
+    "regiao": "Valkaria",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia fixa: escolhe um poder geral ou de classe (com pré-requisitos cumpridos) e pode trocá-lo uma vez por aventura após um descanso.",
+    "beneficio": "Escolhe um poder geral ou de uma classe em que tenha ao menos dois níveis (cumprindo os requisitos); pode trocá-lo por outro uma vez por aventura, após um descanso.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Cria da Favela",
+    "regiao": "Valkaria",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede +1 em Constituição e recuperação de descanso sempre pelo menos normal.",
+    "beneficio": "Recebe +1 em Constituição; por piores que sejam as condições de descanso, sua recuperação é sempre ao menos normal.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Criado pelas Voracis",
+    "regiao": "Galrasia",
+    "periciasSugeridas": [
+      "sob"
+    ],
+    "beneficio": "Recebe +2 na Defesa e em Sobrevivência, além de +3m no deslocamento.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "De Outro Mundo",
+    "regiao": "Éter Divino",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia fixa: escolhe uma magia de 1º círculo (habilidade ou tecnologia de outro mundo) e um atributo-chave para ela.",
+    "beneficio": "Escolhe uma magia de 1º círculo representando uma habilidade ou tecnologia de seu mundo de origem, definindo um atributo-chave (tecnologia vem com um item Minúsculo empunhável e +2 no limite de PM para o efeito).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Descendente Colleniano",
+    "regiao": "Ahlen",
+    "periciasSugeridas": [
+      "per"
+    ],
+    "beneficio": "Recebe +2 em Percepção e pode lançar a magia Visão Mística, com custo reduzido em 1 PM se aprendida novamente.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Desertor da Supremacia",
+    "regiao": "Supremacia Purista",
+    "periciasSugeridas": [
+      "gue"
+    ],
+    "beneficio": "Treinado em Guerra e proficiência com espadas bastardas e escudos; +2 em testes de ataque empunhando espada bastarda e escudo pesado juntos.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Duplo Feérico",
+    "regiao": "Pondsmânia",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia fixa: escolhe uma habilidade de classe de 1º nível de outra classe, usável como se tivesse 1 nível nela.",
+    "beneficio": "Escolhe uma habilidade de classe de 1º nível de uma classe diferente da sua e passa a usá-la como se tivesse 1 nível naquela classe.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Duyshidakk Infiltrado",
+    "regiao": "Ruínas de Tyrondir",
+    "periciasSugeridas": [
+      "fur",
+      "von"
+    ],
+    "beneficio": "Recebe +2 em Furtividade e Vontade e pode usar Sabedoria como atributo-chave de Enganação.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Emissário Ubaneri",
+    "regiao": "Ubani",
+    "periciasSugeridas": [],
+    "nota": "Sem lista fixa de perícia: ganha um alikunhá (parceiro elemental) fora do limite normal e pode usar Sabedoria em Misticismo.",
+    "beneficio": "Recebe um alikunhá (parceiro elemental iniciante fora do limite normal) e pode usar Sabedoria como atributo-chave de Misticismo.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Escudeiro da Luz",
+    "regiao": "Bielefeld",
+    "periciasSugeridas": [
+      "nob"
+    ],
+    "beneficio": "Treinado em Nobreza; recebe +2 na Defesa e +3 PM.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Escudeiro Solitário",
+    "regiao": "Bielefeld",
+    "periciasSugeridas": [
+      "eng",
+      "lad"
+    ],
+    "beneficio": "Treinado em Enganação e Ladinagem; recebe +10 em Enganação para se passar por cavaleiro da Luz e atacar pelas costas não viola Código de Honra semelhante.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Estandarte Vivo",
+    "regiao": "Ermos Púrpuras",
+    "periciasSugeridas": [
+      "sob"
+    ],
+    "beneficio": "Recebe +2 em Sobrevivência e um poder de combate ou da Tormenta à escolha.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Estudante da Academia",
+    "regiao": "Academia Arcana",
+    "periciasSugeridas": [
+      "mis"
+    ],
+    "beneficio": "Aprende e pode lançar uma magia arcana de 1º círculo à escolha (chave Inteligência) e pode testar Misticismo mesmo destreinado (+2 se treinado).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Estudante do Colégio Real",
+    "regiao": "Salistick",
+    "periciasSugeridas": [
+      "cur"
+    ],
+    "beneficio": "Treinado em Cura; efeitos de cura que aplica recuperam +2 PV por dado, mas perde o benefício se tornar-se devoto de qualquer religião.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Explorador de Ruínas",
+    "regiao": "Ruínas de Tyrondir",
+    "periciasSugeridas": [
+      "lad",
+      "per",
+      "ref"
+    ],
+    "beneficio": "Recebe +2 em Ladinagem, Percepção e Reflexos e +3m de deslocamento.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Filhote da Revoada",
+    "regiao": "Lamnor",
+    "periciasSugeridas": [
+      "acr",
+      "pil"
+    ],
+    "beneficio": "Treinado em Acrobacia e Pilotagem; pode gastar 1 PM para rolar um dado adicional e ficar com o melhor resultado num teste dessas perícias.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Futura Lenda",
+    "regiao": "Nova Malpetrim",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia fixa: escolhe um poder de sua classe normalmente liberado a partir do 2º nível.",
+    "beneficio": "Escolhe um dos poderes de sua classe normalmente disponíveis a partir do 2º nível.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Ginete de Tumarkhân",
+    "regiao": "Khubar",
+    "periciasSugeridas": [
+      "cav"
+    ],
+    "beneficio": "Treinado em Cavalgar; possui um tumarkhân parceiro iniciante, com quem recebe +2 em Adestramento e Cavalgar.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Grumete Pirata",
+    "regiao": "Três Mares",
+    "periciasSugeridas": [
+      "acr",
+      "atl",
+      "ref"
+    ],
+    "beneficio": "Treinado em Acrobacia, Atletismo e Reflexos; só cai ou afunda ao se equilibrar, escalar ou nadar com falha de 10 ou mais (em vez de 5).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Guardião Glacial",
+    "regiao": "Montanhas Uivantes",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede redução de frio 5 e proficiência com arco longo e machado de batalha.",
+    "beneficio": "Recebe redução de frio 5 e proficiência com arco longo e machado de batalha (ou +2 em dano com essas armas, se já proficiente).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Iniciado dos Caça-Monstros",
+    "regiao": "Montanhas Sanguinárias",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia treinada fixa: agiliza identificar criaturas e concede dano extra contra não humanoides.",
+    "beneficio": "Pode identificar criaturas com uma ação de movimento e, ao acertar um ataque contra criatura não humanoide, pode gastar 1 PM para causar +1d8 de dano.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Insurgente Tapistano",
+    "regiao": "Império de Tauron",
+    "periciasSugeridas": [
+      "for",
+      "ref",
+      "von"
+    ],
+    "beneficio": "Recebe +1 em Fortitude, Reflexos e Vontade, além de +3 PV no 1º nível e +1 PV por nível seguinte.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Irmão sem Esporas",
+    "regiao": "Namalkah",
+    "periciasSugeridas": [
+      "ref"
+    ],
+    "beneficio": "Possui um cavalo de guerra parceiro iniciante (\"irmão cavalo\") que concede +1 em testes de ataque e Reflexos.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Legionário",
+    "regiao": "Império de Tauron",
+    "periciasSugeridas": [
+      "gue"
+    ],
+    "beneficio": "Treinado em Guerra e proficiência com gládios e escudos; empunhando gládio e escudo pesado juntos, recebe +1 na margem de ameaça e +1 na Defesa.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Lenhador de Tollon",
+    "regiao": "Floresta de Tollon",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "beneficio": "Treinado em Ofício (artesão) e recebe +5 em perícias (exceto ataque) relacionadas a madeira, além de proficiência com machadinhas e machados de batalha.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Liricista de Lenórienn",
+    "regiao": "Lamnor",
+    "periciasSugeridas": [
+      "atu"
+    ],
+    "beneficio": "Treinado em Atuação com +2 nessa perícia; pode usar Carisma como atributo-chave de Misticismo.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Membro do Principado",
+    "regiao": "Repúblicas Livres de Sambúrdia",
+    "periciasSugeridas": [
+      "dip",
+      "intu"
+    ],
+    "beneficio": "Treinado em Diplomacia e Intuição; ao chegar numa cidade pela primeira vez em cada aventura, um teste de Diplomacia bem-sucedido (CD 20) dá 10% de desconto em compras no local.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Nitamuraniano",
+    "regiao": "Valkaria",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia treinada fixa: ganha proficiência com katana e arco longo e pode regastar testes de perícia baseados em Sabedoria com PM.",
+    "beneficio": "Recebe proficiência com katana e arco longo; ao falhar um teste de perícia baseada em Sabedoria, pode gastar 2 PM para refazê-lo (uma vez por teste).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Nobre Zakharoviano",
+    "regiao": "Zakharov",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "beneficio": "Treinado em Ofício (armeiro) e recebe uma arma superior com uma melhoria; enquanto empunhá-la, ganha +2 PM por patamar.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Nômade Sar-Allan",
+    "regiao": "Halak-Tûr",
+    "periciasSugeridas": [
+      "for",
+      "sob"
+    ],
+    "beneficio": "Recebe +2 em Fortitude e Sobrevivência, além de +2 em rolagens de dano com alfanges, arcos curtos e cimitarras.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Pescador Parrudo",
+    "regiao": "Khubar",
+    "periciasSugeridas": [
+      "atl",
+      "for",
+      "sob"
+    ],
+    "beneficio": "Recebe +2 em Atletismo, Fortitude e Sobrevivência e +3 PV; ao nadar com sucesso em Atletismo, avança o deslocamento total (não apenas a metade).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Plebeu Arcano",
+    "regiao": "Wynlla",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede +2 PM e permite regastar testes de resistência contra magia com PM.",
+    "beneficio": "Recebe +2 PM; uma vez por rodada, ao falhar um teste de resistência contra efeito mágico, pode gastar 1 PM para repeti-lo.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Prisioneiro das Catacumbas",
+    "regiao": "Catacumbas de Leverick",
+    "periciasSugeridas": [
+      "per",
+      "ref"
+    ],
+    "beneficio": "Treinado em Percepção e Reflexos; recebe resistência a armadilhas e efeitos de movimento +5.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Procurado: Vivo ou Morto",
+    "regiao": "Smokestone",
+    "periciasSugeridas": [
+      "int",
+      "dip"
+    ],
+    "beneficio": "Recebe proficiência com armas de fogo; +5 em Intimidação e -5 em Diplomacia contra quem reconheça sua fama (e é alvo ocasional de caçadores de recompensa).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Profeta do Akzath",
+    "regiao": "Lamnor",
+    "periciasSugeridas": [
+      "rel"
+    ],
+    "beneficio": "Treinado em Religião; pode lançar magias mesmo sob efeito de Fúria Divina.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Querido Filho",
+    "regiao": "Aslothia",
+    "periciasSugeridas": [
+      "per"
+    ],
+    "beneficio": "Recebe redução de frio e trevas 5 e visão no escuro; se já tiver visão no escuro, recebe +2 em Percepção em vez disso.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Rebelde Agitador",
+    "regiao": "Sckharshantallas",
+    "periciasSugeridas": [
+      "ini",
+      "dip"
+    ],
+    "beneficio": "Treinado em Iniciativa; uma vez por aventura, gastando um dia e um teste de Diplomacia, pode convencer pessoas comuns a atuarem como parceiros iniciantes temporários.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Receptador das Nuvens",
+    "regiao": "Vectora",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: dá acesso a até 2 aparatos mágicos (itens que lançam uma magia de 1º círculo) via contatos em Vectora.",
+    "beneficio": "Tem contatos em Vectora que, gastando 1 dia, dão acesso a um aparato mágico (item de 1 espaço que lança uma magia de 1º círculo escolhida); pode manter até 2 aparatos.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Recruta Arcano",
+    "regiao": "Wynlla",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: aumenta a CD e o dano de suas magias arcanas.",
+    "beneficio": "A CD para resistir às suas magias arcanas aumenta em +1 e elas causam +1 ponto de dano.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Recruta da Fênix",
+    "regiao": "Triunphus",
+    "periciasSugeridas": [
+      "cav"
+    ],
+    "beneficio": "Treinado em Cavalgar; recebe +1 PV por nível e redução de fogo 5.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Sábio Matemático",
+    "regiao": "Halak-Tûr",
+    "periciasSugeridas": [
+      "con"
+    ],
+    "beneficio": "Treinado em Conhecimento; aprende e pode lançar Concentração de Combate e Orientação como efeitos não mágicos (contam como magia só para acúmulo).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Selvagem Sanguinário",
+    "regiao": "Montanhas Sanguinárias",
+    "periciasSugeridas": [
+      "sob"
+    ],
+    "beneficio": "Treinado em Sobrevivência; sem armadura pesada, recebe +1 em rolagens de dano com armas e redução de dano 1.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Sucateiro de Batalhas",
+    "regiao": "Conflagração do Aço",
+    "periciasSugeridas": [
+      "gue",
+      "inv"
+    ],
+    "beneficio": "Treinado em Guerra e Investigação; ao rolar na Tabela de Tesouro por Nível de Desafio, pode rolar novamente cada tipo de resultado (dinheiro ou item).",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Tamalu",
+    "regiao": "Khubar",
+    "periciasSugeridas": [
+      "dip",
+      "nob"
+    ],
+    "beneficio": "Treinado em Diplomacia e Nobreza; recebe uma tatuagem mística à escolha.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Tocado pela Dama Altiva",
+    "regiao": "Moreania",
+    "periciasSugeridas": [
+      "ade"
+    ],
+    "beneficio": "Treinado em Adestramento; pode gastar 1 minuto e 1 PM para convocar um animal Minúsculo que auxilia (+2) em uma perícia até o fim da cena.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Tocado pelo Indomável",
+    "regiao": "Moreania",
+    "periciasSugeridas": [
+      "atl"
+    ],
+    "beneficio": "Treinado em Atletismo; recebe +2 em rolagens de dano com armas naturais e ataques desarmados.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Tradicionalista Svalano",
+    "regiao": "Svalas",
+    "periciasSugeridas": [
+      "con",
+      "nob"
+    ],
+    "beneficio": "Pode usar Sabedoria como atributo-chave de Conhecimento e Nobreza (mesmo destreinado) e recebe +1 em Fortitude e Vontade.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Trapaceiro Ahleniense",
+    "regiao": "Ahlen",
+    "periciasSugeridas": [
+      "eng",
+      "fur"
+    ],
+    "beneficio": "Recebe +2 em Enganação e Furtividade e pode usar Carisma como atributo-chave de Ladinagem.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Turista da Academia",
+    "regiao": "Academia Arcana",
+    "periciasSugeridas": [],
+    "nota": "Sem perícia associada: concede resistência a magia e a capacidade de ativar pergaminhos arcanos de 1º círculo.",
+    "beneficio": "Recebe resistência a magia +2 e pode ativar pergaminhos de magias arcanas de 1º círculo como se as conhecesse.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  },
+  {
+    "id": "Um com os Kami",
+    "regiao": "Tamu-ra",
+    "periciasSugeridas": [],
+    "nota": "Sem lista fixa de perícia: usa Sabedoria em Misticismo e ganha um kami incorpóreo e invisível como parceiro especial.",
+    "beneficio": "Pode usar Sabedoria como atributo-chave de Misticismo; é acompanhado por um kami incorpóreo e invisível, um parceiro especial que permite ver e afetar criaturas incorpóreas.",
+    "fonte": "Atlas de Arton (Jambô Editora, 2023)"
+  }
+]

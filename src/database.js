@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, version] =
+  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -36,9 +36,14 @@ export async function carregarBanco() {
       carregarJSON("data/raw/golem-chassis.json").catch(() => []),
       carregarJSON("data/raw/golem-poderes-fa.json").catch(() => []),
       carregarJSON("data/raw/golem-origens-fa.json").catch(() => []),
+      // Origens regionais do "Atlas de Arton" (66 origens ligadas a um reino ou
+      // região específica de Arton) — curadas à mão a partir do livro. Ficam em
+      // arquivo e chave separados de `origens` porque, ao contrário das origens
+      // comuns, só fazem sentido para quem é nativo (ou cresceu em) daquele lugar.
+      carregarJSON("data/raw/origens-regionais.json").catch(() => []),
       carregarJSON("data/version.json").catch(() => null),
     ]);
-  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, version };
+  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
   return cache;
 }
 

@@ -45,6 +45,16 @@ adaptado para as regras de Tormenta 20.
   encontrou nenhum stat block faltando, então nenhuma entrada nova precisou ser adicionada a partir
   dele. Como de costume neste arquivo, os campos `descricao` ficam vazios — o texto de lore dos
   livros é conteúdo comercial protegido, então só os números e habilidades mecânicas são mantidos.
+- **Origens regionais (`data/raw/origens-regionais.json`, 66 origens)**: digitadas à mão a partir do
+  apêndice "Origens Regionais" do livro **Atlas de Arton** (Jambô Editora, 2023). São origens
+  ligadas a um reino/cultura específico de Arton (ex.: Amazona de Hippion, Legionário, Liricista de
+  Lenórienn), por isso ficam num arquivo e numa chave (`origensRegionais`) separados das 34 origens
+  comuns de `data/core/origens.json` — não fazem sentido para qualquer personagem, só para quem é
+  nativo (ou cresceu) no local indicado. Como de costume, o campo `beneficio` traz só um resumo
+  mecânico curto, sem reproduzir a prosa/flavor text do livro. O trecho do Atlas de Arton disponível
+  para extração cobre principalmente esse apêndice final (páginas ~468–479) mais alguns capítulos de
+  geografia/história (sem uso mecânico para a ficha); não foi possível conferir se o livro completo
+  (480 páginas) foi coberto.
 - **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: digitados à mão a partir
   do livro Tormenta 20 - Jogo Básico, porque não existe uma fonte de dados aberta e "viva" como o
   5etools para D&D. **Os números de progressão de classe (PV/PM por nível) são uma estimativa
