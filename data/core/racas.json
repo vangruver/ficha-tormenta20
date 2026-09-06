@@ -1,107 +1,123 @@
 [
   {
     "id": "anao", "nome": "Anão",
-    "atributos": { "for": 2, "con": 2, "des": -2 },
+    "atributos": { "con": 2, "sab": 1, "des": -1 },
     "deslocamento": "6m", "tamanho": "Médio",
-    "traços": "Viveiro de Ferro (resistência a venenos e magia), Sentidos das Rochas, Devagar e Sempre (não perde deslocamento por carga/armadura pesada).",
-    "poderRacialFixo": "Viveiro de Ferro"
+    "traços": "Conhecimento das Rochas (visão no escuro, +2 em Percepção e Sobrevivência no subterrâneo), Devagar e Sempre (deslocamento 6m, não reduzido por armadura/carga), Duro como Pedra (+3 PV no 1º nível, +1 PV por nível seguinte), Tradição de Heredrimm (machados, martelos, marretas e picaretas contam como armas simples pra você; +2 em ataques com elas).",
+    "poderRacialFixo": "Tradição de Heredrimm"
   },
   {
     "id": "dahllan", "nome": "Dahllan",
-    "atributos": { "sab": 2, "car": 2, "for": -2 },
+    "atributos": { "sab": 2, "des": 1, "int": -1 },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Metamorfose (forma de planta/humanoide), Filha de Oz (comunhão com a natureza).",
-    "poderRacialFixo": "Metamorfose"
+    "traços": "Amiga das Plantas (pode lançar Controlar Plantas), Armadura de Allihanna (1 PM: +2 na Defesa até o fim da cena), Empatia Selvagem (comunicação e persuasão com animais via Adestramento).",
+    "poderRacialFixo": "Amiga das Plantas"
   },
   {
     "id": "elfo", "nome": "Elfo",
-    "atributos": { "des": 2, "int": 2, "con": -2 },
-    "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Graciosos, Visão na Penumbra, Sentidos Aguçados, imunidade a sono e resistência a encantamento.",
+    "atributos": { "int": 2, "des": 1, "con": -1 },
+    "deslocamento": "12m", "tamanho": "Médio",
+    "traços": "Graça de Glórienn (deslocamento 12m), Sangue Mágico (+1 PM por nível), Sentidos Élficos (visão na penumbra, +2 em Misticismo e Percepção).",
     "poderRacialFixo": "Sentidos Élficos"
   },
   {
     "id": "goblin", "nome": "Goblin",
-    "atributos": { "des": 2, "con": 2, "for": -2 },
-    "deslocamento": "6m", "tamanho": "Pequeno",
-    "traços": "Sortudo (rerrola 1s), Fúria Goblin (bônus quando com poucos PV), Trapaceiro.",
-    "poderRacialFixo": "Sortudo"
+    "atributos": { "des": 2, "int": 1, "car": -1 },
+    "deslocamento": "9m", "tamanho": "Pequeno",
+    "traços": "Engenhoso (sem penalidade por não usar ferramentas; +2 se usar a ferramenta certa), Espelunqueiro (visão no escuro, deslocamento de escalada igual ao terrestre), Peste Esguia (tamanho Pequeno, mas deslocamento normal de 9m), Rato das Ruas (+2 em Fortitude; recuperação de PV/PM por descanso nunca é inferior ao nível).",
+    "poderRacialFixo": "Espelunqueiro"
   },
   {
     "id": "golem", "nome": "Golem",
-    "atributos": { "for": 2, "int": 2, "car": -2 },
+    "atributos": { "for": 2, "con": 1, "car": -1 },
     "deslocamento": "6m", "tamanho": "Médio",
-    "traços": "Corpo de metal (imune a veneno, doença e crítico), não precisa respirar/comer/dormir, é constructo.",
-    "poderRacialFixo": "Corpo de Metal"
+    "traços": "Chassi (deslocamento 6m não reduzido por armadura/carga; +2 na Defesa, penalidade de armadura –2 extra), Criatura Artificial (tipo construto: visão no escuro, imune a cansaço/efeitos metabólicos/veneno, não come/dorme/respira), Espírito Elemental (imunidade e cura por um tipo de dano elemental à escolha), Sem Origem (sem origem normal, ganha um poder geral à escolha).",
+    "poderRacialFixo": "Chassi"
   },
   {
     "id": "hynne", "nome": "Hynne (Hobbit)",
-    "atributos": { "des": 2, "car": 2, "for": -2 },
+    "atributos": { "des": 2, "car": 1, "for": -1 },
     "deslocamento": "6m", "tamanho": "Pequeno",
-    "traços": "Sorte Grande (rerrola falhas críticas), Sensação Ruim (percebe perigo iminente).",
-    "poderRacialFixo": "Sorte Grande"
+    "traços": "Arremessador (dano aumentado em um passo com fundas e armas de arremesso), Pequeno e Rechonchudo (tamanho Pequeno, deslocamento 6m, +2 em Enganação, usa Destreza em Atletismo), Sorte Salvadora (1 PM: rerrola um teste de resistência).",
+    "poderRacialFixo": "Sorte Salvadora"
   },
   {
     "id": "kliren", "nome": "Kliren",
-    "atributos": { "int": 4, "for": -2 },
-    "deslocamento": "6m", "tamanho": "Pequeno",
-    "traços": "Vidraça (menos PV), Inventividade (bônus em Ofícios/criação de itens), curiosidade científica.",
-    "poderRacialFixo": "Vidraça"
+    "atributos": { "int": 2, "car": 1, "for": -1 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Híbrido (treinado em uma perícia extra à escolha), Engenhosidade/Lógica Gnômica (2 PM: soma Inteligência num teste de perícia, exceto ataque), Ossos Frágeis (+1 dano adicional por dado de dano de impacto sofrido), Vanguardista (proficiência com armas de fogo, +2 em um Ofício à escolha).",
+    "poderRacialFixo": "Lógica Gnômica"
   },
   {
     "id": "lefou", "nome": "Lefou",
-    "atributos": { "escolha": 2, "escolha2": 2, "car": -4 },
+    "atributos": { "escolha1": 1, "escolha2": 1, "escolha3": 1, "car": -1 },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Mutação Caótica (traço aleatório da Tormenta), aparência monstruosa.",
-    "poderRacialFixo": "Mutação"
+    "traços": "+1 em três atributos diferentes à escolha (exceto Carisma), Carisma –1. Cria da Tormenta (tipo monstro; +5 em resistência a efeitos de lefou/Tormenta), Deformidade (+2 em duas perícias à escolha, trocáveis por um poder da Tormenta).",
+    "poderRacialFixo": "Deformidade"
   },
   {
     "id": "minotauro", "nome": "Minotauro",
-    "atributos": { "for": 4, "int": -2 },
+    "atributos": { "for": 2, "con": 1, "sab": -1 },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Fúria Sanguinária, Chifres (ataque natural de chifrada), tino de labirinto.",
-    "poderRacialFixo": "Chifrada"
+    "traços": "Chifres (arma natural 1d6, x2; 1 PM: ataque extra de chifrada), Couro Rígido (+1 na Defesa), Faro (não fica desprevenido contra inimigos que não perceba em alcance curto; camuflagem total só falha 20%), Medo de Altura (fica abalado perto de quedas de 3m+).",
+    "poderRacialFixo": "Chifres"
   },
   {
     "id": "qareen", "nome": "Qareen",
-    "atributos": { "car": 4, "sab": -2 },
-    "deslocamento": "6m", "tamanho": "Médio",
-    "traços": "Sangue Genasi (ligação com um dos planos elementais), Corpo Amaldiçoado (restrição sobrenatural).",
-    "poderRacialFixo": "Sangue Genasi"
+    "atributos": { "car": 2, "int": 1, "sab": -1 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Desejos (custo de magia –1 PM ao atender um pedido feito desde o último turno), Resistência Elemental (resistência 10 a um tipo de dano elemental, conforme a ascendência), Tatuagem Mística (pode lançar uma magia de 1º círculo à escolha).",
+    "poderRacialFixo": "Tatuagem Mística"
   },
   {
     "id": "sereia", "nome": "Sereia/Tritão",
-    "atributos": { "car": 2, "con": 2, "int": -2 },
-    "deslocamento": "6m (9m nadando)", "tamanho": "Médio",
-    "traços": "Metamorfose Aquática (pernas viram cauda na água), respira debaixo d'água, canto de sereia.",
-    "poderRacialFixo": "Metamorfose Aquática"
+    "atributos": { "escolha1": 1, "escolha2": 1, "escolha3": 1 },
+    "deslocamento": "9m (12m nadando)", "tamanho": "Médio",
+    "traços": "+1 em três atributos diferentes à escolha, sem penalidade. Canção dos Mares (pode lançar duas magias de controle mental à escolha), Mestre do Tridente (tridente é arma simples; +2 no dano com azagaias/lanças/tridentes), Transformação Anfíbia (respira debaixo d'água, cauda com deslocamento de natação 12m; em terra, pernas com 9m).",
+    "poderRacialFixo": "Transformação Anfíbia"
   },
   {
     "id": "suraggel", "nome": "Suraggel",
-    "atributos": { "escolha": 2, "des": 2, "for": -2 },
+    "atributos": { "aggelus": { "sab": 2, "car": 1 }, "sulfure": { "des": 2, "int": 1 } },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Sangue angelical ou sulfúreo (escolha o legado: Aggelus ou Sulfure) com poder racial próprio.",
-    "poderRacialFixo": "Sangue Angelical"
+    "traços": "Escolha um legado: Aggelus (Sabedoria +2, Carisma +1) ou Sulfure (Destreza +2, Inteligência +1). Herança Divina (tipo espírito, visão no escuro). Aggelus ganha Luz Sagrada (+2 em Diplomacia/Intuição, pode lançar Luz); Sulfure ganha Sombras Profanas (+2 em Enganação/Furtividade, pode lançar Escuridão).",
+    "poderRacialFixo": "Herança Divina"
   },
   {
     "id": "silfide", "nome": "Sílfide",
-    "atributos": { "des": 2, "int": 2, "for": -2 },
-    "deslocamento": "9m (voo curto)", "tamanho": "Médio",
-    "traços": "Filha do Vento (voo por curtos períodos), corpo leve.",
-    "poderRacialFixo": "Filha do Vento"
+    "atributos": { "car": 2, "des": 1, "for": -2 },
+    "deslocamento": "9m pairando (12m voando, 1 PM/rodada)", "tamanho": "Minúsculo",
+    "traços": "Asas de Borboleta (tamanho Minúsculo; paira a 1,5m com deslocamento 9m, ignora terreno difícil e dano de queda; 1 PM/rodada: voa a 12m), Espírito da Natureza (tipo espírito, visão na penumbra, fala com animais), Magia das Fadas (pode lançar duas magias de ilusão/encantamento à escolha).",
+    "poderRacialFixo": "Asas de Borboleta"
   },
   {
     "id": "trog", "nome": "Trog",
-    "atributos": { "for": 2, "con": 2, "car": -2 },
+    "atributos": { "con": 2, "for": 1, "int": -1 },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Visão no Escuro, Pele Grossa (RD contra ambiente), instintos primitivos.",
-    "poderRacialFixo": "Pele Grossa"
+    "traços": "Mau Cheiro (2 PM: gás fétido, Fortitude ou enjoo em área), Mordida (arma natural 1d6, x2; 1 PM: ataque extra), Reptiliano (tipo monstro, visão no escuro, +1 na Defesa, +5 em Furtividade sem armadura), Sangue Frio (+1 dano adicional por dado de dano de frio sofrido).",
+    "poderRacialFixo": "Reptiliano"
   },
   {
     "id": "humano", "nome": "Humano",
-    "atributos": { "livre": 2, "livre2": 2 },
+    "atributos": { "escolha1": 1, "escolha2": 1, "escolha3": 1 },
     "deslocamento": "9m", "tamanho": "Médio",
-    "traços": "Determinação (+2 em dois atributos à escolha), versátil (treino extra ou poder geral extra no 1º nível).",
-    "poderRacialFixo": "Determinação"
+    "traços": "+1 em três atributos diferentes à escolha. Versátil (treinado em duas perícias à escolha, uma delas trocável por um poder geral).",
+    "poderRacialFixo": "Versátil"
+  },
+  {
+    "id": "medusa", "nome": "Medusa",
+    "atributos": { "des": 2, "car": 1 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "Cria de Megalokk (tipo monstro, visão no escuro), Natureza Venenosa (resistência a veneno +5; 1 PM: envenena uma arma, perda de 1d12 PV), Olhar Atordoante (1 PM: alvo em alcance curto faz Fortitude CD Car ou fica atordoado por uma rodada).",
+    "poderRacialFixo": "Olhar Atordoante",
+    "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  },
+  {
+    "id": "osteon", "nome": "Osteon",
+    "atributos": { "escolha1": 1, "escolha2": 1, "escolha3": 1, "con": -1 },
+    "deslocamento": "9m", "tamanho": "Médio",
+    "traços": "+1 em três atributos diferentes à escolha (exceto Constituição), Constituição –1. Armadura Óssea (redução de corte, frio e perfuração 5), Memória Póstuma (treinado numa perícia extra ou um poder geral à escolha; alternativa: herda uma habilidade racial de outra raça humanoide), Natureza Esquelética (tipo morto-vivo, visão no escuro, imune a cansaço/metabólicos/trevas/veneno, cura de luz causa dano e dano de trevas cura PV), Preço da Não Vida (precisa passar 8h sob luz de estrelas ou no subterrâneo pra descansar).",
+    "poderRacialFixo": "Armadura Óssea",
+    "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
   }
 ]
