@@ -34,6 +34,17 @@ adaptado para as regras de Tormenta 20.
   um módulo não-oficial para Foundry VTT (tag `0.7.8`, que ainda tinha os pacotes base, combinada
   com o conteúdo extra da branch `master`). Os arquivos `.db` (NeDB — um JSON por linha) são
   baixados e normalizados em `data/raw/*.json` pelo script `sync-data.mjs`.
+- **Bestiário extra (`data/raw/ameacas-extra.json`, ~1.850 criaturas)**: adicionado manualmente numa
+  sessão anterior a partir do compêndio de Foundry VTT "Coleção Arton - Ameaças" (aventuras da
+  Jornada Heroica e outros suplementos oficiais de Tormenta 20). Ao contrário de `ameacas.json`,
+  este arquivo **não** é regerado pelo `sync-data.mjs`, então é o lugar certo para curadoria manual —
+  qualquer entrada adicionada aqui sobrevive à sincronização automática. O livro **Ameaças de Arton**
+  (Jambô Editora, 2023) já está integralmente coberto por esse compêndio (na pasta "Coleção Arton -
+  Ameaças de Arton", com nomes às vezes grafados de forma inconsistente, ex.: "Hynnin"/"Hyninn",
+  "Kallyandranoch"/"Kallyadranoch"); uma conferência criatura a criatura contra o PDF oficial não
+  encontrou nenhum stat block faltando, então nenhuma entrada nova precisou ser adicionada a partir
+  dele. Como de costume neste arquivo, os campos `descricao` ficam vazios — o texto de lore dos
+  livros é conteúdo comercial protegido, então só os números e habilidades mecânicas são mantidos.
 - **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: digitados à mão a partir
   do livro Tormenta 20 - Jogo Básico, porque não existe uma fonte de dados aberta e "viva" como o
   5etools para D&D. **Os números de progressão de classe (PV/PM por nível) são uma estimativa
