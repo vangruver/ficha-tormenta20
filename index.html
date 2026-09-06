@@ -21,9 +21,22 @@
     <button id="btn-exportar" title="Exportar JSON">📤 Exportar</button>
     <button id="btn-pdf" title="Ficha em PDF">🖨️ PDF</button>
     <button id="btn-atualizar-dados" title="Atualizar banco de dados">🔄 Dados</button>
+    <button id="btn-discord" title="Enviar rolagens pro Discord">🔗 Discord</button>
+    <button id="btn-sala" title="Configurar a sala de rolagens compartilhada com o grupo">💬 Sala</button>
+    <button id="btn-novidades" title="O que mudou recentemente na ficha">📰 Novidades</button>
+    <button id="btn-relatar-bug" title="Achou um bug ou tem uma sugestão? Manda pra mim">🐛 Relatar bug</button>
+    <button id="btn-ajuda" title="Guia detalhado de tudo que a ficha faz">❓ Ajuda</button>
   </div>
   <input type="file" id="input-importar" accept="application/json" hidden />
 </header>
+
+<div id="fan-disclaimer-banner" class="fan-disclaimer-banner hidden" role="status">
+  <span>🎲 Ficha 100% gratuita e de código aberto, sem cobrar nada — conteúdo de fã de Tormenta 20.</span>
+  <div class="fan-disclaimer-actions">
+    <button type="button" id="support-btn" class="link-btn">💛 Apoiar o projeto</button>
+    <button type="button" id="fan-disclaimer-dismiss" class="link-btn" title="Dispensar este aviso">Dispensar</button>
+  </div>
+</div>
 
 <div id="aviso-dados" class="aviso" hidden></div>
 
@@ -278,11 +291,65 @@
   </div>
 </div>
 
+<!-- MODAL: Discord / Sala de rolagens / Apoio / Ajuda / Novidades / Aviso legal -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-conteudo modal-box"><button id="modal-close">✕</button><div id="modal-content"></div></div>
+</div>
+<div id="toast" class="toast"></div>
+
+<button id="room-chat-fab" type="button" title="Chat da sala" aria-label="Chat da sala">💬</button>
+<div id="room-chat-panel" class="room-chat-panel hidden" role="dialog" aria-label="Chat da sala">
+  <div class="room-chat-head"><span>💬 Sala</span><span class="room-chat-head-actions"><button type="button" id="room-chat-settings-btn" title="Configurar sala" aria-label="Configurar sala">⚙️</button><button type="button" id="room-chat-close" aria-label="Fechar">×</button></span></div>
+  <div id="room-chat-status" class="room-chat-status dica">Sala não configurada.</div>
+  <div class="room-chat-tabs" id="room-chat-tabs">
+    <button class="active" data-roomtab="rolls">💬 Chat</button>
+    <button data-roomtab="combat">⚔️ Iniciativa</button>
+    <button data-roomtab="music">🎵 Música</button>
+  </div>
+  <div id="room-chat-list" class="room-chat-list"></div>
+  <div id="room-combat-panel" class="room-combat-panel hidden">
+    <div id="room-combat-controls" class="room-combat-controls"></div>
+    <div id="room-combat-list" class="room-combat-list"></div>
+  </div>
+  <div id="room-music-panel" class="room-music-panel hidden">
+    <div id="room-music-status" class="room-chat-status dica">Nenhuma música tocando.</div>
+    <div id="room-music-player-wrap" class="room-music-player-wrap"><div id="room-music-player"></div><div id="room-music-player-sc" class="hidden"></div></div>
+    <div id="room-music-controls" class="room-music-controls"></div>
+  </div>
+  <div id="room-chat-compose" class="room-chat-compose">
+    <div class="dice-quick-row">
+      <button type="button" data-dice-quick="4">d4</button>
+      <button type="button" data-dice-quick="6">d6</button>
+      <button type="button" data-dice-quick="8">d8</button>
+      <button type="button" data-dice-quick="10">d10</button>
+      <button type="button" data-dice-quick="12">d12</button>
+      <button type="button" data-dice-quick="20">d20</button>
+      <button type="button" data-dice-quick="100">d100</button>
+    </div>
+    <div class="dice-expr-row"><input id="dice-expr-input" placeholder="2d6+3" autocomplete="off"><button type="button" id="dice-roll-btn">Rolar</button></div>
+    <label class="dice-type-row">Tipo (aparece na sala)<select id="dice-roll-type">
+      <option value="outro">Genérico</option>
+      <option value="ataque">Ataque</option>
+      <option value="dano">Dano</option>
+      <option value="cura">Cura — deixa clicável pros outros ajustarem o PV</option>
+    </select></label>
+    <div id="dice-history" class="dice-history"></div>
+    <div class="room-chat-message-row">
+      <input type="file" id="room-chat-image-input" accept="image/*" hidden>
+      <button type="button" id="room-chat-image-btn" title="Enviar imagem ou GIF">🖼️</button>
+      <input type="text" id="room-chat-text-input" placeholder="Mensagem… (cole um link de imagem/GIF pra mandar)" autocomplete="off" maxlength="500">
+      <button type="button" id="room-chat-send-btn">Enviar</button>
+    </div>
+  </div>
+</div>
+
 <footer class="rodape">
   <span id="rodape-fonte">Dados: Tormenta 20 (regras centrais) + Tormenta20 Compendium.</span>
+  <button type="button" id="disclaimer-link" class="link-btn" title="Ler o aviso legal completo">Aviso legal completo</button>
   <span id="rodape-versao"></span>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script type="module" src="src/app.js"></script>
 </body>
 </html>

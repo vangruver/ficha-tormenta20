@@ -207,8 +207,172 @@ textarea { width: 100%; resize: vertical; }
   padding: 1em; display: flex; justify-content: center; gap: 1em; flex-wrap: wrap;
 }
 
+.hidden { display: none !important; }
+
+.link-btn { border: 0; background: transparent; color: var(--vinho); font-size: 0.75rem; text-decoration: underline; padding: 0.2em 0.4em; }
+.link-btn:hover { background: transparent; color: var(--vinho-escuro); }
+.add-btn { font-weight: bold; }
+.remove-btn { background: var(--vermelho); }
+.remove-btn:hover { background: #8f1e18; }
+.empty { padding: 1em; text-align: center; color: #999; font-size: 0.8rem; }
+
+/* ---------- Modal genérico (Discord, Sala, Apoio, Ajuda, Novidades, Aviso legal) ---------- */
+.modal-box { max-width: 640px; }
+#modal-close { position: absolute; top: 0.5em; right: 0.5em; background: transparent; color: var(--tinta); }
+#modal-close:hover { background: transparent; color: var(--vinho); }
+.modal-title { border-bottom: 1px solid var(--linha); padding-bottom: 0.6em; margin-bottom: 0.4em; }
+.modal-title h2 { margin: 0.2em 0; color: var(--vinho); }
+.modal-title .muted { color: #666; font-size: 0.85rem; margin: 0; }
+.eyebrow { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--vinho); font-weight: bold; text-transform: uppercase; }
+.modal-body { font-size: 0.9rem; line-height: 1.6; margin-top: 0.8em; }
+.modal-body h3 { color: var(--vinho); margin: 1em 0 0.4em; }
+.modal-body p { margin: 0.5em 0; }
+.modal-body ul, .modal-body ol { padding-left: 1.4em; }
+.modal-body li { margin: 0.3em 0; }
+.modal-body label { display: block; margin: 0.6em 0; font-size: 0.85rem; }
+.linha-botoes-modal { display: flex; gap: 0.5em; flex-wrap: wrap; margin-top: 0.8em; }
+.changelog-entry { margin-bottom: 1em; }
+.changelog-entry:last-child { margin-bottom: 0; }
+.changelog-date { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; color: var(--vinho); border-bottom: 1px solid var(--linha); padding-bottom: 0.3em; margin-bottom: 0.3em; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+  background: var(--tinta); color: #fff; border-left: 3px solid var(--vinho);
+  border-radius: 6px; padding: 0.7em 1em; font-size: 0.85rem;
+  opacity: 0; transform: translateY(12px); pointer-events: none; transition: 0.2s;
+  box-shadow: var(--sombra); max-width: 80vw;
+}
+.toast.show { opacity: 1; transform: none; }
+
+/* ---------- Rolador de dados / sala de rolagens ---------- */
+#room-chat-fab {
+  position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid var(--linha); background: var(--vinho); color: #fff; font-size: 22px;
+  box-shadow: var(--sombra); cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+#room-chat-fab:hover { background: var(--vinho-escuro); }
+.room-chat-panel {
+  position: fixed; bottom: 86px; left: 24px; z-index: 150; width: 320px; max-width: calc(100vw - 32px);
+  background: #fff; border: 1px solid var(--linha); border-radius: 10px; padding: 0.9em;
+  box-shadow: var(--sombra); max-height: 80vh; display: flex; flex-direction: column;
+}
+.room-chat-panel.hidden { display: none; }
+.room-chat-head { display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--vinho); margin-bottom: 0.5em; }
+.room-chat-head-actions { display: flex; align-items: center; gap: 0.5em; }
+.room-chat-head-actions button { background: transparent; color: var(--tinta); border: 0; font-size: 16px; padding: 0.1em 0.3em; }
+.room-chat-status { font-size: 0.75rem; margin-bottom: 0.5em; }
+.room-chat-tabs { display: flex; flex-wrap: nowrap; gap: 0.3em; margin-bottom: 0.5em; }
+.room-chat-tabs button { flex: 1 1 0; min-width: 0; background: var(--papel-escuro); color: var(--vinho); font-size: 0.65rem; padding: 0.35em 0.2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.room-chat-tabs button.active { background: var(--vinho); color: #fff; }
+.room-chat-list { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5em; }
+.room-chat-row { background: var(--papel); border: 1px solid var(--linha); border-radius: 6px; padding: 0.5em 0.6em; font-size: 0.8rem; }
+.room-chat-row.room-chat-heal { border-color: var(--verde); }
+.room-chat-row.room-chat-damage { border-color: var(--vermelho); }
+.room-chat-meta { display: flex; align-items: baseline; gap: 0.4em; margin-bottom: 0.3em; flex-wrap: wrap; }
+.room-chat-meta b { color: var(--tinta); }
+.room-chat-meta span { color: #777; }
+.room-chat-meta small { margin-left: auto; color: #999; }
+.room-chat-body { display: flex; align-items: center; gap: 0.5em; }
+.room-chat-detail { color: #666; flex: 1; }
+.room-chat-total { font-size: 1.1em; font-weight: bold; color: var(--vinho); }
+.room-chat-heal-btn { margin-top: 0.4em; width: 100%; background: var(--verde); color: #fff; font-size: 0.75rem; font-weight: bold; }
+.room-chat-heal-btn:disabled { background: #ccc; color: #666; cursor: default; }
+.room-chat-damage-btn { margin-top: 0.4em; width: 100%; background: var(--vermelho); color: #fff; font-size: 0.75rem; font-weight: bold; }
+.room-chat-damage-btn:disabled { background: #ccc; color: #666; cursor: default; }
+.room-chat-row.room-chat-system { background: transparent; border: none; padding: 0.1em 0.3em; display: flex; justify-content: center; gap: 0.4em; text-align: center; }
+.room-chat-row.room-chat-system span { color: #888; font-style: italic; }
+.room-chat-body-msg { display: block; }
+.room-chat-text { white-space: pre-wrap; word-break: break-word; }
+.room-chat-text a { color: var(--vinho); word-break: break-all; }
+.room-chat-image { display: block; max-width: 100%; max-height: 220px; border-radius: 6px; margin-top: 0.3em; }
+.room-chat-compose { display: flex; flex-direction: column; gap: 0.5em; margin-top: 0.6em; padding-top: 0.6em; border-top: 1px solid var(--linha); }
+.room-chat-message-row { display: flex; gap: 0.4em; align-items: center; }
+.room-chat-message-row input[type="text"] { flex: 1; min-width: 0; }
+.dice-quick-row { display: flex; flex-wrap: wrap; gap: 0.3em; }
+.dice-quick-row button { background: var(--papel-escuro); color: var(--vinho); font-size: 0.75rem; padding: 0.3em 0.5em; }
+.dice-expr-row { display: flex; gap: 0.4em; }
+.dice-expr-row input { flex: 1; min-width: 0; }
+.dice-history { max-height: 140px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.3em; }
+.dice-history-row { display: flex; align-items: center; gap: 0.5em; background: var(--papel); border: 1px solid var(--linha); border-radius: 4px; padding: 0.3em 0.5em; font-size: 0.75rem; }
+.dice-history-expr { font-weight: bold; min-width: 44px; }
+.dice-history-rolls { color: #777; flex: 1; }
+.dice-history-total { font-weight: bold; color: var(--vinho); }
+.dice-type-row { font-size: 0.75rem; color: #666; }
+.dice-type-row select { width: 100%; margin-top: 0.2em; }
+
+/* Com a sala aberta numa tela larga, o chat vira um painel fixo colado à
+   esquerda em vez de flutuar por cima do conteúdo. */
+@media (min-width: 1180px) {
+  body.room-chat-docked main, body.room-chat-docked .topo, body.room-chat-docked footer { margin-left: 340px; }
+  body.room-chat-docked #room-chat-panel {
+    left: 0; top: 0; bottom: 0; width: 320px; max-width: 320px; border-radius: 0;
+    border-width: 0 1px 0 0; padding: 16px 16px 90px; box-shadow: 4px 0 30px rgba(0,0,0,.2);
+  }
+  body.room-chat-docked #room-chat-panel .room-chat-list { flex: 1; max-height: none; }
+}
+
+/* ---------- Rastreador de iniciativa da sala ---------- */
+.room-combat-controls { display: flex; flex-direction: column; gap: 0.4em; margin-bottom: 0.6em; padding-bottom: 0.6em; border-bottom: 1px dashed var(--linha); }
+.room-combat-self, .room-combat-add { display: flex; flex-direction: column; gap: 0.35em; }
+.room-combat-self > input, .room-combat-add > input { width: 100%; }
+.room-combat-self-row { display: flex; gap: 0.4em; align-items: end; }
+.room-combat-self-row label { display: flex; flex-direction: column; gap: 0.1em; font-size: 0.65rem; text-transform: uppercase; color: #777; flex: 1; }
+.room-combat-self-row label input { width: 100%; }
+.room-combat-master { display: flex; flex-wrap: wrap; gap: 0.4em; align-items: center; margin-top: 0.2em; }
+.room-combat-master b { margin-left: auto; color: var(--tinta); }
+.room-combat-list { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5em; }
+.room-combat-row { background: var(--papel); border: 1px solid var(--linha); border-radius: 6px; padding: 0.5em 0.6em; }
+.room-combat-row.room-combat-turn { border-color: var(--ouro); box-shadow: 0 0 0 1px var(--ouro); }
+.room-combat-row-top { display: flex; align-items: center; gap: 0.4em; margin-bottom: 0.3em; }
+.room-combat-init { font-weight: bold; color: var(--vinho); background: var(--papel-escuro); border-radius: 20px; padding: 0.1em 0.5em; font-size: 0.8rem; }
+.room-combat-row-top .remove-btn { margin-left: auto; width: 22px; height: 22px; line-height: 1; padding: 0; font-size: 13px; }
+.room-combat-row-bottom { display: flex; align-items: center; gap: 0.5em; font-size: 0.75rem; color: #777; }
+.dash-hp-bar { position: relative; flex: 1; height: 16px; background: #ccc; border-radius: 8px; overflow: hidden; }
+.dash-hp-fill { height: 100%; background: var(--verde); }
+.dash-hp-fill.ferido { background: var(--amarelo); }
+.dash-hp-fill.critico { background: var(--vermelho); }
+.dash-hp-fill.morto { background: #444; }
+.dash-hp-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: bold; color: #222; text-shadow: 0 1px 1px rgba(255,255,255,.6); }
+.room-combat-hidden-check { display: flex; align-items: center; gap: 0.4em; font-size: 0.7rem; color: #777; cursor: pointer; }
+.room-combat-hidden-check input { width: auto; }
+.room-combat-hidden-badge { font-size: 0.65rem; color: var(--ouro); white-space: nowrap; font-style: italic; }
+.room-combat-hide-toggle { width: 24px; height: 22px; line-height: 1; font-size: 12px; padding: 0; flex: 0 0 auto; }
+.room-combat-row.room-combat-mystery { border-style: dashed; }
+.room-combat-row.room-combat-mystery .room-combat-row-top b { font-style: italic; color: #777; }
+.mystery-hp-bar { position: relative; background: repeating-linear-gradient(135deg, #ddd 0 8px, #eee 8px 16px); background-size: 200% 200%; animation: mystery-shimmer 3.5s linear infinite; }
+@keyframes mystery-shimmer { 0% { background-position: 0 0; } 100% { background-position: 32px 32px; } }
+
+/* ---------- Música da sala ---------- */
+.room-music-player-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 6px; overflow: hidden; margin-bottom: 0.6em; }
+.room-music-player-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.room-music-controls { display: flex; flex-direction: column; gap: 0.5em; }
+.room-music-load { display: flex; gap: 0.4em; }
+.room-music-load input { flex: 1; min-width: 0; }
+.room-music-buttons { display: flex; gap: 0.4em; flex-wrap: wrap; }
+.room-music-controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+.room-music-volume-row { display: flex; align-items: center; gap: 0.5em; }
+.room-music-volume-row input[type="range"] { flex: 1; accent-color: var(--vinho); }
+.room-music-playlist { display: flex; flex-wrap: wrap; gap: 0.4em; max-height: 180px; overflow-y: auto; }
+.room-music-playlist.hidden { display: none; }
+.room-music-track { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; width: 76px; border: 1px solid var(--linha); background: var(--papel); border-radius: 6px; font-size: 0.65rem; font-weight: 600; }
+.room-music-track img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 2px; display: block; }
+.room-music-track span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.room-music-track.active { border-color: var(--vinho); box-shadow: 0 0 0 1px var(--vinho); }
+.room-music-track:disabled { cursor: default; opacity: .85; }
+
+/* ---------- Aviso "conteúdo de fã / gratuito" ---------- */
+.fan-disclaimer-banner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8em;
+  padding: 0.5em 1em; background: linear-gradient(160deg, rgba(46,125,50,.12), transparent);
+  border-bottom: 1px solid rgba(46,125,50,.3); color: #555; font-size: 0.8rem;
+}
+.fan-disclaimer-banner.hidden { display: none; }
+.fan-disclaimer-actions { display: flex; gap: 0.5em; flex-shrink: 0; }
+.fan-disclaimer-banner #support-btn { font-weight: bold; }
+
 @media print {
-  .topo, .aviso, .abas, .dashboard, footer, button { display: none !important; }
+  .topo, .aviso, .abas, .dashboard, footer, button, #room-chat-fab, #room-chat-panel, #modal, #toast, .fan-disclaimer-banner { display: none !important; }
   .aba { display: block !important; }
   main { max-width: 100%; }
   .cartao { box-shadow: none; break-inside: avoid; }

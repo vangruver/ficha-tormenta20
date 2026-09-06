@@ -6,6 +6,21 @@ export function mod(valor) {
   return Math.floor((valor - 10) / 2);
 }
 
+export function fmt(n) { n = Number(n || 0); return n >= 0 ? `+${n}` : `${n}`; }
+
+export function rollDie(lados) { return 1 + Math.floor(Math.random() * Math.max(1, Number(lados) || 6)); }
+export function rollDice(n, lados) {
+  n = Math.max(1, Number(n) || 1);
+  const rolls = Array.from({ length: n }, () => rollDie(lados));
+  return { rolls, total: rolls.reduce((a, b) => a + b, 0) };
+}
+// Expressão tipo "2d6+3" → { n, faces, bonus }.
+export function parseDiceExpr(expr) {
+  const m = String(expr || "").match(/(\d*)d(\d+)\s*([+-]\s*\d+)?/i);
+  if (!m) return null;
+  return { n: Number(m[1] || 1), faces: Number(m[2]), bonus: m[3] ? Number(m[3].replace(/\s+/g, "")) : 0 };
+}
+
 // Bônus de treino de perícia: metade do nível (arred. p/ cima) + 2, mínimo +2, só se treinado.
 export function bonusTreino(nivel, treinado) {
   if (!treinado) return 0;

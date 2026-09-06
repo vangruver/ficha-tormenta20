@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, version] =
+  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -26,9 +26,13 @@ export async function carregarBanco() {
       carregarJSON("data/raw/equipamentos.json"),
       carregarJSON("data/raw/panteao.json"),
       carregarJSON("data/raw/ameacas.json"),
+      // Bestiário extra "Coleção Arton" (1850 ameaças de aventuras/suplementos
+      // oficiais, curado à mão — não vem do sync-data.mjs, então sobrevive a
+      // uma resincronização do compêndio).
+      carregarJSON("data/raw/ameacas-extra.json").catch(() => []),
       carregarJSON("data/version.json").catch(() => null),
     ]);
-  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, version };
+  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], version };
   return cache;
 }
 

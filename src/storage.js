@@ -106,3 +106,53 @@ export function getVersaoDadosVista() {
 export function setVersaoDadosVista(v) {
   localStorage.setItem(KEY_VERSAO_VISTA, v);
 }
+
+// Webhook do Discord pra onde as rolagens são enviadas — fica preso a este
+// navegador (não ao personagem), já que cada jogador cola o link do próprio
+// canal/servidor.
+const DISCORD_WEBHOOK_KEY = "t20.discordWebhook";
+export function getDiscordWebhook() { try { return localStorage.getItem(DISCORD_WEBHOOK_KEY) || ""; } catch { return ""; } }
+export function saveDiscordWebhook(url) {
+  try { url ? localStorage.setItem(DISCORD_WEBHOOK_KEY, url) : localStorage.removeItem(DISCORD_WEBHOOK_KEY); }
+  catch { /* modo privado */ }
+}
+
+// Sala de rolagens — chat em tempo real compartilhado entre os jogadores da
+// mesma mesa, ponto-a-ponto via WebRTC (PeerJS). Ver hostRoom()/joinRoom()/
+// broadcastRoll() em app.js.
+const ROOM_CODE_KEY = "t20.roomCode";
+const ROOM_APPLIED_HEALS_KEY = "t20.roomAppliedHeals";
+const ROOM_APPLIED_DAMAGES_KEY = "t20.roomAppliedDamages";
+
+export function getRoomCode() { try { return localStorage.getItem(ROOM_CODE_KEY) || ""; } catch { return ""; } }
+export function saveRoomCode(code) {
+  try { code ? localStorage.setItem(ROOM_CODE_KEY, code) : localStorage.removeItem(ROOM_CODE_KEY); }
+  catch { /* modo privado */ }
+}
+// IDs das rolagens de cura já aplicadas neste navegador — clicar de novo em
+// "Aplicar cura" na mesma rolagem não cura duas vezes.
+export function getAppliedHeals() {
+  try { const v = localStorage.getItem(ROOM_APPLIED_HEALS_KEY); const arr = v ? JSON.parse(v) : []; return Array.isArray(arr) ? arr : []; }
+  catch { return []; }
+}
+export function markHealApplied(rollId) {
+  const arr = getAppliedHeals();
+  if (arr.includes(rollId)) return;
+  try { localStorage.setItem(ROOM_APPLIED_HEALS_KEY, JSON.stringify([...arr, rollId].slice(-300))); } catch { /* modo privado */ }
+}
+// Mesma ideia, pro botão "Aplicar dano".
+export function getAppliedDamages() {
+  try { const v = localStorage.getItem(ROOM_APPLIED_DAMAGES_KEY); const arr = v ? JSON.parse(v) : []; return Array.isArray(arr) ? arr : []; }
+  catch { return []; }
+}
+export function markDamageApplied(rollId) {
+  const arr = getAppliedDamages();
+  if (arr.includes(rollId)) return;
+  try { localStorage.setItem(ROOM_APPLIED_DAMAGES_KEY, JSON.stringify([...arr, rollId].slice(-300))); } catch { /* modo privado */ }
+}
+
+// Aviso "ficha gratuita / conteúdo de fã" no topo — cada navegador dispensa
+// o próprio, não volta a aparecer depois de fechado uma vez ali.
+const DISCLAIMER_DISMISSED_KEY = "t20.disclaimerDismissed";
+export function isDisclaimerDismissed() { try { return localStorage.getItem(DISCLAIMER_DISMISSED_KEY) === "1"; } catch { return false; } }
+export function dismissDisclaimer() { try { localStorage.setItem(DISCLAIMER_DISMISSED_KEY, "1"); } catch { /* modo privado */ } }
