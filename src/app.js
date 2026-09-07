@@ -151,6 +151,99 @@ function atributosFinais() {
 // Perícias que o personagem tem treinadas *por causa* de classe/origem/raça —
 // a ficha marca sozinha e diz de onde veio. O jogador ainda pode marcar
 // perícias extras à mão (personagem.periciasTreinadas).
+// ==============================================================
+// Escolhas sem alternativa real.
+//
+// Vários "escolha N" do livro chegam na ficha com exatamente N opções
+// disponíveis — o Paladino, por exemplo, já vem treinado em Luta e Vontade
+// e escolhe 2 perícias; se a lista de opções que sobra tiver 2 itens, não há
+// nada a decidir. Pedir a escolha nesse caso só cria pendência falsa.
+//
+// normalizarEscolhas() detecta esses casos e aplica a única combinação
+// possível, gravando na ficha. Os blocos de automação continuam mostrando o
+// que foi concedido, mas como "aplicado automaticamente" em vez de pendência.
+// A função é chamada antes de cada render e devolve `true` se mudou algo.
+// ==============================================================
+
+// Uma escolha é forçada quando o número de opções válidas é menor ou igual
+// à cota — aí a resposta é "todas elas".
+function escolhaForcada(opcoes, cota) { return cota > 0 && opcoes.length > 0 && opcoes.length <= cota; }
+
+// Descreve cada grupo de escolha de perícia da ficha num formato único:
+// { campo, opcoes, cota }. Serve tanto pra normalizar quanto pra renderizar.
+function gruposDeEscolhaDePericia() {
+  const grupos = [];
+  const e = escolhas();
+  const classe = classeAtual();
+  const auto = racaAuto();
+
+  if (classe) {
+    const fixas = classe.periciasFixas || [];
+    const escolhidasGrupo = (classe.periciasFixasEscolha || []).map((_, i) => e.periciasClasseFixa?.[i] || "");
+    const jaFixas = new Set([...fixas, ...escolhidasGrupo.filter(Boolean)]);
+    const opcoes = (classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id));
+    const cota = regras.escolhasDePericiaDaClasse({ classe, modInt: regras.mod(atributoFinal("int")) });
+    grupos.push({ campo: "periciasClasse", opcoes, cota });
+  }
+  if (personagem.origem && !auto.semOrigem) {
+    const lista = origemAtual()?.periciasSugeridas || [];
+    grupos.push({ campo: "periciasOrigem", opcoes: lista, cota: Math.min(2, lista.length || 2) });
+  }
+  if (auto.treinosEscolha) {
+    grupos.push({ campo: "periciasRaciais", opcoes: db.pericias.map((x) => x.id), cota: auto.treinosEscolha });
+  }
+  if (auto.bonusPericiasEscolha) {
+    grupos.push({ campo: "bonusPericiasRaciais", opcoes: db.pericias.map((x) => x.id), cota: auto.bonusPericiasEscolha.quantidade });
+  }
+  if (auto.atributosEscolha) {
+    const { quantidade, excluir = [] } = auto.atributosEscolha;
+    grupos.push({ campo: "atributosRaciais", opcoes: db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), cota: quantidade });
+  }
+  return grupos;
+}
+
+function normalizarEscolhas() {
+  if (!db) return false;
+  const e = escolhas();
+  const classe = classeAtual();
+  const auto = racaAuto();
+  let mudou = false;
+
+  // "Luta ou Pontaria" com uma opção só (ou grupo de uma opção) não é escolha.
+  (classe?.periciasFixasEscolha || []).forEach((grupo, i) => {
+    if (grupo.length === 1 && e.periciasClasseFixa?.[i] !== grupo[0]) {
+      e.periciasClasseFixa = { ...(e.periciasClasseFixa || {}), [i]: grupo[0] };
+      mudou = true;
+    }
+  });
+
+  // Legado único (nenhuma raça do básico tem, mas homebrew pode ter).
+  if (auto.legados?.length === 1 && e.legadoRacial !== auto.legados[0].id) {
+    e.legadoRacial = auto.legados[0].id;
+    mudou = true;
+  }
+
+  // Poder de origem: se a origem só tem um poder correspondente, ele já é o dela.
+  if (personagem.origem && !auto.semOrigem && !e.poderOrigem) {
+    const poderes = poderesDaOrigem(db, personagem.origem);
+    if (poderes.length === 1) { e.poderOrigem = poderes[0].id; mudou = true; }
+  }
+
+  // Perícias/atributos: lista de opções menor ou igual à cota → aplica tudo.
+  for (const { campo, opcoes, cota } of gruposDeEscolhaDePericia()) {
+    if (!escolhaForcada(opcoes, cota)) continue;
+    const atual = Array.isArray(e[campo]) ? e[campo] : [];
+    const alvo = opcoes.slice(0, cota);
+    if (atual.length !== alvo.length || alvo.some((id) => !atual.includes(id))) {
+      e[campo] = alvo;
+      mudou = true;
+    }
+  }
+
+  if (mudou) storage.salvarPersonagem(personagem);
+  return mudou;
+}
+
 function treinosAutomaticos() {
   const mapa = new Map();
   const add = (id, fonte) => {
@@ -261,6 +354,7 @@ function poderesEsperados() {
 // ---------- Render geral ----------
 
 function renderizarTudo() {
+  normalizarEscolhas();
   renderIdentidade();
   renderConstrucao();
   renderAutomacao();
@@ -307,29 +401,185 @@ function renderIdentidade() {
   classeInfo.classList.toggle("hidden", !c);
 }
 
+// ==============================================================
+// Atributos — quatro métodos de geração (compra de pontos, arranjo pronto,
+// rolagem 4d6 descartando o menor e valores livres).
+//
+// Nos métodos "arranjo" e "rolagem" existe uma *piscina* de valores fixos
+// (personagem.atributosPool) que o jogador distribui pelos seis atributos:
+// cada atributo vira um <select> com os valores ainda livres, e
+// personagem.atributosSlots guarda qual índice da piscina foi pra onde.
+// Nos métodos "compra" e "livre" cada atributo é um <input number> comum.
+// ==============================================================
+function atribModo() { return personagem.atributosModo || "compra"; }
+function usaPiscina() { return atribModo() === "arranjo" || atribModo() === "rolagem"; }
+
+// Piscina no formato { valor (escala T20), d20 (só na rolagem), dados }.
+function piscinaAtual() { return Array.isArray(personagem.atributosPool) ? personagem.atributosPool : []; }
+
+function definirPiscina(pool, { limpar = true } = {}) {
+  personagem.atributosPool = pool;
+  if (limpar) {
+    personagem.atributosSlots = {};
+    for (const a of db.atributos) personagem.atributos[a.id] = 0;
+  }
+  salvarERenderizar();
+}
+
+function atribuirSlot(atributoId, indice) {
+  const slots = (personagem.atributosSlots = { ...(personagem.atributosSlots || {}) });
+  // Um valor da piscina só pode estar num atributo: se já estava em outro,
+  // os dois trocam de lugar em vez de o valor sumir.
+  const anterior = Object.entries(slots).find(([, v]) => v === indice)?.[0];
+  const meuAtual = slots[atributoId];
+  if (indice === "" || indice === null) delete slots[atributoId];
+  else {
+    if (anterior && anterior !== atributoId) {
+      if (meuAtual === undefined) delete slots[anterior];
+      else slots[anterior] = meuAtual;
+    }
+    slots[atributoId] = indice;
+  }
+  const pool = piscinaAtual();
+  for (const a of db.atributos) {
+    const i = slots[a.id];
+    personagem.atributos[a.id] = i === undefined ? 0 : Number(pool[i]?.valor ?? 0);
+  }
+  salvarERenderizar();
+}
+
+function setModoAtributos(modo) {
+  if (!regras.MODOS_ATRIBUTO.includes(modo)) return;
+  personagem.atributosModo = modo;
+  if (modo === "arranjo") {
+    const arranjo = regras.ARRANJOS_PADRAO.find((a) => a.id === personagem.atributosArranjo) || regras.ARRANJOS_PADRAO[0];
+    personagem.atributosArranjo = arranjo.id;
+    definirPiscina(arranjo.valores.map((v) => ({ valor: v })));
+    return;
+  }
+  if (modo === "rolagem") {
+    if (!piscinaAtual().length) { rolarAtributos(); return; }
+  } else {
+    personagem.atributosPool = [];
+    personagem.atributosSlots = {};
+  }
+  salvarERenderizar();
+}
+
+function rolarAtributos() {
+  const pool = regras.rolarPiscinaDeAtributos().map((r) => ({ valor: r.valorT20, d20: r.totalD20, dados: r.dados, descartado: r.descartado }));
+  definirPiscina(pool);
+  toast(`Rolagem: ${pool.map((p) => `${p.d20}(${formatarMod(p.valor)})`).join(" · ")}`);
+}
+
+function renderAtribModos() {
+  document.querySelectorAll("#atrib-modos [data-atrib-modo]").forEach((b) => b.classList.toggle("active", b.dataset.atribModo === atribModo()));
+  const extra = document.getElementById("atrib-modo-extra");
+  const pool = document.getElementById("atrib-pool");
+  if (!extra || !pool) return;
+  const modo = atribModo();
+
+  if (modo === "compra") {
+    const gasto = regras.custoTotalAtributos(personagem.atributos);
+    const sobra = regras.PONTOS_ATRIBUTOS - gasto;
+    extra.innerHTML = `<span>Pontos restantes: <b class="atrib-pontos${sobra < 0 ? " estourado" : ""}">${sobra}</b> de ${regras.PONTOS_ATRIBUTOS}</span>
+      <button type="button" id="atrib-zerar">Zerar</button>`;
+    document.getElementById("atrib-zerar").addEventListener("click", () => {
+      for (const a of db.atributos) personagem.atributos[a.id] = 0;
+      salvarERenderizar();
+    });
+    pool.classList.add("hidden");
+    pool.innerHTML = "";
+    return;
+  }
+
+  if (modo === "livre") {
+    extra.innerHTML = `<span>Sem orçamento — digite o que quiser em cada atributo.</span>`;
+    pool.classList.add("hidden");
+    pool.innerHTML = "";
+    return;
+  }
+
+  if (modo === "arranjo") {
+    extra.innerHTML = `<label class="filtro-check">Arranjo
+      <select id="atrib-arranjo">${regras.ARRANJOS_PADRAO.map((a) => `<option value="${a.id}"${a.id === personagem.atributosArranjo ? " selected" : ""}>${esc(a.nome)} — ${a.valores.map(formatarMod).join(", ")}</option>`).join("")}</select>
+    </label>`;
+    document.getElementById("atrib-arranjo").addEventListener("change", (ev) => {
+      const arranjo = regras.ARRANJOS_PADRAO.find((a) => a.id === ev.target.value) || regras.ARRANJOS_PADRAO[0];
+      personagem.atributosArranjo = arranjo.id;
+      definirPiscina(arranjo.valores.map((v) => ({ valor: v })));
+    });
+  } else {
+    extra.innerHTML = `<button type="button" class="primary" id="atrib-rolar">🎲 Rolar 6× 4d6</button>
+      <span>Descarta o menor dado de cada rolagem e converte o total pra escala de T20.</span>`;
+    document.getElementById("atrib-rolar").addEventListener("click", () => {
+      if (piscinaAtual().length && !confirm("Rolar de novo descarta os valores atuais. Continuar?")) return;
+      rolarAtributos();
+    });
+  }
+
+  const usados = new Set(Object.values(personagem.atributosSlots || {}));
+  const lista = piscinaAtual();
+  pool.classList.toggle("hidden", !lista.length);
+  pool.innerHTML = lista.length
+    ? `<span class="atrib-pool-legenda">Valores a distribuir:</span>${lista.map((v, i) => `
+        <span class="atrib-pool-valor${usados.has(i) ? " usado" : ""}" title="${v.d20 ? esc(`4d6 = ${v.dados.join(", ")} (descartou o ${v.descartado}) → ${v.d20} na escala d20`) : "Valor do arranjo"}">${formatarMod(v.valor)}${v.d20 ? `<span class="atrib-pool-valor d20" style="border:0;padding:0 0 0 5px">d20 ${v.d20}</span>` : ""}</span>`).join("")}
+      <span class="atrib-pool-legenda">${usados.size}/${lista.length} distribuídos</span>`
+    : "";
+}
+
 function renderAtributos() {
+  renderAtribModos();
   const cont = document.getElementById("atributos");
+  const modo = atribModo();
+  const chave = classeAtual()?.atributoChave;
+  const pool = piscinaAtual();
+  const slots = personagem.atributosSlots || {};
+  const usados = new Set(Object.values(slots));
+
   cont.innerHTML = db.atributos.map((a) => {
     const final = atributoFinal(a.id);
     const b = bonusRacial(a.id);
+    const campo = usaPiscina()
+      ? `<select class="atrib-slot" data-atributo-slot="${a.id}">
+           <option value="">—</option>
+           ${pool.map((v, i) => `<option value="${i}"${slots[a.id] === i ? " selected" : ""}${usados.has(i) && slots[a.id] !== i ? " disabled" : ""}>${formatarMod(v.valor)}${v.d20 ? ` (d20 ${v.d20})` : ""}</option>`).join("")}
+         </select>`
+      : `<input type="number" data-atributo="${a.id}" min="-5" max="8" step="1" value="${personagem.atributos[a.id] ?? 0}" />`;
     return `
-      <div class="atributo-caixa">
-        <label>${a.nome}</label>
-        <input type="number" data-atributo="${a.id}" min="-2" max="8" step="1" value="${personagem.atributos[a.id] ?? 0}" />
+      <div class="atributo-caixa${chave === a.id ? " chave" : ""}">
+        <label title="${chave === a.id ? esc(`Atributo-chave de ${classeAtual().nome}`) : ""}">${a.nome}</label>
+        ${campo}
         <div class="mod">${formatarMod(final)}</div>
-        <div class="dica">base ${formatarMod(personagem.atributos[a.id] ?? 0)}${b ? ` ${b > 0 ? "+" : ""}${b} racial` : ""}${personagem.atributosTemp?.[a.id] ? ` ${formatarMod(personagem.atributosTemp[a.id])} temp` : ""}</div>
-        <button type="button" class="secundario rolar-atributo" data-rolar-atributo="${a.id}" title="Rolar 1d20 + modificador de ${a.nome}">🎲</button>
+        <div class="dica">base ${formatarMod(personagem.atributos[a.id] ?? 0)}${b ? ` ${formatarMod(b)} racial` : ""}${personagem.atributosTemp?.[a.id] ? ` ${formatarMod(personagem.atributosTemp[a.id])} temp` : ""}</div>
+        <button type="button" class="secundario rolar-atributo" data-rolar-atributo="${a.id}" title="Rolar 1d20 + modificador de ${a.nome}">🎲 rolar</button>
       </div>`;
   }).join("");
 
+  cont.querySelectorAll("[data-atributo-slot]").forEach((sel) => sel.addEventListener("change", () => {
+    const v = sel.value === "" ? "" : Number(sel.value);
+    atribuirSlot(sel.dataset.atributoSlot, v);
+  }));
+
   const resumo = document.getElementById("resumo-atributos");
-  if (resumo) {
+  if (!resumo) return;
+  if (modo === "compra") {
     const gasto = regras.custoTotalAtributos(personagem.atributos);
     const sobra = regras.PONTOS_ATRIBUTOS - gasto;
     resumo.innerHTML = `
       <div class="resumo-treinos-linha">Compra de atributos: <b>${gasto}</b> de <b>${regras.PONTOS_ATRIBUTOS}</b> pontos usados${sobra > 0 ? ` — sobram <b>${sobra}</b>` : sobra < 0 ? ` — <b>${-sobra}</b> acima do orçamento inicial` : ""}.</div>
       <div class="resumo-treinos-conta">Custo por valor: ${[-1, 0, 1, 2, 3, 4].map((v) => `${formatarMod(v)} = ${regras.CUSTO_ATRIBUTO[v]}`).join(" · ")}. Baixar um atributo para −1 devolve 1 ponto.</div>
       <p class="dica">O orçamento vale só para a criação em 1º nível — a ficha nunca trava o valor, então itens, poderes e níveis podem passar dele.</p>`;
+  } else if (usaPiscina()) {
+    const faltam = pool.length - usados.size;
+    resumo.innerHTML = faltam > 0
+      ? `<div class="alerta-automacao">Faltam distribuir <b>${faltam}</b> valor(es) da ${modo === "rolagem" ? "rolagem" : "lista do arranjo"} pelos atributos.</div>`
+      : `<div class="ok-automacao">✓ Todos os valores foram distribuídos.</div>`;
+    if (modo === "rolagem") {
+      resumo.innerHTML += `<p class="dica">Cada valor saiu de <b>4d6 descartando o menor dado</b> (3–18, escala do d20) e foi convertido pra escala de T20 pela regra <b>(valor − 10) ÷ 2</b>, arredondando para baixo. Passe o mouse num valor da lista pra ver os dados.</p>`;
+    }
+  } else {
+    resumo.innerHTML = `<p class="dica">Modo livre: os atributos não seguem orçamento nenhum. Bom pra reproduzir uma ficha pronta ou um NPC.</p>`;
   }
 }
 
@@ -405,15 +655,15 @@ function renderPericias() {
     return `
       <tr class="${treinado ? "treinada" : ""}${bloqueada ? " bloqueada" : ""}">
         <td><input type="checkbox" data-pericia-treino="${p.id}" ${treinado ? "checked" : ""} ${automatica ? "disabled" : ""} title="${automatica ? esc(`Treinada automaticamente por: ${fontes.join(", ")}`) : "Marcar como treinada"}" /></td>
-        <td>${p.nome}
+        <td><span class="pericia-nome">${p.nome}</span>
           ${automatica ? `<span class="tag auto" title="${esc(fontes.join(" · "))}">auto</span>` : ""}
           ${periciasDaClasse.has(p.id) ? '<span class="tag classe">de classe</span>' : ""}
-          ${p.somenteTreinado ? ' <span class="tag">só treinado</span>' : ""}${p.salvamento ? ' <span class="tag">resistência</span>' : ""}
+          ${p.somenteTreinado ? '<span class="tag">só treinado</span>' : ""}${p.salvamento ? '<span class="tag">resistência</span>' : ""}
           ${bloqueada ? '<small class="dica-inline">precisa ser treinada para usar</small>' : ""}
         </td>
         <td>${p.atributo.toUpperCase()}</td>
-        <td><strong title="${esc(partes.join(" · "))}">${formatarMod(bonus)}</strong>
-          <input type="number" class="mod-outros" data-pericia-outros="${p.id}" value="${outros}" title="Outros modificadores" style="width:3.5em" />
+        <td><span class="pericia-bonus" title="${esc(partes.join(" · "))}">${formatarMod(bonus)}</span>
+          <input type="number" class="mod-outros" data-pericia-outros="${p.id}" value="${outros}" title="Outros modificadores" />
         </td>
         <td><button class="secundario" data-rolar-pericia="${p.id}">🎲</button></td>
       </tr>`;
@@ -613,6 +863,7 @@ function renderCatalogoMagias(classe) {
 // ---------- Combate ----------
 
 function renderCombate() {
+  renderCombateArmas();
   const d = calcularDerivados();
   const resist = document.getElementById("lista-resistencias");
   resist.innerHTML = db.pericias.filter((p) => p.salvamento).map((p) => {
@@ -701,9 +952,24 @@ function rolarDanoDoAtaque(i, critico = false) {
 // ---------- Equipamentos ----------
 
 function ehArma(rec) { return rec?.tipoItem === "arma" || !!rec?.dano; }
+// Luta ou Pontaria? O compêndio diz isso na primeira linha da descrição
+// ("Arma Marcial - Ataque à Distância" / "Arma Simples - Corpo a Corpo").
+// O campo `alcance` NÃO serve pra isso: adaga e lança são corpo a corpo e
+// ainda assim trazem alcance "Curto" (a distância de arremesso delas) — ler
+// só o alcance jogava metade das armas brancas pra Pontaria.
 function armaEhDistancia(rec) {
-  const alcance = String(rec?.alcance || "").trim();
-  return /dist[âa]ncia/i.test(rec?.descricao || "") || (alcance && alcance !== "-");
+  const txt = String(rec?.descricao || "");
+  // A categoria vive na PRIMEIRA linha ("Arma Simples - Ataque à Distância").
+  // Só ela decide: o corpo do texto costuma citar as duas coisas — a azagaia
+  // é arma de arremesso e o texto dela ainda explica como usá-la "como arma
+  // corpo a corpo", com penalidade.
+  const cabecalho = txt.split("\n")[0] || "";
+  if (/ataque\s+[àa]\s+dist[âa]ncia/i.test(cabecalho)) return true;
+  if (/corpo\s*a\s*corpo/i.test(cabecalho)) return false;
+  // Armas sem cabeçalho de categoria (itens de origem, itens de aventura):
+  // arma de fogo é à distância, o resto é improviso corpo a corpo.
+  if (/arma\s+de\s+fogo|disparo|proj[ée]til/i.test(txt)) return true;
+  return false;
 }
 
 // Monta a linha de ataque a partir do item do compêndio: perícia (Luta para
@@ -719,6 +985,149 @@ function ataqueDaArma(rec) {
     critico: `${rec.criticoM || 20}/x${rec.criticoX || 2}`,
     itemId: rec.id,
   };
+}
+
+// ==============================================================
+// Armadura, escudo e armas — atalhos que faltavam.
+//
+// Até aqui a única forma de vestir uma armadura era caçar o item no
+// catálogo geral (misturado com tesouros e consumíveis), adicionar ao
+// inventário e só então equipar. Estas funções dão um seletor direto por
+// função — armadura, escudo, arma corpo a corpo, arma à distância — que
+// adiciona ao inventário, equipa e, no caso das armas, já cria a linha de
+// ataque na aba Combate.
+// ==============================================================
+
+// O compêndio não marca armadura/escudo como tipo próprio: armaduras vêm
+// como "tesouro" com "Armadura Leve/Pesada" na descrição e escudos vêm
+// como "arma". regras.lerArmadura() é quem sabe ler isso.
+function classificarEquipamento(rec) {
+  const info = regras.lerArmadura(rec);
+  if (info?.tipo === "escudo") return "escudo";
+  if (info) return "armadura";
+  // Só o que o compêndio marca como `tipoItem: "arma"` entra nos seletores
+  // de arma — poções e itens de origem também têm dano ("Elixir da vida",
+  // 4d6) e não são coisas que se empunha.
+  if (rec?.tipoItem === "arma") return armaEhDistancia(rec) ? "arma-distancia" : "arma-corpo";
+  return rec?.tipoItem || "tesouro";
+}
+function catalogoPorFuncao(funcao) {
+  // O compêndio traz algumas entradas repetidas (duas "Alabarda", por
+  // exemplo) — no seletor por função elas viram uma linha só.
+  const vistos = new Set();
+  return db.equipamentos
+    .filter((e) => classificarEquipamento(e) === funcao)
+    .filter((e) => { const k = e.nome.trim().toLowerCase(); if (vistos.has(k)) return false; vistos.add(k); return true; })
+    .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+}
+// Item do inventário atualmente equipado numa "vaga" (armadura ou escudo).
+function equipadoNaVaga(vaga) {
+  return personagem.equipamentos.find((item) => {
+    if (!item.equipado) return false;
+    const info = regras.lerArmadura(registroDoItem(item));
+    return info && (vaga === "escudo" ? info.tipo === "escudo" : info.tipo !== "escudo");
+  }) || null;
+}
+function garantirNoInventario(rec) {
+  let item = personagem.equipamentos.find((x) => x.id === rec.id);
+  if (!item) {
+    item = { id: rec.id, nome: rec.nome, peso: rec.peso, qtd: 1, equipado: false };
+    personagem.equipamentos.push(item);
+  }
+  return item;
+}
+// Equipa uma armadura/escudo, tirando o que estava na mesma vaga.
+function equiparNaVaga(rec, vaga) {
+  const atual = equipadoNaVaga(vaga);
+  if (atual && atual.id === rec.id) { atual.equipado = false; salvarERenderizar(); return; }
+  if (atual) atual.equipado = false;
+  garantirNoInventario(rec).equipado = true;
+  salvarERenderizar();
+  toast(`${rec.nome} equipado.`);
+}
+// Empunhar uma arma = colocar no inventário e criar a linha de ataque.
+function empunharArma(rec) {
+  garantirNoInventario(rec);
+  if (personagem.ataques.some((a) => a.itemId === rec.id)) {
+    personagem.ataques = personagem.ataques.filter((a) => a.itemId !== rec.id);
+    salvarERenderizar();
+    toast(`${rec.nome} saiu da lista de ataques.`);
+    return;
+  }
+  personagem.ataques.push(ataqueDaArma(rec));
+  salvarERenderizar();
+  toast(`Ataque de ${rec.nome} criado.`);
+}
+
+function slotHtml({ vaga, rotulo, rec, detalhe }) {
+  return `<div class="equip-slot ${rec ? "preenchido" : "vazio"}">
+    <div class="equip-slot-info"><span>${esc(rotulo)}</span><b>${rec ? esc(rec.nome) : "nada equipado"}</b><small>${detalhe}</small></div>
+    ${rec ? `<button type="button" class="perigo" data-equip-tirar="${vaga}">Tirar</button>` : ""}
+  </div>`;
+}
+
+function opcoesHtml(lista, selecionadosIds, attr) {
+  return `<div class="equip-opcoes">${lista.map((rec) => {
+    const info = regras.lerArmadura(rec);
+    const detalhe = info
+      ? `+${info.defesa} Defesa${info.penalidade ? ` · −${info.penalidade} penalidade` : ""}${rec.peso ? ` · ${rec.peso}kg` : ""}`
+      : `${rec.dano || "—"} · ${rec.criticoM || 20}/x${rec.criticoX || 2}${rec.peso ? ` · ${rec.peso}kg` : ""}`;
+    return `<button type="button" class="equip-opcao${selecionadosIds.includes(rec.id) ? " selected" : ""}" ${attr}="${esc(rec.id)}">
+      <b>${esc(rec.nome)}</b><small>${esc(detalhe)}</small></button>`;
+  }).join("") || '<p class="dica">Nenhum item.</p>'}</div>`;
+}
+
+// Painel "Armadura, escudo e armas" da aba Equipamentos (e do passo
+// "Equipamento" do assistente guiado).
+function renderEquipSlots(alvoId = "equip-slots") {
+  const box = document.getElementById(alvoId);
+  if (!box) return;
+  const d = calcularDerivados();
+  const armadura = equipadoNaVaga("armadura");
+  const escudo = equipadoNaVaga("escudo");
+  const recArmadura = armadura ? registroDoItem(armadura) : null;
+  const recEscudo = escudo ? registroDoItem(escudo) : null;
+  const armasNaLista = personagem.ataques.map((a) => a.itemId).filter(Boolean);
+
+  box.innerHTML = `
+    <div class="equip-quick-col">
+      <h3>Armadura</h3>
+      ${slotHtml({ vaga: "armadura", rotulo: "Vestindo", rec: recArmadura, detalhe: d.equip.armadura ? `+${d.equip.armadura} de Defesa${d.equip.penalidade ? ` · −${d.equip.penalidade} de penalidade` : ""}` : "Defesa sem armadura" })}
+      ${opcoesHtml(catalogoPorFuncao("armadura"), recArmadura ? [recArmadura.id] : [], "data-equip-armadura")}
+    </div>
+    <div class="equip-quick-col">
+      <h3>Escudo</h3>
+      ${slotHtml({ vaga: "escudo", rotulo: "Empunhando", rec: recEscudo, detalhe: d.equip.escudo ? `+${d.equip.escudo} de Defesa` : "Nenhum bônus de escudo" })}
+      ${opcoesHtml(catalogoPorFuncao("escudo"), recEscudo ? [recEscudo.id] : [], "data-equip-escudo")}
+    </div>
+    <div class="equip-quick-col">
+      <h3>Armas corpo a corpo <span class="tag">Luta</span></h3>
+      ${opcoesHtml(catalogoPorFuncao("arma-corpo"), armasNaLista, "data-equip-arma")}
+    </div>
+    <div class="equip-quick-col">
+      <h3>Armas à distância <span class="tag">Pontaria</span></h3>
+      ${opcoesHtml(catalogoPorFuncao("arma-distancia"), armasNaLista, "data-equip-arma")}
+    </div>
+    <p class="dica coluna-cheia">Defesa atual: <b>${d.defesa}</b> (10 base ${formatarMod(regras.mod(d.atrs.des))} Des${d.equip.armadura ? ` +${d.equip.armadura} armadura` : ""}${d.equip.escudo ? ` +${d.equip.escudo} escudo` : ""}). Carga: <b>${Math.round(d.carga * 10) / 10}</b>/${d.cargaMax}.</p>`;
+
+  box.querySelectorAll("[data-equip-armadura]").forEach((b) => b.addEventListener("click", () => equiparNaVaga(db.equipamentos.find((x) => x.id === b.dataset.equipArmadura), "armadura")));
+  box.querySelectorAll("[data-equip-escudo]").forEach((b) => b.addEventListener("click", () => equiparNaVaga(db.equipamentos.find((x) => x.id === b.dataset.equipEscudo), "escudo")));
+  box.querySelectorAll("[data-equip-arma]").forEach((b) => b.addEventListener("click", () => empunharArma(db.equipamentos.find((x) => x.id === b.dataset.equipArma))));
+  box.querySelectorAll("[data-equip-tirar]").forEach((b) => b.addEventListener("click", () => {
+    const item = equipadoNaVaga(b.dataset.equipTirar);
+    if (item) { item.equipado = false; salvarERenderizar(); }
+  }));
+}
+
+// Versão enxuta do painel para a aba Combate: só as armas.
+function renderCombateArmas() {
+  const box = document.getElementById("combate-armas");
+  if (!box) return;
+  const armasNaLista = personagem.ataques.map((a) => a.itemId).filter(Boolean);
+  box.innerHTML = `
+    <div class="equip-quick-col"><h3>Corpo a corpo <span class="tag">Luta</span></h3>${opcoesHtml(catalogoPorFuncao("arma-corpo"), armasNaLista, "data-equip-arma")}</div>
+    <div class="equip-quick-col"><h3>À distância <span class="tag">Pontaria</span></h3>${opcoesHtml(catalogoPorFuncao("arma-distancia"), armasNaLista, "data-equip-arma")}</div>`;
+  box.querySelectorAll("[data-equip-arma]").forEach((b) => b.addEventListener("click", () => empunharArma(db.equipamentos.find((x) => x.id === b.dataset.equipArma))));
 }
 
 function renderEquipamentos() {
@@ -755,10 +1164,17 @@ function renderEquipamentos() {
       ${excedeu ? '<div class="alerta-automacao">Você está carregando mais que a carga máxima — combine a penalidade com o mestre.</div>' : ""}`;
   }
 
+  renderEquipSlots();
+
   const tipo = document.getElementById("equip-filtro-tipo").value;
   const busca = document.getElementById("equip-busca").value;
   const catalogo = document.getElementById("lista-equip-catalogo");
-  const lista = equipamentosFiltrados(db, { tipoItem: tipo || undefined, busca: busca || undefined }).slice(0, 200);
+  // "armadura" e "escudo" não existem como tipoItem no compêndio — são lidos
+  // da descrição por classificarEquipamento(), então filtram aqui.
+  const porFuncao = tipo === "armadura" || tipo === "escudo";
+  const lista = equipamentosFiltrados(db, { tipoItem: porFuncao ? undefined : (tipo || undefined), busca: busca || undefined })
+    .filter((e) => !porFuncao || classificarEquipamento(e) === tipo)
+    .slice(0, 200);
   catalogo.innerHTML = lista.map((e) => {
     const armadura = regras.lerArmadura(e);
     return `
@@ -935,7 +1351,11 @@ function registrarEventos() {
     });
   }
 
-  // Atributos
+  // Atributos — barra de modos (compra / arranjo / rolagem / livre)
+  document.getElementById("atrib-modos")?.addEventListener("click", (e) => {
+    const modo = e.target.closest("[data-atrib-modo]")?.dataset.atribModo;
+    if (modo) setModoAtributos(modo);
+  });
   document.getElementById("atributos").addEventListener("input", (e) => {
     const id = e.target.dataset.atributo;
     if (!id) return;
@@ -2346,6 +2766,16 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-08", items: [
+    "<b>Visual novo</b>: a ficha inteira foi repaginada — superfícies escuras empilhadas, tipografia condensada nos rótulos e acento escarlate de Arton, na mesma linguagem visual da ficha de D&D 5e. Agora são quatro temas: Noite (padrão), Mesa (escuro e compacto pra jogar), Papel Branco e Pergaminho.",
+    "<b>Perícias treinadas legíveis em qualquer tema</b>: a linha destacada usava um creme fixo que, no tema escuro, deixava texto claro sobre fundo claro — impossível de ler. Agora o realce sai da cor de acento do tema, com uma faixa vermelha na margem e o bônus em pílula.",
+    "<b>Assistente guiado com 10 passos</b> (era 4): raça, classe, origem, divindade, nível, atributos, perícias e traços, poderes, equipamento e revisão final — com cartões pesquisáveis, resumo do que cada opção concede e ✓ no que já está resolvido.",
+    "<b>Quatro jeitos de gerar atributos</b>: compra de pontos (os 10 do livro), arranjo padrão, rolagem 4d6 descartando o menor (convertida pra escala de T20) e valores livres. Nos dois do meio os valores viram uma piscina que você distribui pelos atributos.",
+    "<b>Escolha sem alternativa não é mais pendência</b>: quando a lista de opções tem exatamente o tamanho da cota (a origem que sugere 2 perícias e treina 2, o grupo \"uma ou outra\" com uma opção só), a ficha aplica sozinha e marca como <em>aplicado</em> em vez de pedir uma decisão que não existe.",
+    "<b>Seletor de armadura, escudo e armas</b> na aba Equipamentos e na aba Combate: cada função tem sua lista, com Defesa, penalidade e peso à mostra. Equipar entra na Defesa na hora; escolher uma arma cria a linha de ataque.",
+    "<b>Luta ou Pontaria pela categoria certa</b>: a ficha decidia pelo campo de alcance, o que jogava adaga, lança e azagaia pro lado errado. Agora lê a categoria do compêndio (\"Arma Simples - Corpo a Corpo\" / \"Ataque à Distância\").",
+    "<b>Gerador de personagem</b> (menu Personagem): trava o que você já decidiu e sorteia o resto — distribui atributos favorecendo o atributo-chave da classe, resolve todas as escolhas da automação, veste equipamento e enche PV/PM.",
+  ] },
   { date: "2026-09-07", items: [
     "<b>Atributos na escala de Tormenta 20</b>: o valor do atributo agora <em>é</em> o modificador (Força 2 = +2), como manda o livro — a ficha vinha usando a escala do d20 (base 10). Fichas antigas são convertidas sozinhas ao abrir.",
     "<b>Bônus de perícia correto</b>: metade do nível em toda perícia + treino de +2 (+4 no 7º nível, +6 no 15º). Antes o treino escalava errado e as perícias não-treinadas não somavam metade do nível.",
@@ -2406,8 +2836,6 @@ function renderDisclaimerModal() {
 // ==============================================================
 const CHOICE_KINDS = ["raca", "classe", "origem", "divindade"];
 let creationMode = "livre"; // "livre" | "guiado"
-let wizardStepIndex = 0;
-const WIZARD_STEPS = ["raca", "classe", "origem", "divindade"];
 
 function nomePericia(id) { return db.pericias.find((p) => p.id === id)?.nome || id; }
 
@@ -2474,41 +2902,274 @@ function openPickerModal(kind) {
   }));
 }
 
+// ==============================================================
+// Assistente guiado — passo a passo completo de criação.
+//
+// Antes eram só quatro passos (raça/classe/origem/divindade); tudo o que
+// realmente monta o personagem — atributos, perícias, poderes, equipamento —
+// ficava fora dele. Agora são dez, na ordem em que o livro monta a ficha.
+//
+// Os passos de atributos, perícias/automação e equipamento não duplicam
+// nenhuma lógica: eles *movem* pra dentro do corpo do assistente os mesmos
+// elementos que vivem nas abas Ficha/Construção/Equipamentos, e devolvem pro
+// lugar de origem ao sair do passo. Assim só existe uma implementação de cada
+// painel — se ela melhora numa aba, melhora no assistente também.
+// ==============================================================
+const PASSOS_WIZARD = [
+  { key: "raca", tipo: "raca", titulo: "Raça", dica: "A raça define tamanho, deslocamento, bônus de atributo e traços — em T20 ela pesa bastante no herói que você vai jogar." },
+  { key: "classe", tipo: "classe", titulo: "Classe", dica: "A classe define PV e PM por nível, o atributo-chave, as perícias treinadas iniciais, os poderes que você pode pegar e se o personagem conjura magias." },
+  { key: "origem", tipo: "origem", titulo: "Origem", dica: "A origem é a vida antes da aventura: treina 2 perícias da lista dela e concede um poder de origem.", opcional: true },
+  { key: "divindade", tipo: "divindade", titulo: "Divindade", dica: "Opcional para a maioria, obrigatória pra Clérigos e Paladinos. Define os poderes concedidos e obrigações do devoto.", opcional: true },
+  { key: "nivel", titulo: "Nível", dica: "O nível determina PV, PM, quantos poderes você escolheu até aqui, metade do nível somada em toda perícia e o bônus de treino (+2, +4 no 7º, +6 no 15º)." },
+  { key: "atributos", titulo: "Atributos", dica: "Distribua os atributos por compra de pontos, por um arranjo pronto, rolando 4d6 e descartando o menor, ou digitando livremente. Os bônus raciais entram sozinhos por cima." },
+  { key: "pericias", titulo: "Perícias e traços", dica: "Aqui ficam todas as escolhas que raça, classe e origem mandam fazer. O que não tem alternativa real já vem aplicado — só sobra o que de fato é decisão sua." },
+  { key: "poderes", titulo: "Poderes", dica: "Escolha os poderes que o nível concede: um poder de classe no 2º nível e um a cada nível seguinte, mais o poder de origem.", opcional: true },
+  { key: "equipamento", titulo: "Equipamento", dica: "Vista uma armadura, empunhe um escudo e escolha suas armas — a Defesa, a penalidade de armadura e as linhas de ataque saem daqui.", opcional: true },
+  { key: "revisao", titulo: "Revisão", dica: "Confira o herói montado. Depois de concluir dá pra mexer em tudo, a qualquer momento, no modo livre e nas abas da ficha." },
+];
+
+let wizardStepIndex = 0;
+// Onde cada painel emprestado mora quando o assistente não está usando ele.
+const ancorasDePainel = new Map();
+
+function guardarAncora(id) {
+  const el = document.getElementById(id);
+  if (!el || ancorasDePainel.has(id)) return;
+  ancorasDePainel.set(id, { pai: el.parentNode, proximo: el.nextSibling });
+}
+function devolverPaineis() {
+  for (const [id, { pai, proximo }] of ancorasDePainel) {
+    const el = document.getElementById(id);
+    if (el && el.parentNode !== pai) pai.insertBefore(el, proximo);
+  }
+}
+function emprestarPainel(id, destino) {
+  guardarAncora(id);
+  const el = document.getElementById(id);
+  if (el && destino) destino.appendChild(el);
+}
+
 function wizardStepBodyHtml(kind) {
   const opts = pickerOptionsFor(kind);
   const atual = valorAtualDoCampo(kind);
-  const titulos = { raca: "Escolha uma raça", classe: "Escolha uma classe", origem: "Escolha uma origem", divindade: "Escolha uma divindade (opcional)" };
-  return `<p class="dica">${esc(titulos[kind])}</p>
-    ${kind === "divindade" ? `<button type="button" class="change-choice" data-wiz-opt="" style="margin-bottom:8px">— Nenhuma —</button>` : ""}
-    <div class="pick-list">${opts.map((o) => `
-      <button type="button" class="pick-card${o.id === atual ? " selected" : ""}" data-wiz-opt="${esc(o.id)}">
-        <b>${esc(o.nome)}</b><small>${esc(o.meta)}</small>
-      </button>`).join("")}</div>`;
+  const selecionado = atual ? opts.find((o) => o.id === atual) : null;
+  return `<div class="wizard-current${selecionado ? " picked" : ""}">${selecionado
+      ? `Selecionado: <strong>${esc(selecionado.nome)}</strong> — ${esc(selecionado.meta)}`
+      : "Nada selecionado ainda."}</div>
+    <div class="picker-controls"><input type="search" id="wizard-busca" placeholder="Pesquisar…" autocomplete="off"></div>
+    ${kind === "divindade" ? `<button type="button" class="change-choice" data-wiz-opt="" style="margin-bottom:10px">— Nenhuma —</button>` : ""}
+    <div class="pick-list" id="wizard-pick-list">${pickCardsHtml(opts, atual)}</div>`;
 }
-function renderWizard() {
-  const kind = WIZARD_STEPS[wizardStepIndex];
-  $("wizard-steps").innerHTML = WIZARD_STEPS.map((k, i) => {
-    const done = !!valorAtualDoCampo(k);
-    return `<span class="wizard-step-chip${i === wizardStepIndex ? " active" : ""}${done ? " done" : ""}">${i + 1}. ${k[0].toUpperCase()}${k.slice(1)}${done ? " ✓" : ""}</span>`;
-  }).join("");
-  $("wizard-body").innerHTML = wizardStepBodyHtml(kind);
-  $("wizard-body").querySelectorAll("[data-wiz-opt]").forEach((b) => b.addEventListener("click", () => {
+function pickCardsHtml(opts, atual) {
+  return opts.map((o) => `
+    <button type="button" class="pick-card${o.id === atual ? " selected" : ""}" data-wiz-opt="${esc(o.id)}">
+      <b>${esc(o.nome)}</b><small>${esc(o.meta)}</small>
+      <span class="pick-desc">${esc((o.desc || "").replace(/<[^>]+>/g, "").slice(0, 150))}</span>
+    </button>`).join("") || '<p class="dica">Nenhum resultado.</p>';
+}
+
+function renderWizardPassoEscolha(passo, body) {
+  const kind = passo.tipo;
+  body.innerHTML = wizardStepBodyHtml(kind);
+  const opts = pickerOptionsFor(kind);
+  const lista = document.getElementById("wizard-pick-list");
+  const busca = document.getElementById("wizard-busca");
+  const ligar = () => lista.querySelectorAll("[data-wiz-opt]").forEach((b) => b.addEventListener("click", () => {
     definirCampo(kind, b.dataset.wizOpt);
     renderWizard();
   }));
-  $("wizard-progress").textContent = `Passo ${wizardStepIndex + 1} de ${WIZARD_STEPS.length}`;
-  $("wizard-back").disabled = wizardStepIndex === 0;
-  $("wizard-next").textContent = wizardStepIndex === WIZARD_STEPS.length - 1 ? "Concluir ✓" : "Próximo →";
+  busca?.addEventListener("input", () => {
+    const q = normalizar(busca.value);
+    lista.innerHTML = pickCardsHtml(opts.filter((o) => normalizar(`${o.nome} ${o.meta}`).includes(q)), valorAtualDoCampo(kind));
+    ligar();
+  });
+  body.querySelectorAll('[data-wiz-opt=""]').forEach((b) => b.addEventListener("click", () => { definirCampo(kind, ""); renderWizard(); }));
+  ligar();
 }
+
+function renderWizardPassoNivel(body) {
+  const d = calcularDerivados();
+  const classe = classeAtual();
+  const esperados = poderesEsperados();
+  body.innerHTML = `<div class="wizard-nivel-box">
+      <input id="wizard-nivel-input" type="number" min="1" max="20" value="${d.nivel}">
+      <div class="wizard-nivel-resumo">
+        <div>Pontos de vida: <b>${d.pvMax ?? "—"}</b>${classe ? ` (${classe.pvInicial}${formatarMod(regras.mod(d.atrs.con))} no 1º nível, ${classe.pvPorNivel}${formatarMod(regras.mod(d.atrs.con))} por nível)` : ""}</div>
+        <div>Pontos de mana: <b>${d.pmMax ?? "—"}</b>${classe ? ` (${classe.pmPorNivel} por nível — PM não soma atributo em T20)` : ""}</div>
+        <div>Metade do nível em toda perícia: <b>${formatarMod(regras.metadeNivel(d.nivel))}</b> · bônus de treino: <b>${formatarMod(regras.bonusTreino(d.nivel, true))}</b></div>
+        <div>Poderes que este nível concede: <b>${esperados.total}</b> (${esperados.daClasse} de classe${esperados.daOrigem ? " + 1 de origem" : ""}${esperados.geraisExtra ? ` + ${esperados.geraisExtra} geral` : ""})</div>
+      </div>
+    </div>
+    <p class="dica" style="margin-top:10px">Personagens de Tormenta 20 começam no 1º nível; níveis acima disso já contam todos os poderes e o bônus de treino maior.</p>`;
+  document.getElementById("wizard-nivel-input").addEventListener("input", (ev) => {
+    personagem.nivel = Math.max(1, Math.min(20, Number(ev.target.value) || 1));
+    salvar();
+    renderizarTudo();
+    renderWizard();
+  });
+}
+
+function renderWizardPassoPoderes(body) {
+  const d = calcularDerivados();
+  const esperados = poderesEsperados();
+  const pool = poolPoderesDisponiveis();
+  const escolhidos = personagem.poderes.slice();
+  const faltam = esperados.escolhiveis - escolhidos.length;
+  body.innerHTML = `
+    <div class="wizard-current${faltam === 0 ? " picked" : ""}">
+      ${classeAtual()
+        ? `Escolhidos <strong>${escolhidos.length}</strong> de <strong>${esperados.escolhiveis}</strong> poder(es) do nível ${d.nivel}.${faltam > 0 ? ` Faltam ${faltam}.` : faltam < 0 ? ` ${-faltam} a mais do que o nível concede.` : " Tudo certo."}`
+        : "Escolha uma classe nos passos anteriores para a ficha calcular seus poderes."}
+    </div>
+    <div class="picker-controls"><input type="search" id="wizard-poder-busca" placeholder="Pesquisar poder…" autocomplete="off"></div>
+    <div class="pick-list" id="wizard-poder-list"></div>`;
+
+  const cards = (q) => {
+    const filtro = normalizar(q || "");
+    const lista = pool.filter((x) => !filtro || normalizar(`${x.nome} ${x.subtipo || ""}`).includes(filtro)).slice(0, 150);
+    return lista.map((poder) => {
+      const ok = requisitoAtendido(poder, d);
+      return `<button type="button" class="pick-card${escolhidos.includes(poder.id) ? " selected" : ""}" data-wiz-poder="${esc(poder.id)}">
+        <b>${esc(poder.nome)}</b><small>${esc(poder.subtipo || poder.categoria || "")}${poder.custo ? ` · ${poder.custo} PM` : ""}${ok === false ? " · requisito não atendido" : ""}</small>
+        <span class="pick-desc">${esc((poder.descricao || "").replace(/<[^>]+>/g, "").slice(0, 140))}</span></button>`;
+    }).join("") || '<p class="dica">Nenhum poder disponível — escolha uma classe primeiro.</p>';
+  };
+  const listaEl = document.getElementById("wizard-poder-list");
+  const ligar = () => listaEl.querySelectorAll("[data-wiz-poder]").forEach((b) => b.addEventListener("click", () => {
+    const id = b.dataset.wizPoder;
+    personagem.poderes = personagem.poderes.includes(id) ? personagem.poderes.filter((x) => x !== id) : [...personagem.poderes, id];
+    salvar();
+    renderizarTudo();
+    renderWizard();
+  }));
+  listaEl.innerHTML = cards("");
+  ligar();
+  document.getElementById("wizard-poder-busca").addEventListener("input", (ev) => { listaEl.innerHTML = cards(ev.target.value); ligar(); });
+}
+
+function renderWizardPassoRevisao(body) {
+  const d = calcularDerivados();
+  const linhas = [
+    ["Raça", racaAtual()?.nome],
+    ["Classe", classeAtual()?.nome],
+    ["Origem", personagem.origem],
+    ["Divindade", personagem.divindade],
+    ["Nível", String(d.nivel)],
+    ["Atributos", db.atributos.map((a) => `${a.nome.slice(0, 3).toUpperCase()} ${formatarMod(atributoFinal(a.id))}`).join(" · ")],
+    ["Perícias treinadas", `${d.treinos.size} (${[...d.treinos.keys()].map(nomePericia).sort((x, y) => x.localeCompare(y, "pt-BR")).join(", ") || "nenhuma"})`],
+    ["Poderes", personagem.poderes.map((id) => db.poderes.find((x) => x.id === id)?.nome).filter(Boolean).join(", ") || "nenhum"],
+    ["Equipado", [equipadoNaVaga("armadura"), equipadoNaVaga("escudo")].filter(Boolean).map((i) => i.nome).join(" · ") || "nada"],
+    ["Ataques", personagem.ataques.map((a) => a.nome).join(", ") || "nenhum"],
+  ];
+  const pendencias = blocosDeAutomacao().filter((b) => b.includes('class="auto-bloco pendente"')).length;
+  body.innerHTML = `
+    <div class="wizard-review-grid">${linhas.map(([r, v]) => `<div class="identity-row"><span>${esc(r)}</span><strong>${esc(v || "—")}</strong></div>`).join("")}</div>
+    <div class="two-input">
+      <label>Nome do personagem<input id="wizard-nome" value="${esc(personagem.nome || "")}" placeholder="Nome do personagem"></label>
+      <label>Jogador<input id="wizard-jogador" value="${esc(personagem.jogador || "")}" placeholder="Seu nome"></label>
+    </div>
+    <div class="resumo-grande">
+      <div><span>PV</span><b>${d.pvMax ?? "—"}</b></div>
+      <div><span>PM</span><b>${d.pmMax ?? "—"}</b></div>
+      <div><span>Defesa</span><b>${d.defesa}</b></div>
+      <div><span>Iniciativa</span><b>${formatarMod(d.iniciativa)}</b></div>
+      <div><span>Deslocamento</span><b>${esc(racaAtual()?.deslocamento || "9m")}</b></div>
+    </div>
+    ${pendencias
+      ? `<div class="alerta-automacao">Ainda restam <b>${pendencias}</b> escolha(s) pendente(s) no passo "Perícias e traços". Dá pra concluir assim mesmo e resolver depois.</div>`
+      : '<div class="ok-automacao">✓ Nenhuma pendência de construção.</div>'}`;
+  document.getElementById("wizard-nome").addEventListener("input", (ev) => {
+    personagem.nome = ev.target.value;
+    document.getElementById("nome").value = personagem.nome;
+    salvar();
+  });
+  document.getElementById("wizard-jogador").addEventListener("input", (ev) => {
+    personagem.jogador = ev.target.value;
+    document.getElementById("jogador").value = personagem.jogador;
+    salvar();
+  });
+}
+
+function renderWizard() {
+  const passo = PASSOS_WIZARD[wizardStepIndex];
+  const feito = (p) => {
+    if (p.tipo) return !!valorAtualDoCampo(p.tipo);
+    if (p.key === "nivel") return true;
+    if (p.key === "atributos") return db.atributos.some((a) => (personagem.atributos[a.id] || 0) !== 0);
+    if (p.key === "pericias") return !blocosDeAutomacao().some((b) => b.includes('class="auto-bloco pendente"'));
+    if (p.key === "poderes") return personagem.poderes.length >= poderesEsperados().escolhiveis;
+    if (p.key === "equipamento") return !!equipadoNaVaga("armadura") || personagem.ataques.length > 0;
+    return false;
+  };
+
+  document.getElementById("wizard-steps").innerHTML = PASSOS_WIZARD.map((p, i) => {
+    const ok = feito(p);
+    return `<button type="button" class="wizard-step-chip${i === wizardStepIndex ? " active" : ""}${ok ? " done" : ""}" data-wiz-passo="${i}">${i + 1}. ${esc(p.titulo)}${ok ? " ✓" : ""}</button>`;
+  }).join("");
+  document.getElementById("wizard-steps").querySelectorAll("[data-wiz-passo]").forEach((b) => b.addEventListener("click", () => {
+    wizardStepIndex = Number(b.dataset.wizPasso);
+    renderWizard();
+  }));
+
+  const body = document.getElementById("wizard-body");
+  // Todo painel emprestado volta pro lugar antes de montar o passo novo.
+  devolverPaineis();
+  body.innerHTML = `<p class="wizard-hint">${esc(passo.dica)}</p><div id="wizard-passo-corpo"></div>`;
+  const corpo = document.getElementById("wizard-passo-corpo");
+
+  if (passo.tipo) renderWizardPassoEscolha(passo, corpo);
+  else if (passo.key === "nivel") renderWizardPassoNivel(corpo);
+  else if (passo.key === "atributos") emprestarPainel("cartao-atributos", corpo);
+  else if (passo.key === "pericias") emprestarPainel("auto-panel", corpo);
+  else if (passo.key === "poderes") renderWizardPassoPoderes(corpo);
+  else if (passo.key === "equipamento") {
+    corpo.innerHTML = '<div id="wizard-equip" class="equip-quick"></div>';
+    renderEquipSlots("wizard-equip");
+  } else if (passo.key === "revisao") renderWizardPassoRevisao(corpo);
+
+  document.getElementById("wizard-progress").textContent = `Passo ${wizardStepIndex + 1} de ${PASSOS_WIZARD.length} · ${passo.titulo}`;
+  document.getElementById("wizard-back").disabled = wizardStepIndex === 0;
+  const ultimo = wizardStepIndex === PASSOS_WIZARD.length - 1;
+  const pulavel = passo.opcional && !feito(passo);
+  document.getElementById("wizard-next").textContent = ultimo ? "Concluir ✓" : pulavel ? "Pular →" : "Próximo →";
+}
+
 function avancarWizardSeSelecionado() {
-  if (wizardStepIndex < WIZARD_STEPS.length - 1) { wizardStepIndex++; renderWizard(); }
+  if (wizardStepIndex < PASSOS_WIZARD.length - 1) { wizardStepIndex++; renderWizard(); }
 }
+
+function wizardProximo() {
+  const passo = PASSOS_WIZARD[wizardStepIndex];
+  if (passo.tipo === "raca" && !personagem.raca) { toast("Escolha uma raça antes de continuar."); return; }
+  if (passo.tipo === "classe" && !personagem.classe) { toast("Escolha uma classe antes de continuar."); return; }
+  if (wizardStepIndex < PASSOS_WIZARD.length - 1) { wizardStepIndex++; renderWizard(); return; }
+  concluirWizard();
+}
+function wizardVoltar() { if (wizardStepIndex > 0) { wizardStepIndex--; renderWizard(); } }
+
+function concluirWizard() {
+  setCreationMode("livre");
+  // PV e PM cheios: quem acabou de criar o herói quer ele pronto pra jogar.
+  const d = calcularDerivados();
+  if (d.pvMax) personagem.pv.atual = d.pvMax;
+  if (d.pmMax) personagem.pm.atual = d.pmMax;
+  salvarERenderizar();
+  toast("Personagem pronto! Ajuste o que quiser nas abas da ficha.");
+  irParaAba("ficha");
+}
+
 function setCreationMode(mode) {
   creationMode = mode;
   document.querySelectorAll("#creation-mode-toggle [data-modo]").forEach((b) => b.classList.toggle("active", b.dataset.modo === mode));
   $("wizard").classList.toggle("hidden", mode !== "guiado");
   $("modo-livre-conteudo").classList.toggle("hidden", mode === "guiado");
-  if (mode === "guiado") { wizardStepIndex = 0; renderWizard(); }
+  if (mode === "guiado") renderWizard();
+  else devolverPaineis();
+}
+
+// Busca sem acento/caixa, usada pelos filtros do assistente.
+function normalizar(txt) {
+  return String(txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
 
 const CHOICE_INFO = {
@@ -2587,15 +3248,21 @@ function subirDeNivel() {
 // `jaTreinadas` é o mapa de perícias que outras fontes já concederam: em T20,
 // se você ganharia de novo uma perícia que já tem, o livro manda escolher
 // outra — então elas aparecem marcadas para não desperdiçar a escolha.
-function chipsDePericia(pericias, selecionadas, attr, jaTreinadas = new Map()) {
+function chipsDePericia(pericias, selecionadas, attr, jaTreinadas = new Map(), { travado = false } = {}) {
   return `<div class="chip-lista">${pericias.map((id) => {
     const p = db.pericias.find((x) => x.id === id);
     if (!p) return "";
     const ativo = selecionadas.includes(id);
     const repetida = !ativo && jaTreinadas.has(id);
+    // Escolha sem alternativa: o chip vira leitura (não é botão clicável),
+    // porque clicar nele só poderia desfazer algo que o livro já decidiu.
+    if (travado) return `<span class="chip travado" title="Concedida automaticamente — não há outra opção para escolher.">${esc(p.nome)}<small>${p.atributo.toUpperCase()}</small></span>`;
     return `<button type="button" class="chip${ativo ? " ativo" : ""}${repetida ? " repetida" : ""}" ${attr}="${esc(id)}"${repetida ? ` title="${esc(`Você já é treinado em ${p.nome} por: ${jaTreinadas.get(id).join(", ")}. Escolha outra para não desperdiçar.`)}"` : ""}>${esc(p.nome)}<small>${repetida ? "já treinada" : p.atributo.toUpperCase()}</small></button>`;
   }).join("")}</div>`;
 }
+
+// Frase padrão dos blocos cuja "escolha" não tem alternativa nenhuma.
+const SEM_ESCOLHA = (n, oQue) => `A lista tem exatamente <b>${n}</b> ${oQue} para <b>${n}</b> vaga(s) — não há o que escolher, então a ficha já aplicou.`;
 
 // Perícias já concedidas por outras fontes que não a que está sendo escolhida
 // agora — usado para marcar as repetidas nos chips.
@@ -2631,13 +3298,16 @@ function blocosDeAutomacao() {
     const { quantidade, excluir = [] } = auto.atributosEscolha;
     const escolhidos = (e.atributosRaciais || []).slice(0, quantidade);
     const disponiveis = db.atributos.filter((a) => !excluir.includes(a.id));
+    const forcada = escolhaForcada(disponiveis.map((a) => a.id), quantidade);
     blocos.push(blocoHtml({
       id: "atributos-raciais",
       titulo: `Atributos de ${raca.nome}`,
-      fonte: "Raça",
-      estado: escolhidos.length === quantidade ? "ok" : "pendente",
-      texto: `+1 em <b>${quantidade}</b> atributos diferentes${excluir.length ? ` (não pode ser ${excluir.map((x) => x.toUpperCase()).join("/")})` : ""}. Escolhidos: <b>${escolhidos.length}/${quantidade}</b>.`,
-      corpo: `<div class="chip-lista">${disponiveis.map((a) => `
+      fonte: forcada ? "Raça · automático" : "Raça",
+      estado: forcada ? "info" : escolhidos.length === quantidade ? "ok" : "pendente",
+      texto: forcada
+        ? `+1 em ${listaLegivel(disponiveis.map((a) => a.nome))}. ${SEM_ESCOLHA(quantidade, "atributos possíveis")}`
+        : `+1 em <b>${quantidade}</b> atributos diferentes${excluir.length ? ` (não pode ser ${excluir.map((x) => x.toUpperCase()).join("/")})` : ""}. Escolhidos: <b>${escolhidos.length}/${quantidade}</b>.`,
+      corpo: forcada ? "" : `<div class="chip-lista">${disponiveis.map((a) => `
         <button type="button" class="chip${escolhidos.includes(a.id) ? " ativo" : ""}" data-auto-atributo="${a.id}">${esc(a.nome)}<small>${escolhidos.includes(a.id) ? "+1" : ""}</small></button>`).join("")}</div>`,
     }));
   }
@@ -2645,11 +3315,12 @@ function blocosDeAutomacao() {
   // --- Raça: legado (suraggel) ---
   if (auto.legados?.length) {
     const atual = legadoAtual();
+    const legadoUnico = auto.legados.length === 1;
     blocos.push(blocoHtml({
       id: "legado",
       titulo: `Legado de ${raca.nome}`,
-      fonte: "Raça",
-      estado: atual ? "ok" : "pendente",
+      fonte: legadoUnico ? "Raça · automático" : "Raça",
+      estado: legadoUnico ? "info" : atual ? "ok" : "pendente",
       texto: atual
         ? `Legado <b>${esc(atual.nome)}</b>: ${Object.entries(atual.atributos).map(([k, v]) => `${formatarMod(v)} ${k.toUpperCase()}`).join(", ")}${atual.bonusPericias ? `; ${Object.entries(atual.bonusPericias).map(([k, v]) => `${formatarMod(v)} em ${nomePericia(k)}`).join(", ")}` : ""}.`
         : "Escolha um legado — ele define os bônus de atributo e de perícia da raça.",
@@ -2682,13 +3353,14 @@ function blocosDeAutomacao() {
   if (auto.bonusPericiasEscolha) {
     const { quantidade, valor } = auto.bonusPericiasEscolha;
     const escolhidas = (e.bonusPericiasRaciais || []).slice(0, quantidade);
+    const forcada = escolhaForcada(db.pericias.map((x) => x.id), quantidade);
     blocos.push(blocoHtml({
       id: "bonus-racial",
       titulo: `Bônus de perícia de ${raca.nome}`,
-      fonte: "Raça",
-      estado: escolhidas.length === quantidade ? "ok" : "pendente",
+      fonte: forcada ? "Raça · automático" : "Raça",
+      estado: forcada ? "info" : escolhidas.length === quantidade ? "ok" : "pendente",
       texto: `${formatarMod(valor)} em <b>${quantidade}</b> perícias à escolha. Escolhidas: <b>${escolhidas.length}/${quantidade}</b>.`,
-      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-bonus-racial"),
+      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-bonus-racial", new Map(), { travado: forcada }),
     }));
   }
 
@@ -2696,13 +3368,16 @@ function blocosDeAutomacao() {
   if (auto.treinosEscolha) {
     const escolhidas = (e.periciasRaciais || []).slice(0, auto.treinosEscolha);
     const opcional = !!auto.treinosEscolhaOpcional;
+    const forcada = escolhaForcada(db.pericias.map((x) => x.id), auto.treinosEscolha);
     blocos.push(blocoHtml({
       id: "pericias-raciais",
       titulo: `Perícias de ${raca.nome}`,
-      fonte: "Raça",
-      estado: escolhidas.length === auto.treinosEscolha ? "ok" : opcional ? "info" : "pendente",
-      texto: `Treinado em <b>${auto.treinosEscolha}</b> perícia(s) à escolha${opcional ? " (ou troque por um poder geral)" : ""}. Escolhidas: <b>${escolhidas.length}/${auto.treinosEscolha}</b>.`,
-      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-pericia-racial", treinosDeOutrasFontes("Raça")),
+      fonte: forcada ? "Raça · automático" : "Raça",
+      estado: forcada ? "info" : escolhidas.length === auto.treinosEscolha ? "ok" : opcional ? "info" : "pendente",
+      texto: forcada
+        ? SEM_ESCOLHA(auto.treinosEscolha, "perícias possíveis")
+        : `Treinado em <b>${auto.treinosEscolha}</b> perícia(s) à escolha${opcional ? " (ou troque por um poder geral)" : ""}. Escolhidas: <b>${escolhidas.length}/${auto.treinosEscolha}</b>.`,
+      corpo: chipsDePericia(db.pericias.map((x) => x.id), escolhidas, "data-auto-pericia-racial", treinosDeOutrasFontes("Raça"), { travado: forcada }),
     }));
   }
 
@@ -2712,13 +3387,16 @@ function blocosDeAutomacao() {
     const grupos = classe.periciasFixasEscolha || [];
     const escolhidasGrupo = grupos.map((_, i) => e.periciasClasseFixa?.[i] || "");
     if (fixas.length || grupos.length) {
+      // Grupo com uma opção só já foi aplicado por normalizarEscolhas().
+      const gruposReais = grupos.filter((g) => g.length > 1);
+      const pendente = grupos.some((g, i) => g.length > 1 && !escolhidasGrupo[i]);
       blocos.push(blocoHtml({
         id: "pericias-classe-fixas",
         titulo: `Perícias garantidas de ${classe.nome}`,
         fonte: "Classe · automático",
-        estado: escolhidasGrupo.every(Boolean) ? "ok" : "pendente",
-        texto: `${fixas.length ? `Já treinado em <b>${fixas.map(nomePericia).join(", ")}</b>.` : ""}${grupos.length ? ` Escolha ${grupos.length === 1 ? "uma" : `${grupos.length}`}: ` : ""}`,
-        corpo: grupos.map((grupo, i) => `<div class="chip-lista">${grupo.map((id) => `
+        estado: pendente ? "pendente" : gruposReais.length ? "ok" : "info",
+        texto: `${fixas.length ? `Já treinado em <b>${fixas.map(nomePericia).join(", ")}</b>.` : ""}${gruposReais.length ? ` Escolha ${gruposReais.length === 1 ? "uma" : gruposReais.length}: ` : grupos.length ? " O grupo de escolha tinha uma opção só, já aplicada." : ""}`,
+        corpo: grupos.map((grupo, i) => grupo.length <= 1 ? "" : `<div class="chip-lista">${grupo.map((id) => `
           <button type="button" class="chip${escolhidasGrupo[i] === id ? " ativo" : ""}" data-auto-classe-fixa="${i}" data-valor="${esc(id)}">${esc(nomePericia(id))}</button>`).join("")}</div>`).join(""),
       }));
     }
@@ -2729,13 +3407,17 @@ function blocosDeAutomacao() {
     const jaFixas = new Set([...fixas, ...escolhidasGrupo.filter(Boolean)]);
     const opcoes = (classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id));
     const escolhidasClasse = (e.periciasClasse || []).filter((id) => opcoes.includes(id));
+    const forcadaClasse = escolhaForcada(opcoes, cotaClasse);
+    const conta = `<b>${classe.treinosIniciais}</b> da classe ${formatarMod(modInt)} de Inteligência = <b>${cotaClasse}</b> perícia(s) na lista de ${esc(classe.nome)}`;
     blocos.push(blocoHtml({
       id: "pericias-classe",
-      titulo: `Perícias à escolha de ${classe.nome}`,
-      fonte: "Classe",
-      estado: escolhidasClasse.length >= cotaClasse ? "ok" : "pendente",
-      texto: `<b>${classe.treinosIniciais}</b> da classe ${formatarMod(modInt)} de Inteligência = <b>${cotaClasse}</b> perícia(s) à escolha na lista de ${esc(classe.nome)}. Escolhidas: <b>${escolhidasClasse.length}/${cotaClasse}</b>.`,
-      corpo: chipsDePericia(opcoes, escolhidasClasse, "data-auto-pericia-classe", treinosDeOutrasFontes("Classe")),
+      titulo: forcadaClasse ? `Perícias de ${classe.nome}` : `Perícias à escolha de ${classe.nome}`,
+      fonte: forcadaClasse ? "Classe · automático" : "Classe",
+      estado: forcadaClasse ? "info" : escolhidasClasse.length >= cotaClasse ? "ok" : "pendente",
+      texto: forcadaClasse
+        ? `${conta}. ${SEM_ESCOLHA(opcoes.length, "perícias disponíveis")}`
+        : `${conta}. Escolhidas: <b>${escolhidasClasse.length}/${cotaClasse}</b>.`,
+      corpo: chipsDePericia(opcoes, escolhidasClasse, "data-auto-pericia-classe", treinosDeOutrasFontes("Classe"), { travado: forcadaClasse }),
     }));
   }
 
@@ -2750,26 +3432,30 @@ function blocosDeAutomacao() {
     const listaOrigem = origem?.periciasSugeridas || [];
     const cotaOrigem = Math.min(2, listaOrigem.length || 2);
     const escolhidasOrigem = (e.periciasOrigem || []).slice(0, cotaOrigem);
+    const forcadaOrigem = escolhaForcada(listaOrigem, cotaOrigem);
     blocos.push(blocoHtml({
       id: "pericias-origem",
       titulo: `Perícias de ${personagem.origem}`,
-      fonte: "Origem",
-      estado: escolhidasOrigem.length >= cotaOrigem ? "ok" : "pendente",
-      texto: listaOrigem.length
-        ? `A origem treina <b>${cotaOrigem}</b> perícia(s) da lista dela. Escolhidas: <b>${escolhidasOrigem.length}/${cotaOrigem}</b>.`
-        : "Esta origem não tem lista fixa de perícias — combine com o mestre e marque à mão na aba Perícias.",
-      corpo: listaOrigem.length ? chipsDePericia(listaOrigem, escolhidasOrigem, "data-auto-pericia-origem", treinosDeOutrasFontes("Origem")) : "",
+      fonte: forcadaOrigem ? "Origem · automático" : "Origem",
+      estado: forcadaOrigem ? "info" : escolhidasOrigem.length >= cotaOrigem ? "ok" : "pendente",
+      texto: !listaOrigem.length
+        ? "Esta origem não tem lista fixa de perícias — combine com o mestre e marque à mão na aba Perícias."
+        : forcadaOrigem
+          ? `A origem treina <b>${cotaOrigem}</b> perícia(s). ${SEM_ESCOLHA(listaOrigem.length, "perícias na lista dela")}`
+          : `A origem treina <b>${cotaOrigem}</b> perícia(s) da lista dela. Escolhidas: <b>${escolhidasOrigem.length}/${cotaOrigem}</b>.`,
+      corpo: listaOrigem.length ? chipsDePericia(listaOrigem, escolhidasOrigem, "data-auto-pericia-origem", treinosDeOutrasFontes("Origem"), { travado: forcadaOrigem }) : "",
     }));
 
     const poderesOrigem = poderesDaOrigem(db, personagem.origem);
     const beneficio = origem?.beneficio;
     if (poderesOrigem.length || beneficio) {
       const atual = e.poderOrigem ? db.poderes.find((x) => x.id === e.poderOrigem) : null;
+      const poderUnico = poderesOrigem.length === 1;
       blocos.push(blocoHtml({
         id: "poder-origem",
         titulo: `Poder de ${personagem.origem}`,
-        fonte: "Origem",
-        estado: atual ? "ok" : poderesOrigem.length ? "pendente" : "info",
+        fonte: poderUnico ? "Origem · automático" : "Origem",
+        estado: poderUnico ? "info" : atual ? "ok" : poderesOrigem.length ? "pendente" : "info",
         texto: beneficio
           ? `<em>${esc(beneficio)}</em>`
           : atual ? `Poder escolhido: <b>${esc(atual.nome)}</b>.` : "A origem concede um poder — escolha abaixo.",
@@ -2886,39 +3572,6 @@ function irParaAba(aba) {
   document.querySelector(`#aba-${aba}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// Preenche as escolhas de automação com uma opção válida — usado pelo
-// "Personagem aleatório", que precisa entregar uma ficha jogável e não uma
-// pilha de pendências.
-function aplicarAutomacaoAleatoria(raca, classe, origem) {
-  const e = (personagem.escolhas = storage.escolhasVazias());
-  const auto = raca?.auto || {};
-  const sorteio = (lista, n) => {
-    const copia = lista.slice();
-    const out = [];
-    while (out.length < n && copia.length) out.push(...copia.splice(Math.floor(Math.random() * copia.length), 1));
-    return out;
-  };
-  if (auto.legados?.length) e.legadoRacial = auto.legados[Math.floor(Math.random() * auto.legados.length)].id;
-  if (auto.atributosEscolha) {
-    const { quantidade, excluir = [] } = auto.atributosEscolha;
-    e.atributosRaciais = sorteio(db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), quantidade);
-  }
-  if (auto.bonusPericiasEscolha) e.bonusPericiasRaciais = sorteio(db.pericias.map((p) => p.id), auto.bonusPericiasEscolha.quantidade);
-  if (auto.treinosEscolha) e.periciasRaciais = sorteio(db.pericias.map((p) => p.id), auto.treinosEscolha);
-  if (classe) {
-    (classe.periciasFixasEscolha || []).forEach((grupo, i) => { e.periciasClasseFixa[i] = grupo[Math.floor(Math.random() * grupo.length)]; });
-    const jaFixas = new Set([...(classe.periciasFixas || []), ...Object.values(e.periciasClasseFixa)]);
-    const cota = regras.escolhasDePericiaDaClasse({ classe, modInt: regras.mod(atributoFinal("int")) });
-    e.periciasClasse = sorteio((classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id)), cota);
-  }
-  if (origem && !auto.semOrigem) {
-    e.periciasOrigem = sorteio(origem.periciasSugeridas || [], Math.min(2, (origem.periciasSugeridas || []).length));
-    e.poderOrigem = poderesDaOrigem(db, origem.id)[0]?.id || "";
-  }
-  const poderes = poolPoderesDisponiveis();
-  personagem.poderes = sorteio(poderes.map((x) => x.id), poderesEsperados().escolhiveis);
-}
-
 // ==============================================================
 // Modelos de personagem — construções (raça/classe/origem/divindade/
 // nível/atributos) salvas pra reaproveitar em personagens novos.
@@ -2966,48 +3619,218 @@ function openTemplatesModal() {
 }
 
 // ==============================================================
-// Personagem aleatório — sorteia raça, classe, origem, divindade e
-// atributos (4d6, descarta o menor, seis vezes) pra um personagem
-// pronto pra jogar.
+// Gerador de personagem — monta uma ficha jogável de ponta a ponta.
+//
+// Não é só sortear raça e classe: ele distribui atributos favorecendo o
+// atributo-chave da classe, resolve TODAS as escolhas do painel de automação
+// (perícias de classe/origem/raça, legado, poder de origem, poderes por
+// nível), veste a melhor armadura que o personagem aguenta, empunha uma arma
+// coerente com a classe, cria a linha de ataque e enche PV/PM. O resultado é
+// uma ficha sem pendências, pronta pra jogar.
+//
+// gerarPersonagem(opcoes) aceita escolhas parciais — o modal "Gerador de
+// personagem" deixa travar raça/classe/nível e sortear o resto.
 // ==============================================================
 const NOMES_ALEATORIOS = [
   "Aldrin", "Bran", "Cassia", "Doriel", "Elenwe", "Fenris", "Galadur", "Helvi", "Ithir", "Jarik",
   "Kaelen", "Liora", "Morwen", "Nerion", "Orwin", "Perah", "Quenna", "Rhandir", "Selune", "Torvald",
 ];
-// Distribuição de atributos válida em T20 (10 pontos de compra, escala de
-// modificadores): embaralhamos um arranjo pronto em vez de rolar 4d6, que é
-// a escala do d20 e não vale mais nesta ficha.
-const ARRANJOS_ATRIBUTOS = [
-  [3, 2, 2, 1, 0, 0],   // 4+2+2+1 = 9 pontos
-  [4, 2, 1, 1, 0, -1],  // 7+2+1+1+0-1 = 10 pontos
-  [3, 3, 1, 1, 0, -1],  // 4+4+1+1+0-1 = 9 pontos
-  [2, 2, 2, 2, 1, -1],  // 2+2+2+2+1-1 = 8 pontos
-];
-function arranjoAleatorioDeAtributos() {
-  const base = ARRANJOS_ATRIBUTOS[Math.floor(Math.random() * ARRANJOS_ATRIBUTOS.length)].slice();
-  for (let i = base.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [base[i], base[j]] = [base[j], base[i]];
-  }
-  return base;
+
+const sorteia = (lista) => lista[Math.floor(Math.random() * lista.length)];
+function sorteiaVarios(lista, n) {
+  const copia = lista.slice();
+  const out = [];
+  while (out.length < n && copia.length) out.push(...copia.splice(Math.floor(Math.random() * copia.length), 1));
+  return out;
 }
-function gerarPersonagemAleatorio() {
-  const raca = db.racas[Math.floor(Math.random() * db.racas.length)];
-  const classe = db.classes[Math.floor(Math.random() * db.classes.length)];
-  const origem = db.origens[Math.floor(Math.random() * db.origens.length)];
-  const divindade = Math.random() < 0.5 ? db.panteao[Math.floor(Math.random() * db.panteao.length)] : null;
-  personagem.nome = `${NOMES_ALEATORIOS[Math.floor(Math.random() * NOMES_ALEATORIOS.length)]} de ${raca.nome}`;
+
+// Distribui um arranjo priorizando o atributo-chave da classe e, depois,
+// Constituição e Destreza (que todo mundo usa: PV, Defesa e iniciativa).
+function distribuirArranjo(valores, classe) {
+  const ordem = valores.slice().sort((a, b) => b - a);
+  const chave = classe?.atributoChave;
+  const prioridade = [chave, "con", "des", "sab", "int", "car", "for"].filter(Boolean);
+  const restantes = db.atributos.map((a) => a.id).filter((id) => !prioridade.includes(id));
+  const alvo = [...new Set([...prioridade, ...restantes])].slice(0, valores.length);
+  const out = {};
+  alvo.forEach((id, i) => { out[id] = ordem[i] ?? 0; });
+  for (const a of db.atributos) if (out[a.id] === undefined) out[a.id] = 0;
+  return out;
+}
+
+// Preenche as escolhas de automação com opções válidas — o "Personagem
+// aleatório" precisa entregar ficha jogável, não uma pilha de pendências.
+function aplicarAutomacaoAleatoria(raca, classe, origem) {
+  const e = (personagem.escolhas = storage.escolhasVazias());
+  const auto = raca?.auto || {};
+  if (auto.legados?.length) e.legadoRacial = sorteia(auto.legados).id;
+  if (auto.atributosEscolha) {
+    const { quantidade, excluir = [] } = auto.atributosEscolha;
+    e.atributosRaciais = sorteiaVarios(db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), quantidade);
+  }
+  if (auto.bonusPericiasEscolha) e.bonusPericiasRaciais = sorteiaVarios(db.pericias.map((p) => p.id), auto.bonusPericiasEscolha.quantidade);
+  if (auto.treinosEscolha) e.periciasRaciais = sorteiaVarios(db.pericias.map((p) => p.id), auto.treinosEscolha);
+  if (classe) {
+    (classe.periciasFixasEscolha || []).forEach((grupo, i) => { e.periciasClasseFixa[i] = sorteia(grupo); });
+    const jaFixas = new Set([...(classe.periciasFixas || []), ...Object.values(e.periciasClasseFixa)]);
+    const cota = regras.escolhasDePericiaDaClasse({ classe, modInt: regras.mod(atributoFinal("int")) });
+    e.periciasClasse = sorteiaVarios((classe.periciasDeClasse || []).filter((id) => !jaFixas.has(id)), cota);
+  }
+  if (origem && !auto.semOrigem) {
+    e.periciasOrigem = sorteiaVarios(origem.periciasSugeridas || [], Math.min(2, (origem.periciasSugeridas || []).length));
+    e.poderOrigem = poderesDaOrigem(db, origem.id)[0]?.id || "";
+  }
+  const disponiveis = poolPoderesDisponiveis();
+  const d = calcularDerivados();
+  // Prefere poderes cujo requisito a ficha consegue conferir e aprovar.
+  const validos = disponiveis.filter((p) => requisitoAtendido(p, d) !== false);
+  personagem.poderes = sorteiaVarios((validos.length ? validos : disponiveis).map((x) => x.id), poderesEsperados().escolhiveis);
+}
+
+// Veste a melhor armadura cuja penalidade o personagem aguenta, um escudo, e
+// empunha uma arma coerente com a classe (Pontaria → arma de ataque à
+// distância; senão, corpo a corpo), criando a linha de ataque.
+function equiparInicialAleatorio(classe) {
+  personagem.equipamentos = [];
+  personagem.ataques = [];
+
+  const armaduras = catalogoPorFuncao("armadura")
+    .map((rec) => ({ rec, info: regras.lerArmadura(rec) }))
+    .filter((x) => x.info)
+    .sort((a, b) => b.info.defesa - a.info.defesa);
+  // Classe sem treino em armadura pesada é castigada pela penalidade; como a
+  // ficha não modela proficiências, o limite usado é a penalidade máxima que
+  // não zera as perícias de Destreza do personagem.
+  const limitePenalidade = Math.max(1, 2 + regras.mod(atributoFinal("des")));
+  // ...e que ele consiga carregar: armadura pesada com Força baixa deixa o
+  // personagem sobrecarregado antes mesmo de pegar o resto do equipamento.
+  const cargaMax = regras.cargaMaxima(regras.mod(atributoFinal("for")));
+  const cabe = (x) => (Number(x.rec.peso) || 0) <= cargaMax * 0.6;
+  const escolhida = armaduras.find((x) => x.info.penalidade <= limitePenalidade && cabe(x))
+    || armaduras.filter(cabe).pop()
+    || armaduras[armaduras.length - 1];
+  if (escolhida) equiparNaVaga(escolhida.rec, "armadura");
+
+  const usaDistancia = (classe?.periciasDeClasse || []).includes("pon") && !(classe?.periciasFixas || []).includes("lut");
+  const armas = catalogoPorFuncao(usaDistancia ? "arma-distancia" : "arma-corpo");
+  const arma = armas.length ? sorteia(armas) : null;
+  if (arma) {
+    garantirNoInventario(arma);
+    personagem.ataques.push(ataqueDaArma(arma));
+  }
+  // Escudo só pra quem luta corpo a corpo e não usa arma de duas mãos óbvia.
+  if (!usaDistancia) {
+    const escudo = catalogoPorFuncao("escudo").find((x) => /leve/i.test(x.nome));
+    if (escudo) equiparNaVaga(escudo, "escudo");
+  }
+}
+
+// opcoes: { raca, classe, origem, nivel, divindade, modoAtributos, equipar }
+// Qualquer campo vazio é sorteado.
+function gerarPersonagem(opcoes = {}) {
+  const raca = porId(db.racas, opcoes.raca) || sorteia(db.racas);
+  const classe = porId(db.classes, opcoes.classe) || sorteia(db.classes);
+  const origem = raca.auto?.semOrigem ? null : (porId(db.origens, opcoes.origem) || sorteia(db.origens));
+  const divindade = opcoes.divindade !== undefined
+    ? opcoes.divindade
+    : (Math.random() < 0.5 ? sorteia(db.panteao).nome : "");
+
+  personagem.nome = opcoes.nome || `${sorteia(NOMES_ALEATORIOS)} de ${raca.nome}`;
   personagem.raca = raca.id;
   personagem.classe = classe.id;
-  personagem.origem = origem.id;
-  personagem.divindade = divindade ? divindade.nome : "";
-  const arranjo = arranjoAleatorioDeAtributos();
-  db.atributos.forEach((a, i) => { personagem.atributos[a.id] = arranjo[i]; });
+  personagem.origem = origem ? origem.id : "";
+  personagem.divindade = divindade;
+  personagem.nivel = Math.max(1, Math.min(20, Number(opcoes.nivel) || 1));
   personagem.escalaAtributos = "t20";
   personagem.periciasTreinadas = [];
+
+  // Atributos: rolagem 4d6 (convertida pra escala T20) ou um arranjo pronto.
+  const modo = opcoes.modoAtributos || "arranjo";
+  if (modo === "rolagem") {
+    const pool = regras.rolarPiscinaDeAtributos().map((r) => ({ valor: r.valorT20, d20: r.totalD20, dados: r.dados, descartado: r.descartado }));
+    personagem.atributosModo = "rolagem";
+    personagem.atributosPool = pool;
+    const distribuido = distribuirArranjo(pool.map((x) => x.valor), classe);
+    personagem.atributos = distribuido;
+    // Liga cada atributo ao índice da piscina de onde veio o valor.
+    const usados = new Set();
+    personagem.atributosSlots = {};
+    for (const [id, valor] of Object.entries(distribuido)) {
+      const i = pool.findIndex((x, k) => x.valor === valor && !usados.has(k));
+      if (i >= 0) { usados.add(i); personagem.atributosSlots[id] = i; }
+    }
+  } else {
+    const arranjo = regras.ARRANJOS_PADRAO[Math.floor(Math.random() * regras.ARRANJOS_PADRAO.length)];
+    personagem.atributosModo = "arranjo";
+    personagem.atributosArranjo = arranjo.id;
+    personagem.atributosPool = arranjo.valores.map((v) => ({ valor: v }));
+    personagem.atributos = distribuirArranjo(arranjo.valores, classe);
+    const usados = new Set();
+    personagem.atributosSlots = {};
+    for (const [id, valor] of Object.entries(personagem.atributos)) {
+      const i = arranjo.valores.findIndex((v, k) => v === valor && !usados.has(k));
+      if (i >= 0) { usados.add(i); personagem.atributosSlots[id] = i; }
+    }
+  }
+
   aplicarAutomacaoAleatoria(raca, classe, origem);
+  if (opcoes.equipar !== false) equiparInicialAleatorio(classe);
+
+  normalizarEscolhas();
+  const d = calcularDerivados();
+  personagem.pv = { atual: d.pvMax ?? 0, maximo: null, temp: 0 };
+  personagem.pm = { atual: d.pmMax ?? 0, maximo: null, temp: 0 };
   salvarERenderizar();
-  toast(`Personagem aleatório gerado: ${personagem.nome}.`);
+  return { raca, classe, origem };
+}
+
+function gerarPersonagemAleatorio() {
+  const { raca, classe } = gerarPersonagem();
+  toast(`Gerado: ${personagem.nome} — ${raca.nome} ${classe.nome} nível ${personagem.nivel}.`);
+}
+
+// Modal "Gerador de personagem": trava o que você já decidiu e sorteia o resto.
+function abrirGeradorModal() {
+  const opcoesSelect = (lista, rotulo) => `<option value="">— sortear ${rotulo} —</option>${lista.map((x) => `<option value="${esc(x.id)}">${esc(x.nome || x.id)}</option>`).join("")}`;
+  abrirModalGenerico(`<div class="modal-title"><div><span class="eyebrow">GERADOR</span><h2>Gerador de personagem</h2><p class="muted">Deixe em "sortear" o que você não decidiu. A ficha resolve todas as escolhas da automação, veste equipamento e enche PV/PM.</p></div></div>
+    <div class="modal-body">
+      <div class="two-input">
+        <label>Raça<select id="gen-raca">${opcoesSelect(db.racas, "raça")}</select></label>
+        <label>Classe<select id="gen-classe">${opcoesSelect(db.classes, "classe")}</select></label>
+      </div>
+      <div class="two-input">
+        <label>Origem<select id="gen-origem">${opcoesSelect(db.origens, "origem")}</select></label>
+        <label>Nível<input id="gen-nivel" type="number" min="1" max="20" value="${personagem.nivel || 1}"></label>
+      </div>
+      <div class="two-input">
+        <label>Atributos<select id="gen-atributos">
+          <option value="arranjo">Arranjo pronto (dentro dos 10 pontos)</option>
+          <option value="rolagem">Rolagem 4d6, descarta o menor</option>
+        </select></label>
+        <label>Nome<input id="gen-nome" placeholder="deixe vazio pra sortear"></label>
+      </div>
+      <label class="filtro-check" style="margin-top:10px"><input type="checkbox" id="gen-equipar" checked> Vestir armadura, escudo e arma automaticamente</label>
+      <div class="linha-botoes-modal">
+        <button type="button" class="primary" id="gen-gerar">🎲 Gerar personagem</button>
+        <button type="button" id="gen-cancelar">Cancelar</button>
+      </div>
+      <p class="dica">Isto substitui as escolhas do personagem que está aberto. Pra manter o atual, crie um novo antes (Personagem → Novo).</p>
+    </div>`);
+  $("gen-cancelar").addEventListener("click", () => $("modal").classList.add("hidden"));
+  $("gen-gerar").addEventListener("click", () => {
+    const { raca, classe } = gerarPersonagem({
+      raca: $("gen-raca").value,
+      classe: $("gen-classe").value,
+      origem: $("gen-origem").value,
+      nivel: Number($("gen-nivel").value) || 1,
+      nome: $("gen-nome").value.trim(),
+      modoAtributos: $("gen-atributos").value,
+      equipar: $("gen-equipar").checked,
+    });
+    $("modal").classList.add("hidden");
+    toast(`Gerado: ${personagem.nome} — ${raca.nome} ${classe.nome} nível ${personagem.nivel}.`);
+    irParaAba("ficha");
+  });
 }
 
 // ==============================================================
@@ -3068,7 +3891,7 @@ function enterViewOnlyMode() {
   document.querySelectorAll(".aba").forEach((a) => a.classList.remove("ativo"));
   document.querySelector('.aba-btn[data-aba="ficha"]')?.classList.add("ativo");
   $("aba-ficha")?.classList.add("ativo");
-  ["btn-personagens", "btn-novo", "btn-templates", "btn-aleatorio", "input-importar", "btn-link-leitura"].forEach((id) => { const el = $(id); if (el) el.disabled = true; });
+  ["btn-personagens", "btn-novo", "btn-templates", "btn-aleatorio", "btn-gerador", "input-importar", "btn-link-leitura"].forEach((id) => { const el = $(id); if (el) el.disabled = true; });
   lockViewOnlyControls();
   const banner = $("view-only-banner");
   if (banner) {
@@ -3294,15 +4117,15 @@ function openMonsterCreateModal() {
 // (Personagem/Arquivo/Ferramentas/Ajustes) — comportamento de abrir um
 // por vez e fechar ao clicar fora/Escape/num item.
 // ==============================================================
-const SKIN_THEME_COLOR = { pergaminho: "#7a1f1f", noite: "#2a1a12", papel: "#8e2a2a" };
+const SKIN_THEME_COLOR = { noite: "#101013", mesa: "#131417", papel: "#f2f2f0", pergaminho: "#e7ddc6" };
 function applySkin(skin) {
-  const v = storage.SKINS.includes(skin) ? skin : "pergaminho";
+  const v = storage.SKINS.includes(skin) ? skin : storage.SKIN_PADRAO;
   document.documentElement.setAttribute("data-skin", v);
   storage.saveSkin(v);
   const sel = $("skin-select");
   if (sel && sel.value !== v) sel.value = v;
   const meta = $("meta-theme-color");
-  if (meta) meta.setAttribute("content", SKIN_THEME_COLOR[v]);
+  if (meta) meta.setAttribute("content", SKIN_THEME_COLOR[v] || SKIN_THEME_COLOR.noite);
 }
 function wireMenus() {
   const menus = [...document.querySelectorAll(".appbar .menu")];
@@ -3410,14 +4233,12 @@ function registrarEventosExtra() {
   document.querySelectorAll(".change-choice[data-pick]").forEach((b) => b.addEventListener("click", () => openPickerModal(b.dataset.pick)));
   const CHOICE_TITULOS = { raca: "Raça", classe: "Classe", origem: "Origem", divindade: "Divindade" };
   document.querySelectorAll(".tiny-info[data-info]").forEach((b) => b.addEventListener("click", () => abrirDetalheTexto(CHOICE_TITULOS[b.dataset.info] || b.dataset.info, CHOICE_INFO[b.dataset.info])));
-  $("wizard-back")?.addEventListener("click", () => { if (wizardStepIndex > 0) { wizardStepIndex--; renderWizard(); } });
-  $("wizard-next")?.addEventListener("click", () => {
-    if (wizardStepIndex < WIZARD_STEPS.length - 1) { wizardStepIndex++; renderWizard(); }
-    else { setCreationMode("livre"); toast("Construção concluída — revise na aba Construção ou siga pra Ficha."); }
-  });
+  $("wizard-back")?.addEventListener("click", wizardVoltar);
+  $("wizard-next")?.addEventListener("click", wizardProximo);
 
   // Personagem/Arquivo
   $("btn-templates")?.addEventListener("click", openTemplatesModal);
+  $("btn-gerador")?.addEventListener("click", abrirGeradorModal);
   $("btn-aleatorio")?.addEventListener("click", () => { if (confirm("Sortear um novo personagem? Isso substitui as escolhas do personagem atualmente aberto.")) gerarPersonagemAleatorio(); });
   $("btn-link-leitura")?.addEventListener("click", async () => {
     try {

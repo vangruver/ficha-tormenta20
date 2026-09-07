@@ -147,3 +147,43 @@ export function lerArmadura(item) {
     penalidade: pen ? Number(pen[1]) : 0,
   };
 }
+
+// ==============================================================
+// Geração de atributos — os quatro métodos que a ficha oferece.
+//
+//   compra   — os 10 pontos do livro básico (tabela CUSTO_ATRIBUTO acima).
+//   arranjo  — conjuntos prontos que já fecham o orçamento de compra, pra
+//              quem não quer distribuir ponto a ponto.
+//   rolagem  — 4d6 descartando o menor, seis vezes. O resultado sai na
+//              escala d20 (3–18) e é convertido pra escala de T20 por
+//              modDeEscalaD20() — que é a mesma regra de conversão que o
+//              livro usa pra ler estatísticas do d20.
+//   livre    — sem orçamento nem sorteio; digita o que quiser.
+// ==============================================================
+export const MODOS_ATRIBUTO = ["compra", "arranjo", "rolagem", "livre"];
+
+// Arranjos prontos, todos dentro (ou abaixo) dos 10 pontos de compra.
+export const ARRANJOS_PADRAO = [
+  { id: "equilibrado", nome: "Equilibrado", valores: [3, 2, 2, 1, 0, 0] },
+  { id: "especialista", nome: "Especialista", valores: [4, 2, 1, 1, 0, -1] },
+  { id: "duplo", nome: "Dois picos", valores: [3, 3, 1, 1, 0, -1] },
+  { id: "generalista", nome: "Generalista", valores: [2, 2, 2, 2, 1, -1] },
+];
+
+// 4d6 descartando o menor: devolve os quatro dados, os três somados e o
+// valor já convertido pra escala de T20.
+export function rolar4d6MenorDescartado() {
+  const dados = [rollDie(6), rollDie(6), rollDie(6), rollDie(6)];
+  const ordenados = dados.slice().sort((a, b) => a - b);
+  const descartado = ordenados[0];
+  const usados = ordenados.slice(1);
+  const totalD20 = usados.reduce((a, b) => a + b, 0);
+  return { dados, descartado, usados, totalD20, valorT20: modDeEscalaD20(totalD20) };
+}
+
+// Seis rolagens de uma vez — a piscina que o jogador distribui pelos seis
+// atributos. Ordenada do maior pro menor só pra facilitar a leitura.
+export function rolarPiscinaDeAtributos() {
+  return Array.from({ length: 6 }, () => rolar4d6MenorDescartado())
+    .sort((a, b) => b.totalD20 - a.totalD20);
+}

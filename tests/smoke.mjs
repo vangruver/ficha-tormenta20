@@ -95,6 +95,33 @@ async function main() {
   const magiaCirculo1 = magias.filter((m) => String(m.circulo) === "1");
   assert(magiaCirculo1.length > 5, `existem magias de 1º círculo (${magiaCirculo1.length})`);
 
+  // ---- geração de atributos ----
+  assert(regras.ARRANJOS_PADRAO.every((a) => a.valores.length === 6),
+    "todo arranjo padrão distribui os seis atributos");
+  assert(regras.ARRANJOS_PADRAO.every((a) => regras.custoTotalAtributos(
+    Object.fromEntries(a.valores.map((v, i) => [i, v])))  <= regras.PONTOS_ATRIBUTOS),
+    "nenhum arranjo padrão estoura os 10 pontos de compra");
+  const piscina = regras.rolarPiscinaDeAtributos();
+  assert(piscina.length === 6, "a rolagem de atributos devolve seis valores");
+  assert(piscina.every((r) => r.dados.length === 4 && r.usados.length === 3 && r.usados.reduce((a, b) => a + b, 0) === r.totalD20),
+    "4d6 descartando o menor: quatro dados rolados, três somados");
+  assert(piscina.every((r) => r.totalD20 >= 3 && r.totalD20 <= 18 && r.valorT20 === Math.floor((r.totalD20 - 10) / 2)),
+    "o total do d20 vira modificador de T20 por (valor − 10) ÷ 2");
+  assert(regras.custoDoAtributo(-1) === -1 && regras.custoDoAtributo(4) === 7,
+    "tabela de compra: −1 devolve 1 ponto e +4 custa 7");
+
+  // ---- escolhas sem alternativa ----
+  // O painel de automação não deve pedir escolha quando a lista de opções
+  // tem exatamente o tamanho da cota (ver normalizarEscolhas em src/app.js).
+  const semEscolha = classes.filter((c) => {
+    const fixas = new Set([...(c.periciasFixas || []), ...(c.periciasFixasEscolha || []).flat()]);
+    const opcoes = (c.periciasDeClasse || []).filter((id) => !fixas.has(id));
+    return opcoes.length <= regras.escolhasDePericiaDaClasse({ classe: c, modInt: 0 });
+  });
+  assert(Array.isArray(semEscolha), `classes cuja lista de perícias não deixa margem de escolha com Int +0: ${semEscolha.map((c) => c.id).join(", ") || "nenhuma"}`);
+  const origensSemEscolha = origens.filter((o) => (o.periciasSugeridas || []).length && (o.periciasSugeridas || []).length <= 2);
+  assert(origensSemEscolha.length > 0, `origens que treinam a lista inteira, sem escolha (${origensSemEscolha.length})`);
+
   console.log("\nTudo certo!");
 }
 

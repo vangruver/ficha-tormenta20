@@ -8,9 +8,38 @@ adaptado para as regras de Tormenta 20.
 
 ## O que ela faz
 
+- **Assistente guiado de criação** (aba Construção → "Assistente guiado"): dez passos na ordem em
+  que o livro monta a ficha — raça, classe, origem, divindade, nível, atributos, perícias e traços,
+  poderes, equipamento e uma revisão final com PV/PM/Defesa/iniciativa calculados. Cada passo traz
+  cartões pesquisáveis com o resumo do que a opção concede, e as marcas de ✓ mostram o que já está
+  resolvido. Os passos de atributos, perícias e equipamento **reaproveitam os mesmos painéis** das
+  abas Ficha/Construção/Equipamentos (eles são movidos pra dentro do assistente e devolvidos ao
+  sair), então não existem duas versões da mesma lógica.
+- **Quatro métodos de geração de atributos** (aba Ficha, ou passo "Atributos" do assistente):
+  - **compra de pontos** — os 10 pontos do livro, com o custo por valor e quanto sobra;
+  - **arranjo padrão** — quatro conjuntos prontos que já fecham o orçamento;
+  - **rolagem** — 4d6 descartando o menor, seis vezes; o resultado sai na escala do d20 (3–18) e é
+    convertido pra escala de T20 por *(valor − 10) ÷ 2*. Os dados de cada rolagem ficam visíveis no
+    tooltip do valor;
+  - **valores livres** — sem orçamento nenhum, pra reproduzir uma ficha pronta ou um NPC.
+  Nos modos de arranjo e rolagem os valores viram uma piscina que você distribui pelos atributos
+  num `<select>` por atributo (trocar um valor de lugar troca os dois automaticamente).
+- **Gerador de personagem** (menu Personagem → "Gerador de personagem"): trava o que você já
+  decidiu (raça, classe, origem, nível, nome) e sorteia o resto. Ele distribui os atributos
+  favorecendo o atributo-chave da classe, resolve **todas** as escolhas do painel de automação,
+  veste a melhor armadura que o personagem aguenta carregar, empunha escudo e arma coerentes com a
+  classe, cria a linha de ataque e enche PV/PM — o resultado é uma ficha sem pendências.
+- **Seletor de armadura, escudo e armas** (aba Equipamentos, e também na aba Combate e no
+  assistente): em vez de caçar a armadura no catálogo geral misturada com tesouros e consumíveis,
+  cada função tem sua própria lista com Defesa, penalidade e peso à mostra. Equipar entra na Defesa
+  na hora; escolher uma arma cria a linha de ataque com a perícia certa.
 - **Painel de automação** (aba Construção): cada benefício que raça, classe, origem e nível concedem
   vira um bloco. O que é fixo já vem aplicado; o que o livro manda escolher fica marcado como
-  pendência até você decidir — e o topo do painel conta quantas pendências sobraram:
+  pendência até você decidir — e o topo do painel conta quantas pendências sobraram. **Escolha que
+  não tem alternativa real não vira pendência**: quando a lista de opções tem exatamente o tamanho
+  da cota (a origem que sugere 2 perícias e treina 2, o grupo "uma ou outra" com uma opção só, a
+  origem com um único poder correspondente), a ficha aplica sozinha e marca o bloco como
+  *aplicado* em vez de pedir uma decisão que não existe:
   - **atributos raciais à escolha** (o "+1 em três atributos" do humano, do lefou, do osteon e da
     sereia) e o **legado** do suraggel (Aggelus/Sulfure), com os bônus entrando na hora;
   - **perícias treinadas**: as fixas da classe entram sozinhas, o "Luta **ou** Pontaria" vira uma
@@ -42,6 +71,10 @@ adaptado para as regras de Tormenta 20.
 - **Condições de combate**: as condições oficiais de T20, com efeito descrito.
 - **Múltiplos personagens salvos**, **importar/exportar em JSON** e **ficha em PDF** (via impressão
   do navegador).
+- **Quatro temas**: *Noite* (escuro, padrão), *Mesa* (escuro e compacto, pra ficha aberta durante a
+  sessão), *Papel Branco* e *Pergaminho*. Toda a folha de estilo lê só tokens semânticos, então
+  nenhuma cor fica presa a um tema — as perícias treinadas, por exemplo, são realçadas pela cor de
+  acento do tema em vez de um creme fixo que sumia no escuro.
 - **Cache offline e instalável (PWA)**: service worker cacheia a casca do app e os dados, dá pra
   instalar no celular/desktop e abrir offline.
 - **Sincronização diária**: um workflow do GitHub Actions baixa a versão mais nova do compêndio
@@ -129,10 +162,10 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 
 | Arquivo | Papel |
 |---|---|
-| `index.html` / `assets/style.css` | interface e tema "papel" |
+| `index.html` / `assets/style.css` | interface e os quatro temas (Noite, Mesa, Papel, Pergaminho) |
 | `src/database.js` | carrega `data/core` + `data/raw` e expõe as consultas (poderes, magias, equipamentos, ameaças, panteão) |
-| `src/rules.js` | atributos, perícias, PV/PM, defesa, compra de atributos, leitura de armadura — fórmulas de Tormenta 20 |
-| `src/app.js` | interface, abas, painel de automação, rolagens e sala |
+| `src/rules.js` | atributos, perícias, PV/PM, defesa, compra/arranjo/rolagem de atributos, leitura de armadura — fórmulas de Tormenta 20 |
+| `src/app.js` | interface, abas, assistente guiado, painel de automação, gerador de personagem, equipamento, rolagens e sala |
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens — regras centrais digitadas à mão |

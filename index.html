@@ -4,11 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ficha de Tormenta 20</title>
-<meta name="theme-color" content="#7a1f1f" id="meta-theme-color" />
+<meta name="theme-color" content="#101013" id="meta-theme-color" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@400;600;700&family=Spectral:wght@400;600;700&display=swap" />
 <script>(function(){try{
   var s=localStorage.getItem('t20.skin');
-  document.documentElement.setAttribute('data-skin', ['pergaminho','noite','papel'].includes(s)?s:'pergaminho');
-}catch(e){document.documentElement.setAttribute('data-skin','pergaminho');}})();</script>
+  document.documentElement.setAttribute('data-skin', ['noite','mesa','papel','pergaminho'].includes(s)?s:'noite');
+}catch(e){document.documentElement.setAttribute('data-skin','noite');}})();</script>
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="assets/icons/icon-192.png" />
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
@@ -17,7 +20,7 @@
 <body>
 
 <header class="appbar">
-  <div class="brand"><h1 data-i18n="app.title">⚔️ Ficha de Tormenta 20</h1></div>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">T20</span><div><h1 data-i18n="app.title">Ficha de Tormenta 20</h1><small>Arton · Jogo Básico</small></div></div>
   <div class="toolbar">
     <details class="menu" id="menu-personagem">
       <summary data-i18n="menu.character">Personagem</summary>
@@ -25,6 +28,7 @@
         <button id="btn-personagens" data-i18n="menu.charactersBtn">🗂️ Meus Personagens</button>
         <button id="btn-novo" data-i18n="menu.newCharacter">➕ Novo</button>
         <button id="btn-templates" data-i18n="menu.templatesBtn">📐 Modelos</button>
+        <button id="btn-gerador">🧙 Gerador de personagem…</button>
         <button id="btn-aleatorio" data-i18n="menu.randomCharacter" data-i18n-title="menu.randomCharacter.title" title="Sorteia raça, classe, origem, divindade e atributos">🎲 Personagem aleatório</button>
       </div>
     </details>
@@ -52,9 +56,10 @@
       <summary data-i18n="menu.prefs">Ajustes</summary>
       <div class="menu-body menu-fields">
         <label><span data-i18n="prefs.skin">Tema</span><select id="skin-select">
-          <option value="pergaminho" data-i18n="prefs.skin.pergaminho">Pergaminho (padrão)</option>
-          <option value="noite" data-i18n="prefs.skin.noite">Noite (escuro)</option>
+          <option value="noite" data-i18n="prefs.skin.noite">Noite (padrão)</option>
+          <option value="mesa" data-i18n="prefs.skin.mesa">Mesa (escuro e denso)</option>
           <option value="papel" data-i18n="prefs.skin.papel">Papel Branco (claro)</option>
+          <option value="pergaminho" data-i18n="prefs.skin.pergaminho">Pergaminho</option>
         </select></label>
         <label><span data-i18n="prefs.lang">Idioma</span><select id="lang-select">
           <option value="pt">Português</option>
@@ -230,8 +235,18 @@
       <p class="dica">Raça, classe, origem e divindade agora se escolhem na aba <b>Construção</b>.</p>
     </div>
 
-    <div class="cartao">
+    <div class="cartao" id="cartao-atributos">
       <h2>Atributos</h2>
+      <div class="atrib-modos">
+        <div class="atrib-modos-pills" id="atrib-modos" role="group" aria-label="Como gerar os atributos">
+          <button type="button" data-atrib-modo="compra" class="active">Compra de pontos</button>
+          <button type="button" data-atrib-modo="arranjo">Arranjo padrão</button>
+          <button type="button" data-atrib-modo="rolagem">Rolagem (4d6, descarta o menor)</button>
+          <button type="button" data-atrib-modo="livre">Valores livres</button>
+        </div>
+        <div class="atrib-modo-extra" id="atrib-modo-extra"></div>
+      </div>
+      <div id="atrib-pool" class="atrib-pool hidden"></div>
       <div id="atributos" class="grade-atributos"></div>
       <div id="resumo-atributos" class="resumo-automacao"></div>
       <p class="dica">Em Tormenta 20 <b>o valor do atributo já é o modificador</b> — um herói com Força 2 soma +2, não existe "Força 14". Os bônus raciais entram sozinhos ao escolher a raça.</p>
@@ -323,6 +338,11 @@
       <div id="lista-resistencias" class="grade-resistencias"></div>
     </div>
     <div class="cartao">
+      <h2>Armas empunhadas</h2>
+      <p class="dica">Escolha a arma aqui e a ficha cria a linha de ataque sozinha, com a perícia certa (Luta ou Pontaria), o dano com o atributo e a margem/multiplicador de crítico.</p>
+      <div id="combate-armas" class="equip-quick"></div>
+    </div>
+    <div class="cartao">
       <h2>Ataques</h2>
       <button id="btn-add-ataque">➕ Adicionar ataque</button>
       <table class="tabela-ataques">
@@ -343,6 +363,11 @@
   <!-- ABA EQUIPAMENTOS -->
   <section id="aba-equipamentos" class="aba">
     <div class="cartao">
+      <h2>Armadura, escudo e armas</h2>
+      <p class="dica">Equipar a armadura e o escudo entra direto na <b>Defesa</b> e na <b>penalidade de armadura</b>; escolher uma arma cria a linha de ataque na aba Combate. Tudo o que você escolher aqui também entra no inventário.</p>
+      <div id="equip-slots" class="equip-quick"></div>
+    </div>
+    <div class="cartao">
       <h2>Inventário</h2>
       <div id="resumo-carga" class="resumo-automacao"></div>
       <table class="tabela-equip">
@@ -356,7 +381,9 @@
         <select id="equip-filtro-tipo">
           <option value="">Todos os tipos</option>
           <option value="arma">Armas</option>
-          <option value="tesouro">Armaduras/Tesouros</option>
+          <option value="armadura">Armaduras</option>
+          <option value="escudo">Escudos</option>
+          <option value="tesouro">Outros tesouros</option>
           <option value="consumivel">Consumíveis</option>
         </select>
         <input id="equip-busca" type="search" placeholder="Buscar item..." />

@@ -43,6 +43,15 @@ export function novoPersonagem(nome = "Novo Herói") {
     escolhas: escolhasVazias(),
     // Escala de T20: o valor do atributo já é o modificador e começa em 0.
     escalaAtributos: "t20",
+    // Como os atributos foram gerados: "compra" (10 pontos), "arranjo"
+    // (conjunto pronto), "rolagem" (4d6 descartando o menor, convertido pra
+    // escala de T20) ou "livre". `atributosPool` guarda a piscina rolada/do
+    // arranjo e `atributosSlots` diz qual valor da piscina foi pra qual
+    // atributo — sem isso, recarregar a página perderia a rolagem.
+    atributosModo: "compra",
+    atributosArranjo: "",
+    atributosPool: [],
+    atributosSlots: {},
     atributos: { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 },
     atributosTemp: { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 },
     pv: { atual: 0, maximo: null, temp: 0 },
@@ -99,6 +108,10 @@ export function migrarPersonagem(p) {
     p.escalaAtributos = "t20";
   }
   p.atributosTemp = p.atributosTemp || { for: 0, des: 0, con: 0, int: 0, sab: 0, car: 0 };
+  if (!["compra", "arranjo", "rolagem", "livre"].includes(p.atributosModo)) p.atributosModo = "compra";
+  if (typeof p.atributosArranjo !== "string") p.atributosArranjo = "";
+  if (!Array.isArray(p.atributosPool)) p.atributosPool = [];
+  if (!p.atributosSlots || typeof p.atributosSlots !== "object") p.atributosSlots = {};
   p.periciasOutros = p.periciasOutros || {};
   for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp"]) {
     if (!Array.isArray(p[k])) p[k] = [];
@@ -211,13 +224,15 @@ const DISCLAIMER_DISMISSED_KEY = "t20.disclaimerDismissed";
 export function isDisclaimerDismissed() { try { return localStorage.getItem(DISCLAIMER_DISMISSED_KEY) === "1"; } catch { return false; } }
 export function dismissDisclaimer() { try { localStorage.setItem(DISCLAIMER_DISMISSED_KEY, "1"); } catch { /* modo privado */ } }
 
-// Tema visual da ficha na tela: "pergaminho" (padrão) | "noite" | "papel".
+// Tema visual da ficha na tela:
+//   "noite" (padrão, escuro) | "mesa" (escuro e denso) | "papel" | "pergaminho".
 const SKIN_KEY = "t20.skin";
-export const SKINS = ["pergaminho", "noite", "papel"];
+export const SKINS = ["noite", "mesa", "papel", "pergaminho"];
+export const SKIN_PADRAO = "noite";
 export function getSavedSkin() {
-  try { const v = localStorage.getItem(SKIN_KEY); return SKINS.includes(v) ? v : "pergaminho"; } catch { return "pergaminho"; }
+  try { const v = localStorage.getItem(SKIN_KEY); return SKINS.includes(v) ? v : SKIN_PADRAO; } catch { return SKIN_PADRAO; }
 }
-export function saveSkin(v) { try { localStorage.setItem(SKIN_KEY, SKINS.includes(v) ? v : "pergaminho"); } catch { /* modo privado */ } }
+export function saveSkin(v) { try { localStorage.setItem(SKIN_KEY, SKINS.includes(v) ? v : SKIN_PADRAO); } catch { /* modo privado */ } }
 
 // Idioma da INTERFACE (menus, abas, rótulos fixos da própria ficha) — não
 // traduz o conteúdo do compêndio (poderes, magias, ameaças...), só a casca
