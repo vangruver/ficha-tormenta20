@@ -1,0 +1,725 @@
+[
+  {
+    "id": "alquimista",
+    "nome": "Alquimista",
+    "variantede": "Inventor",
+    "periciasFixas": [
+      "ofi",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Engenhosidade"
+      },
+      {
+        "nivel": 1,
+        "nome": "Laboratório Pessoal"
+      },
+      {
+        "nivel": 2,
+        "nome": "Alquimista Iniciado"
+      },
+      {
+        "nivel": 3,
+        "nome": "Mistura Básica"
+      },
+      {
+        "nivel": 5,
+        "nome": "Aplicação Rápida"
+      },
+      {
+        "nivel": 7,
+        "nome": "Magia Engarrafada"
+      },
+      {
+        "nivel": 8,
+        "nome": "Odores Alquímicos"
+      },
+      {
+        "nivel": 9,
+        "nome": "Fabricar Emulsão"
+      },
+      {
+        "nivel": 10,
+        "nome": "Mestre Alquimista"
+      },
+      {
+        "nivel": 11,
+        "nome": "Bombardeio Eficiente"
+      },
+      {
+        "nivel": 20,
+        "nome": "Pedra Filosofal"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "atleta",
+    "nome": "Atleta",
+    "variantede": "Lutador",
+    "periciasFixas": [
+      "atl",
+      "lut"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Briga"
+      },
+      {
+        "nivel": 1,
+        "nome": "Façanha Atlética"
+      },
+      {
+        "nivel": 2,
+        "nome": "Arremesso Atlético"
+      },
+      {
+        "nivel": 2,
+        "nome": "Poderio Muscular"
+      },
+      {
+        "nivel": 3,
+        "nome": "Casca Grossa"
+      },
+      {
+        "nivel": 5,
+        "nome": "Mais Alto e Mais Rápido"
+      },
+      {
+        "nivel": 9,
+        "nome": "Disciplina Atlética"
+      },
+      {
+        "nivel": 20,
+        "nome": "Corpo Ideal"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "burgues",
+    "nome": "Burguês",
+    "variantede": "Nobre",
+    "periciasFixas": [
+      "dip",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Meios de Produção"
+      },
+      {
+        "nivel": 1,
+        "nome": "Orgulho"
+      },
+      {
+        "nivel": 1,
+        "nome": "Poder Monetário"
+      },
+      {
+        "nivel": 2,
+        "nome": "Desmoralizar"
+      },
+      {
+        "nivel": 3,
+        "nome": "Negociante Nato"
+      },
+      {
+        "nivel": 4,
+        "nome": "Suborno"
+      },
+      {
+        "nivel": 5,
+        "nome": "Ostentação"
+      },
+      {
+        "nivel": 9,
+        "nome": "Novo Rico"
+      },
+      {
+        "nivel": 20,
+        "nome": "Magnata"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "duelista",
+    "nome": "Duelista",
+    "variantede": "Bucaneiro",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Duelo"
+      },
+      {
+        "nivel": 1,
+        "nome": "Insolência"
+      },
+      {
+        "nivel": 2,
+        "nome": "Escola de Duelo"
+      },
+      {
+        "nivel": 3,
+        "nome": "Esquiva Sagaz"
+      },
+      {
+        "nivel": 4,
+        "nome": "Truques de Capa"
+      },
+      {
+        "nivel": 10,
+        "nome": "Técnica Avançada"
+      },
+      {
+        "nivel": 20,
+        "nome": "Duelista Lendário"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "ermitao",
+    "nome": "Ermitão",
+    "variantede": "Druida",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Devoto Fiel"
+      },
+      {
+        "nivel": 1,
+        "nome": "Empatia Selvagem"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 3,
+        "nome": "Sítio Sagrado"
+      },
+      {
+        "nivel": 5,
+        "nome": "Vínculo com a Terra"
+      },
+      {
+        "nivel": 11,
+        "nome": "Temperado pelo Clima"
+      },
+      {
+        "nivel": 20,
+        "nome": "Eixo de Pedras"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "inovador",
+    "nome": "Inovador",
+    "variantede": "Guerreiro",
+    "periciasFixas": [
+      "acr"
+    ],
+    "periciasFixasEscolha": [
+      [
+        "lut",
+        "pon"
+      ]
+    ],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Do Bom e do Melhor"
+      },
+      {
+        "nivel": 1,
+        "nome": "Sequência Especial"
+      },
+      {
+        "nivel": 2,
+        "nome": "Bombardeio Sequencial"
+      },
+      {
+        "nivel": 3,
+        "nome": "Acrobacia Defensiva"
+      },
+      {
+        "nivel": 4,
+        "nome": "Domínio Excêntrico"
+      },
+      {
+        "nivel": 7,
+        "nome": "Técnica Revolucionária"
+      },
+      {
+        "nivel": 20,
+        "nome": "Estilo Único"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "machado-de-pedra",
+    "nome": "Machado de Pedra",
+    "variantede": "Bárbaro",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [
+      "Escudos"
+    ],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Fúria"
+      },
+      {
+        "nivel": 1,
+        "nome": "Grunhidos"
+      },
+      {
+        "nivel": 1,
+        "nome": "Machado de Pedra"
+      },
+      {
+        "nivel": 1,
+        "nome": "Tanga de Peles"
+      },
+      {
+        "nivel": 2,
+        "nome": "Fúria Primitiva"
+      },
+      {
+        "nivel": 3,
+        "nome": "Instinto Selvagem"
+      },
+      {
+        "nivel": 5,
+        "nome": "Resiliência Primal"
+      },
+      {
+        "nivel": 20,
+        "nome": "Fúria Rústica"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "magimarcialista",
+    "nome": "Magimarcialista",
+    "variantede": "Bardo",
+    "periciasFixas": [
+      "atu",
+      "lut"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Cadência Magimarcial"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magificação"
+      },
+      {
+        "nivel": 2,
+        "nome": "Bravado Magimarcial"
+      },
+      {
+        "nivel": 3,
+        "nome": "Dança Defensiva"
+      },
+      {
+        "nivel": 7,
+        "nome": "Arte Sublime"
+      },
+      {
+        "nivel": 20,
+        "nome": "Crescendo Vitorioso"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "necromante",
+    "nome": "Necromante",
+    "variantede": "Arcanista",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Caminho do Necromante"
+      },
+      {
+        "nivel": 1,
+        "nome": "Falar com Mortos"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 2,
+        "nome": "Animar Cadáver"
+      },
+      {
+        "nivel": 3,
+        "nome": "Necrologia"
+      },
+      {
+        "nivel": 4,
+        "nome": "Distorção Necrótica"
+      },
+      {
+        "nivel": 5,
+        "nome": "Necropotência"
+      },
+      {
+        "nivel": 20,
+        "nome": "Domínio Sobre a Morte"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "santo",
+    "nome": "Santo",
+    "variantede": "Paladino",
+    "periciasFixas": [
+      "rel",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Abençoado"
+      },
+      {
+        "nivel": 1,
+        "nome": "Código de Héroi"
+      },
+      {
+        "nivel": 1,
+        "nome": "Ladainha de Combate"
+      },
+      {
+        "nivel": 2,
+        "nome": "Santo Curandeiro"
+      },
+      {
+        "nivel": 3,
+        "nome": "Vaso do Espírito"
+      },
+      {
+        "nivel": 6,
+        "nome": "Mártir"
+      },
+      {
+        "nivel": 8,
+        "nome": "Pira Santa"
+      },
+      {
+        "nivel": 20,
+        "nome": "Vingador Santificado"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "seteiro",
+    "nome": "Seteiro",
+    "variantede": "Caçador",
+    "periciasFixas": [
+      "pon",
+      "sob"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [
+      "Armas Marciais"
+    ],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Caminho do Atirador"
+      },
+      {
+        "nivel": 1,
+        "nome": "Marca da Presa"
+      },
+      {
+        "nivel": 1,
+        "nome": "Tiro de Supressão"
+      },
+      {
+        "nivel": 3,
+        "nome": "Evasão"
+      },
+      {
+        "nivel": 5,
+        "nome": "Disparo Constritor"
+      },
+      {
+        "nivel": 10,
+        "nome": "Rajada de Flechas"
+      },
+      {
+        "nivel": 13,
+        "nome": "Evasão Aprimorada"
+      },
+      {
+        "nivel": 15,
+        "nome": "Sentinela"
+      },
+      {
+        "nivel": 20,
+        "nome": "Mestre do Disparo"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "usurpador",
+    "nome": "Usurpador",
+    "variantede": "Clérigo",
+    "periciasFixas": [
+      "eng",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Inimigo dos Deuses"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 1,
+        "nome": "Usurpar"
+      },
+      {
+        "nivel": 2,
+        "nome": "Canalização Falsa"
+      },
+      {
+        "nivel": 2,
+        "nome": "Poder de Clérigo"
+      },
+      {
+        "nivel": 3,
+        "nome": "Discrição Divina"
+      },
+      {
+        "nivel": 4,
+        "nome": "Poder Capturado"
+      },
+      {
+        "nivel": 20,
+        "nome": "Roubo Divino"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "vassalo",
+    "nome": "Vassalo",
+    "variantede": "Cavaleiro",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [
+      "Armas Marciais",
+      "Escudos"
+    ],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Código de Honra"
+      },
+      {
+        "nivel": 1,
+        "nome": "Baluarte"
+      },
+      {
+        "nivel": 1,
+        "nome": "Jovem Pajem"
+      },
+      {
+        "nivel": 1,
+        "nome": "Suserano"
+      },
+      {
+        "nivel": 2,
+        "nome": "Valete"
+      },
+      {
+        "nivel": 3,
+        "nome": "Escudeiro Aprendiz"
+      },
+      {
+        "nivel": 4,
+        "nome": "Guarda do Castelo"
+      },
+      {
+        "nivel": 5,
+        "nome": "Vigilante de Estradas"
+      },
+      {
+        "nivel": 6,
+        "nome": "Cavaleiro do Reino"
+      },
+      {
+        "nivel": 7,
+        "nome": "Sargento do Reino"
+      },
+      {
+        "nivel": 8,
+        "nome": "Capitão do Reino"
+      },
+      {
+        "nivel": 9,
+        "nome": "Lorde"
+      },
+      {
+        "nivel": 10,
+        "nome": "Barão"
+      },
+      {
+        "nivel": 11,
+        "nome": "Visconde"
+      },
+      {
+        "nivel": 12,
+        "nome": "Conde"
+      },
+      {
+        "nivel": 13,
+        "nome": "Marquês"
+      },
+      {
+        "nivel": 14,
+        "nome": "Duque"
+      },
+      {
+        "nivel": 15,
+        "nome": "Arquiduque"
+      },
+      {
+        "nivel": 16,
+        "nome": "Conselheiro Real"
+      },
+      {
+        "nivel": 17,
+        "nome": "Rei Mercenário"
+      },
+      {
+        "nivel": 18,
+        "nome": "Rei"
+      },
+      {
+        "nivel": 19,
+        "nome": "Alto Rei"
+      },
+      {
+        "nivel": 20,
+        "nome": "Imperador"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "ventanista",
+    "nome": "Ventanista",
+    "variantede": "Ladino",
+    "periciasFixas": [],
+    "periciasFixasEscolha": [],
+    "proficiencias": [],
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Charme"
+      },
+      {
+        "nivel": 1,
+        "nome": "Truques do Ofício"
+      },
+      {
+        "nivel": 2,
+        "nome": "Evasão"
+      },
+      {
+        "nivel": 3,
+        "nome": "Disfarce Elaborado"
+      },
+      {
+        "nivel": 4,
+        "nome": "Esquiva Sobrenatural"
+      },
+      {
+        "nivel": 7,
+        "nome": "Virar a Casaca"
+      },
+      {
+        "nivel": 8,
+        "nome": "Olhos nas Costas"
+      },
+      {
+        "nivel": 10,
+        "nome": "Evasão Aprimorada"
+      },
+      {
+        "nivel": 11,
+        "nome": "Provocação Ousada"
+      },
+      {
+        "nivel": 20,
+        "nome": "O Grande Golpe"
+      }
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  }
+]

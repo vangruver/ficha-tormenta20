@@ -1,0 +1,44 @@
+[
+  {
+    "id": "aco-rubi",
+    "nome": "aço rubi",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "adamante",
+    "nome": "adamante",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "gelo-eterno",
+    "nome": "gelo eterno",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "madeira-tollon",
+    "nome": "madeira Tollon",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "materia-vermelha",
+    "nome": "matéria vermelha",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "mitral",
+    "nome": "mitral",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Tormenta 20 - Jogo Básico"
+  }
+]

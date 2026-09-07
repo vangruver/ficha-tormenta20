@@ -1,0 +1,732 @@
+[
+  {
+    "id": "geral-cosmetico",
+    "nome": "Cosmético",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-elixir-amor",
+    "nome": "Elixir amor",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 100,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-po-do-desaparecimento",
+    "nome": "Pó do desaparecimento",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 100,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-sangue-de-dragao",
+    "nome": "Sangue de dragão",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 45,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-essencia-abissal",
+    "nome": "Essência abissal",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-ramo-verdejante",
+    "nome": "Ramo verdejante",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 45,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-seiva-de-ambar",
+    "nome": "Seiva de âmbar",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-beladona",
+    "nome": "Beladona",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1500,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-bruma-sonolenta",
+    "nome": "Bruma sonolenta",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cicuta",
+    "nome": "Cicuta",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 60,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-essencia-de-sombra",
+    "nome": "Essência de sombra",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 100,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-nevoa-toxica",
+    "nome": "Névoa tóxica",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-peconha-comum",
+    "nome": "Peçonha comum",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 15,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-peconha-concentrada",
+    "nome": "Peçonha concentrada",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 90,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-peconha-potente",
+    "nome": "Peçonha potente",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 600,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-po-de-lich",
+    "nome": "Pó de lich",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 3000,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-riso-de-nimb",
+    "nome": "Riso de Nimb",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "alchemyItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-macarrao-de-vivakin",
+    "nome": "Macarrão de vivakin",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 6,
+    "grupo": "alimentacao",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-alforje",
+    "nome": "Alforje",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cao-de-caca",
+    "nome": "Cão de caça",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cavalo",
+    "nome": "Cavalo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 75,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cavalo-de-guerra",
+    "nome": "Cavalo de guerra",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 400,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-estabulo-por-dia",
+    "nome": "Estábulo (por dia)",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 0.1,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-ponei",
+    "nome": "Pônei",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-ponei-de-guerra",
+    "nome": "Pônei de guerra",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-trobo",
+    "nome": "Trobo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 60,
+    "grupo": "animais",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-andrajos-de-aldeao",
+    "nome": "Andrajos de aldeão",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-bandana",
+    "nome": "Bandana",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-botas-reforcadas",
+    "nome": "Botas reforçadas",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 20,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-camisa-bufante",
+    "nome": "Camisa bufante",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 25,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-capa-esvoacante",
+    "nome": "Capa esvoaçante",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 25,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-capa-pesada",
+    "nome": "Capa pesada",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 15,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-casaco-longo",
+    "nome": "Casaco longo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 20,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-chapeu-arcano",
+    "nome": "Chapéu arcano",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 50,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-enfeite-de-elmo",
+    "nome": "Enfeite de elmo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 15,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-fardamento-de-guarnicao",
+    "nome": "Fardamento de guarnição",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-farrapos-de-ermitao",
+    "nome": "Farrapos de ermitão",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-gorro-de-ervas",
+    "nome": "Gorro de ervas",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 75,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-luva-de-pelica",
+    "nome": "Luva de pelica",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-manto-camuflado",
+    "nome": "Manto camuflado",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 12,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-manto-eclesiastico",
+    "nome": "Manto eclesiástico",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 20,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-robe-mistico",
+    "nome": "Robe místico",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 50,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-sapatos-de-andruanca",
+    "nome": "Sapatos de andruança",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 8,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-tabardo",
+    "nome": "Tabardo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 10,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-veste-de-seda",
+    "nome": "Veste de seda",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 25,
+    "grupo": "clothingItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-arpeu",
+    "nome": "Arpéu",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-bandoleira-de-pocoes",
+    "nome": "Bandoleira de poções",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 20,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-corda",
+    "nome": "Corda",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-espelho",
+    "nome": "Espelho",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 10,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-mochila-de-aventureiro",
+    "nome": "Mochila de aventureiro",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 50,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-oleo",
+    "nome": "Óleo",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 0.1,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-organizador-de-pergaminhos",
+    "nome": "Organizador de pergaminhos",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 25,
+    "grupo": "equipamentoAventureiro",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-bolsa-de-po",
+    "nome": "Bolsa de pó",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 300,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cajado-arcano",
+    "nome": "Cajado arcano",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1000,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-cetro-elemental",
+    "nome": "Cetro elemental",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 750,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-costela-de-lich",
+    "nome": "Costela de lich",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 300,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-dedo-de-ente",
+    "nome": "Dedo de ente",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 200,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-luva-de-ferro",
+    "nome": "Luva de ferro",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-medalhao-de-prata",
+    "nome": "Medalhão de prata",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 750,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-orbe-cristalina",
+    "nome": "Orbe cristalina",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 750,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-tomo-hermetico",
+    "nome": "Tomo hermético",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 1500,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-varinha-arcana",
+    "nome": "Varinha arcana",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 100,
+    "grupo": "esotericItems",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-alaude-elfico",
+    "nome": "Alaúde élfico",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 300,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-colecao-de-livros",
+    "nome": "Coleção de livros",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 75,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-equipamento-de-viagem",
+    "nome": "Equipamento de viagem",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 10,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-estojo-de-disfarces",
+    "nome": "Estojo de disfarces",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 50,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-flauta-mistica",
+    "nome": "Flauta mística",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 150,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-gazua",
+    "nome": "Gazua",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 5,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-instrumentos-de-oficio",
+    "nome": "Instrumentos de «ofício»",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 30,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-luneta",
+    "nome": "Luneta",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 100,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-maleta-de-medicamentos",
+    "nome": "Maleta de medicamentos",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 50,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-sela",
+    "nome": "Sela",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 20,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  },
+  {
+    "id": "geral-tambor-das-profundezas",
+    "nome": "Tambor das profundezas",
+    "tipoItem": "tesouro",
+    "peso": 0,
+    "preco": 80,
+    "grupo": "ferramentas",
+    "descricao": "",
+    "fonte": "Tormenta 20"
+  }
+]

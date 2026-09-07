@@ -25,6 +25,10 @@ export function escolhasVazias() {
     atributosRaciais: [],        // humano/lefou/osteon/sereia: 3 atributos +1
     legadoRacial: "",            // suraggel: "aggelus" | "sulfure"; moreau: herança
     varianteAtributos: "",       // kallyanach: como distribuir o bônus racial
+    varianteClasse: "",          // variante da classe (Heróis de Arton)
+    golpePessoal: "",            // guerreiro: efeito do Golpe Pessoal
+    familiar: "",                // arcanista: familiar
+    totemAnimal: "",             // druida: totem
     periciasClasseFixa: {},      // grupo "Luta ou Pontaria" → id escolhido
     periciasClasse: [],          // perícias escolhidas na lista da classe
     periciasOrigem: [],          // 2 perícias da lista da origem

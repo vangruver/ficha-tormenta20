@@ -1,0 +1,50 @@
+[
+  {
+    "id": "coruja",
+    "nome": "Coruja",
+    "magia": "Orientação",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "corvo",
+    "nome": "Corvo",
+    "magia": "Visão Mística",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "falcao",
+    "nome": "Falcão",
+    "magia": "Detectar Ameaças",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "grifo",
+    "nome": "Grifo",
+    "magia": "Primor Atlético",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "lobo",
+    "nome": "Lobo",
+    "magia": "Concentração de Combate",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "raposa",
+    "nome": "Raposa",
+    "magia": "Imagem Espelhada",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "tartaruga",
+    "nome": "Tartaruga",
+    "magia": "Armadura Arcana",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "urso",
+    "nome": "Urso",
+    "magia": "Vitalidade Fantasma",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  }
+]

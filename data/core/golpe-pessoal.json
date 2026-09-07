@@ -1,0 +1,121 @@
+[
+  {
+    "id": "amplo",
+    "nome": "Amplo",
+    "custo": 3,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "atordoante",
+    "nome": "Atordoante",
+    "custo": 2,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "brutal",
+    "nome": "Brutal",
+    "custo": 1,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "conjurador",
+    "nome": "Conjurador",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "destruidor",
+    "nome": "Destruidor",
+    "custo": 2,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "distante",
+    "nome": "Distante",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "elemental",
+    "nome": "Elemental",
+    "custo": 2,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "impactante",
+    "nome": "Impactante",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "letal",
+    "nome": "Letal",
+    "custo": 2,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "penetrante",
+    "nome": "Penetrante",
+    "custo": 1,
+    "categoria": "offensive",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "preciso",
+    "nome": "Preciso",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "qualquer-arma",
+    "nome": "Qualquer Arma",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "ricocheteante",
+    "nome": "Ricocheteante",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "teleguiado",
+    "nome": "Teleguiado",
+    "custo": 1,
+    "categoria": "utility",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "lento",
+    "nome": "Lento",
+    "custo": -2,
+    "categoria": "drawback",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "perto-da-morte",
+    "nome": "Perto da Morte",
+    "custo": -2,
+    "categoria": "drawback",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "sacrificio",
+    "nome": "Sacrifício",
+    "custo": -2,
+    "categoria": "drawback",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "borboleta",
+    "nome": "Borboleta",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "cobra",
+    "nome": "Cobra",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "coruja",
+    "nome": "Coruja",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "corvo",
+    "nome": "Corvo",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "falcao",
+    "nome": "Falcão",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "gato",
+    "nome": "Gato",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "lagarto",
+    "nome": "Lagarto",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "morcego",
+    "nome": "Morcego",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "rato",
+    "nome": "Rato",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "sapo",
+    "nome": "Sapo",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  }
+]

@@ -1,0 +1,185 @@
+{
+  "tipos": [
+    {
+      "id": "animal",
+      "nome": "Animal"
+    },
+    {
+      "id": "construto",
+      "nome": "Construto"
+    },
+    {
+      "id": "espirito",
+      "nome": "Espírito"
+    },
+    {
+      "id": "monstro",
+      "nome": "Monstro"
+    },
+    {
+      "id": "morto-vivo",
+      "nome": "Morto-Vivo"
+    }
+  ],
+  "tamanhos": [
+    "Pequeno",
+    "Médio",
+    "Grande"
+  ],
+  "periciasDisponiveis": [
+    "acr",
+    "atl",
+    "for",
+    "fur",
+    "lut",
+    "per",
+    "pon",
+    "ref",
+    "sob",
+    "von"
+  ],
+  "tiposDeDano": [
+    "Corte",
+    "Impacto",
+    "Perfuração"
+  ],
+  "truques": [
+    {
+      "id": "alado",
+      "nome": "Alado",
+      "nivelMinimo": 5,
+      "exige": [
+        "asas"
+      ]
+    },
+    {
+      "id": "amigao",
+      "nome": "Amigão",
+      "nivelMinimo": 7,
+      "exige": []
+    },
+    {
+      "id": "amigo-feroz",
+      "nome": "Amigo Feroz",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "amigo-protetor",
+      "nome": "Amigo Protetor",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "amigo-veterano",
+      "nome": "Amigo Veterano",
+      "nivelMinimo": 5,
+      "exige": []
+    },
+    {
+      "id": "amigo-mestre",
+      "nome": "Amigo Mestre",
+      "nivelMinimo": 11,
+      "exige": [
+        "amigo-veterano"
+      ]
+    },
+    {
+      "id": "anatomia-humanoide",
+      "nome": "Anatomia Humanoide",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "arma-natural-adicional",
+      "nome": "Arma Natural Adicional",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "asas",
+      "nome": "Asas",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "bote",
+      "nome": "Bote",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "condicionamento-especial",
+      "nome": "Condicionamento Especial",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "deslocamento-especial",
+      "nome": "Deslocamento Especial",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "magia-inata",
+      "nome": "Magia Inata",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "manobra-ensaiada",
+      "nome": "Manobra Ensaiada",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "reanimacao-sombria",
+      "nome": "Reanimação Sombria",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "reducao-de-dano",
+      "nome": "Redução de Dano",
+      "nivelMinimo": 5,
+      "exige": []
+    },
+    {
+      "id": "sopro",
+      "nome": "Sopro",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "taticas-de-matilha",
+      "nome": "Táticas de Matilha",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "treinamento-de-companhia",
+      "nome": "Treinamento de Companhia",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "treinamento-defensivo",
+      "nome": "Treinamento Defensivo",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "treinamento-marcial",
+      "nome": "Treinamento Marcial",
+      "nivelMinimo": 1,
+      "exige": []
+    },
+    {
+      "id": "veloz",
+      "nome": "Veloz",
+      "nivelMinimo": 1,
+      "exige": []
+    }
+  ],
+  "fonte": "Heróis de Arton"
+}

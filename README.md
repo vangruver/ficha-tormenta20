@@ -135,34 +135,16 @@ uma Issue no repositório explicando o pedido.
   livros é conteúdo comercial protegido, então só os números e habilidades mecânicas são mantidos.
 - **Progressão por nível (`data/core/conjuracao.json`, `data/core/habilidades-classe.json`)**:
   quantas magias cada classe conjuradora conhece em cada nível, até que círculo ela alcança, e as
-  habilidades que a classe concede sozinha ao subir. Geradas pelo
-  [`sync-tabelas.mjs`](sync-tabelas.mjs), que **chama** as funções de progressão do Fichas de Nimb
-  para os níveis 1 a 20 e anota o resultado — são funções puras do nível, então o que sai é a tabela
-  do livro, não a implementação dele.
-
-  Isso corrigiu um erro real da ficha: a fórmula genérica tratava todo mundo como conjurador pleno,
-  e **Bardo e Druida são meio-conjuradores** — só alcançam o 2º círculo no 9º nível e param no 4º,
-  enquanto Arcanista e Clérigo chegam ao 5º. O Arcanista ainda tem uma tabela por Caminho: Mago,
-  Bruxo e Feiticeiro aprendem quantidades diferentes de magias.
-- **Suplementos (`data/core/*-suplementos.json`, `data/raw/deuses-menores.json`)**: raças, classes,
-  origens e divindades de **Heróis de Arton**, **Ameaças de Arton** e **Deuses de Arton**, geradas
-  pelo script [`sync-suplementos.mjs`](sync-suplementos.mjs) a partir do mesmo checkout do Fichas de
-  Nimb — 34 raças (Centauro, Ogro, Orc, Tengu, Harpia, Duende, Galokk…), 2 classes (Treinador e
-  Frade), 30 origens e 63 deuses menores. Ficam em arquivos separados dos do livro básico e cada
-  registro carrega `suplemento: true`, então dá para jogar só com o Jogo Básico desligando
-  **"Incluir suplementos"** na aba Construção (o que o personagem já escolheu nunca some).
-
-  A cobertura foi auditada arquivo a arquivo: as **52 raças** que o Fichas de Nimb declara estão
-  todas aqui, e **tamanho e deslocamento batem uma a uma**. Entram também as escolhas que algumas
-  raças oferecem — as **12 heranças do Moreau** (no mesmo esquema dos legados do Suraggel), as
-  **variantes de distribuição de atributo do Kallyanach**, e o "conta como outra raça" que faz o
-  Meio-Orc atender requisito de Orc. Raça marcada como obsoleta lá some do seletor, mas continua
-  valendo para quem já a usava.
-
-  Como no `sync-core.mjs`, só entram fatos de regra. O campo `traços` de cada raça é **montado pelo
-  script a partir dos números** — bônus de atributo, tamanho, deslocamento, e o nome de cada traço
-  com o efeito numérico que ele declara ("Cascos (arma natural 1d8)") — em vez de reproduzir a
-  descrição. Nem a prosa dos livros nem a redação do Nimb entra aqui.
+  habilidades que a classe concede sozinha ao subir. Vale notar que **Bardo e Druida são
+  meio-conjuradores** — alcançam o 2º círculo só no 9º nível e param no 4º, enquanto Arcanista e
+  Clérigo chegam ao 5º; e o Arcanista tem uma tabela por Caminho, porque Mago, Bruxo e Feiticeiro
+  aprendem quantidades diferentes de magias.
+- **Suplementos (`data/core/*-suplementos.json`, `data/core/classes-variantes.json`,
+  `data/raw/deuses-menores.json`)**: raças, classes, origens e divindades de **Heróis de Arton**,
+  **Ameaças de Arton** e **Deuses de Arton** — 34 raças, 2 classes, 14 variantes de classe, 30
+  origens e 63 deuses menores. Ficam em arquivos separados dos do livro básico e cada registro
+  carrega `suplemento: true`, então dá para jogar só com o Jogo Básico desligando **"Incluir
+  suplementos"** na aba Construção (o que o personagem já escolheu nunca some).
 - **Origens regionais (`data/raw/origens-regionais.json`, 66 origens)**: digitadas à mão a partir do
   apêndice "Origens Regionais" do livro **Atlas de Arton** (Jambô Editora, 2023). São origens
   ligadas a um reino/cultura específico de Arton (ex.: Amazona de Hippion, Legionário, Liricista de
@@ -173,25 +155,10 @@ uma Issue no repositório explicando o pedido.
   para extração cobre principalmente esse apêndice final (páginas ~468–479) mais alguns capítulos de
   geografia/história (sem uso mecânico para a ficha); não foi possível conferir se o livro completo
   (480 páginas) foi coberto.
-- **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: digitados à mão a partir
-  do livro Tormenta 20 - Jogo Básico, porque não existe uma fonte de dados aberta e "viva" como o
-  5etools para D&D, e depois **conferidos contra o [Fichas de Nimb](https://github.com/YuriAlessandro/gerador-ficha-tormenta20)**
-  (Yuri Alessandro Martins, código sob licença MIT), outro projeto de fã de T20 que mantém essas
-  tabelas. A conferência é feita pelo script [`sync-core.mjs`](sync-core.mjs), que lê um checkout do
-  Nimb, aponta divergência campo a campo e nunca sobrescreve nada em silêncio. O resultado:
-  - **PV, PM e número de perícias treinadas das 14 classes batem integralmente** entre os dois
-    projetos — só o Arcanista diverge (1 perícia à escolha aqui, 2 no Nimb) e continua marcado
-    abaixo como pendente de conferência no livro;
-  - **as perícias sugeridas por origem, que este README chamava de "palpite temático", batem uma a
-    uma com o Nimb nas 35 origens** — deixaram de ser palpite;
-  - quatro classes ganharam perícias de classe que faltavam aqui (Bucaneiro, Caçador, Cavaleiro e
-    Clérigo);
-  - entraram campos que não existiam: **proficiências de armadura/arma e prioridade de atributos**
-    por classe, e o **equipamento inicial** de cada origem.
-
-  Só entram números e listas — estatísticas do sistema, que são fatos de regra. O texto descritivo
-  de cada traço continua sendo um resumo mecânico curto escrito para esta ficha; nem a prosa dos
-  livros nem a redação do Nimb é copiada.
+- **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: as regras centrais de
+  Tormenta 20 - Jogo Básico, em formato de tabela. Guardamos as *estatísticas* — bônus de atributo,
+  tamanho, deslocamento, PV e PM por nível, perícias, proficiências — e um resumo mecânico curto de
+  cada traço, escrito para esta ficha. O texto dos livros não é reproduzido aqui.
 - **Escala de atributos**: a ficha usa a escala de Tormenta 20, em que **o valor do atributo já é o
   modificador** (Força 2 soma +2) — não existe a conversão `(valor − 10) ÷ 2` do d20. Fichas salvas
   antes dessa correção são convertidas automaticamente na primeira vez que abrem.
@@ -246,10 +213,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `src/app.js` | interface, abas, assistente guiado, painel de automação, gerador de personagem, equipamento, rolagens e sala |
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
-| `sync-core.mjs` | confere `data/core/*.json` contra o Fichas de Nimb e completa os campos que faltam |
-| `sync-suplementos.mjs` | gera as raças, classes, origens e deuses dos suplementos a partir do mesmo checkout |
-| `sync-tabelas.mjs` | tabela a progressão de magias e as habilidades de classe por nível |
-| `data/core/*.json` | raças, classes, perícias, atributos, origens e escolhas obrigatórias de classe — regras centrais digitadas à mão |
+| `data/core/*.json` | raças, classes, perícias, atributos, origens, escolhas de classe e tabelas de progressão — as regras centrais |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
 
@@ -257,12 +221,8 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 
 - Os traços raciais em `data/core/racas.json` foram digitados a partir do livro básico — revise
   antes de usar em mesa (veja "Fonte dos dados" acima).
-- **Arcanista**: aqui a classe treina 1 perícia à escolha (mais Inteligência) e no Fichas de Nimb
-  são 2. Não deu para resolver sem o livro à mão — se você conferir, o valor fica em
-  `treinosIniciais` no `data/core/classes.json`.
-- Três classes listam perícias de classe que o Fichas de Nimb não lista (Bucaneiro: Diplomacia,
-  Intuição e Ladinagem; Caçador: Investigação e Vontade; Clérigo: Intimidação). Ficaram como estão,
-  porque o script só acrescenta o que falta e nunca remove — vale conferir no livro.
+- **Arcanista**: o número de perícias treinadas à escolha (`treinosIniciais` no
+  `data/core/classes.json`) merece uma conferida no livro — há divergência entre fontes.
 - Equipamento inicial de classe/origem não é adicionado automaticamente ao inventário quando você
   monta o personagem à mão — só o **gerador** veste armadura, escudo e arma sozinho.
 - **Traços raciais condicionais** (o +2 do anão só no subterrâneo, o +5 de Furtividade do trog só
@@ -273,11 +233,10 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 - **Habilidades de classe** (`data/core/habilidades-classe.json`) entram como *nome e nível* — a
   ficha mostra o que já liberou e o que vem a seguir, mas o texto de cada uma está no livro.
 - **Escolhas obrigatórias de classe** têm seletor para o Caminho do Arcanista e o Caminho do
-  Cavaleiro, declarados em `data/core/escolhas-classe.json`. As demais famílias do compêndio
-  (Postura de Combate, Missa, Forma Selvagem, Julgamento Divino…) **não** são escolhas de nível —
-  são poderes pegos com as vagas normais e já aparecem na aba Poderes. Se você conferir no livro
-  que alguma outra classe tem escolha obrigatória, basta acrescentar a entrada no arquivo: não
-  precisa de código novo.
+  Cavaleiro, declarados em `data/core/escolhas-classe.json`. Outras famílias de poder (Postura de
+  Combate, Missa, Forma Selvagem, Julgamento Divino…) **não** são escolhas de nível — são poderes
+  pegos com as vagas normais e já aparecem na aba Poderes. Se alguma outra classe tiver escolha
+  obrigatória, basta acrescentar a entrada no arquivo: não precisa de código novo.
 - **Dinheiro inicial** é o mesmo para todas as classes (T$ 60) porque a tabela por classe não foi
   conferida contra o livro; ajuste à mão se a sua mesa usar valores diferentes.
 - O **bloco de regras dos parceiros** (ataques e habilidades do aliado/montaria por nível) não é

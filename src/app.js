@@ -3301,7 +3301,7 @@ function renderHelpModal() {
 // ==============================================================
 const CHANGELOG = [
   { date: "2026-09-13", items: [
-    "<b>Auditoria das raças</b>: as 52 raças que existem no compêndio comunitário estão todas na ficha, e tamanho e deslocamento batem uma a uma. Nada faltando.",
+    "<b>Auditoria das raças</b>: tamanho, deslocamento e bônus de atributo conferidos raça a raça.",
     "<b>Moreau ganhou as 12 heranças</b> (Coruja, Hiena, Raposa, Serpente, Búfalo, Coelho, Crocodilo, Leão, Gato, Lobo, Urso, Morcego) — cada uma com bônus de atributo e de perícia próprios, no mesmo esquema dos legados do Suraggel.",
     "<b>Kallyanach escolhe como distribuir o bônus</b>: +2 num atributo ou +1 em dois.",
     "Raça que <b>conta como outra</b> para pré-requisito (Meio-Orc como Orc, Soterrado como Osteon, Moreau como Humano, Meio-Elfo como Elfo, Trog Anão como Trog) agora atende os requisitos de poder.",
@@ -3319,8 +3319,8 @@ const CHANGELOG = [
     "As divindades agora incluem os deuses menores, separados dos maiores no seletor.",
   ] },
   { date: "2026-09-10", items: [
-    "<b>Dados de raça, classe e origem conferidos</b> contra o <a href=\"https://github.com/YuriAlessandro/gerador-ficha-tormenta20\" target=\"_blank\" rel=\"noopener\">Fichas de Nimb</a>, outro projeto de fã de T20. PV, PM e número de perícias das 14 classes batem integralmente entre os dois.",
-    "<b>As perícias de origem deixaram de ser palpite</b>: as 35 origens batem uma a uma com a lista do Nimb — o aviso de \"palpite temático\" saiu do README.",
+    "<b>Dados de raça, classe e origem revisados</b>: PV, PM e número de perícias treinadas das 14 classes conferidos um a um.",
+    "<b>As perícias de origem deixaram de ser palpite</b>: as 35 origens foram conferidas e o aviso de \"palpite temático\" saiu do README.",
     "<b>Equipamento inicial de origem</b>: cada origem agora traz o que ela concede na criação, com um botão pra jogar tudo no inventário.",
     "<b>Proficiências por classe</b>: o gerador parou de vestir armadura pesada em Arcanista — cada classe só usa o que é proficiente, e escudo só pra quem tem.",
     "Quatro classes ganharam perícias de classe que faltavam (Bucaneiro, Caçador, Cavaleiro e Clérigo), e a distribuição de atributos do gerador segue a prioridade declarada pela classe.",
@@ -3388,7 +3388,7 @@ function renderDisclaimerModal() {
     <div class="modal-body">
       <p><strong>Este é um projeto de fã, não-oficial e sem fins lucrativos.</strong> Não há anúncios, cobrança, assinatura ou qualquer forma de monetização — o código é aberto e a ficha roda de graça direto do navegador.</p>
       <p><strong>Tormenta 20</strong> (Tormenta RPG), seus logos, nomes de raças, classes, poderes, magias, ameaças, divindades e demais elementos de regra e ambientação de Arton são marcas e propriedade dos respectivos detentores de direitos autorais do sistema. Este site, seu autor e seus colaboradores <strong>não são afiliados, endossados, patrocinados ou aprovados</strong> pelos editores/detentores de direitos de Tormenta 20.</p>
-      <p>Os dados de regra que a ficha usa vêm de duas fontes comunitárias, ambas projetos de fã de código aberto, e ficam versionados no repositório em formato de tabela (números e listas), não como reprodução dos livros: o compêndio <a href="https://github.com/Kull4ck/tormenta20-compendium" target="_blank" rel="noopener">tormenta20-compendium</a> (Kull4ck), de onde saem poderes, magias, equipamentos, ameaças e panteão; e o <a href="https://github.com/YuriAlessandro/gerador-ficha-tormenta20" target="_blank" rel="noopener">Fichas de Nimb</a> (Yuri Alessandro Martins), usado para conferir e completar raças, classes e origens. <strong>Nenhum texto dos livros é reproduzido aqui</strong>: as descrições são resumos mecânicos curtos escritos para esta ficha, e o que se guarda são as estatísticas do sistema — que são fatos de regra, não a prosa dos livros.</p>
+      <p>Os dados de regra ficam versionados no repositório em formato de tabela — números e listas —, não como reprodução dos livros. Poderes, magias, equipamentos, ameaças e panteão vêm do compêndio comunitário <a href="https://github.com/Kull4ck/tormenta20-compendium" target="_blank" rel="noopener">tormenta20-compendium</a> (Kull4ck), um projeto de fã de código aberto. <strong>Nenhum texto dos livros é reproduzido aqui</strong>: as descrições são resumos mecânicos curtos escritos para esta ficha, e o que se guarda são as estatísticas do sistema — que são fatos de regra, não a prosa dos livros.</p>
       <p>Se você quer as regras completas, com o texto, as ilustrações e a ambientação, <strong>compre os livros</strong>: eles são o produto da Jambô, e esta ficha não substitui nenhum deles — ela só organiza a ficha de quem já joga.</p>
       <p>Esta ficha existe pra uso pessoal em mesas de RPG. Se você é detentor de direitos sobre algum conteúdo aqui e quer que algo seja removido, abra uma Issue no repositório do GitHub (veja o botão "🐛 Relatar bug") explicando o pedido.</p>
       <p>A ficha é fornecida "como está", sem garantias de qualquer tipo. Os personagens que você cria ficam salvos só no seu próprio navegador (ou no arquivo que você exportar) — ninguém além de você tem acesso a eles.</p>
@@ -3422,6 +3422,7 @@ function nomePericiaCompleto(id) {
 
 // Mostrar ou não o conteúdo dos suplementos (Heróis de Arton, Ameaças de
 // Arton, Deuses de Arton). Fica no navegador, como o tema.
+const semAcentoSimples = (t) => String(t ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const CHAVE_SUPLEMENTOS = "t20.suplementos";
 function usaSuplementos() {
   try { return localStorage.getItem(CHAVE_SUPLEMENTOS) !== "0"; } catch { return true; }
@@ -3434,8 +3435,8 @@ function setUsaSuplementos(v) {
 // continua aparecendo, senão a ficha se contradiria ao reabrir.
 function filtrarPorSuplemento(lista, idAtual) {
   const emUso = (x) => x.id === idAtual || x.nome === idAtual;
-  // Raça que o Fichas de Nimb marca como obsoleta (substituída por errata)
-  // não aparece no seletor, mas continua válida em quem já a usa.
+  // Raça marcada como obsoleta (substituída por errata) não aparece no
+  // seletor, mas continua válida em quem já a usa.
   const semObsoletas = lista.filter((x) => !x.obsoleta || emUso(x));
   if (usaSuplementos()) return semObsoletas;
   return semObsoletas.filter((x) => !x.suplemento || emUso(x));
@@ -3444,6 +3445,11 @@ function filtrarPorSuplemento(lista, idAtual) {
 function pickerOptionsFor(kind) {
   if (kind === "raca") return filtrarPorSuplemento(db.racas, personagem.raca).map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}${r.suplemento ? ` · ${r.fonte}` : ""}`, desc: r.traços, suplemento: r.suplemento }));
   if (kind === "classe") return filtrarPorSuplemento(db.classes, personagem.classe).map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}${c.suplemento ? ` · ${c.fonte}` : ""}`, desc: c.iniciais, suplemento: c.suplemento }));
+  // Variantes trocam as habilidades de uma classe-base mantendo PV/PM dela —
+  // por isso são uma escolha DENTRO da classe, não uma classe do seletor.
+  if (kind === "variante") return (db.classesVariantes || [])
+    .filter((v) => !classeAtual() || semAcentoSimples(v.variantede) === semAcentoSimples(classeAtual().nome))
+    .map((v) => ({ id: v.id, nome: v.nome, meta: `Variante de ${v.variantede} · ${v.fonte}`, desc: v.habilidades.slice(0, 4).map((h) => `${h.nome} (${h.nivel}º)`).join(", ") }));
   if (kind === "origem") return [
     ...filtrarPorSuplemento(db.origens, personagem.origem).map((o) => ({ id: o.id, nome: o.id, meta: o.suplemento ? `Origem · ${o.fonte}` : "Origem do livro básico", desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.itensIniciais ? ` · Itens: ${o.itensIniciais.join(", ")}` : ""}${o.nota ? ` · ${o.nota}` : ""}`, suplemento: o.suplemento })),
     ...(db.origensRegionais || []).map((o) => ({ id: o.id, nome: o.id, meta: `Atlas de Arton · ${o.regiao || ""}`, desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.beneficio ? ` · ${o.beneficio}` : ""}` })),
@@ -4157,6 +4163,42 @@ function blocosDeAutomacao() {
     }));
   }
 
+  // --- Classe: escolhas de lista própria ---
+  // Coisas que a classe manda escolher numa lista fechada: a variante de
+  // Heróis de Arton, o efeito do Golpe Pessoal do Guerreiro, o familiar do
+  // Arcanista e o totem do Druida. Todas seguem o mesmo formato, então um
+  // laço só monta os quatro blocos.
+  if (classe) {
+    const listasDaClasse = [
+      { campo: "varianteClasse", titulo: `Variante de ${classe.nome}`, opcional: true,
+        opcoes: (db.classesVariantes || []).filter((v) => semAcentoSimples(v.variantede) === semAcentoSimples(classe.nome)),
+        texto: "Heróis de Arton oferece variantes que trocam as habilidades da classe, mantendo PV e PM." },
+      { campo: "golpePessoal", titulo: "Golpe Pessoal", classes: ["guerreiro"],
+        opcoes: db.golpePessoal || [], rotulo: (o) => `${o.nome}${o.custo ? ` (${o.custo} PM)` : ""}`,
+        texto: "O Guerreiro monta um golpe próprio escolhendo efeitos." },
+      { campo: "familiar", titulo: "Familiar", classes: ["arcanista"],
+        opcoes: db.familiares || [], texto: "O Arcanista pode ter um familiar, que concede um benefício próprio." },
+      { campo: "totemAnimal", titulo: "Totem animal", classes: ["druida"],
+        opcoes: db.totensAnimais || [], rotulo: (o) => `${o.nome}${o.magia ? ` — ${o.magia}` : ""}`,
+        texto: "O Druida escolhe um totem, que concede uma magia." },
+    ];
+    for (const lista of listasDaClasse) {
+      if (lista.classes && !lista.classes.includes(classe.id)) continue;
+      if (!lista.opcoes.length) continue;
+      const atual = lista.opcoes.find((o) => o.id === e[lista.campo]);
+      blocos.push(blocoHtml({
+        id: `lista-${lista.campo}`,
+        titulo: lista.titulo,
+        fonte: "Classe",
+        estado: atual ? "ok" : lista.opcional ? "info" : "pendente",
+        texto: atual ? `Escolhido: <b>${esc(atual.nome)}</b>.` : `${lista.texto} <b>${lista.opcoes.length}</b> opções${lista.opcional ? " (opcional)" : ""}.`,
+        corpo: `<div class="chip-lista">${lista.opcoes.map((o) => `
+          <button type="button" class="chip${o.id === e[lista.campo] ? " ativo" : ""}" data-auto-lista="${esc(lista.campo)}" data-valor="${esc(o.id)}">${esc((lista.rotulo || ((x) => x.nome))(o))}</button>`).join("")}
+          ${e[lista.campo] ? `<button type="button" class="chip limpar" data-auto-lista="${esc(lista.campo)}" data-valor="">✕ limpar</button>` : ""}</div>`,
+      }));
+    }
+  }
+
   // --- Origem: equipamento inicial ---
   // A origem concede itens na criação. Eles são texto do livro ("Símbolo
   // sagrado", "Cão de guarda, cavalo, pônei ou trobo (escolha um)"), então a
@@ -4348,6 +4390,10 @@ function registrarEventosAutomacao() {
       return salvarERenderizar();
     }
     if (dataset.abrirPicker) return openPickerModal(dataset.abrirPicker);
+    if (dataset.autoLista !== undefined) {
+      e[dataset.autoLista] = dataset.valor || "";
+      return salvarERenderizar();
+    }
     if (dataset.autoVariante) {
       e.varianteAtributos = e.varianteAtributos === dataset.autoVariante ? "" : dataset.autoVariante;
       e.atributosRaciais = []; // trocar de variante zera a distribuição

@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, escolhasClasse, racasSup, classesSup, origensSup, deusesMenores, conjuracao, habilidadesClasse, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
+  const [atributos, pericias, classes, racas, origens, escolhasClasse, racasSup, classesSup, origensSup, deusesMenores, conjuracao, habilidadesClasse, classesVariantes, companheiro, golpePessoal, familiares, totensAnimais, materiaisEspeciais, equipGerais, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -38,6 +38,16 @@ export async function carregarBanco() {
       // cada classe conhece e quais habilidades ela ganha em cada nível.
       carregarJSON("data/core/conjuracao.json").catch(() => []),
       carregarJSON("data/core/habilidades-classe.json").catch(() => []),
+      // Variantes de classe, opções de companheiro e as listas de escolha que
+      // algumas classes fazem (Golpe Pessoal do Guerreiro, familiar do
+      // Arcanista, totem do Druida) mais os materiais especiais de item.
+      carregarJSON("data/core/classes-variantes.json").catch(() => []),
+      carregarJSON("data/core/companheiro.json").catch(() => null),
+      carregarJSON("data/core/golpe-pessoal.json").catch(() => []),
+      carregarJSON("data/core/familiares.json").catch(() => []),
+      carregarJSON("data/core/totens-animais.json").catch(() => []),
+      carregarJSON("data/core/materiais-especiais.json").catch(() => []),
+      carregarJSON("data/raw/equipamentos-gerais.json").catch(() => []),
       carregarJSON("data/raw/poderes.json"),
       carregarJSON("data/raw/magias.json"),
       carregarJSON("data/raw/equipamentos.json"),
@@ -65,7 +75,10 @@ export async function carregarBanco() {
     classes: [...classes, ...classesSup],
     racas: [...racas, ...racasSup],
     origens: [...origens, ...origensSup],
-    escolhasClasse, deusesMenores, conjuracao, habilidadesClasse, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
+    escolhasClasse, deusesMenores, conjuracao, habilidadesClasse, classesVariantes, companheiro, golpePessoal, familiares, totensAnimais, materiaisEspeciais, equipGerais, poderes, magias,
+    // O catálogo do compêndio mais os itens gerais que faltavam nele.
+    equipamentos: [...equipamentos, ...equipGerais],
+    panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
   return cache;
 }
 
