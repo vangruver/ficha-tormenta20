@@ -3221,6 +3221,11 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-11", items: [
+    "<b>Conteúdo dos suplementos</b>: 34 raças novas (Centauro, Ogro, Orc, Tengu, Harpia, Duende, Galokk…), 2 classes (Treinador e Frade), 30 origens e 63 deuses menores, de <b>Heróis de Arton</b>, <b>Ameaças de Arton</b> e <b>Deuses de Arton</b>.",
+    "Cada opção mostra de qual livro veio, e o filtro <b>\"Incluir suplementos\"</b> na aba Construção deixa jogar só com o Jogo Básico — o que o personagem já escolheu nunca some da ficha.",
+    "As divindades agora incluem os deuses menores, separados dos maiores no seletor.",
+  ] },
   { date: "2026-09-10", items: [
     "<b>Dados de raça, classe e origem conferidos</b> contra o <a href=\"https://github.com/YuriAlessandro/gerador-ficha-tormenta20\" target=\"_blank\" rel=\"noopener\">Fichas de Nimb</a>, outro projeto de fã de T20. PV, PM e número de perícias das 14 classes batem integralmente entre os dois.",
     "<b>As perícias de origem deixaram de ser palpite</b>: as 35 origens batem uma a uma com a lista do Nimb — o aviso de \"palpite temático\" saiu do README.",
@@ -3323,14 +3328,34 @@ function nomePericiaCompleto(id) {
   return espec ? `${base} (${espec})` : base;
 }
 
+// Mostrar ou não o conteúdo dos suplementos (Heróis de Arton, Ameaças de
+// Arton, Deuses de Arton). Fica no navegador, como o tema.
+const CHAVE_SUPLEMENTOS = "t20.suplementos";
+function usaSuplementos() {
+  try { return localStorage.getItem(CHAVE_SUPLEMENTOS) !== "0"; } catch { return true; }
+}
+function setUsaSuplementos(v) {
+  try { localStorage.setItem(CHAVE_SUPLEMENTOS, v ? "1" : "0"); } catch { /* modo privado */ }
+  renderizarTudo();
+}
+// Nada some da ficha por desligar o filtro: o que o personagem já escolheu
+// continua aparecendo, senão a ficha se contradiria ao reabrir.
+function filtrarPorSuplemento(lista, idAtual) {
+  if (usaSuplementos()) return lista;
+  return lista.filter((x) => !x.suplemento || x.id === idAtual || x.nome === idAtual);
+}
+
 function pickerOptionsFor(kind) {
-  if (kind === "raca") return db.racas.map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}`, desc: r.traços }));
-  if (kind === "classe") return db.classes.map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}`, desc: c.iniciais }));
+  if (kind === "raca") return filtrarPorSuplemento(db.racas, personagem.raca).map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}${r.suplemento ? ` · ${r.fonte}` : ""}`, desc: r.traços, suplemento: r.suplemento }));
+  if (kind === "classe") return filtrarPorSuplemento(db.classes, personagem.classe).map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}${c.suplemento ? ` · ${c.fonte}` : ""}`, desc: c.iniciais, suplemento: c.suplemento }));
   if (kind === "origem") return [
-    ...db.origens.map((o) => ({ id: o.id, nome: o.id, meta: "Origem do livro básico", desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.nota ? ` · ${o.nota}` : ""}` })),
+    ...filtrarPorSuplemento(db.origens, personagem.origem).map((o) => ({ id: o.id, nome: o.id, meta: o.suplemento ? `Origem · ${o.fonte}` : "Origem do livro básico", desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.itensIniciais ? ` · Itens: ${o.itensIniciais.join(", ")}` : ""}${o.nota ? ` · ${o.nota}` : ""}`, suplemento: o.suplemento })),
     ...(db.origensRegionais || []).map((o) => ({ id: o.id, nome: o.id, meta: `Atlas de Arton · ${o.regiao || ""}`, desc: `Perícias: ${(o.periciasSugeridas || []).map(nomePericia).join(", ") || "—"}${o.beneficio ? ` · ${o.beneficio}` : ""}` })),
   ];
-  if (kind === "divindade") return db.panteao.map((d) => ({ id: d.nome, nome: d.nome, meta: "Divindade", desc: (d.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220) }));
+  if (kind === "divindade") return [
+    ...db.panteao.map((d) => ({ id: d.nome, nome: d.nome, meta: "Divindade maior", desc: (d.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220) })),
+    ...(db.deusesMenores || []).map((d) => ({ id: d.nome, nome: d.nome, meta: `Deus menor · ${d.fonte}`, desc: "", suplemento: true })),
+  ];
   return [];
 }
 function valorAtualDoCampo(kind) { return document.getElementById(kind).value; }
@@ -4413,9 +4438,9 @@ function equiparInicialAleatorio(classe) {
 // opcoes: { raca, classe, origem, nivel, divindade, modoAtributos, equipar }
 // Qualquer campo vazio é sorteado.
 function gerarPersonagem(opcoes = {}) {
-  const raca = porId(db.racas, opcoes.raca) || sorteia(db.racas);
-  const classe = porId(db.classes, opcoes.classe) || sorteia(db.classes);
-  const origem = raca.auto?.semOrigem ? null : (porId(db.origens, opcoes.origem) || sorteia(db.origens));
+  const raca = porId(db.racas, opcoes.raca) || sorteia(filtrarPorSuplemento(db.racas, ""));
+  const classe = porId(db.classes, opcoes.classe) || sorteia(filtrarPorSuplemento(db.classes, ""));
+  const origem = raca.auto?.semOrigem ? null : (porId(db.origens, opcoes.origem) || sorteia(filtrarPorSuplemento(db.origens, "")));
   // Clérigo e Paladino são devotos: divindade não é sorteio de moeda.
   const precisaDivindade = !!classe.divindadeObrigatoria;
   const divindade = opcoes.divindade !== undefined
@@ -5104,6 +5129,11 @@ function registrarEventosExtra() {
 
   // Construção
   document.querySelectorAll("#creation-mode-toggle [data-modo]").forEach((b) => b.addEventListener("click", () => setCreationMode(b.dataset.modo)));
+  const filtroSup = $("filtro-suplementos");
+  if (filtroSup) {
+    filtroSup.checked = usaSuplementos();
+    filtroSup.addEventListener("change", () => setUsaSuplementos(filtroSup.checked));
+  }
   document.querySelectorAll(".change-choice[data-pick]").forEach((b) => b.addEventListener("click", () => openPickerModal(b.dataset.pick)));
   const CHOICE_TITULOS = { raca: "Raça", classe: "Classe", origem: "Origem", divindade: "Divindade" };
   document.querySelectorAll(".tiny-info[data-info]").forEach((b) => b.addEventListener("click", () => abrirDetalheTexto(CHOICE_TITULOS[b.dataset.info] || b.dataset.info, CHOICE_INFO[b.dataset.info])));

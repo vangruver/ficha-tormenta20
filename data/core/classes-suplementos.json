@@ -1,0 +1,85 @@
+[
+  {
+    "id": "treinador",
+    "nome": "Treinador",
+    "pvInicial": 12,
+    "pvPorNivel": 3,
+    "pmInicial": 4,
+    "pmPorNivel": 4,
+    "atributoChave": "car",
+    "periciasFixas": [
+      "ade",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "treinosIniciais": 4,
+    "periciasDeClasse": [
+      "ade",
+      "atl",
+      "cav",
+      "dip",
+      "gue",
+      "ini",
+      "int",
+      "intu",
+      "lut",
+      "ofi",
+      "per",
+      "pon",
+      "ref",
+      "rel",
+      "sob",
+      "von"
+    ],
+    "proficiencias": [],
+    "atributosPrioritarios": [
+      "car"
+    ],
+    "iniciais": "Classe de Heróis de Arton. 6 habilidade(s) de classe e 21 poder(es) próprios no compêndio.",
+    "fonte": "Heróis de Arton",
+    "suplemento": true,
+    "dinheiroInicial": 60
+  },
+  {
+    "id": "frade",
+    "nome": "Frade",
+    "pvInicial": 12,
+    "pvPorNivel": 3,
+    "pmInicial": 6,
+    "pmPorNivel": 6,
+    "atributoChave": "sab",
+    "periciasFixas": [
+      "rel",
+      "von"
+    ],
+    "periciasFixasEscolha": [],
+    "treinosIniciais": 4,
+    "periciasDeClasse": [
+      "ade",
+      "atu",
+      "con",
+      "cur",
+      "dip",
+      "for",
+      "gue",
+      "ini",
+      "int",
+      "intu",
+      "inv",
+      "mis",
+      "nob",
+      "ofi",
+      "per",
+      "rel",
+      "von"
+    ],
+    "proficiencias": [],
+    "atributosPrioritarios": [
+      "sab"
+    ],
+    "iniciais": "Classe de Deuses de Arton. 6 habilidade(s) de classe e 29 poder(es) próprios no compêndio.",
+    "fonte": "Deuses de Arton",
+    "suplemento": true,
+    "dinheiroInicial": 60
+  }
+]

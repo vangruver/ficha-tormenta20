@@ -1,0 +1,380 @@
+[
+  {
+    "nome": "A Espada-Deus",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Akok",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Altair",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Anilatir",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Apis",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Artaphan",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Ayllana",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Beluhga",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Benthos",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Betsumial",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Blinar",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Caerdellach",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Canastra",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Canora",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Cette",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Champarr",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Dahriol",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Drumak",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Dunsark",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Elrophin",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Escamandra",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Esmeralda",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Garanaam",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Garth",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Goharom",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Granto",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Gratissa",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Gwendolynn",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Hippion",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Hurlaagh",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Hydora",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Inghlblhpholstgt",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Irione",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Jandra",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Klangor",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Kurur Lianth",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Laan",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Lamashtu",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Lupan",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Luvithy",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Marina",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Mauziell",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Mzzileyn",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Nerelim",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Neruíte",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "O Deus Cristal de Urielka",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "O Deus das Cidades",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "O Deus do Medo",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Piscigeros",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Rhond",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Sartan",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Sckhar",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Sunnary",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Tamagrah",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Teldiskan",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Tessalus",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Tibar",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Toris",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Tukala",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Ur",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Yasshara",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Zadbblein",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  },
+  {
+    "nome": "Zakharov",
+    "tipo": "Deus menor",
+    "fonte": "Deuses de Arton",
+    "descricao": ""
+  }
+]

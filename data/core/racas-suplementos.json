@@ -1,0 +1,533 @@
+[
+  {
+    "id": "duende",
+    "nome": "Duende",
+    "atributos": {
+      "escolha": 2
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 em 2 atributo(s) à escolha. Tipo de Criatura (tipo: espírito); Aversão a Ferro; Aversão a Sinos",
+    "fonte": "Heróis de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 2,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "eiradaan",
+    "nome": "Eiradaan",
+    "atributos": {
+      "sab": 2,
+      "car": 1,
+      "for": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 SAB, +1 CAR, -1 FOR. Essência Feérica; Magia Instintiva; Sentidos Místicos; Canção da Melancolia",
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "galokk",
+    "nome": "Galokk",
+    "atributos": {
+      "for": 1,
+      "con": 1,
+      "car": -1,
+      "escolha": 1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Grande",
+    "traços": "+1 FOR, +1 CON, -1 CAR, +1 em 1 atributo(s) à escolha. Força dos Titãs; Meio-Gigante; Infância entre os Pequenos",
+    "fonte": "Heróis de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 1,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "meio-elfo",
+    "nome": "Meio-Elfo",
+    "atributos": {
+      "int": 1,
+      "escolha": 2
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 INT, +1 em 2 atributo(s) à escolha. Ambição Herdada; Entre Dois Mundos (+1 em Adestramento, +1 em Atuação, +1 em Diplomacia, +1 em Enganação, +1 em Intimidação, +1 em Jogatina); Sangue Élfico (visão na penumbra)",
+    "fonte": "Heróis de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 2,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "satiro",
+    "nome": "Sátiro",
+    "atributos": {
+      "car": 2,
+      "des": 1,
+      "sab": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 CAR, +1 DES, -1 SAB. Festeiro Feérico (+2 em Atuação, +2 em Fortitude, visão na penumbra); Instrumentista Mágico; Marrada; Pernas Caprinas",
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "bugbear",
+    "nome": "Bugbear",
+    "atributos": {
+      "for": 2,
+      "des": 1,
+      "car": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 FOR, +1 DES, -1 CAR. Empunhadura Poderosa; Saborear Pavor; Sentidos de Predador",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "centauro",
+    "nome": "Centauro",
+    "atributos": {
+      "sab": 2,
+      "for": 1,
+      "int": -1
+    },
+    "deslocamento": "12m",
+    "tamanho": "Grande",
+    "traços": "+2 SAB, +1 FOR, -1 INT. Avantajado; Cascos (arma natural 1d8); Ginete Natural; Medo de Altura",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "ceratops",
+    "nome": "Ceratops",
+    "atributos": {
+      "con": 2,
+      "for": 1,
+      "des": -1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Grande",
+    "traços": "+2 CON, +1 FOR, -1 DES, -1 INT. Chifres (arma natural 1d8); Papel Tribal; Paquiderme (+1 Defesa); Medo de Altura",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "defesa": 1
+    }
+  },
+  {
+    "id": "elfo-do-mar",
+    "nome": "Elfo-do-Mar",
+    "atributos": {
+      "des": 2,
+      "con": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 CON, -1 INT. Arsenal Oceano; Cria das Águas; Dependência de Água",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "fintroll",
+    "nome": "Fintroll",
+    "atributos": {
+      "int": 2,
+      "con": 1,
+      "for": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 INT, +1 CON, -1 FOR. Corpo Vegetante; Presença Arcana (+2 em Misticismo); Regeneração Vegetal; Intolerância à Luz",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "gnoll",
+    "nome": "Gnoll",
+    "atributos": {
+      "con": 2,
+      "sab": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 CON, +1 SAB, -1 INT. Faro; Mordida (arma natural 1d6); Oportunista; Rendição",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "golem-desperto",
+    "nome": "Golem Desperto",
+    "atributos": {
+      "for": 1,
+      "car": -1
+    },
+    "deslocamento": "6m",
+    "tamanho": "Médio",
+    "traços": "+1 FOR, -1 CAR. Criatura Artificial (visão no escuro, imunidade a doenças, fadiga, sangramento, sono e venenos); Sem Origem; Chassi; Fonte de Energia",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "harpia",
+    "nome": "Harpia",
+    "atributos": {
+      "des": 2,
+      "car": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 CAR, -1 INT. Asas de Abutre; Cria de Masmorra (+2 em Intimidação, +2 em Sobrevivência); Grito Aterrorizante; Pés Rapaantes (arma natural 1d6)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "hobgoblin",
+    "nome": "Hobgoblin",
+    "atributos": {
+      "con": 2,
+      "des": 1,
+      "car": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 CON, +1 DES, -1 CAR. Arte da Guerra (+2 em Guerra); Metalurgia Hobgoblin (+2 em Ofício (Armeiro)); Táticas de Guerrilha (+2 em Furtividade)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "kaijin",
+    "nome": "Kaijin",
+    "atributos": {
+      "for": 2,
+      "con": 1,
+      "car": -2
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 FOR, +1 CON, -2 CAR. Couraça Rúbea; Cria de Tormenta; Disforme; Terror Vivo; Longevidade",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "kallyanach",
+    "nome": "Kallyanach",
+    "atributos": {
+      "escolha": 1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 em 1 atributo(s) à escolha. Herança Dracônica; Bênção de Kallyadranoch",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 1,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "kappa",
+    "nome": "Kappa",
+    "atributos": {
+      "des": 2,
+      "con": 1,
+      "car": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 CON, -1 CAR. Alma da Água; Carapaça Kappa; Cura das Águas; Tigela d'Água",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "kobolds",
+    "nome": "Kobolds",
+    "atributos": {
+      "des": 2,
+      "for": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, -1 FOR. Ajuntamento Escamoso; Praga Monstruosa (+2 em Sobrevivência); Sensibilidade a Luz; Talentos do Bando",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "mashin",
+    "nome": "Mashin",
+    "atributos": {
+      "escolha": 2
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 em 2 atributo(s) à escolha. Criatura Artificial (visão no escuro, imunidade a doenças, fadiga, sangramento, sono e venenos); Sem Origem; Mashin (chassi); Maravilha Mecânica; Canalizar Reparos",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 2,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "meio-orc",
+    "nome": "Meio-Orc",
+    "atributos": {
+      "for": 2,
+      "escolha": 1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 FOR, +1 em 1 atributo(s) à escolha. Adaptável (+2 em Intimidação); Criatura das Profundezas (+2 em Percepção, +2 em Sobrevivência); Sangue Orc",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 1,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "minauro",
+    "nome": "Minauro",
+    "atributos": {
+      "for": 1,
+      "escolha": 2
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 FOR, +1 em 2 atributo(s) à escolha. Faro; Mente Aberta (+2 em Diplomacia, +2 em Investigação); Plurivalente",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 2,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "moreau",
+    "nome": "Moreau",
+    "atributos": {
+      "escolha": 3
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 em 3 atributo(s) à escolha",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 3,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "nagah",
+    "nome": "Nagah",
+    "atributos": {
+      "for": 1,
+      "des": 1,
+      "con": 1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+1 FOR, +1 DES, +1 CON. Cauda; Inocência Dissimulada (+2 em Enganação); Presentes de Sszzaas (+1 Defesa); Fraquezas Ofídicas",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "defesa": 1
+    }
+  },
+  {
+    "id": "nezumi",
+    "nome": "Nezumi",
+    "atributos": {
+      "con": 2,
+      "des": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 CON, +1 DES, -1 INT. Empunhadura Poderosa; Pequeno, Mas Não Medrão (+2 em Intimidação); Roedor (arma natural 1d6); Sentidos Murídeos; Longevidade; Devotos",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "ogro",
+    "nome": "Ogro",
+    "atributos": {
+      "for": 3,
+      "con": 2,
+      "int": -1,
+      "car": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Grande",
+    "traços": "+3 FOR, +2 CON, -1 INT, -1 CAR. ...Maior a Porrada!; Camada de Ingenuidade (-5 em Intuição, -5 em Vontade); Quanto Maior o Tamanho...",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "orc",
+    "nome": "Orc",
+    "atributos": {
+      "for": 2,
+      "con": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 FOR, +1 CON, -1 INT. Feroz; Habitante das Cavernas (+2 em Percepção, +2 em Sobrevivência); Vigor Brutal (+2 em Fortitude)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "pteros",
+    "nome": "Pteros",
+    "atributos": {
+      "sab": 2,
+      "des": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 SAB, +1 DES, -1 INT. Ligação Natural; Mãos Rudimentares; Pés Rapinantes; Senhor dos Céus; Sentidos Rapinantes (+2 em Percepção, +2 em Sobrevivência)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "soterrado",
+    "nome": "Soterrado",
+    "atributos": {
+      "con": -1,
+      "escolha": 3
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "-1 CON, +1 em 3 atributo(s) à escolha. Abraço Gélido; Esquife de Gelo; Memória Póstuma; Natureza Esquelética",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 3,
+        "excluir": []
+      }
+    }
+  },
+  {
+    "id": "tabrachi",
+    "nome": "Tabrachi",
+    "atributos": {
+      "con": 2,
+      "for": 1,
+      "car": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 CON, +1 FOR, -1 CAR. Batráquio; Linguarudo (arma natural 1d4); Saltador",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "tengu",
+    "nome": "Tengu",
+    "atributos": {
+      "des": 2,
+      "int": 1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 INT. Asas Desorientadoras; Caminhante do Céu; Espírito Corvino (+2 em Percepção)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "trog-anao",
+    "nome": "Trog Anão",
+    "atributos": {
+      "con": 2,
+      "for": 1,
+      "des": -1,
+      "int": -1
+    },
+    "deslocamento": "6m",
+    "tamanho": "Médio",
+    "traços": "+2 CON, +1 FOR, -1 DES, -1 INT. Mau Cheiro; Mordida (arma natural 1d6); Quase Anão; Sangue Frio",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "velocis",
+    "nome": "Velocis",
+    "atributos": {
+      "des": 2,
+      "sab": 1,
+      "int": -1
+    },
+    "deslocamento": "12m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 SAB, -1 INT. Através de Espinheiros; Sentidos Selvagens (+2 em Sobrevivência); Velocista da Planície",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "voracis",
+    "nome": "Voracis",
+    "atributos": {
+      "des": 2,
+      "con": 1,
+      "int": -1
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "+2 DES, +1 CON, -1 INT. Garras; Rainha da Selva (+2 em Atletismo); Sentidos Selvagens (+2 em Sobrevivência)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "yidishan",
+    "nome": "Yidishan",
+    "atributos": {
+      "car": -2,
+      "escolha": 3
+    },
+    "deslocamento": "9m",
+    "tamanho": "Médio",
+    "traços": "-2 CAR, +1 em 3 atributo(s) à escolha. Híbrido Mecânico; Natureza Orgânica; Peças Metálicas (+2 Defesa)",
+    "fonte": "Ameaças de Arton",
+    "suplemento": true,
+    "auto": {
+      "atributosEscolha": {
+        "quantidade": 3,
+        "excluir": []
+      },
+      "defesa": 2
+    }
+  }
+]

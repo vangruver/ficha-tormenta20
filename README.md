@@ -133,6 +133,18 @@ uma Issue no repositório explicando o pedido.
   encontrou nenhum stat block faltando, então nenhuma entrada nova precisou ser adicionada a partir
   dele. Como de costume neste arquivo, os campos `descricao` ficam vazios — o texto de lore dos
   livros é conteúdo comercial protegido, então só os números e habilidades mecânicas são mantidos.
+- **Suplementos (`data/core/*-suplementos.json`, `data/raw/deuses-menores.json`)**: raças, classes,
+  origens e divindades de **Heróis de Arton**, **Ameaças de Arton** e **Deuses de Arton**, geradas
+  pelo script [`sync-suplementos.mjs`](sync-suplementos.mjs) a partir do mesmo checkout do Fichas de
+  Nimb — 34 raças (Centauro, Ogro, Orc, Tengu, Harpia, Duende, Galokk…), 2 classes (Treinador e
+  Frade), 30 origens e 63 deuses menores. Ficam em arquivos separados dos do livro básico e cada
+  registro carrega `suplemento: true`, então dá para jogar só com o Jogo Básico desligando
+  **"Incluir suplementos"** na aba Construção (o que o personagem já escolheu nunca some).
+
+  Como no `sync-core.mjs`, só entram fatos de regra. O campo `traços` de cada raça é **montado pelo
+  script a partir dos números** — bônus de atributo, tamanho, deslocamento, e o nome de cada traço
+  com o efeito numérico que ele declara ("Cascos (arma natural 1d8)") — em vez de reproduzir a
+  descrição. Nem a prosa dos livros nem a redação do Nimb entra aqui.
 - **Origens regionais (`data/raw/origens-regionais.json`, 66 origens)**: digitadas à mão a partir do
   apêndice "Origens Regionais" do livro **Atlas de Arton** (Jambô Editora, 2023). São origens
   ligadas a um reino/cultura específico de Arton (ex.: Amazona de Hippion, Legionário, Liricista de
@@ -217,6 +229,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
 | `sync-core.mjs` | confere `data/core/*.json` contra o Fichas de Nimb e completa os campos que faltam |
+| `sync-suplementos.mjs` | gera as raças, classes, origens e deuses dos suplementos a partir do mesmo checkout |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens e escolhas obrigatórias de classe — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |

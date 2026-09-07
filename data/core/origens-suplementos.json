@@ -1,0 +1,367 @@
+[
+  {
+    "id": "Bacharel",
+    "periciasSugeridas": [
+      "con",
+      "dip",
+      "nob"
+    ],
+    "itensIniciais": [
+      "Tabardo com o símbolo de Khalmyr",
+      "Coleção de livros a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Boticário",
+    "periciasSugeridas": [
+      "cur",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Bálsamo restaurador",
+      "Instrumentos de Ofício (alquimista)",
+      "Maleta de medicamentos"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Caçador de Ratos",
+    "periciasSugeridas": [
+      "fur",
+      "inv",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Um gato (parceiro perseguidor iniciante)"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Cão de Briga",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Manoplas ou uma arma marcial"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Carcereiro",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Algemas",
+      "Lampião",
+      "Uma arma de até T$ 500 a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Carpinteiro de Guilda",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de Ofício (carpinteiro)",
+      "Uma arma de corte a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Catador da Catástrofe",
+    "periciasSugeridas": [
+      "for",
+      "per"
+    ],
+    "itensIniciais": [
+      "Equipamento de aventura de até T$ 150"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Chef Hynne",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Cutelo",
+      "Instrumentos de cozinheiro aprimorados"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Cirurgião-Barbeiro",
+    "periciasSugeridas": [
+      "cur",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Dente falso",
+      "Instrumentos de barbeiro",
+      "Maleta de medicamentos"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Citadino Abastado",
+    "periciasSugeridas": [
+      "nob",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Arma, armadura, ferramenta ou vestuário de até T$ 500"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Cocheiro",
+    "periciasSugeridas": [
+      "ade",
+      "pil"
+    ],
+    "itensIniciais": [
+      "Cavalo ou trobo",
+      "Carroça"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Construtor",
+    "periciasSugeridas": [
+      "for",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de pedreiro ou ferramenta pesada"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Contrabandista",
+    "periciasSugeridas": [
+      "eng",
+      "lad"
+    ],
+    "itensIniciais": [
+      "Uma arma de fogo, ou 10 doses de venenos"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Coureiro",
+    "periciasSugeridas": [
+      "for",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Faca de corte",
+      "Instrumentos de coureiro",
+      "T$ 100 em itens alquímicos"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Escriba",
+    "periciasSugeridas": [
+      "con",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de escriba",
+      "Organizador de pergaminhos",
+      "Uma coleção de livros a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Espião",
+    "periciasSugeridas": [
+      "eng",
+      "lad"
+    ],
+    "itensIniciais": [
+      "Estojo de disfarces",
+      "Gazua",
+      "Luneta",
+      "Três doses de cosmético"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Ferreiro Militar",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de armeiro"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Freira",
+    "periciasSugeridas": [
+      "cur"
+    ],
+    "itensIniciais": [
+      "Maleta de medicamentos",
+      "Manto eclesiástico",
+      "Símbolo sagrado"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Goradista",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de cozinheiro",
+      "T$ 36 em ingredientes para produzir gorad quente"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Insciente",
+    "periciasSugeridas": [
+      "sob"
+    ],
+    "itensIniciais": [
+      "Uma arma simples ou ferramenta a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Interrogador",
+    "periciasSugeridas": [
+      "int",
+      "inv"
+    ],
+    "itensIniciais": [
+      "Itens que pertenciam a antigos interrogados"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Ladrão de Túmulos",
+    "periciasSugeridas": [
+      "lad",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Pá",
+      "Pé de cabra"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Menestrel",
+    "periciasSugeridas": [
+      "atu"
+    ],
+    "itensIniciais": [
+      "Um instrumento musical a sua escolha"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Mensageiro",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Cavalo com sela",
+      "Mochila de aventureiro",
+      "Traje de viajante"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Náufrago",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Uma bola (ou outro objeto simples) com uma cara pintada e nome de gente"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Padeiro",
+    "periciasSugeridas": [
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de Ofício (cozinheiro)",
+      "Rolo de massa"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Pedinte",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Andrajos",
+      "Esmolas que guardou"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Pescador",
+    "periciasSugeridas": [
+      "ofi",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Bolsa cheia de minhocas",
+      "Instrumentos de pescador"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Servo",
+    "periciasSugeridas": [
+      "dip",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Balde e vassoura",
+      "Tabardo de seu patrono"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  },
+  {
+    "id": "Suporte de Tropas",
+    "periciasSugeridas": [],
+    "itensIniciais": [
+      "Equipamento de viagem",
+      "Instrumentos de ofício",
+      "Maleta de medicamentos"
+    ],
+    "fonte": "Heróis de Arton",
+    "suplemento": true
+  }
+]

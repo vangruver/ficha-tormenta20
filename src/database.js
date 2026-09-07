@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, escolhasClasse, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
+  const [atributos, pericias, classes, racas, origens, escolhasClasse, racasSup, classesSup, origensSup, deusesMenores, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -26,6 +26,14 @@ export async function carregarBanco() {
       // pra família de poderes do compêndio, então continuam certas depois de
       // uma sincronização. Ver data/core/README-escolhas-classe.md.
       carregarJSON("data/core/escolhas-classe.json").catch(() => []),
+      // Conteúdo dos suplementos (Heróis de Arton, Ameaças de Arton, Deuses de
+      // Arton), gerado por sync-suplementos.mjs. Fica em arquivos separados dos
+      // do livro básico e cada registro carrega `suplemento: true`, então dá
+      // pra jogar só com o básico desligando o filtro na aba Construção.
+      carregarJSON("data/core/racas-suplementos.json").catch(() => []),
+      carregarJSON("data/core/classes-suplementos.json").catch(() => []),
+      carregarJSON("data/core/origens-suplementos.json").catch(() => []),
+      carregarJSON("data/raw/deuses-menores.json").catch(() => []),
       carregarJSON("data/raw/poderes.json"),
       carregarJSON("data/raw/magias.json"),
       carregarJSON("data/raw/equipamentos.json"),
@@ -48,7 +56,12 @@ export async function carregarBanco() {
       carregarJSON("data/raw/origens-regionais.json").catch(() => []),
       carregarJSON("data/version.json").catch(() => null),
     ]);
-  cache = { atributos, pericias, classes, racas, origens, escolhasClasse, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
+  cache = { atributos, pericias,
+    // As listas já chegam unidas: quem quiser só o básico filtra por `suplemento`.
+    classes: [...classes, ...classesSup],
+    racas: [...racas, ...racasSup],
+    origens: [...origens, ...origensSup],
+    escolhasClasse, deusesMenores, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
   return cache;
 }
 
