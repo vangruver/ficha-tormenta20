@@ -23,7 +23,8 @@ function salvarLista(lista) {
 export function escolhasVazias() {
   return {
     atributosRaciais: [],        // humano/lefou/osteon/sereia: 3 atributos +1
-    legadoRacial: "",            // suraggel: "aggelus" | "sulfure"
+    legadoRacial: "",            // suraggel: "aggelus" | "sulfure"; moreau: herança
+    varianteAtributos: "",       // kallyanach: como distribuir o bônus racial
     periciasClasseFixa: {},      // grupo "Luta ou Pontaria" → id escolhido
     periciasClasse: [],          // perícias escolhidas na lista da classe
     periciasOrigem: [],          // 2 perícias da lista da origem

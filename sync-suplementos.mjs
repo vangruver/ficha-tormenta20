@@ -98,6 +98,8 @@ function resumoDoTraco(hab) {
   return unicos.length ? `${hab.name} (${unicos.join(", ")})` : hab.name;
 }
 
+let paraIdPericia = () => null; // preenchido na execução, quando pericias.json é lido
+
 function converterRaca(r, fonte) {
   const fixos = {}; let escolhas = 0; const excluir = [];
   for (const a of r.attributes?.attrs || []) {
@@ -119,6 +121,43 @@ function converterRaca(r, fonte) {
     escolhas ? `${fmt(1)} em ${escolhas} atributo(s) à escolha` : "",
   ].filter(Boolean).join(", ");
 
+  // Heranças (Moreau) são o mesmo padrão dos legados do Suraggel: escolhas
+  // que trocam os bônus de atributo e de perícia da raça. A ficha já sabe
+  // tratar `auto.legados`, então elas entram por lá.
+  const legados = Object.entries(r.heritages || {}).map(([chave, h]) => {
+    const atributos = {}; let livres = 0;
+    for (const a of h.attributes || []) {
+      if (a.attr === "any") livres += 1;
+      else { const id = paraAtributo(a.attr); if (id) atributos[id] = (atributos[id] || 0) + a.mod; }
+    }
+    const bonusPericias = {};
+    for (const hab of h.abilities || []) {
+      for (const b of hab.sheetBonuses || []) {
+        if (b.target?.type === "Skill" && b.target.name && b.modifier?.type === "Fixed") {
+          const idPericia = paraIdPericia(b.target.name);
+          if (idPericia) bonusPericias[idPericia] = (bonusPericias[idPericia] || 0) + b.modifier.value;
+        }
+      }
+    }
+    return {
+      id: idDe(chave), nome: h.name || chave, atributos,
+      ...(livres ? { atributosLivres: livres } : {}),
+      ...(Object.keys(bonusPericias).length ? { bonusPericias } : {}),
+    };
+  });
+
+  // Variantes de atributo (Kallyanach): a raça deixa escolher COMO distribuir
+  // o bônus, em vez de fixar quais atributos sobem.
+  const variantes = (r.attributeVariants || []).map((v, i) => ({
+    id: `variante-${i + 1}`,
+    nome: v.label || `Variante ${i + 1}`,
+    livres: (v.attrs || []).filter((a) => a.attr === "any").length,
+    valor: (v.attrs || [])[0]?.mod ?? 1,
+  }));
+
+  if (legados.length) tracos.push(`${legados.length} heranças à escolha (${legados.map((l) => l.nome.replace(/^Herança d[eoa]s? /i, "")).join(", ")})`);
+  if (variantes.length) tracos.push(`bônus de atributo à escolha: ${variantes.map((v) => v.nome).join(" ou ")}`);
+
   const raca = {
     id: idDe(r.name),
     nome: r.name,
@@ -129,9 +168,17 @@ function converterRaca(r, fonte) {
     traços: [atributosTexto, tracos.join("; ")].filter(Boolean).join(". "),
     fonte,
     suplemento: true,
+    // O autor do Fichas de Nimb marca algumas raças como obsoletas (a Mashin
+    // virou outra coisa em errata). Elas ficam na ficha, mas escondidas do
+    // seletor a menos que o personagem já use.
+    ...(r.deprecated ? { obsoleta: true } : {}),
+    // Raça que "conta como" outra para pré-requisito de poder.
+    ...(r.countsAsRaces?.length ? { contaComo: r.countsAsRaces } : {}),
     auto: {},
   };
   if (escolhas) raca.auto.atributosEscolha = { quantidade: escolhas, excluir: [...new Set(excluir)] };
+  if (legados.length) raca.auto.legados = legados;
+  if (variantes.length) raca.auto.variantesAtributos = variantes;
   // Traços numéricos que a ficha sabe aplicar sozinha.
   for (const hab of r.abilities || []) {
     for (const b of hab.sheetBonuses || []) {
@@ -171,6 +218,7 @@ function converterClasse(c, fonte, paraId) {
 const pericias = JSON.parse(fs.readFileSync(path.join(CORE, "pericias.json"), "utf8"));
 const mapaPericia = new Map(pericias.map((p) => [semAcento(p.nome), p.id]));
 const paraId = (nome) => mapaPericia.get(semAcento(nome).replace(/\s*\(.*\)$/, "")) ?? null;
+paraIdPericia = paraId;
 
 const FONTES_RACAS = [
   ["herois-de-arton/races/index", "Heróis de Arton"],

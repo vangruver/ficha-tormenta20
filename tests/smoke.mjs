@@ -192,6 +192,22 @@ async function main() {
   assert(!racasSup.some((r) => nomesBase.has(r.nome.toLowerCase())), "nenhuma raça de suplemento duplica uma do básico");
   assert(classesSup.every((c) => c.pvInicial > 0 && c.pmInicial >= 0), "classes de suplemento têm PV/PM");
 
+  // ---- auditoria das raças de suplemento ----
+  const comHeranca = racasSup.filter((r) => r.auto?.legados?.length);
+  assert(comHeranca.length >= 1, `raças com heranças à escolha (${comHeranca.map((r) => `${r.nome}: ${r.auto.legados.length}`).join(", ")})`);
+  assert(comHeranca.every((r) => r.auto.legados.every((l) => l.id && l.nome && l.atributos)),
+    "toda herança tem id, nome e bônus de atributo");
+  const comVariante = racasSup.filter((r) => r.auto?.variantesAtributos?.length);
+  assert(comVariante.every((r) => r.auto.variantesAtributos.every((v) => v.id && v.livres > 0 && v.valor > 0)),
+    `variantes de distribuição de atributo bem formadas (${comVariante.map((r) => r.nome).join(", ") || "nenhuma"})`);
+  const comContaComo = racasSup.filter((r) => r.contaComo?.length);
+  const nomesTodos = new Set([...racas, ...racasSup].map((r) => r.nome.toLowerCase()));
+  assert(comContaComo.every((r) => r.contaComo.every((n) => nomesTodos.has(n.toLowerCase()))),
+    `"conta como" sempre aponta para uma raça existente (${comContaComo.length} raças)`);
+  assert(racasSup.every((r) => r.deslocamento?.endsWith("m") && r.tamanho), "toda raça de suplemento tem deslocamento e tamanho");
+  assert(racasSup.every((r) => !/\.\s*[A-ZÀ-Ý][a-zà-ÿ]+ [a-zà-ÿ]+ [a-zà-ÿ]+ [a-zà-ÿ]+ [a-zà-ÿ]+/.test(r.traços || "")),
+    "o resumo de traços é lista curta, não prosa corrida do livro");
+
   console.log("\nTudo certo!");
 }
 

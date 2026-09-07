@@ -152,6 +152,13 @@ uma Issue no repositório explicando o pedido.
   registro carrega `suplemento: true`, então dá para jogar só com o Jogo Básico desligando
   **"Incluir suplementos"** na aba Construção (o que o personagem já escolheu nunca some).
 
+  A cobertura foi auditada arquivo a arquivo: as **52 raças** que o Fichas de Nimb declara estão
+  todas aqui, e **tamanho e deslocamento batem uma a uma**. Entram também as escolhas que algumas
+  raças oferecem — as **12 heranças do Moreau** (no mesmo esquema dos legados do Suraggel), as
+  **variantes de distribuição de atributo do Kallyanach**, e o "conta como outra raça" que faz o
+  Meio-Orc atender requisito de Orc. Raça marcada como obsoleta lá some do seletor, mas continua
+  valendo para quem já a usava.
+
   Como no `sync-core.mjs`, só entram fatos de regra. O campo `traços` de cada raça é **montado pelo
   script a partir dos números** — bônus de atributo, tamanho, deslocamento, e o nome de cada traço
   com o efeito numérico que ele declara ("Cascos (arma natural 1d8)") — em vez de reproduzir a

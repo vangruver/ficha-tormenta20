@@ -64,6 +64,9 @@
     "traços": "+1 INT, +1 em 2 atributo(s) à escolha. Ambição Herdada; Entre Dois Mundos (+1 em Adestramento, +1 em Atuação, +1 em Diplomacia, +1 em Enganação, +1 em Intimidação, +1 em Jogatina); Sangue Élfico (visão na penumbra)",
     "fonte": "Heróis de Arton",
     "suplemento": true,
+    "contaComo": [
+      "Elfo"
+    ],
     "auto": {
       "atributosEscolha": {
         "quantidade": 2,
@@ -236,14 +239,28 @@
     },
     "deslocamento": "9m",
     "tamanho": "Médio",
-    "traços": "+1 em 1 atributo(s) à escolha. Herança Dracônica; Bênção de Kallyadranoch",
+    "traços": "+1 em 1 atributo(s) à escolha. Herança Dracônica; Bênção de Kallyadranoch; bônus de atributo à escolha: +2 em 1 atributo ou +1 em 2 atributos",
     "fonte": "Ameaças de Arton",
     "suplemento": true,
     "auto": {
       "atributosEscolha": {
         "quantidade": 1,
         "excluir": []
-      }
+      },
+      "variantesAtributos": [
+        {
+          "id": "variante-1",
+          "nome": "+2 em 1 atributo",
+          "livres": 1,
+          "valor": 2
+        },
+        {
+          "id": "variante-2",
+          "nome": "+1 em 2 atributos",
+          "livres": 2,
+          "valor": 1
+        }
+      ]
     }
   },
   {
@@ -284,6 +301,7 @@
     "traços": "+1 em 2 atributo(s) à escolha. Criatura Artificial (visão no escuro, imunidade a doenças, fadiga, sangramento, sono e venenos); Sem Origem; Mashin (chassi); Maravilha Mecânica; Canalizar Reparos",
     "fonte": "Ameaças de Arton",
     "suplemento": true,
+    "obsoleta": true,
     "auto": {
       "atributosEscolha": {
         "quantidade": 2,
@@ -303,6 +321,9 @@
     "traços": "+2 FOR, +1 em 1 atributo(s) à escolha. Adaptável (+2 em Intimidação); Criatura das Profundezas (+2 em Percepção, +2 em Sobrevivência); Sangue Orc",
     "fonte": "Ameaças de Arton",
     "suplemento": true,
+    "contaComo": [
+      "Orc"
+    ],
     "auto": {
       "atributosEscolha": {
         "quantidade": 1,
@@ -337,14 +358,142 @@
     },
     "deslocamento": "9m",
     "tamanho": "Médio",
-    "traços": "+1 em 3 atributo(s) à escolha",
+    "traços": "+1 em 3 atributo(s) à escolha. 12 heranças à escolha (Coruja, Hiena, Raposa, Serpente, Búfalo, Coelho, Crocodilo, Leão, Gato, Lobo, Urso, Morcego)",
     "fonte": "Ameaças de Arton",
     "suplemento": true,
+    "contaComo": [
+      "Humano"
+    ],
     "auto": {
       "atributosEscolha": {
         "quantidade": 3,
         "excluir": []
-      }
+      },
+      "legados": [
+        {
+          "id": "coruja",
+          "nome": "Herança da Coruja",
+          "atributos": {
+            "sab": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "per": 2,
+            "von": 2
+          }
+        },
+        {
+          "id": "hiena",
+          "nome": "Herança da Hiena",
+          "atributos": {
+            "sab": 1
+          },
+          "atributosLivres": 2
+        },
+        {
+          "id": "raposa",
+          "nome": "Herança da Raposa",
+          "atributos": {
+            "int": 1
+          },
+          "atributosLivres": 2
+        },
+        {
+          "id": "serpente",
+          "nome": "Herança da Serpente",
+          "atributos": {
+            "int": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "fur": 2,
+            "dip": 2
+          }
+        },
+        {
+          "id": "bufalo",
+          "nome": "Herança do Búfalo",
+          "atributos": {
+            "for": 1
+          },
+          "atributosLivres": 2
+        },
+        {
+          "id": "coelho",
+          "nome": "Herança do Coelho",
+          "atributos": {
+            "des": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "per": 2,
+            "ref": 2
+          }
+        },
+        {
+          "id": "crocodilo",
+          "nome": "Herança do Crocodilo",
+          "atributos": {
+            "con": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "fur": 2
+          }
+        },
+        {
+          "id": "leao",
+          "nome": "Herança do Leão",
+          "atributos": {
+            "for": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "int": 2,
+            "per": 2
+          }
+        },
+        {
+          "id": "gato",
+          "nome": "Herança do Gato",
+          "atributos": {
+            "car": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "fur": 2,
+            "per": 2
+          }
+        },
+        {
+          "id": "lobo",
+          "nome": "Herança do Lobo",
+          "atributos": {
+            "car": 1
+          },
+          "atributosLivres": 2
+        },
+        {
+          "id": "urso",
+          "nome": "Herança do Urso",
+          "atributos": {
+            "con": 1
+          },
+          "atributosLivres": 2
+        },
+        {
+          "id": "morcego",
+          "nome": "Herança do Morcego",
+          "atributos": {
+            "des": 1
+          },
+          "atributosLivres": 2,
+          "bonusPericias": {
+            "fur": 2,
+            "per": 2
+          }
+        }
+      ]
     }
   },
   {
@@ -433,6 +582,9 @@
     "traços": "-1 CON, +1 em 3 atributo(s) à escolha. Abraço Gélido; Esquife de Gelo; Memória Póstuma; Natureza Esquelética",
     "fonte": "Ameaças de Arton",
     "suplemento": true,
+    "contaComo": [
+      "Osteon"
+    ],
     "auto": {
       "atributosEscolha": {
         "quantidade": 3,
@@ -480,7 +632,10 @@
     "tamanho": "Médio",
     "traços": "+2 CON, +1 FOR, -1 DES, -1 INT. Mau Cheiro; Mordida (arma natural 1d6); Quase Anão; Sangue Frio",
     "fonte": "Ameaças de Arton",
-    "suplemento": true
+    "suplemento": true,
+    "contaComo": [
+      "Trog"
+    ]
   },
   {
     "id": "velocis",

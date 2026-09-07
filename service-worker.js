@@ -5,7 +5,7 @@
 // do mesmo domínio (gerados por sync-data.mjs), então cacheiam aqui
 // mesmo, sem precisar de uma camada de IndexedDB separada.
 // ============================================================
-const CACHE_NAME = "t20-ficha-shell-v7";
+const CACHE_NAME = "t20-ficha-shell-v8";
 const CORE_ASSETS = [
   "./",
   "./index.html",

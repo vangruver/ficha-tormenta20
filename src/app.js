@@ -167,7 +167,31 @@ function bonusRacial(atributoId) {
   if (racaAuto().atributosEscolha) {
     total += (escolhas().atributosRaciais || []).filter((a) => a === atributoId).length;
   }
+  // Herança com atributos livres (Moreau: +1 fixo e +1 em dois à escolha) e
+  // variantes de distribuição (Kallyanach: +2 num atributo OU +1 em dois)
+  // guardam as escolhas na mesma lista, com o valor que a opção declara.
+  const variante = varianteAtributosAtual();
+  if (leg?.atributosLivres || variante) {
+    const valor = variante?.valor ?? 1;
+    total += (escolhas().atributosRaciais || []).filter((a) => a === atributoId).length * valor;
+  }
   return total;
+}
+
+// Variante de distribuição de atributos escolhida (só as raças que oferecem).
+function varianteAtributosAtual() {
+  const variantes = racaAuto().variantesAtributos;
+  if (!variantes?.length) return null;
+  return variantes.find((v) => v.id === escolhas().varianteAtributos) || null;
+}
+// Quantos atributos livres a raça deixa escolher, contando legado e variante.
+function atributosLivresDaRaca() {
+  const auto = racaAuto();
+  if (auto.atributosEscolha) return auto.atributosEscolha.quantidade;
+  const variante = varianteAtributosAtual();
+  if (variante) return variante.livres;
+  const leg = legadoAtual();
+  return leg?.atributosLivres || 0;
 }
 
 // ==============================================================
@@ -297,8 +321,9 @@ function gruposDeEscolhaDePericia() {
   if (auto.bonusPericiasEscolha) {
     grupos.push({ campo: "bonusPericiasRaciais", opcoes: db.pericias.map((x) => x.id), cota: auto.bonusPericiasEscolha.quantidade });
   }
-  if (auto.atributosEscolha) {
-    const { quantidade, excluir = [] } = auto.atributosEscolha;
+  const livresDaRaca = atributosLivresDaRaca();
+  if (auto.atributosEscolha || livresDaRaca) {
+    const { quantidade = livresDaRaca, excluir = [] } = auto.atributosEscolha || {};
     grupos.push({ campo: "atributosRaciais", opcoes: db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), cota: quantidade });
   }
   return grupos;
@@ -1004,6 +1029,14 @@ function requisitoAtendido(poder, d) {
   if (atr) {
     const chave = NOMES[atr[1].toLowerCase().normalize("NFC")] || ATRS[atr[1].slice(0, 3).toLowerCase()];
     if (chave && regras.mod(d.atrs[chave]) < Number(atr[2])) return false;
+  }
+  // "Conta como" outra raça para pré-requisito: um Meio-Orc atende requisito
+  // de Orc, um Soterrado atende o de Osteon.
+  const raca = racaAtual();
+  if (raca) {
+    const nomes = [raca.nome, ...(raca.contaComo || [])].map((n) => n.toLowerCase());
+    const pedeRaca = db.racas.find((x) => new RegExp(`\\b${x.nome.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(txt));
+    if (pedeRaca && !nomes.includes(pedeRaca.nome.toLowerCase())) return false;
   }
   const treino = txt.match(/treinad[oa]\s+em\s+([A-Za-zÀ-ÿ]+)/i);
   if (treino) {
@@ -3267,6 +3300,13 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-13", items: [
+    "<b>Auditoria das raças</b>: as 52 raças que existem no compêndio comunitário estão todas na ficha, e tamanho e deslocamento batem uma a uma. Nada faltando.",
+    "<b>Moreau ganhou as 12 heranças</b> (Coruja, Hiena, Raposa, Serpente, Búfalo, Coelho, Crocodilo, Leão, Gato, Lobo, Urso, Morcego) — cada uma com bônus de atributo e de perícia próprios, no mesmo esquema dos legados do Suraggel.",
+    "<b>Kallyanach escolhe como distribuir o bônus</b>: +2 num atributo ou +1 em dois.",
+    "Raça que <b>conta como outra</b> para pré-requisito (Meio-Orc como Orc, Soterrado como Osteon, Moreau como Humano, Meio-Elfo como Elfo, Trog Anão como Trog) agora atende os requisitos de poder.",
+    "Raça marcada como obsoleta no compêndio sai do seletor, mas continua valendo em quem já a usava.",
+  ] },
   { date: "2026-09-12", items: [
     "<b>Bardo e Druida são meio-conjuradores</b> — a ficha tratava todo mundo como conjurador pleno. Eles só alcançam o 2º círculo no 9º nível e param no 4º; Arcanista e Clérigo continuam chegando ao 5º.",
     "<b>Magias conhecidas por nível</b>: a aba Magias agora mostra quantas magias o seu nível concede e avisa se faltam ou sobram. O Arcanista tem uma tabela por Caminho — Mago, Bruxo e Feiticeiro aprendem quantidades diferentes.",
@@ -3393,8 +3433,12 @@ function setUsaSuplementos(v) {
 // Nada some da ficha por desligar o filtro: o que o personagem já escolheu
 // continua aparecendo, senão a ficha se contradiria ao reabrir.
 function filtrarPorSuplemento(lista, idAtual) {
-  if (usaSuplementos()) return lista;
-  return lista.filter((x) => !x.suplemento || x.id === idAtual || x.nome === idAtual);
+  const emUso = (x) => x.id === idAtual || x.nome === idAtual;
+  // Raça que o Fichas de Nimb marca como obsoleta (substituída por errata)
+  // não aparece no seletor, mas continua válida em quem já a usa.
+  const semObsoletas = lista.filter((x) => !x.obsoleta || emUso(x));
+  if (usaSuplementos()) return semObsoletas;
+  return semObsoletas.filter((x) => !x.suplemento || emUso(x));
 }
 
 function pickerOptionsFor(kind) {
@@ -3919,8 +3963,9 @@ function blocosDeAutomacao() {
   if (!raca && !classe) return blocos;
 
   // --- Raça: atributos à escolha ---
-  if (auto.atributosEscolha) {
-    const { quantidade, excluir = [] } = auto.atributosEscolha;
+  const livresDaRaca = atributosLivresDaRaca();
+  if (auto.atributosEscolha || livresDaRaca) {
+    const { quantidade = livresDaRaca, excluir = [] } = auto.atributosEscolha || {};
     const escolhidos = (e.atributosRaciais || []).slice(0, quantidade);
     const disponiveis = db.atributos.filter((a) => !excluir.includes(a.id));
     const forcada = escolhaForcada(disponiveis.map((a) => a.id), quantidade);
@@ -3934,6 +3979,22 @@ function blocosDeAutomacao() {
         : `+1 em <b>${quantidade}</b> atributos diferentes${excluir.length ? ` (não pode ser ${excluir.map((x) => x.toUpperCase()).join("/")})` : ""}. Escolhidos: <b>${escolhidos.length}/${quantidade}</b>.`,
       corpo: forcada ? "" : `<div class="chip-lista">${disponiveis.map((a) => `
         <button type="button" class="chip${escolhidos.includes(a.id) ? " ativo" : ""}" data-auto-atributo="${a.id}">${esc(a.nome)}<small>${escolhidos.includes(a.id) ? "+1" : ""}</small></button>`).join("")}</div>`,
+    }));
+  }
+
+  // --- Raça: variante de distribuição de atributos (kallyanach) ---
+  if (auto.variantesAtributos?.length) {
+    const atual = varianteAtributosAtual();
+    blocos.push(blocoHtml({
+      id: "variante-atributos",
+      titulo: `Bônus de atributo de ${raca.nome}`,
+      fonte: "Raça",
+      estado: atual ? "ok" : "pendente",
+      texto: atual
+        ? `Escolhido: <b>${esc(atual.nome)}</b>. Marque abaixo em qu${atual.livres > 1 ? "ais atributos" : "al atributo"} aplicar.`
+        : "Esta raça deixa você escolher como distribuir o bônus racial.",
+      corpo: `<div class="chip-lista">${auto.variantesAtributos.map((v) => `
+        <button type="button" class="chip${v.id === atual?.id ? " ativo" : ""}" data-auto-variante="${esc(v.id)}">${esc(v.nome)}</button>`).join("")}</div>`,
     }));
   }
 
@@ -4255,7 +4316,7 @@ function registrarEventosAutomacao() {
     const auto = racaAuto();
     const dataset = alvo.dataset;
 
-    if (dataset.autoAtributo) return alternarEscolha("atributosRaciais", dataset.autoAtributo, auto.atributosEscolha?.quantidade || 3);
+    if (dataset.autoAtributo) return alternarEscolha("atributosRaciais", dataset.autoAtributo, atributosLivresDaRaca() || 3);
     if (dataset.autoBonusRacial) return alternarEscolha("bonusPericiasRaciais", dataset.autoBonusRacial, auto.bonusPericiasEscolha?.quantidade || 2);
     if (dataset.autoPericiaRacial) return alternarEscolha("periciasRaciais", dataset.autoPericiaRacial, auto.treinosEscolha || 1);
     if (dataset.autoPericiaOrigem) {
@@ -4287,7 +4348,16 @@ function registrarEventosAutomacao() {
       return salvarERenderizar();
     }
     if (dataset.abrirPicker) return openPickerModal(dataset.abrirPicker);
-    if (dataset.autoLegado) { e.legadoRacial = dataset.autoLegado; return salvarERenderizar(); }
+    if (dataset.autoVariante) {
+      e.varianteAtributos = e.varianteAtributos === dataset.autoVariante ? "" : dataset.autoVariante;
+      e.atributosRaciais = []; // trocar de variante zera a distribuição
+      return salvarERenderizar();
+    }
+    if (dataset.autoLegado) {
+      e.legadoRacial = dataset.autoLegado;
+      e.atributosRaciais = []; // herança nova, distribuição nova
+      return salvarERenderizar();
+    }
     if (dataset.autoPoderOrigem !== undefined) {
       e.poderOrigem = e.poderOrigem === dataset.autoPoderOrigem ? "" : dataset.autoPoderOrigem;
       return salvarERenderizar();
@@ -4406,9 +4476,13 @@ function aplicarAutomacaoAleatoria(raca, classe, origem) {
   const e = (personagem.escolhas = storage.escolhasVazias());
   const auto = raca?.auto || {};
   if (auto.legados?.length) e.legadoRacial = sorteia(auto.legados).id;
-  if (auto.atributosEscolha) {
-    const { quantidade, excluir = [] } = auto.atributosEscolha;
-    e.atributosRaciais = sorteiaVarios(db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), quantidade);
+  if (auto.variantesAtributos?.length) e.varianteAtributos = sorteia(auto.variantesAtributos).id;
+  // Quantos atributos ficam livres depende do legado e da variante sorteados
+  // acima, então esta leitura vem depois deles.
+  const livresDaRaca = atributosLivresDaRaca();
+  if (livresDaRaca) {
+    const excluir = auto.atributosEscolha?.excluir || [];
+    e.atributosRaciais = sorteiaVarios(db.atributos.map((a) => a.id).filter((id) => !excluir.includes(id)), livresDaRaca);
   }
   if (auto.bonusPericiasEscolha) e.bonusPericiasRaciais = sorteiaVarios(db.pericias.map((p) => p.id), auto.bonusPericiasEscolha.quantidade);
   if (auto.treinosEscolha) e.periciasRaciais = sorteiaVarios(db.pericias.map((p) => p.id), auto.treinosEscolha);
