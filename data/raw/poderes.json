@@ -7,8 +7,8 @@
   "tipoOriginal": "P. Concedido",
   "custo": 2,
   "requisito": "",
-  "descricao": "Você pode gastar uma ação completa e 2 PM para invocar 2d4+1 kobolds em espaços desocupa-dos  em  alcance  curto.  Você  pode  usar  uma  ação  de  movimento para fazer os kobolds andarem (eles têm deslocamento 9m) ou uma ação padrão para fazer com  que  ataquem  criaturas  adjacentes,  causando  1d6–1 pontos de dano de perfuração cada. Os kobol-ds têm For 8, Des 2, 1 PV, não têm valor de Defesa ou  testes  de  resistência  e  falham  automaticamente  em qualquer teste oposto. Eles desaparecem quando morrem ou no fim da cena. Os  kobolds  não  agem  sem receber uma ordem. Usos criativos para criaturas invocadas fora de combate ficam a critério do mestre.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você pode gastar uma ação completa e 2 PM para invocar 2d4+1 kobolds em espaços desocupa-dos  em  alcance  curto.  Você  pode  usar  uma  ação  de  movimento para fazer os kobolds andarem (eles têm deslocamento 9m) ou uma ação padrão para fazer com  que  ataquem  criaturas  adjacentes,  causando  1d6–1 pontos de dano de perfuração cada. Os kobol-ds têm For 8, Des 14, 1 PV, não têm valor de Defesa ou  testes  de  resistência  e  falham  automaticamente  em qualquer teste oposto. Eles desaparecem quando morrem ou no fim da cena. Os  kobolds  não  agem  sem receber uma ordem. Usos criativos para criaturas invocadas fora de combate ficam a critério do mestre.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "08Or2dxtMBSLKVHW",
@@ -40,8 +40,8 @@
   "tipoOriginal": "Classe - Guerreiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Se um alvo em alcance de seus ataques corpo a corpo ficar desprevenido ou se mover para fora do seu alcance, você pode gastar 1 PM para fazer um ataque corpo a corpo contra esse alvo como uma reação. Pré-requisito: Des 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se um alvo em alcance de seus ataques corpo a corpo ficar desprevenido ou se mover para fora do seu alcance, você pode gastar 1 PM para fazer um ataque corpo a corpo contra esse alvo como uma reação. Pré-requisito: Des 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "0PPKBaYtiiMsKj0g",
@@ -117,8 +117,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  pode  gastar  uma  ação  completa  para  fazer  um teste de Cura (CD 15) em uma criatura. Se você passar, ela recupera 1d6 PV, mais 1d6 para cada 5 pontos pelos quais o resultado do teste exceder a CD (2d6 com um resultado 20, 3d6 com um resultado 25 e assim por diante). Você só pode usar este poder uma vez por dia numa mesma criatura. Pré-requisitos:Sab 1, treinado em Cura.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  gastar  uma  ação  completa  para  fazer  um teste de Cura (CD 15) em uma criatura. Se você passar, ela recupera 1d6 PV, mais 1d6 para cada 5 pontos pelos quais o resultado do teste exceder a CD (2d6 com um resultado 20, 3d6 com um resultado 25 e assim por diante). Você só pode usar este poder uma vez por dia numa mesma criatura. Pré-requisitos:Sab 13, treinado em Cura.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "0tfJ1wT2LbC6YcJN",
@@ -304,8 +304,8 @@
   "tipoOriginal": "Classe - Inventor",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando  usa  um  item  alquímico  que cure pontos de vida, você pode gastar uma quantidade de PM a sua escolha (limitado pelo seu bônus de Inteligência). Para cada PM que gastar, o item cura um dado extra do mesmo tipo. Pré-requisitos: Sab 1, treinado em Ofício (alquimia).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando  usa  um  item  alquímico  que cure pontos de vida, você pode gastar uma quantidade de PM a sua escolha (limitado pelo seu bônus de Inteligência). Para cada PM que gastar, o item cura um dado extra do mesmo tipo. Pré-requisitos: Sab 13, treinado em Ofício (alquimia).",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "29020onqtdmtOG3B",
@@ -315,8 +315,8 @@
   "tipoOriginal": "Classe - Caçador",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando se move 6m ou mais, você recebe +2 em Defesa e Reflexos e +1d8 nas rolagens de dano de ataques corpo a corpo e à dis-tância em alcance curto até o início de seu próximo turno. Você não pode usar esta habilidade se estiver vestindo armadura pesada. Pré-requisito: Des 2, 6º nível de caçador.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando se move 6m ou mais, você recebe +2 em Defesa e Reflexos e +1d8 nas rolagens de dano de ataques corpo a corpo e à dis-tância em alcance curto até o início de seu próximo turno. Você não pode usar esta habilidade se estiver vestindo armadura pesada. Pré-requisito: Des 15, 6º nível de caçador.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "2Ez0hINMBDSMC3YW",
@@ -392,8 +392,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você recebe +2 em testes de perícias baseadas em  Carisma  contra  criaturas  que  possam  se  sentir  fisicamente atraídas por você. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você recebe +2 em testes de perícias baseadas em  Carisma  contra  criaturas  que  possam  se  sentir  fisicamente atraídas por você. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "2cbFrAuQY6dmk8eS",
@@ -436,8 +436,8 @@
   "tipoOriginal": "Classe - Ladino",
   "custo": 2,
   "requisito": "",
-  "descricao": "Uma  vez  por  rodada,  você  pode gastar 2 PM para realizar uma ação de movi-ento adicional em seu turno. Pré-requisito: Des 2, treinado em Iniciativa.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Uma  vez  por  rodada,  você  pode gastar 2 PM para realizar uma ação de movi-ento adicional em seu turno. Pré-requisito: Des 15, treinado em Iniciativa.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "2pPEzPSySI3EpsPS",
@@ -491,8 +491,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Você recebe +2 em Defesa e Reflexos. Pré-requi-sito: Des 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você recebe +2 em Defesa e Reflexos. Pré-requi-sito: Des 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "3Hr5IHsISX8a4cRS",
@@ -546,8 +546,8 @@
   "tipoOriginal": "Classe - Inventor",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  um  livro  de  fórmulas e pode fabricar poções com fórmulas que conheça de 1º e 2º círculos. Veja o Capítulo 8: Recompensas para as regras de poções. Pré-requisitos:Int 1, Sab 1, treinado em Ofício (alquimia).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  um  livro  de  fórmulas e pode fabricar poções com fórmulas que conheça de 1º e 2º círculos. Veja o Capítulo 8: Recompensas para as regras de poções. Pré-requisitos:Int 13, Sab 13, treinado em Ofício (alquimia).",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "3xj6PavO9eazdqRx",
@@ -557,8 +557,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você recebe +2 em Atletismo e +3m em seu deslocamento. Pré-requisito: For 2.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você recebe +2 em Atletismo e +3m em seu deslocamento. Pré-requisito: For 15.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "43OxhX7uIOWhnj0c",
@@ -678,8 +678,8 @@
   "tipoOriginal": "Classe - Ladino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  pode  gastar  1  PM  para  fazer um teste de Ladinagem para abrir fechaduras, ocultar item, punga ou sabotar como uma ação livre. Pré-requisito: Des 2, treinado em Ladinagem.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  gastar  1  PM  para  fazer um teste de Ladinagem para abrir fechaduras, ocultar item, punga ou sabotar como uma ação livre. Pré-requisito: Des 15, treinado em Ladinagem.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "59z8asrLz1R0a6RL",
@@ -964,8 +964,8 @@
   "tipoOriginal": "Classe - Guerreiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Se  estiver  usando  duas  armas  (e  pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre uma penalidade de –2 em ambos os testes de ataque. Pré-requisito: Des 2.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se  estiver  usando  duas  armas  (e  pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre uma penalidade de –2 em ambos os testes de ataque. Pré-requisito: Des 15.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "7l8QfEV23EubxDfx",
@@ -1030,8 +1030,8 @@
   "tipoOriginal": "Classe - Caçador",
   "custo": 2,
   "requisito": "",
-  "descricao": "Quando  usa  Ambidestria,  você pode pagar 2 PM para fazer um ataque adicional com sua arma primária. Pré-requisito: Des 4, Ambi-destria, 12º nível de caçador.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando  usa  Ambidestria,  você pode pagar 2 PM para fazer um ataque adicional com sua arma primária. Pré-requisito: Des 19, Ambi-destria, 12º nível de caçador.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "893W9N6002rbwgy9",
@@ -1063,8 +1063,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "A primeira criatura inteligente (Int 3 ou mais) que atacar você em uma cena deve fazer um teste de Vontade (CD Car). Se falhar, perderá sua ação. Este poder só funciona uma vez por cena; independente-mente  de  a  criatura  falhar  ou  não  no  teste,  poderá  atacá-lo nas rodadas seguintes. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "A primeira criatura inteligente (Int 3 ou mais) que atacar você em uma cena deve fazer um teste de Vontade (CD Car). Se falhar, perderá sua ação. Este poder só funciona uma vez por cena; independente-mente  de  a  criatura  falhar  ou  não  no  teste,  poderá  atacá-lo nas rodadas seguintes. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "8rQKDsKUYMM2aRwk",
@@ -1129,8 +1129,8 @@
   "tipoOriginal": "Classe - Ladino",
   "custo": 1,
   "requisito": "",
-  "descricao": "Você  pode  gastar  uma  ação  completa  e  1  PM  para  analisar  o  lugar  no  qual  está  (um castelo, um porto, a praça de uma cidade...). Até o fim da cena, você recebe +3m em seu deslocamento, +5 em testes de Acrobacia e Atletismo e ignora penalidades em movimento por terreno difícil. Porém, para receber esses bônus, todas as suas ações na rodada devem  estar  diretamente  ligadas  a  fugir.  Por  exemplo,  você  só  pode  atacar  um  inimigo  se  ele  estiver  bloqueando seu caminho, agarrando-o etc. Você pode fazer ações para ajudar seus aliados, mas apenas se eles estiverem tentando escapar. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  gastar  uma  ação  completa  e  1  PM  para  analisar  o  lugar  no  qual  está  (um castelo, um porto, a praça de uma cidade...). Até o fim da cena, você recebe +3m em seu deslocamento, +5 em testes de Acrobacia e Atletismo e ignora penalidades em movimento por terreno difícil. Porém, para receber esses bônus, todas as suas ações na rodada devem  estar  diretamente  ligadas  a  fugir.  Por  exemplo,  você  só  pode  atacar  um  inimigo  se  ele  estiver  bloqueando seu caminho, agarrando-o etc. Você pode fazer ações para ajudar seus aliados, mas apenas se eles estiverem tentando escapar. Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "9ufcM7yTLDVvJVP2",
@@ -1613,8 +1613,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando usa uma arma de arremesso, você pode usar seu modificador de Força em vez de Destreza nos testes de ataque. Se você possuir o poder Ataque Poderoso, poderá usá-lo com armas de arremesso. Pré-requisitos: For 1, Estilo de Arremesso.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando usa uma arma de arremesso, você pode usar seu modificador de Força em vez de Destreza nos testes de ataque. Se você possuir o poder Ataque Poderoso, poderá usá-lo com armas de arremesso. Pré-requisitos: For 13, Estilo de Arremesso.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "Ecesw31b7jMDRBbt",
@@ -1899,8 +1899,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Declare  que  está  usando  este  poder  antes  de  fazer um ataque corpo a corpo. Você sofre –2 no teste de ataque, mas recebe +5 na rolagem de dano. Pré-requisito: For 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Declare  que  está  usando  este  poder  antes  de  fazer um ataque corpo a corpo. Você sofre –2 no teste de ataque, mas recebe +5 na rolagem de dano. Pré-requisito: For 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "H44C0wAQby5qnVrx",
@@ -2152,8 +2152,8 @@
   "tipoOriginal": "Classe - Bardo",
   "custo": null,
   "requisito": "",
-  "descricao": "Você   é   dissimulador,   atento  para  rumores  e  ótimo  em  espalhar  fofocas.  Quando  faz  um  teste  de  Investigação  para  obter informação  ou  um  teste  de  Enganação  para  intriga,  você rola dois dados e usa o melhor resultado. Além disso,  você  pode  fazer  estes  testes  em  ambientes  sociais (taverna, festival, baile na corte...) sem custo e na metade do tempo. Pré-requisitos: Car 1, treinado em Enganação e Investigação.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você   é   dissimulador,   atento  para  rumores  e  ótimo  em  espalhar  fofocas.  Quando  faz  um  teste  de  Investigação  para  obter informação  ou  um  teste  de  Enganação  para  intriga,  você rola dois dados e usa o melhor resultado. Além disso,  você  pode  fazer  estes  testes  em  ambientes  sociais (taverna, festival, baile na corte...) sem custo e na metade do tempo. Pré-requisitos: Car 13, treinado em Enganação e Investigação.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "J3wBeeUlf8m2WjSk",
@@ -2240,8 +2240,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  +1  PM  para  cada  dois  níveis  de  personagem e +2 em Vontade. Pré-requisito: Sab 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  +1  PM  para  cada  dois  níveis  de  personagem e +2 em Vontade. Pré-requisito: Sab 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "Jqv6kjzvZCJo5tRl",
@@ -2394,8 +2394,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando  faz  uma  ação  ataque,  você  pode  usar  este poder. Se fizer isso, até seu próximo turno, sofre –2 em testes de ataque, mas recebe +5 na Defesa. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando  faz  uma  ação  ataque,  você  pode  usar  este poder. Se fizer isso, até seu próximo turno, sofre –2 em testes de ataque, mas recebe +5 na Defesa. Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "LC7Zj48ZrAV0Ta6e",
@@ -2438,8 +2438,8 @@
   "tipoOriginal": "Classe - Ladino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você aprende e pode lançar uma magia  arcana  de  1º  círculo  a  sua  escolha,  pagando  seu custo normal em PM. Seu atributo-chave para esta magia é Inteligência. Você pode escolher este poder quantas vezes quiser. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você aprende e pode lançar uma magia  arcana  de  1º  círculo  a  sua  escolha,  pagando  seu custo normal em PM. Seu atributo-chave para esta magia é Inteligência. Você pode escolher este poder quantas vezes quiser. Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "LMYbVqQ5dthk1yMO",
@@ -2471,8 +2471,8 @@
   "tipoOriginal": "Classe - Inventor",
   "custo": null,
   "requisito": "",
-  "descricao": "Você pode fabricar engenhocas. Veja a seguir as regras para isso. Pré-requisitos: Int 3, treinado em Ofício (engenhoqueiro).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você pode fabricar engenhocas. Veja a seguir as regras para isso. Pré-requisitos: Int 17, treinado em Ofício (engenhoqueiro).",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "LoQZqFTWlSlfkCej",
@@ -2702,8 +2702,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você pode usar seu modificador de Destreza em vez  de  Força  em  testes  de  Atletismo.  Além  disso,  terreno  difícil  não  reduz  seu  deslocamento  nem  o  impede de realizar investidas. Pré-requisito: Des 2.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você pode usar seu modificador de Destreza em vez  de  Força  em  testes  de  Atletismo.  Além  disso,  terreno  difícil  não  reduz  seu  deslocamento  nem  o  impede de realizar investidas. Pré-requisito: Des 15.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "Ocrkp1WHWv2seqSr",
@@ -2900,8 +2900,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você recebe +2 em Percepção, não fica desprevenido contra inimigos que não possa ver e, sempre que erra um ataque devido a camuflagem, pode rolar mais uma vez o dado da chance de falha. Pré-requisitos:Sab 1, treinado em Percepção.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você recebe +2 em Percepção, não fica desprevenido contra inimigos que não possa ver e, sempre que erra um ataque devido a camuflagem, pode rolar mais uma vez o dado da chance de falha. Pré-requisitos:Sab 13, treinado em Percepção.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "QGrIxgErNXRuUsZe",
@@ -2911,8 +2911,8 @@
   "tipoOriginal": "Classe - Lutador",
   "custo": null,
   "requisito": "",
-  "descricao": "Esculpido  à  exaustão,  seu  corpo  se  tornou uma máquina. Você soma seu modificador de Constituição nas suas rolagens de dano desarmado. Pré-requisitos: Con 3, Sarado, 10º nível de lutador.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Esculpido  à  exaustão,  seu  corpo  se  tornou uma máquina. Você soma seu modificador de Constituição nas suas rolagens de dano desarmado. Pré-requisitos: Con 17, Sarado, 10º nível de lutador.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "QUqBvHLdSXPrVWQ0",
@@ -3043,8 +3043,8 @@
   "tipoOriginal": "Classe - Bucaneiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando usa uma arma leve ou ágil, você soma seu bônus de Inteligência nas rolagens de dano (limitado pelo seu nível). Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando usa uma arma leve ou ágil, você soma seu bônus de Inteligência nas rolagens de dano (limitado pelo seu nível). Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "RiDuyDbH3AI66X4U",
@@ -3098,8 +3098,8 @@
   "tipoOriginal": "Classe - Bárbaro",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  soma  seu  bônus  de Sabedoria no seu total de pontos de mana. Escolha um  animal  totêmico  (veja  o  quadro).  Você  pode  lançar uma magia definida pelo animal escolhido. Pré-requisitos: Sab 1, 4º nível de bárbaro.\r\n\r\nA seguir está uma lista de animais venerados por tribos bárbaras de Arton.\r\n\r\n• Coruja. A sábia coruja guia seus discípulos. Você pode lançar Orientação.\r\n\r\n• Corvo. Um seguidor do corvo enxerga além do véu. Você pode lançar Visão Mística.\r\n\r\n• Falcão. Sempre atento, o falcão permite que você lance Detectar Ameaças.\r\n\r\n• Grifo. O mais veloz dos animais, o grifo permite que você lance Primor Atlético.\r\n\r\n• Lobo. O lobo é feroz e letal. Você pode lançar Concentração de Combate.\r\n\r\n• Raposa. A sagaz raposa nunca está onde se espera. Você pode lançar Imagem Espelhada.\r\n\r\n• Tartaruga. A tartaruga protege os seus. Você pode lançar Armadura Arcana\r\n\r\n• Urso. O vigoroso urso permite que você lance Vitalidade Fantasma.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  soma  seu  bônus  de Sabedoria no seu total de pontos de mana. Escolha um  animal  totêmico  (veja  o  quadro).  Você  pode  lançar uma magia definida pelo animal escolhido. Pré-requisitos: Sab 13, 4º nível de bárbaro.\r\n\r\nA seguir está uma lista de animais venerados por tribos bárbaras de Arton.\r\n\r\n• Coruja. A sábia coruja guia seus discípulos. Você pode lançar Orientação.\r\n\r\n• Corvo. Um seguidor do corvo enxerga além do véu. Você pode lançar Visão Mística.\r\n\r\n• Falcão. Sempre atento, o falcão permite que você lance Detectar Ameaças.\r\n\r\n• Grifo. O mais veloz dos animais, o grifo permite que você lance Primor Atlético.\r\n\r\n• Lobo. O lobo é feroz e letal. Você pode lançar Concentração de Combate.\r\n\r\n• Raposa. A sagaz raposa nunca está onde se espera. Você pode lançar Imagem Espelhada.\r\n\r\n• Tartaruga. A tartaruga protege os seus. Você pode lançar Armadura Arcana\r\n\r\n• Urso. O vigoroso urso permite que você lance Vitalidade Fantasma.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "SKQ0qQsrNjSTjKXJ",
@@ -3175,8 +3175,8 @@
   "tipoOriginal": "Classe - Nobre",
   "custo": 1,
   "requisito": "",
-  "descricao": "Você  pode  direcionar  aliados  em  alcance  curto.  Gaste  uma  ação  padrão  e  1  PM  por  aliado que quiser direcionar (limitado pelo seu modificador de Carisma). No próximo turno do aliado, ele ganha uma ação de movimento. Pré-requisitos: Int 1, treinado em Guerra, 6º nível de nobre.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  direcionar  aliados  em  alcance  curto.  Gaste  uma  ação  padrão  e  1  PM  por  aliado que quiser direcionar (limitado pelo seu modificador de Carisma). No próximo turno do aliado, ele ganha uma ação de movimento. Pré-requisitos: Int 13, treinado em Guerra, 6º nível de nobre.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "T9EwQsElTej9RIT8",
@@ -3263,8 +3263,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  pode  gastar  uma  ação  de  movimento  para  mirar. Se fizer isso, recebe +2 em testes de ataque e na margem de ameaça com ataques à distância até o fim do turno. Pré-requisitos: Sab 1, Disparo Preciso.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  gastar  uma  ação  de  movimento  para  mirar. Se fizer isso, recebe +2 em testes de ataque e na margem de ameaça com ataques à distância até o fim do turno. Pré-requisitos: Sab 13, Disparo Preciso.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "U6Op7yMmr16WMRRY",
@@ -3494,8 +3494,8 @@
   "tipoOriginal": "Classe - Bucaneiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Você tem facilidade em criar amizades durante  festas,  de  noitadas  em  tavernas  a  bailes  na  corte. O mestre define exatamente o que você pode fazer com este poder. Como regra geral, a atitude de todas as pessoas em relação a você durante uma festa melhora em uma categoria. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você tem facilidade em criar amizades durante  festas,  de  noitadas  em  tavernas  a  bailes  na  corte. O mestre define exatamente o que você pode fazer com este poder. Como regra geral, a atitude de todas as pessoas em relação a você durante uma festa melhora em uma categoria. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "VTzVqjsiOsECTkM1",
@@ -3604,8 +3604,8 @@
   "tipoOriginal": "Classe - Caçador",
   "custo": null,
   "requisito": "",
-  "descricao": "Se estiver usando uma arma de ataque à distância, você soma seu bônus de Sabedoria nas  rolagens  de dano  (limitado  pelo  seu  nível).  Pré-requisito: Sab 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se estiver usando uma arma de ataque à distância, você soma seu bônus de Sabedoria nas  rolagens  de dano  (limitado  pelo  seu  nível).  Pré-requisito: Sab 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "WEQnmmUNI1guD5HV",
@@ -3714,8 +3714,8 @@
   "tipoOriginal": "Classe - Ladino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você soma seu bônus de Inteligência em Ladinagem e Furtividade. Pré-requisito:Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você soma seu bônus de Inteligência em Ladinagem e Furtividade. Pré-requisito:Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "XGtuslv5pO3SRJbr",
@@ -3747,8 +3747,8 @@
   "tipoOriginal": "P. Geral - Magia",
   "custo": null,
   "requisito": "",
-  "descricao": "Você soma seu atributo-chave no limite de PM que pode gastar numa magia. Por exemplo, um arcanista de 5º nível com Int 4 e este poder pode gastar até 9 PM em cada magia.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você soma seu modificador do atributo-chave no  limite  de  PM  que  pode  gastar  numa  magia.  Por  exemplo, um mago de 5º nível com Int 18 (+4) e este poder pode gastar até 9 PM em cada magia.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "XZPRZLtNabtdN8mv",
@@ -3791,8 +3791,8 @@
   "tipoOriginal": "Classe - Druida",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  um  companheiro  animal  adicional,  de  um  tipo  diferente  dos que já tenha. Você pode escolher este poder quantas  vezes  quiser,  mas  ainda  está  sujeito  ao  limite  de  aliados que pode ter (veja a página 246). Pré-requisitos:Car 2, Companheiro Animal, 7º nível de druida.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  um  companheiro  animal  adicional,  de  um  tipo  diferente  dos que já tenha. Você pode escolher este poder quantas  vezes  quiser,  mas  ainda  está  sujeito  ao  limite  de  aliados que pode ter (veja a página 246). Pré-requisitos:Car 15, Companheiro Animal, 7º nível de druida.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "Y5QPCs5NpAyHuczB",
@@ -3835,8 +3835,8 @@
   "tipoOriginal": "Classe - Inventor",
   "custo": null,
   "requisito": "",
-  "descricao": "Você pode fabricar poções com  fórmulas  que  conheça  de  qualquer  círculo.  Pré-requisitos: Int 3, Sab 3, Alquimista Iniciado, 10º nível de inventor.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você pode fabricar poções com  fórmulas  que  conheça  de  qualquer  círculo.  Pré-requisitos: Int 17, Sab 17, Alquimista Iniciado, 10º nível de inventor.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "YCPbjV6oDAmWZ9hr",
@@ -4088,8 +4088,8 @@
   "tipoOriginal": "Classe - Guerreiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando  rola  o  dano  de  um  ataque  realizado com uma arma corpo a corpo de duas mãos, você pode rolar novamente qualquer resultado 1 ou 2. Pré-requisito: For 1",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando  rola  o  dano  de  um  ataque  realizado com uma arma corpo a corpo de duas mãos, você pode rolar novamente qualquer resultado 1 ou 2. Pré-requisito: For 13",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "aWqyL32syia8NuX3",
@@ -4110,8 +4110,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Se estiver usando uma arma corpo a corpo com as duas mãos, você recebe +5 nas rolagens de dano. Este  poder  não  pode  ser  usado  com  armas  leves.  Pré-requisitos: For 2, Treinado em Luta.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se estiver usando uma arma corpo a corpo com as duas mãos, você recebe +5 nas rolagens de dano. Este  poder  não  pode  ser  usado  com  armas  leves.  Pré-requisitos: For 15, Treinado em Luta.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "aifX4unNHBonHubf",
@@ -4220,8 +4220,8 @@
   "tipoOriginal": "Classe - Lutador",
   "custo": null,
   "requisito": "",
-  "descricao": "Você soma seu bônus de Força no seu total  de  pontos  de  vida  e  em  testes  de  Fortitude.  A  critério  do  mestre,  você  pode  chamar  a  atenção  de  pessoas que se atraiam por físicos bem definidos. Pré-requisito: For 3.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você soma seu bônus de Força no seu total  de  pontos  de  vida  e  em  testes  de  Fortitude.  A  critério  do  mestre,  você  pode  chamar  a  atenção  de  pessoas que se atraiam por físicos bem definidos. Pré-requisito: For 17.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "bWD6dc5zO5itYMQa",
@@ -4495,8 +4495,8 @@
   "tipoOriginal": "Classe - Bucaneiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Você soma seu bônus de Carisma em Iniciativa. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você soma seu bônus de Carisma em Iniciativa. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "ebkvViYlLzxFy8XO",
@@ -4682,8 +4682,8 @@
   "tipoOriginal": "P. Concedido",
   "custo": 2,
   "requisito": "",
-  "descricao": "Você pode gastar uma ação completa e 2 PM para invocar 1d4+1 goblinoides em espaços deso-cupados em alcance curto. Você pode usar uma ação de  movimento  para  fazer  os  goblinoides  andarem  (eles têm deslocamento 9m) ou uma ação padrão para  fazer  com  que  ataquem  criaturas  adjacentes,  causando  1d6+1  pontos  de  dano  de  corte  cada. Os goblinoides têm For 2, Des 2, 1 PV, não têm valor  de  Defesa  ou  testes  de  resistência  e  falham  automaticamente  em  qualquer  teste  oposto.  Eles  desaparecem quando morrem ou no fim da cena. Os goblinoides não agem sem receber uma ordem. Usos  criativos  para  criaturas  invocadas  fora  de  combate ficam a critério do mestre.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você pode gastar uma ação completa e 2 PM para invocar 1d4+1 goblinoides em espaços deso-cupados em alcance curto. Você pode usar uma ação de  movimento  para  fazer  os  goblinoides  andarem  (eles têm deslocamento 9m) ou uma ação padrão para  fazer  com  que  ataquem  criaturas  adjacentes,  causando  1d6+1  pontos  de  dano  de  corte  cada. Os goblinoides têm For 14, Des 14, 1 PV, não têm valor  de  Defesa  ou  testes  de  resistência  e  falham  automaticamente  em  qualquer  teste  oposto.  Eles  desaparecem quando morrem ou no fim da cena. Os goblinoides não agem sem receber uma ordem. Usos  criativos  para  criaturas  invocadas  fora  de  combate ficam a critério do mestre.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "fogM3iyIIrVopYlJ",
@@ -4825,8 +4825,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Você ganha uma ação de movimento extra no seu primeiro turno de cada combate. Pré-requisito: Des 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você ganha uma ação de movimento extra no seu primeiro turno de cada combate. Pré-requisito: Des 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "hpb7TnXraUY1qevb",
@@ -4946,8 +4946,8 @@
   "tipoOriginal": "Classe - Bucaneiro",
   "custo": 2,
   "requisito": "",
-  "descricao": "Quando chega em uma comu-nidade portuária, você pode gastar 2 PM para fazer um teste de Carisma (CD 10). Se passar, encontra um amigo para o qual pode pedir um favor (veja a perícia Diplomacia) ou que pode ajudá-lo como um aliado por uma cena. Pré-requisito: Car 1, 6º nível de bucaneiro.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando chega em uma comu-nidade portuária, você pode gastar 2 PM para fazer um teste de Carisma (CD 10). Se passar, encontra um amigo para o qual pode pedir um favor (veja a perícia Diplomacia) ou que pode ajudá-lo como um aliado por uma cena. Pré-requisito: Car 13, 6º nível de bucaneiro.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "jHboLitRyPZwDAF0",
@@ -5210,8 +5210,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Se estiver usando duas armas (e pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre –2 em ambos os testes de ataque. Se você possuir a habilidade  Ambidestria,  não  sofre  essa  penalidade.  Pré-requisitos: Des 2, treinado em Luta.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se estiver usando duas armas (e pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre –2 em ambos os testes de ataque. Se você possuir a habilidade  Ambidestria,  não  sofre  essa  penalidade.  Pré-requisitos: Des 15, treinado em Luta.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "lQuRjelAvkrV6nVY",
@@ -5287,8 +5287,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Quando usa uma arma leve de corpo a corpo ou uma  arma  de  arremesso,  você  pode  usar  seu  modificador de Destreza em vez de Força nos testes de ataque e rolagens de dano. Pré-requisito: Des 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Quando usa uma arma leve de corpo a corpo ou uma  arma  de  arremesso,  você  pode  usar  seu  modificador de Destreza em vez de Força nos testes de ataque e rolagens de dano. Pré-requisito: Des 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "me2utFcHVX2UsXyN",
@@ -5320,8 +5320,8 @@
   "tipoOriginal": "Classe - Lutador",
   "custo": null,
   "requisito": "",
-  "descricao": "Se estiver agarrando uma criatura e fizer um teste de manobra contra ela para causar dano, o dano aumenta em um passo. Pré-requisitos: Int 1, Lutador de Chão, 4º nível de lutador.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se estiver agarrando uma criatura e fizer um teste de manobra contra ela para causar dano, o dano aumenta em um passo. Pré-requisitos: Int 13, Lutador de Chão, 4º nível de lutador.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "mlzUTxfA4loIefuG",
@@ -5419,8 +5419,8 @@
   "tipoOriginal": "Classe - Caçador",
   "custo": null,
   "requisito": "",
-  "descricao": "Se  estiver  usando  duas  armas  (e  pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre uma penalidade de –2 em ambos os testes de ataque. Pré-requisito: Des 2.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se  estiver  usando  duas  armas  (e  pelo menos uma delas for leve) e fizer a ação ataque, você pode fazer dois ataques, um com cada arma. Se fizer isso, sofre uma penalidade de –2 em ambos os testes de ataque. Pré-requisito: Des 15.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "oInPEvobbtz7Us88",
@@ -5606,8 +5606,8 @@
   "tipoOriginal": "Classe - Bardo",
   "custo": 1,
   "requisito": "",
-  "descricao": "Você   possui   um   acervo   mental  de  relatos,  canções  e  folclore,  sendo  um arquivo  vivo  de  assuntos  gerais.  Além  de  outros  benefícios  a  critério  do  mestre,  você  pode  gastar  1  PM  para  rolar  novamente  um  teste  recém  realizado  de Conhecimento, Misticismo, Nobreza ou Religião para informação, identificar criaturas ou identificar itens mágicos. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você   possui   um   acervo   mental  de  relatos,  canções  e  folclore,  sendo  um arquivo  vivo  de  assuntos  gerais.  Além  de  outros  benefícios  a  critério  do  mestre,  você  pode  gastar  1  PM  para  rolar  novamente  um  teste  recém  realizado  de Conhecimento, Misticismo, Nobreza ou Religião para informação, identificar criaturas ou identificar itens mágicos. Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "phoD0x4cY06pfHmV",
@@ -5793,8 +5793,8 @@
   "tipoOriginal": "Classe - Guerreiro",
   "custo": null,
   "requisito": "",
-  "descricao": "Se  estiver  usando  uma  arma  de  ataque à distância, você soma seu bônus de Sabedoria  em  rolagens  de  dano  (limitado  pelo  seu  nível).  Pré-requisito: Sab 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se  estiver  usando  uma  arma  de  ataque à distância, você soma seu bônus de Sabedoria  em  rolagens  de  dano  (limitado  pelo  seu  nível).  Pré-requisito: Sab 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "sE4mWoW3zqLZaCYC",
@@ -5826,8 +5826,8 @@
   "tipoOriginal": "Classe - Lutador",
   "custo": 1,
   "requisito": "",
-  "descricao": "Você  pode  pagar  1  PM  para  usar seu bônus de Força no lugar de Carisma em um teste  de  perícia  baseada  em  Carisma.  Pré-requisitos:For 1, treinado em Intimidação",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  pagar  1  PM  para  usar seu bônus de Força no lugar de Carisma em um teste  de  perícia  baseada  em  Carisma.  Pré-requisitos:For 13, treinado em Intimidação",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "sQFi9Zy0fsP0ePmZ",
@@ -5925,8 +5925,8 @@
   "tipoOriginal": "Classe - Bárbaro",
   "custo": null,
   "requisito": "",
-  "descricao": "Se estiver usando uma arma corpo a  corpo  de  duas  mãos,  você  pode  rolar  novamente  qualquer  resultado  1  ou  2  em  rolagens  de  dano. Pré-requisito: For 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Se estiver usando uma arma corpo a  corpo  de  duas  mãos,  você  pode  rolar  novamente  qualquer  resultado  1  ou  2  em  rolagens  de  dano. Pré-requisito: For 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "tNuIJrmXypr1IVOh",
@@ -6013,8 +6013,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": 1,
   "requisito": "",
-  "descricao": "Você  pode  gastar  uma  ação  de  movimento  e  1  PM para gritar ordens para seus aliados em alcance médio.  Eles  recebem  +1  em  testes  de  perícia  até  o  fim da cena. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  pode  gastar  uma  ação  de  movimento  e  1  PM para gritar ordens para seus aliados em alcance médio.  Eles  recebem  +1  em  testes  de  perícia  até  o  fim da cena. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "uWXyA5uVOcqIYbRi",
@@ -6090,8 +6090,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  +1  PV  por  nível  de  personagem  e  +2 em Fortitude. Pré-requisito: Con 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  +1  PV  por  nível  de  personagem  e  +2 em Fortitude. Pré-requisito: Con 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "veDt5Sfsc7Cue7xL",
@@ -6189,8 +6189,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  +2  em  Investigação  e  soma  seu bônus de Inteligência em Intuição. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  +2  em  Investigação  e  soma  seu bônus de Inteligência em Intuição. Pré-requisito: Int 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "whJFemzRCrz6gvtp",
@@ -6255,8 +6255,8 @@
   "tipoOriginal": "P. Geral - Destino",
   "custo": null,
   "requisito": "",
-  "descricao": "Você  recebe  +2  em  testes  de  perícia  e  Defesa  quando  tem  a  torcida  a  seu  favor.  Entenda-se  por  “torcida” qualquer número de criaturas inteligentes em alcance médio que não esteja realizando nenhu-ma ação além de torcer por você. Pré-requisito: Car 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você  recebe  +2  em  testes  de  perícia  e  Defesa  quando  tem  a  torcida  a  seu  favor.  Entenda-se  por  “torcida” qualquer número de criaturas inteligentes em alcance médio que não esteja realizando nenhu-ma ação além de torcer por você. Pré-requisito: Car 13.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "xaqGqmp2mlAFvRma",
@@ -6321,8 +6321,8 @@
   "tipoOriginal": "P. Geral - Combate",
   "custo": null,
   "requisito": "",
-  "descricao": "Ao usar uma arma feita para uma categoria de ta-manho maior que a sua, a penalidade que você sofre nos testes de ataque diminui para –2 (normalmente, uma criatura que use uma arma feita para uma cate-goria de tamanho maior sofre uma penalidade de –5 nos testes de ataque). Pré-requisito: For 3.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Ao usar uma arma feita para uma categoria de ta-manho maior que a sua, a penalidade que você sofre nos testes de ataque diminui para –2 (normalmente, uma criatura que use uma arma feita para uma cate-goria de tamanho maior sofre uma penalidade de –5 nos testes de ataque). Pré-requisito: For 17.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "xpqcwyDLc1U7Zyug",
@@ -6398,8 +6398,8 @@
   "tipoOriginal": "Classe - Caçador",
   "custo": null,
   "requisito": "",
-  "descricao": "Você soma seu bônus de Sabedoria em seu total de pontos de mana, e aprende e  pode  lançar  Caminhos da Natureza (atributo-chave Sabedoria). Pré-requisito: Sab 1, 3º nível de caçador.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "Você soma seu bônus de Sabedoria em seu total de pontos de mana, e aprende e  pode  lançar  Caminhos da Natureza (atributo-chave Sabedoria). Pré-requisito: Sab 13, 3º nível de caçador.",
+  "fonte": "Tormenta20 Compendium"
  },
  {
   "id": "z4yuEi87sze92iGh",
@@ -7245,8 +7245,8 @@
   "tipoOriginal": "geral",
   "custo": null,
   "requisito": "",
-  "descricao": "[Desvantagem Geral] Você recebe –1 PV por nível de personagem. Pré-requisito: Con 0 ou menos.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
+  "descricao": "[Desvantagem Geral] Você recebe –1 PV por nível de personagem. Pré-requisito: Con 11 ou menos.",
+  "fonte": "Compendium Extra T20 (poderes-extra)"
  },
  {
   "id": "mzcYclx2KZ64qUGI",
@@ -7522,280 +7522,5 @@
   "requisito": "",
   "descricao": "Um bárbaro, lutador ou outro tipo que bate primeiro e pensa depois. Iniciante : você recebe +1d8 em rolagens de dano corpo a corpo. Veterano : muda para +1d12. Mestre : muda para +3d6.",
   "fonte": "Compendium Extra T20 (poderes-extra)"
- },
- {
-  "id": "t20jda-arremesso-multiplo",
-  "nome": "Arremesso Múltiplo",
-  "categoria": "geral",
-  "subtipo": "Combate",
-  "tipoOriginal": "P. Geral - Combate",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Uma vez por rodada, quando faz um ataque com uma arma de arremesso, você pode gastar 1 PM para fazer um ataque adicional contra o mesmo alvo, arremessando outra arma de arremesso. Pré-requisitos: Des 1, Estilo de Arremesso.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-ataque-com-escudo",
-  "nome": "Ataque com Escudo",
-  "categoria": "geral",
-  "subtipo": "Combate",
-  "tipoOriginal": "P. Geral - Combate",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Uma vez por rodada, se estiver empunhando um escudo e fizer a ação agredir, você pode gastar 1 PM para fazer um ataque corpo a corpo extra com o escudo. Este ataque não faz você perder o bônus do escudo na Defesa. Pré-requisito: Estilo de Arma e Escudo.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-piqueiro",
-  "nome": "Piqueiro",
-  "categoria": "geral",
-  "subtipo": "Combate",
-  "tipoOriginal": "P. Geral - Combate",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Uma vez por rodada, se estiver empunhando uma arma alongada e um inimigo entrar voluntariamente em seu alcance corpo a corpo, você pode gastar 1 PM para fazer um ataque corpo a corpo contra este oponente com esta arma. Se o oponente tiver se aproximado fazendo uma investida, seu ataque causa dois dados de dano extra do mesmo tipo. Pré-requisito: Estilo de Arma Longa.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-costas-largas",
-  "nome": "Costas Largas",
-  "categoria": "geral",
-  "subtipo": "Destino",
-  "tipoOriginal": "P. Geral - Destino",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Seu limite de carga aumenta em 5 espaços e você pode se beneficiar de um item vestido adicional. Pré-requisito: Con 1, For 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-inventario-organizado",
-  "nome": "Inventário Organizado",
-  "categoria": "geral",
-  "subtipo": "Destino",
-  "tipoOriginal": "P. Geral - Destino",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você soma sua Inteligência no limite de espaços que pode carregar. Para você, itens muito leves ou pequenos, que normalmente ocupam meio espaço, em vez disso ocupam 1/4 de espaço. Pré-requisito: Int 1.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-desprezar-a-realidade",
-  "nome": "Desprezar a Realidade",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": 2,
-  "requisito": "",
-  "descricao": "Você pode gastar 2 PM para ficar no limiar da realidade até o início de seu próximo turno. Nesse estado, você ignora terreno difícil e causa 20% de chance de falha em efeitos usados contra você (não apenas ataques). Para cada dois outros poderes da Tormenta que você possuir, essa chance aumenta em 5% (máximo de 50%). Pré-requisito: quatro outros poderes da Tormenta.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-legiao-aberrante",
-  "nome": "Legião Aberrante",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Seu corpo se transforma em uma massa de insetos rubros. Você pode atravessar qualquer espaço por onde seja possível passar uma moeda (mas considera esses espaços como terreno difícil) e recebe +1 em testes contra manobras de combate e de resistência contra efeitos que tenham você como alvo (mas não efeitos de área). Este bônus aumenta em +1 para cada dois outros poderes da Tormenta que você possui. Pré-requisito: Anatomia Insana, três outros poderes da Tormenta.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-fome-de-mana",
-  "nome": "Fome de Mana",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você recebe resistência a efeitos mentais +1. Além disso, sempre que precisa fazer um teste de Vontade para resistir a uma habilidade mágica de um inimigo, a criatura que usou essa habilidade sofre 1d6 pontos de dano psíquico. Para cada dois outros poderes da Tormenta que você possui, o bônus em testes de resistência aumenta em +1 e o dano aumenta em +1d6.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-membros-estendidos",
-  "nome": "Membros Estendidos",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Seus braços e armas naturais são grotescamente mais longos que o normal, o que aumenta seu alcance natural para ataques corpo a corpo em +1,5m. Para cada quatro outros poderes da Tormenta que você possui, esse alcance aumenta em +1,5m.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-mente-aberrante",
-  "nome": "Mente Aberrante",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Quando passa em um teste de resistência para resistir a uma habilidade mágica de um inimigo, você recebe 1 PM temporário cumulativo. Você pode ganhar um máximo de PM temporários por cena desta forma igual ao número de poderes da Tormenta que possui.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-cuspir-enxame",
-  "nome": "Cuspir Enxame",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": 2,
-  "requisito": "",
-  "descricao": "Você pode gastar uma ação completa e 2 PM para criar um enxame de insetos rubros em um ponto a sua escolha em alcance curto e com duração sustentada. O enxame tem tamanho Médio e pode passar pelo espaço de outras criaturas. Uma vez por rodada, você pode gastar uma ação de movimento para mover o enxame 9m. No final do seu turno, o enxame causa 2d6 pontos de dano de ácido a qualquer criatura no espaço que ele estiver ocupando. Para cada dois outros poderes da Tormenta que possui, você pode gastar +1 PM quando usa este poder para aumentar o dano do enxame em +1d6.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-larva-explosiva",
-  "nome": "Larva Explosiva",
-  "categoria": "geral",
-  "subtipo": "Tormenta",
-  "tipoOriginal": "P. Geral - Tormenta",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Se uma criatura que tenha sofrido dano de sua mordida nesta cena for reduzida a 0 ou menos PV, ela explode em chuva cáustica, morrendo e causando 4d4 pontos de dano de ácido em criaturas adjacentes. Para cada dois outros poderes da Tormenta que você possui, o dano aumenta em +2d4. Você é imune a esse dano. Pré-requisito: Dentes Afiados.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-00",
-  "nome": "Almejar o Impossível",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Quando faz um teste de perícia, um resultado de 19 ou mais no dado sempre é um sucesso, não importando o valor a ser alcançado.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-01",
-  "nome": "Apostar com o Trapaceiro",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Quando faz um teste de perícia, você pode gastar 1 PM para apostar com Hyninn. Você e o mestre rolam 1d20, mas o mestre mantém o resultado dele em segredo. Você então escolhe entre usar seu próprio resultado ou o resultado oculto do mestre (neste caso, ele revela o resultado).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-02",
-  "nome": "Compreender os Ermos",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você recebe +2 em Sobrevivência e pode usar Sabedoria para Adestramento (em vez de Carisma).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-03",
-  "nome": "Dom da Esperança",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você soma sua Sabedoria em seus PV em vez de Constituição, e se torna imune às condições alquebrado, esmorecido e frustrado.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-04",
-  "nome": "Êxtase da Loucura",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Toda vez que uma ou mais criaturas falham em um teste de Vontade contra uma de suas habilidades mágicas, você recebe 1 PM temporário cumulativo. Você pode ganhar um máximo de PM temporários por cena desta forma igual a sua Sabedoria.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-05",
-  "nome": "Fé Guerreira",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você pode usar Sabedoria para Guerra (em vez de Inteligência). Além disso, em combate, quando vai fazer um teste de perícia, você pode gastar 2 PM para substituí-lo por um teste de Guerra (exceto para testes de ataque).",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-06",
-  "nome": "Fulgor Solar",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você recebe redução de frio e trevas 5. Além disso, quando é alvo de um ataque você pode gastar 1 PM para emitir um clarão solar que deixa o atacante ofuscado por uma rodada.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-07",
-  "nome": "Pesquisa Abençoada",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Se passar uma hora pesquisando seus livros e anotações, você pode rolar novamente um teste de perícia baseada em Inteligência ou Sabedoria que tenha feito desde a última cena. Se tiver acesso a mais livros, você recebe um bônus no teste: +2 para uma coleção particular ou biblioteca pequena e +5 para a biblioteca de um templo ou universidade.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-08",
-  "nome": "Presas Primordiais",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você pode gastar 1 PM para transformar seus dentes em presas afiadas até o fim da cena. Você recebe uma arma natural de mordida (dano 1d6, crítico x2, perfuração). Uma vez por rodada, quando usa a ação agredir com outra arma, você pode gastar 1 PM para fazer um ataque corpo a corpo extra com a mordida. Se já possuir outro ataque natural de mordida, em vez disso, o dano desse ataque aumenta em dois passos.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-09",
-  "nome": "Reparar Injustiça",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Uma vez por rodada, quando um oponente em alcance curto acerta um ataque em você ou em um de seus aliados, você pode gastar 2 PM para fazer este oponente repetir o ataque, escolhendo o pior entre os dois resultados.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-10",
-  "nome": "Sopro do Mar",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você pode gastar uma ação padrão e 1 PM para soprar vento marinho em um cone de 6m. Criaturas na área sofrem 2d6 pontos de dano de frio (Reflexos CD Sab reduz à metade). Você pode aprender Sopro das Uivantes como uma magia divina. Se fizer isso, o custo dela diminui em –1 PM.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-11",
-  "nome": "Tradição de Lin-Wu",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você considera a katana uma arma simples e, se for proficiente em armas marciais, recebe +1 na margem de ameaça com ela.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
- },
- {
-  "id": "t20jda-concedido-12",
-  "nome": "Zumbificar",
-  "categoria": "concedido",
-  "subtipo": "Concedido",
-  "tipoOriginal": "P. Concedido",
-  "custo": null,
-  "requisito": "",
-  "descricao": "Você pode gastar uma ação completa e 3 PM para reanimar o cadáver de uma criatura Pequena ou Média adjacente por um dia. O cadáver funciona como um parceiro iniciante de um tipo a sua escolha entre combatente, fortão ou guardião. Além disso, quando sofre dano, você pode sacrificar esse parceiro; se fizer isso, você sofre apenas metade do dano, mas o cadáver é destruído.",
-  "fonte": "Tormenta20 - Edição Jogo do Ano v1.3"
  }
 ]
