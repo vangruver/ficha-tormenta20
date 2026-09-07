@@ -30,6 +30,10 @@ export function escolhasVazias() {
     periciasRaciais: [],         // humano (2), kliren (1), osteon (1)
     bonusPericiasRaciais: [],    // lefou: 2 perícias com +2
     poderOrigem: "",             // poder concedido pela origem
+    escolhasClasse: {},          // escolha obrigatória de classe → id do poder
+                                 // (arcanista.caminho → "Caminho do Arcanista: Mago")
+    especializacoes: {},         // perícia "com especialidade" → texto livre
+                                 // (ofi → "Ferreiro", con → "Arcano")
   };
 }
 
@@ -111,6 +115,7 @@ export function migrarPersonagem(p) {
   if (!["compra", "arranjo", "rolagem", "livre"].includes(p.atributosModo)) p.atributosModo = "compra";
   if (typeof p.atributosArranjo !== "string") p.atributosArranjo = "";
   if (!Array.isArray(p.atributosPool)) p.atributosPool = [];
+  if (!p.especializacoes || typeof p.especializacoes !== "object") p.especializacoes = {};
   if (!p.atributosSlots || typeof p.atributosSlots !== "object") p.atributosSlots = {};
   p.periciasOutros = p.periciasOutros || {};
   for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp"]) {

@@ -14,13 +14,18 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
+  const [atributos, pericias, classes, racas, origens, escolhasClasse, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
       carregarJSON("data/core/classes.json"),
       carregarJSON("data/core/racas.json"),
       carregarJSON("data/core/origens.json"),
+      // Escolhas que a classe OBRIGA a fazer num nível (Caminho do Arcanista,
+      // Caminho do Cavaleiro). As opções não estão no arquivo: ele só aponta
+      // pra família de poderes do compêndio, então continuam certas depois de
+      // uma sincronização. Ver data/core/README-escolhas-classe.md.
+      carregarJSON("data/core/escolhas-classe.json").catch(() => []),
       carregarJSON("data/raw/poderes.json"),
       carregarJSON("data/raw/magias.json"),
       carregarJSON("data/raw/equipamentos.json"),
@@ -43,7 +48,7 @@ export async function carregarBanco() {
       carregarJSON("data/raw/origens-regionais.json").catch(() => []),
       carregarJSON("data/version.json").catch(() => null),
     ]);
-  cache = { atributos, pericias, classes, racas, origens, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
+  cache = { atributos, pericias, classes, racas, origens, escolhasClasse, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
   return cache;
 }
 
@@ -127,4 +132,26 @@ export function panteaoFiltrado(db, { busca } = {}) {
     if (busca && !normalizar(p.nome).includes(normalizar(busca)) && !normalizar(p.descricao).includes(normalizar(busca))) return false;
     return true;
   });
+}
+
+// Opções de uma escolha obrigatória de classe: os poderes do compêndio cujo
+// nome começa com "<familia>:" (ex.: "Caminho do Arcanista: Mago"). O
+// compêndio tem nomes com espaços duplicados em alguns registros, então a
+// comparação normaliza os espaços.
+export function opcoesDaEscolhaDeClasse(db, familia) {
+  const alvo = String(familia || "").replace(/\s+/g, " ").trim().toLowerCase();
+  if (!alvo) return [];
+  return db.poderes
+    .filter((p) => {
+      const nome = String(p.nome || "").replace(/\s+/g, " ");
+      const i = nome.indexOf(":");
+      return i > 0 && nome.slice(0, i).trim().toLowerCase() === alvo;
+    })
+    .map((p) => ({ ...p, rotulo: String(p.nome).replace(/\s+/g, " ").split(":").slice(1).join(":").trim() }))
+    .sort((a, b) => a.rotulo.localeCompare(b.rotulo, "pt-BR"));
+}
+
+// As escolhas de classe que já valem no nível atual do personagem.
+export function escolhasDeClassePara(db, classeId, nivel) {
+  return (db.escolhasClasse || []).filter((e) => e.classe === classeId && (Number(e.nivel) || 1) <= (Number(nivel) || 1));
 }

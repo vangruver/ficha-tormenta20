@@ -1,0 +1,22 @@
+[
+  {
+    "classe": "arcanista",
+    "id": "caminho",
+    "nome": "Caminho do Arcanista",
+    "familia": "Caminho do Arcanista",
+    "nivel": 1,
+    "obrigatorio": true,
+    "descricao": "No 1º nível o Arcanista escolhe um Caminho, que define de onde vem a magia dele e como ela é conjurada.",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "classe": "cavaleiro",
+    "id": "caminho",
+    "nome": "Caminho do Cavaleiro",
+    "familia": "Caminho do Cavaleiro",
+    "nivel": 1,
+    "obrigatorio": true,
+    "descricao": "No 1º nível o Cavaleiro escolhe um Caminho, que define o estilo de combate dele.",
+    "fonte": "Tormenta 20 - Jogo Básico"
+  }
+]

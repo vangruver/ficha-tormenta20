@@ -1,4 +1,4 @@
-import { carregarBanco, porId, poderesDe, poderesDaClasse, poderesDaRaca, poderesDaOrigem, poderesGerais, magiasFiltradas, equipamentosFiltrados, ameacasFiltradas, panteaoFiltrado } from "./database.js";
+import { carregarBanco, porId, poderesDe, poderesDaClasse, poderesDaRaca, poderesDaOrigem, poderesGerais, magiasFiltradas, equipamentosFiltrados, ameacasFiltradas, panteaoFiltrado, opcoesDaEscolhaDeClasse, escolhasDeClassePara } from "./database.js";
 import * as regras from "./rules.js";
 import * as storage from "./storage.js";
 import { applyI18n, setLang, getLang, t } from "./i18n.js";
@@ -295,6 +295,15 @@ function normalizarEscolhas() {
   if (auto.legados?.length === 1 && e.legadoRacial !== auto.legados[0].id) {
     e.legadoRacial = auto.legados[0].id;
     mudou = true;
+  }
+
+  // Escolha de classe com uma opção só na família não é escolha.
+  for (const regra of escolhasDeClassePara(db, classe?.id, personagem.nivel || 1)) {
+    const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
+    if (opcoes.length === 1 && e.escolhasClasse?.[regra.id] !== opcoes[0].id) {
+      e.escolhasClasse = { ...(e.escolhasClasse || {}), [regra.id]: opcoes[0].id };
+      mudou = true;
+    }
   }
 
   // Poder de origem: se a origem só tem um poder correspondente, ele já é o dela.
@@ -743,7 +752,10 @@ function renderPericias() {
     return `
       <tr class="${treinado ? "treinada" : ""}${bloqueada ? " bloqueada" : ""}">
         <td><input type="checkbox" data-pericia-treino="${p.id}" ${treinado ? "checked" : ""} ${automatica ? "disabled" : ""} title="${automatica ? esc(`Treinada automaticamente por: ${fontes.join(", ")}`) : "Marcar como treinada"}" /></td>
-        <td><span class="pericia-nome">${p.nome}</span>
+        <td><span class="pericia-nome">${esc(p.nome)}</span>
+          ${PERICIAS_COM_ESPECIALIDADE.includes(p.id)
+            ? `<input type="text" class="pericia-especialidade" data-pericia-especialidade="${p.id}" value="${esc(personagem.especializacoes?.[p.id] || "")}" placeholder="especialidade…" title="${esc(`${p.nome} pede uma especialidade escolhida na criação — ex.: Ofício (ferreiro)`)}" />`
+            : ""}
           ${automatica ? `<span class="tag auto" title="${esc(fontes.join(" · "))}">auto</span>` : ""}
           ${periciasDaClasse.has(p.id) ? '<span class="tag classe">de classe</span>' : ""}
           ${p.somenteTreinado ? '<span class="tag">só treinado</span>' : ""}${p.salvamento ? '<span class="tag">resistência</span>' : ""}
@@ -1606,6 +1618,15 @@ function registrarEventos() {
   });
 
   // Perícias
+  // A especialidade é texto livre: grava enquanto digita, sem redesenhar a
+  // tabela (o campo perderia o foco a cada tecla).
+  document.getElementById("lista-pericias").addEventListener("input", (e) => {
+    const espec = e.target.dataset.periciaEspecialidade;
+    if (!espec) return;
+    personagem.especializacoes = { ...(personagem.especializacoes || {}), [espec]: e.target.value };
+    salvar();
+    renderAutomacao();
+  });
   document.getElementById("lista-pericias").addEventListener("change", (e) => {
     const treino = e.target.dataset.periciaTreino;
     if (treino) {
@@ -3095,6 +3116,16 @@ let creationMode = "livre"; // "livre" | "guiado"
 
 function nomePericia(id) { return db.pericias.find((p) => p.id === id)?.nome || id; }
 
+// Perícias que o livro manda especializar na criação: você não é treinado em
+// "Ofício", e sim em "Ofício (ferreiro)". A ficha guarda o texto em
+// personagem.especializacoes e mostra junto do nome da perícia.
+const PERICIAS_COM_ESPECIALIDADE = ["ofi", "con"];
+function nomePericiaCompleto(id) {
+  const base = nomePericia(id);
+  const espec = (personagem.especializacoes?.[id] || "").trim();
+  return espec ? `${base} (${espec})` : base;
+}
+
 function pickerOptionsFor(kind) {
   if (kind === "raca") return db.racas.map((r) => ({ id: r.id, nome: r.nome, meta: `${r.tamanho} · desloc. ${r.deslocamento}`, desc: r.traços }));
   if (kind === "classe") return db.classes.map((c) => ({ id: c.id, nome: c.nome, meta: `Atributo-chave ${c.atributoChave.toUpperCase()}${c.conjuracao ? ` · conjuração ${c.conjuracao}` : ""}`, desc: c.iniciais }));
@@ -3727,6 +3758,64 @@ function blocosDeAutomacao() {
     }));
   }
 
+  // --- Classe: escolhas obrigatórias de nível (Caminho do Arcanista etc.) ---
+  // A ficha não guarda a lista de opções: ela pergunta ao compêndio quais
+  // poderes pertencem à família declarada em data/core/escolhas-classe.json.
+  if (classe) {
+    // `regra` e não `esc`: `esc` é a função global de escapar HTML, e uma
+    // variável de laço com esse nome a apagaria dentro do bloco.
+    for (const regra of escolhasDeClassePara(db, classe.id, d.nivel)) {
+      const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
+      if (!opcoes.length) continue;
+      const escolhidoId = e.escolhasClasse?.[regra.id] || "";
+      const escolhido = opcoes.find((o) => o.id === escolhidoId);
+      const forcada = opcoes.length === 1;
+      blocos.push(blocoHtml({
+        id: `escolha-classe-${regra.id}`,
+        titulo: regra.nome,
+        fonte: forcada ? "Classe · automático" : `Classe · ${regra.nivel}º nível`,
+        estado: forcada ? "info" : escolhido ? "ok" : regra.obrigatorio ? "pendente" : "info",
+        texto: escolhido
+          ? `Escolhido: <b>${esc(escolhido.rotulo)}</b>. <em>${esc((escolhido.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220))}</em>`
+          : `${esc(regra.descricao || "")} <b>${opcoes.length}</b> opções.`,
+        corpo: `<div class="chip-lista">${opcoes.map((o) => `
+          <button type="button" class="chip${o.id === escolhidoId ? " ativo" : ""}" data-auto-escolha-classe="${esc(regra.id)}" data-valor="${esc(o.id)}" title="${esc((o.descricao || "").replace(/<[^>]+>/g, "").slice(0, 240))}">${esc(o.rotulo)}</button>`).join("")}
+          ${escolhidoId ? `<button type="button" class="chip limpar" data-auto-escolha-classe="${esc(regra.id)}" data-valor="">✕ limpar</button>` : ""}</div>`,
+      }));
+    }
+
+    // Clérigo e Paladino são devotos: sem divindade a ficha fica incompleta.
+    if (classe.divindadeObrigatoria) {
+      blocos.push(blocoHtml({
+        id: "divindade-obrigatoria",
+        titulo: `Divindade de ${classe.nome}`,
+        fonte: "Classe",
+        estado: personagem.divindade ? "ok" : "pendente",
+        texto: personagem.divindade
+          ? `Devoto de <b>${esc(personagem.divindade)}</b>.`
+          : `${esc(classe.nome)} é uma classe devota — escolher uma divindade não é opcional. Ela define os poderes concedidos e as obrigações do código.`,
+        corpo: personagem.divindade ? "" : '<div class="chip-lista"><button type="button" class="chip acao" data-abrir-picker="divindade">Escolher divindade →</button></div>',
+      }));
+    }
+  }
+
+  // --- Perícias que pedem especialidade (Ofício, Conhecimento...) ---
+  const comEspecialidade = PERICIAS_COM_ESPECIALIDADE.filter((id) => d.treinos.has(id) || personagem.periciasTreinadas.includes(id));
+  if (comEspecialidade.length) {
+    const faltando = comEspecialidade.filter((id) => !(personagem.especializacoes?.[id] || "").trim());
+    blocos.push(blocoHtml({
+      id: "especializacoes",
+      titulo: "Especialidade das perícias",
+      fonte: "Perícias",
+      estado: faltando.length ? "pendente" : "ok",
+      texto: `${listaLegivel(comEspecialidade.map(nomePericia))} ${comEspecialidade.length > 1 ? "pedem" : "pede"} uma especialidade escolhida na criação (o Ofício de ferreiro, o Conhecimento arcano). Anote na aba <b>Perícias</b>.`,
+      corpo: `<div class="chip-lista">${comEspecialidade.map((id) => {
+        const v = (personagem.especializacoes?.[id] || "").trim();
+        return `<span class="chip ${v ? "ativo" : "limpar"}">${esc(nomePericia(id))}<small>${v ? esc(v) : "sem especialidade"}</small></span>`;
+      }).join("")}<button type="button" class="chip acao" data-ir-aba="pericias">Abrir aba Perícias →</button></div>`,
+    }));
+  }
+
   // --- Poderes por nível ---
   const esperados = poderesEsperados();
   const escolhidosPoderes = personagem.poderes.length;
@@ -3812,6 +3901,13 @@ function registrarEventosAutomacao() {
       e.periciasClasseFixa = { ...(e.periciasClasseFixa || {}), [dataset.autoClasseFixa]: dataset.valor };
       return salvarERenderizar();
     }
+    if (dataset.autoEscolhaClasse !== undefined) {
+      e.escolhasClasse = { ...(e.escolhasClasse || {}) };
+      if (dataset.valor) e.escolhasClasse[dataset.autoEscolhaClasse] = dataset.valor;
+      else delete e.escolhasClasse[dataset.autoEscolhaClasse];
+      return salvarERenderizar();
+    }
+    if (dataset.abrirPicker) return openPickerModal(dataset.abrirPicker);
     if (dataset.autoLegado) { e.legadoRacial = dataset.autoLegado; return salvarERenderizar(); }
     if (dataset.autoPoderOrigem !== undefined) {
       e.poderOrigem = e.poderOrigem === dataset.autoPoderOrigem ? "" : dataset.autoPoderOrigem;
@@ -3893,6 +3989,13 @@ const NOMES_ALEATORIOS = [
 ];
 
 const sorteia = (lista) => lista[Math.floor(Math.random() * lista.length)];
+
+// Especialidades temáticas para o gerador preencher Ofício/Conhecimento —
+// são sugestões de sabor, não uma lista fechada do livro.
+const ESPECIALIDADES_SUGERIDAS = {
+  ofi: ["ferreiro", "alfaiate", "cozinheiro", "carpinteiro", "joalheiro", "curtidor", "escriba", "alquimista"],
+  con: ["arcano", "história", "natureza", "religião", "engenharia", "geografia"],
+};
 function sorteiaVarios(lista, n) {
   const copia = lista.slice();
   const out = [];
@@ -3935,6 +4038,20 @@ function aplicarAutomacaoAleatoria(raca, classe, origem) {
   if (origem && !auto.semOrigem) {
     e.periciasOrigem = sorteiaVarios(origem.periciasSugeridas || [], Math.min(2, (origem.periciasSugeridas || []).length));
     e.poderOrigem = poderesDaOrigem(db, origem.id)[0]?.id || "";
+  }
+  // Escolhas obrigatórias da classe (Caminho do Arcanista, do Cavaleiro...).
+  if (classe) {
+    e.escolhasClasse = {};
+    for (const regra of escolhasDeClassePara(db, classe.id, personagem.nivel || 1)) {
+      const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
+      if (opcoes.length) e.escolhasClasse[regra.id] = sorteia(opcoes).id;
+    }
+  }
+  // Ofício e Conhecimento pedem especialidade — o gerador escolhe uma temática.
+  personagem.especializacoes = {};
+  const treinadas = treinosAutomaticos();
+  for (const [id, lista] of Object.entries(ESPECIALIDADES_SUGERIDAS)) {
+    if (treinadas.has(id)) personagem.especializacoes[id] = sorteia(lista);
   }
   const disponiveis = poolPoderesDisponiveis();
   const d = calcularDerivados();
@@ -3987,9 +4104,11 @@ function gerarPersonagem(opcoes = {}) {
   const raca = porId(db.racas, opcoes.raca) || sorteia(db.racas);
   const classe = porId(db.classes, opcoes.classe) || sorteia(db.classes);
   const origem = raca.auto?.semOrigem ? null : (porId(db.origens, opcoes.origem) || sorteia(db.origens));
+  // Clérigo e Paladino são devotos: divindade não é sorteio de moeda.
+  const precisaDivindade = !!classe.divindadeObrigatoria;
   const divindade = opcoes.divindade !== undefined
     ? opcoes.divindade
-    : (Math.random() < 0.5 ? sorteia(db.panteao).nome : "");
+    : (precisaDivindade || Math.random() < 0.5 ? sorteia(db.panteao).nome : "");
 
   personagem.nome = opcoes.nome || `${sorteia(NOMES_ALEATORIOS)} de ${raca.nome}`;
   personagem.raca = raca.id;
