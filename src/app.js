@@ -1947,7 +1947,7 @@ function registrarEventos() {
     e.target.value = "";
   });
 
-  document.getElementById("btn-pdf").addEventListener("click", () => window.print());
+  document.getElementById("btn-pdf").addEventListener("click", imprimirFicha);
 
   document.getElementById("btn-atualizar-dados").addEventListener("click", async () => {
     location.reload();
@@ -4318,6 +4318,167 @@ function abrirGeradorModal() {
 }
 
 // ==============================================================
+// Ficha impressa (A4) — duas páginas montadas na hora de imprimir.
+//
+// Antes o botão de PDF mandava o navegador imprimir a própria página do
+// app, com abas, painéis de automação e catálogos escondidos por CSS: dava
+// uma folha que ninguém levaria pra mesa. Aqui a ficha é remontada num
+// layout de papel — bloco de identidade, atributos, Defesa/PV/PM, as 29
+// perícias em duas colunas, ataques, equipamento e, na segunda página,
+// poderes, magias e anotações.
+//
+// O HTML só existe enquanto a impressão acontece; em tela ele fica com
+// display:none (a não ser na pré-visualização).
+// ==============================================================
+function campoImpresso(rotulo, valor) {
+  return `<div class="fi-campo"><b>${valor === "" || valor == null ? "&nbsp;" : valor}</b><span>${esc(rotulo)}</span></div>`;
+}
+function caixaImpressa(titulo, corpo, classe = "") {
+  return `<section class="fi-caixa ${classe}"><h3>${esc(titulo)}</h3><div class="fi-caixa-corpo">${corpo}</div></section>`;
+}
+
+function montarFichaImpressa() {
+  const d = calcularDerivados();
+  const raca = racaAtual();
+  const classeTexto = d.classes.length > 1 ? rotuloDeClasses() : (classeAtual()?.nome || "—");
+
+  // --- Atributos ---
+  const atributos = db.atributos.map((a) => `
+    <div class="fi-atributo"><span>${esc(a.nome)}</span><b>${formatarMod(atributoFinal(a.id))}</b></div>`).join("");
+
+  // --- Perícias: as 29, em duas colunas, marcando as treinadas ---
+  const pericias = db.pericias.map((p) => {
+    const treinado = estaTreinado(p.id, d);
+    return `<div class="fi-pericia${treinado ? " treinada" : ""}">
+      <i>${treinado ? "●" : "○"}</i>
+      <span>${esc(nomePericiaCompleto(p.id))}</span>
+      <em>${esc(p.atributo.toUpperCase())}</em>
+      <b>${formatarMod(bonusDePericiaSeguro(p, d))}</b></div>`;
+  }).join("");
+
+  // --- Ataques ---
+  const linhasAtaque = personagem.ataques.map((at) => `
+    <tr><td>${esc(at.nome || "—")}</td><td>${formatarMod(bonusDeAtaque(at, d))}</td>
+    <td>${esc(at.dano || "—")}</td><td>${esc(at.critico || "20/x2")}</td></tr>`).join("")
+    || '<tr><td colspan="4">—</td></tr>';
+
+  // --- Equipamento ---
+  const equipamento = personagem.equipamentos.map((it) => {
+    const rec = registroDoItem(it);
+    return `<li>${it.equipado ? "<b>[equipado]</b> " : ""}${esc(it.nome)}${it.qtd > 1 ? ` ×${it.qtd}` : ""}${rec.peso ? ` <i>${rec.peso}kg</i>` : ""}</li>`;
+  }).join("") || "<li>—</li>";
+
+  const dinheiro = ["tt", "to", "tp", "tc"].map((k) => `${k.toUpperCase()}$ ${personagem.dinheiro?.[k] ?? 0}`).join(" · ");
+
+  const pagina1 = `<div class="fi-pagina">
+    <header class="fi-topo">
+      <div class="fi-nome">
+        ${campoImpresso("Nome do personagem", esc(personagem.nome || "—"))}
+        <div class="fi-campo-linha">
+          ${campoImpresso("Raça", esc(raca?.nome || "—"))}
+          ${campoImpresso("Classe e nível", esc(classeTexto) + ` — nível ${d.nivel}`)}
+        </div>
+        <div class="fi-campo-linha">
+          ${campoImpresso("Origem", esc(personagem.origem || "—"))}
+          ${campoImpresso("Divindade", esc(personagem.divindade || "—"))}
+          ${campoImpresso("Jogador", esc(personagem.jogador || "—"))}
+        </div>
+      </div>
+      <div class="fi-escudo"><span>Defesa</span><b>${d.defesa}</b></div>
+      <div class="fi-vitais">
+        <div><span>PV</span><b>${personagem.pv.atual ?? 0}</b><small>de ${d.pvMax ?? "—"}</small></div>
+        <div><span>PM</span><b>${personagem.pm.atual ?? 0}</b><small>de ${d.pmMax ?? "—"}</small></div>
+      </div>
+    </header>
+
+    <div class="fi-colunas">
+      <div class="fi-coluna fi-coluna-estreita">
+        ${caixaImpressa("Atributos", `<div class="fi-atributos">${atributos}</div>`)}
+        ${caixaImpressa("Combate", `
+          <div class="fi-mini">
+            <div><span>Iniciativa</span><b>${formatarMod(d.iniciativa)}</b></div>
+            <div><span>Deslocamento</span><b>${esc(raca?.deslocamento || "9m")}</b></div>
+            <div><span>Penal. armadura</span><b>${d.penalidadeArmadura ? `−${d.penalidadeArmadura}` : "0"}</b></div>
+            <div><span>Carga</span><b>${Math.round(d.carga * 10) / 10}/${d.cargaMax}</b></div>
+          </div>`)}
+        ${caixaImpressa("Resistências", `<div class="fi-mini">${["for", "ref", "von"].map((id) => {
+          const p = db.pericias.find((x) => x.id === id) || db.pericias.find((x) => x.salvamento && x.id.startsWith(id));
+          return p ? `<div><span>${esc(p.nome)}</span><b>${formatarMod(bonusDePericiaSeguro(p, d))}</b></div>` : "";
+        }).join("")}</div>`)}
+        ${caixaImpressa("Dinheiro e carga", `<p>${esc(dinheiro)}</p><p>Carga máxima: <b>${d.cargaMax}</b></p>`)}
+      </div>
+      <div class="fi-coluna">
+        ${caixaImpressa("Perícias", `<div class="fi-pericias">${pericias}</div>
+          <p class="fi-nota">● treinada · o bônus já soma metade do nível, atributo, treino, racial e penalidade de armadura.</p>`)}
+        ${caixaImpressa("Ataques", `<table class="fi-tabela">
+          <thead><tr><th>Arma</th><th>Ataque</th><th>Dano</th><th>Crítico</th></tr></thead>
+          <tbody>${linhasAtaque}</tbody></table>`)}
+      </div>
+    </div>
+  </div>`;
+
+  // --- Página 2: poderes, magias, notas ---
+  const poderOrigem = escolhas().poderOrigem ? db.poderes.find((x) => x.id === escolhas().poderOrigem) : null;
+  const escolhasClasseTexto = Object.values(escolhas().escolhasClasse || {})
+    .map((id) => db.poderes.find((p) => p.id === id)?.nome).filter(Boolean);
+  const poderes = [
+    ...(poderOrigem ? [`${poderOrigem.nome} <i>(origem)</i>`] : []),
+    ...escolhasClasseTexto.map((n) => `${esc(n)} <i>(escolha de classe)</i>`),
+    ...personagem.poderes.map((id) => {
+      const p = db.poderes.find((x) => x.id === id);
+      return p ? `${esc(p.nome)}${p.custo ? ` <i>(${p.custo} PM)</i>` : ""}` : "";
+    }).filter(Boolean),
+  ];
+  const magias = personagem.magias.map((id) => {
+    const m = db.magias.find((x) => x.id === id);
+    return m ? `${esc(m.nome)} <i>(${m.circulo}º · ${regras.custoDaMagia(m)} PM)</i>` : "";
+  }).filter(Boolean);
+  const condicoes = condicoesAtivas().map((c) => esc(c.nome));
+  const notas = personagem.notas.slice(-6).reverse().map((n) => `<li>${esc(n.texto)}</li>`).join("");
+
+  const pagina2 = `<div class="fi-pagina">
+    <header class="fi-topo-2"><h2>${esc(personagem.nome || "Personagem")}</h2><span>${esc(classeTexto)} — nível ${d.nivel}</span></header>
+    <div class="fi-colunas">
+      <div class="fi-coluna">
+        ${caixaImpressa(`Poderes (${poderes.length})`, `<ul class="fi-lista">${poderes.map((x) => `<li>${x}</li>`).join("") || "<li>—</li>"}</ul>`)}
+        ${caixaImpressa("Equipamento", `<ul class="fi-lista">${equipamento}</ul>`)}
+      </div>
+      <div class="fi-coluna">
+        ${magias.length ? caixaImpressa(`Magias (${magias.length})`, `<ul class="fi-lista">${magias.map((x) => `<li>${x}</li>`).join("")}</ul>`) : ""}
+        ${condicoes.length ? caixaImpressa("Condições ativas", `<p>${condicoes.join(" · ")}</p>`) : ""}
+        ${caixaImpressa("Biografia e aparência", `<p>${esc(personagem.biografia || "—")}</p><p>${esc(personagem.aparencia || "")}</p>`)}
+        ${caixaImpressa("Anotações", `<ul class="fi-lista">${notas || "<li>—</li>"}</ul>`)}
+      </div>
+    </div>
+  </div>`;
+
+  return pagina1 + pagina2;
+}
+
+function imprimirFicha() {
+  montarPreviewImpressao();
+  // Espera o layout assentar antes de abrir o diálogo de impressão.
+  requestAnimationFrame(() => window.print());
+}
+
+// Pré-visualização: mostra as duas páginas na tela, do jeito que vão sair no
+// papel, sem precisar abrir o diálogo de impressão pra conferir.
+function montarPreviewImpressao(mostrar = false) {
+  const alvo = document.getElementById("ficha-impressa");
+  if (!alvo) return;
+  alvo.innerHTML = montarFichaImpressa();
+  alvo.classList.toggle("visivel", mostrar);
+  return alvo;
+}
+function alternarPreviewImpressao() {
+  const alvo = document.getElementById("ficha-impressa");
+  if (!alvo) return;
+  const abrindo = !alvo.classList.contains("visivel");
+  montarPreviewImpressao(abrindo);
+  if (abrindo) alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ==============================================================
 // Link somente-leitura — codifica o personagem inteiro (sem notas) num
 // hash de URL (#share=gz:<dados>). Sem servidor: quem abre roda o mesmo
 // app; a ficha vira read-only até salvar uma cópia editável.
@@ -4708,7 +4869,8 @@ function registrarEventosExtra() {
     storage.setDashboardCollapsed(collapsed);
   });
 
-  $("btn-pdf-topo")?.addEventListener("click", () => window.print());
+  $("btn-pdf-topo")?.addEventListener("click", imprimirFicha);
+  $("btn-preview-pdf")?.addEventListener("click", alternarPreviewImpressao);
   $("btn-dados")?.addEventListener("click", renderDiceRollerModal);
   $("btn-subir-nivel")?.addEventListener("click", subirDeNivel);
 

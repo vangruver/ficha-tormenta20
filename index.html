@@ -40,6 +40,7 @@
         <input type="file" id="input-importar" accept="application/json" hidden />
         <button id="btn-link-leitura" data-i18n="menu.shareLink" data-i18n-title="menu.shareLink.title" title="Gera um link somente-leitura com o personagem inteiro codificado nele">🔗 Link somente-leitura</button>
         <button id="btn-pdf" data-i18n="menu.printCharacter">🖨️ Imprimir ficha</button>
+        <button id="btn-preview-pdf" title="Ver as duas páginas da ficha em A4 antes de imprimir">👁️ Pré-visualizar ficha</button>
       </div>
     </details>
     <details class="menu" id="menu-ferramentas">
@@ -532,6 +533,9 @@
     </div>
   </div>
 </div>
+
+<!-- Ficha oficial em A4, montada só na hora de imprimir/pré-visualizar -->
+<div id="ficha-impressa" class="ficha-impressa" aria-hidden="true"></div>
 
 <footer class="rodape">
   <span id="rodape-fonte">Dados: Tormenta 20 (regras centrais) + Tormenta20 Compendium.</span>

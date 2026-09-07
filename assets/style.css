@@ -951,21 +951,8 @@ body.view-only .toolbar>button:not(#btn-pdf-topo):not(.link-btn),body.view-only 
 /* ============================================================
    Impressão
    ============================================================ */
-@media print{
-  .appbar,.aviso,.abas,.dashboard,footer,button,#room-chat-fab,#room-chat-panel,#modal,#toast,
-  .fan-disclaimer-banner,.mestre-shell,#view-only-banner{display:none!important}
-  body::before{display:none}
-  body{background:#fff;color:#000}
-  .aba{display:block!important}
-  .ficha-shell,main{max-width:100%;margin:0;padding:0}
-  .cartao{box-shadow:none;break-inside:avoid;border-color:#999;background:#fff;color:#000}
-  .cartao h2{color:#000;border-color:#999}
-  .auto-blocos,.chip-lista,.alerta-automacao,.ok-automacao,.filtro-linha,.wizard,
-  .creation-mode-toggle,.atrib-modos,.atrib-pool,.equip-quick{display:none!important}
-  .resumo-treinos-conta,.dica-inline,.dica{color:#444}
-  .tabela-pericias td,.tabela-ataques td,.tabela-equip td{color:#000;border-color:#bbb}
-  .tabela-pericias tr.treinada{background:#f0f0f0}
-  .pericia-bonus{border-color:#999;color:#000;background:transparent}
+/* O bloco @media print antigo (que escondia partes do app pra imprimir a
+   própria página) foi substituído pela ficha em A4 no fim deste arquivo. */
 }
 
 /* Especialidade de perícia (Ofício, Conhecimento) — campo inline na tabela */
@@ -991,3 +978,94 @@ body.view-only .toolbar>button:not(#btn-pdf-topo):not(.link-btn),body.view-only 
 .multiclasse-linha select,.multiclasse-linha input{width:100%;min-width:0}
 .multiclasse-linha input{text-align:center}
 @media(max-width:520px){.multiclasse-linha{grid-template-columns:1fr 70px 30px}}
+
+/* ============================================================
+   Ficha impressa (A4) — duas páginas montadas por montarFichaImpressa().
+   Em tela fica escondida; só aparece no @media print (ou na
+   pré-visualização, que adiciona .visivel).
+   ============================================================ */
+.ficha-impressa{display:none}
+.ficha-impressa.visivel{
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+  margin:18px auto 60px;padding:20px;max-width:1440px;
+  background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius)
+}
+.fi-pagina{
+  width:210mm;min-height:296mm;padding:9mm;box-sizing:border-box;flex-shrink:0;
+  background:#fdfbf5;color:#1a1a1a;border:1px solid #999;border-radius:4px;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;font-size:9pt;line-height:1.35
+}
+.ficha-impressa.visivel .fi-pagina{box-shadow:0 10px 34px rgba(0,0,0,.4)}
+
+.fi-topo{display:grid;grid-template-columns:1fr 26mm 40mm;gap:4mm;margin-bottom:4mm;align-items:stretch}
+.fi-nome{display:flex;flex-direction:column;gap:2mm}
+.fi-campo-linha{display:grid;grid-template-columns:repeat(auto-fit,minmax(30mm,1fr));gap:2mm}
+.fi-campo{border:1px solid #b9b0a0;border-radius:2mm;padding:1.6mm 2.4mm;background:#fff;min-width:0}
+.fi-campo b{display:block;font-size:10.5pt;font-weight:700;line-height:1.25;word-break:break-word}
+.fi-campo span{display:block;font-size:6pt;text-transform:uppercase;letter-spacing:.08em;color:#7a7060;margin-top:.6mm}
+.fi-escudo{
+  border:2px solid #8e1b22;border-radius:2mm;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2mm
+}
+.fi-escudo span{font-size:6pt;text-transform:uppercase;letter-spacing:.08em;color:#8e1b22;font-weight:700}
+.fi-escudo b{font-size:24pt;font-weight:800;line-height:1}
+.fi-vitais{display:grid;grid-template-rows:1fr 1fr;gap:2mm}
+.fi-vitais>div{border:1px solid #b9b0a0;border-radius:2mm;background:#fff;padding:1.4mm 2.4mm;display:flex;align-items:baseline;gap:2mm}
+.fi-vitais span{font-size:6.5pt;text-transform:uppercase;letter-spacing:.07em;color:#7a7060;font-weight:700}
+.fi-vitais b{font-size:15pt;font-weight:800;margin-left:auto}
+.fi-vitais small{font-size:7pt;color:#7a7060}
+
+.fi-topo-2{border-bottom:1.5pt solid #8e1b22;padding-bottom:2mm;margin-bottom:4mm;display:flex;align-items:baseline;gap:3mm}
+.fi-topo-2 h2{margin:0;font-size:15pt;font-weight:800}
+.fi-topo-2 span{font-size:8pt;color:#7a7060}
+
+.fi-colunas{display:grid;grid-template-columns:52mm 1fr;gap:4mm;align-items:start}
+.fi-pagina:nth-child(2) .fi-colunas,.fi-topo-2+.fi-colunas{grid-template-columns:1fr 1fr}
+.fi-coluna{display:flex;flex-direction:column;gap:3mm;min-width:0}
+
+.fi-caixa{border:1px solid #b9b0a0;border-radius:2mm;background:#fff;break-inside:avoid}
+.fi-caixa h3{
+  margin:0;padding:1.4mm 2.4mm;font-size:7pt;text-transform:uppercase;letter-spacing:.1em;
+  color:#fff;background:#8e1b22;border-radius:1.6mm 1.6mm 0 0;font-weight:700
+}
+.fi-caixa-corpo{padding:2mm 2.4mm}
+.fi-caixa-corpo p{margin:0 0 1.4mm}
+.fi-caixa-corpo p:last-child{margin-bottom:0}
+
+.fi-atributos{display:grid;grid-template-columns:1fr 1fr;gap:1.6mm}
+.fi-atributo{border:1px solid #d5cec0;border-radius:1.6mm;text-align:center;padding:1.4mm .8mm}
+.fi-atributo span{display:block;font-size:6pt;text-transform:uppercase;letter-spacing:.05em;color:#7a7060}
+.fi-atributo b{display:block;font-size:14pt;font-weight:800;line-height:1.1}
+
+.fi-mini{display:grid;grid-template-columns:1fr;gap:1.2mm}
+.fi-mini>div{display:flex;align-items:baseline;gap:2mm;border-bottom:1px dotted #d5cec0;padding-bottom:.8mm}
+.fi-mini>div:last-child{border-bottom:0;padding-bottom:0}
+.fi-mini span{font-size:7pt;color:#5c5445}
+.fi-mini b{margin-left:auto;font-size:10pt;font-weight:800}
+
+.fi-pericias{display:grid;grid-template-columns:1fr 1fr;gap:0 4mm}
+.fi-pericia{display:grid;grid-template-columns:3.5mm 1fr 8mm 8mm;align-items:baseline;gap:1mm;padding:.5mm 0;border-bottom:1px dotted #e0dacd;font-size:7.6pt}
+.fi-pericia i{font-style:normal;color:#8e1b22;font-size:7pt}
+.fi-pericia.treinada span{font-weight:700}
+.fi-pericia em{font-style:normal;font-size:6pt;color:#8a8172;text-align:right}
+.fi-pericia b{text-align:right;font-weight:800;font-size:8.5pt}
+
+.fi-tabela{width:100%;border-collapse:collapse;font-size:7.8pt}
+.fi-tabela th{text-align:left;font-size:6.2pt;text-transform:uppercase;letter-spacing:.06em;color:#7a7060;border-bottom:1px solid #b9b0a0;padding:.8mm .6mm}
+.fi-tabela td{border-bottom:1px dotted #e0dacd;padding:1mm .6mm}
+
+.fi-lista{margin:0;padding-left:4mm;font-size:8pt}
+.fi-lista li{margin-bottom:.9mm;break-inside:avoid}
+.fi-lista i,.fi-pagina i{font-style:normal;color:#7a7060;font-size:7pt}
+.fi-nota{font-size:6.4pt;color:#8a8172;margin-top:1.4mm!important}
+
+@media print{
+  /* Na impressão só existe a ficha em papel: o app inteiro sai de cena. */
+  body>*:not(.ficha-impressa){display:none!important}
+  body{background:#fff;margin:0}
+  body::before{display:none}
+  .ficha-impressa{display:block!important;margin:0;padding:0;background:none;border:0}
+  .fi-pagina{width:auto;min-height:0;border:0;border-radius:0;padding:0;background:#fff;break-after:page}
+  .fi-pagina:last-child{break-after:auto}
+  @page{size:A4 portrait;margin:9mm}
+}
