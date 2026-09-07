@@ -1,37 +1,402 @@
 [
-  { "id": "Acólito", "periciasSugeridas": ["cur", "rel", "von"] },
-  { "id": "Amigo dos Animais", "periciasSugeridas": ["ade", "cav"] },
-  { "id": "Amnésico", "periciasSugeridas": [], "nota": "Sem lista fixa: perícia e poder escolhidos pelo mestre, mais o poder único Lembranças Graduais." },
-  { "id": "Aristocrata", "periciasSugeridas": ["dip", "eng", "nob"] },
-  { "id": "Artesão", "periciasSugeridas": ["ofi", "von"] },
-  { "id": "Artista", "periciasSugeridas": ["atu", "eng"] },
-  { "id": "Assistente de Laboratório", "periciasSugeridas": ["ofi", "mis"] },
-  { "id": "Batedor", "periciasSugeridas": ["fur", "per", "sob"] },
-  { "id": "Capanga", "periciasSugeridas": ["lut", "int"] },
-  { "id": "Charlatão", "periciasSugeridas": ["eng", "jog"] },
-  { "id": "Circense", "periciasSugeridas": ["acr", "atu", "ref"] },
-  { "id": "Criminoso", "periciasSugeridas": ["eng", "fur", "lad"] },
-  { "id": "Curandeiro", "periciasSugeridas": ["cur", "von"] },
-  { "id": "Eremita", "periciasSugeridas": ["mis", "rel", "sob"] },
-  { "id": "Escravo", "periciasSugeridas": ["atl", "for", "fur"] },
-  { "id": "Estudioso", "periciasSugeridas": ["con", "gue", "mis"] },
-  { "id": "Fazendeiro", "periciasSugeridas": ["ade", "cav", "ofi", "sob"] },
-  { "id": "Forasteiro", "periciasSugeridas": ["cav", "pil", "sob"] },
-  { "id": "Gladiador", "periciasSugeridas": ["atu", "lut"] },
-  { "id": "Guarda", "periciasSugeridas": ["inv", "lut", "per"] },
-  { "id": "Herdeiro", "periciasSugeridas": ["mis", "nob", "ofi"] },
-  { "id": "Herói Camponês", "periciasSugeridas": ["ade", "ofi"] },
-  { "id": "Marujo", "periciasSugeridas": ["atl", "jog", "pil"] },
-  { "id": "Mateiro", "periciasSugeridas": ["atl", "fur", "sob"] },
-  { "id": "Membro de Guilda", "periciasSugeridas": ["dip", "eng", "mis", "ofi"] },
-  { "id": "Mercador", "periciasSugeridas": ["dip", "intu", "ofi"] },
-  { "id": "Minerador", "periciasSugeridas": ["atl", "for", "ofi"] },
-  { "id": "Nômade", "periciasSugeridas": ["cav", "pil", "sob"] },
-  { "id": "Pivete", "periciasSugeridas": ["fur", "ini", "lad"] },
-  { "id": "Refugiado", "periciasSugeridas": ["for", "ref", "von"] },
-  { "id": "Seguidor", "periciasSugeridas": ["ade", "ofi"] },
-  { "id": "Selvagem", "periciasSugeridas": ["per", "ref", "sob"] },
-  { "id": "Soldado", "periciasSugeridas": ["for", "gue", "lut", "pon"] },
-  { "id": "Taverneiro", "periciasSugeridas": ["dip", "jog", "ofi"] },
-  { "id": "Trabalhador", "periciasSugeridas": ["atl", "for"] }
+  {
+    "id": "Acólito",
+    "periciasSugeridas": [
+      "cur",
+      "rel",
+      "von"
+    ],
+    "itensIniciais": [
+      "Símbolo sagrado",
+      "Traje de Sacerdote"
+    ]
+  },
+  {
+    "id": "Amigo dos Animais",
+    "periciasSugeridas": [
+      "ade",
+      "cav"
+    ],
+    "itensIniciais": [
+      "Cão de guarda, cavalo, pônei ou trobo (escolha um)."
+    ]
+  },
+  {
+    "id": "Amnésico",
+    "periciasSugeridas": [],
+    "nota": "Sem lista fixa: perícia e poder escolhidos pelo mestre, mais o poder único Lembranças Graduais.",
+    "itensIniciais": [
+      "Um ou mais itens (somando até T$ 500), aprovados pelo mestre, que podem ser uma pista misteriosa do seu passado."
+    ]
+  },
+  {
+    "id": "Aristocrata",
+    "periciasSugeridas": [
+      "dip",
+      "eng",
+      "nob"
+    ],
+    "itensIniciais": [
+      "Joia de família no valor de T$ 300",
+      "Traje da Corte"
+    ]
+  },
+  {
+    "id": "Artesão",
+    "periciasSugeridas": [
+      "ofi",
+      "von"
+    ],
+    "itensIniciais": [
+      "Instrumentos de ofício (qualquer)",
+      "Um que você possa fabricar de até T$ 50"
+    ]
+  },
+  {
+    "id": "Artista",
+    "periciasSugeridas": [
+      "atu",
+      "eng"
+    ],
+    "itensIniciais": [
+      "Estojo de disfarces ou um instrumento musical a sua escolha."
+    ]
+  },
+  {
+    "id": "Assistente de Laboratório",
+    "periciasSugeridas": [
+      "ofi",
+      "mis"
+    ],
+    "itensIniciais": [
+      "Instrumentos de Ofício (alquimista)"
+    ]
+  },
+  {
+    "id": "Batedor",
+    "periciasSugeridas": [
+      "fur",
+      "per",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Barraca",
+      "Equipamento de viagem"
+    ]
+  },
+  {
+    "id": "Capanga",
+    "periciasSugeridas": [
+      "lut",
+      "int"
+    ],
+    "itensIniciais": [
+      "Tatuagem ou outro adereço de sua gangue aprimorado (+1 em Intimidação)"
+    ]
+  },
+  {
+    "id": "Charlatão",
+    "periciasSugeridas": [
+      "eng",
+      "jog"
+    ],
+    "itensIniciais": [
+      "Joia falsificada (valor aparente de T$ 100, sem valor real)",
+      "Estojo de disfarces"
+    ]
+  },
+  {
+    "id": "Circense",
+    "periciasSugeridas": [
+      "acr",
+      "atu",
+      "ref"
+    ],
+    "itensIniciais": [
+      "Bola Colorida (+1 em Atuação)"
+    ]
+  },
+  {
+    "id": "Criminoso",
+    "periciasSugeridas": [
+      "eng",
+      "fur",
+      "lad"
+    ],
+    "itensIniciais": [
+      "Estojo de disfarces",
+      "Gazua"
+    ]
+  },
+  {
+    "id": "Curandeiro",
+    "periciasSugeridas": [
+      "cur",
+      "von"
+    ],
+    "itensIniciais": [
+      "Bálsamo restaurador",
+      "Maleta de Medicamentos"
+    ]
+  },
+  {
+    "id": "Eremita",
+    "periciasSugeridas": [
+      "mis",
+      "rel",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Barraca",
+      "Equipamento de viagem"
+    ]
+  },
+  {
+    "id": "Escravo",
+    "periciasSugeridas": [
+      "atl",
+      "for",
+      "fur"
+    ],
+    "itensIniciais": [
+      "Algemas",
+      "Ferramenta Pesada (mesma estatística que maça)"
+    ]
+  },
+  {
+    "id": "Estudioso",
+    "periciasSugeridas": [
+      "con",
+      "gue",
+      "mis"
+    ],
+    "itensIniciais": [
+      "Coleção de livros (+1 em Conhecimento, Guerra, Misticismo ou Nobreza, a sua escolha)."
+    ]
+  },
+  {
+    "id": "Fazendeiro",
+    "periciasSugeridas": [
+      "ade",
+      "cav",
+      "ofi",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Carroça",
+      "Ferramenta agrícola (mesmas estatísticas de uma lança)",
+      "Ração de Viagem",
+      "Animal não combativo (como uma galinha, porco ou ovelha)"
+    ]
+  },
+  {
+    "id": "Forasteiro",
+    "periciasSugeridas": [
+      "cav",
+      "pil",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Equipamento de viagem",
+      "Traje de Viagem Estrangeiro",
+      "Instrumento musical exótico (+1 em uma perícia de Carisma aprovada pelo mestre)"
+    ]
+  },
+  {
+    "id": "Gladiador",
+    "periciasSugeridas": [
+      "atu",
+      "lut"
+    ],
+    "itensIniciais": [
+      "Item sem valor recebido de um admirador"
+    ]
+  },
+  {
+    "id": "Guarda",
+    "periciasSugeridas": [
+      "inv",
+      "lut",
+      "per"
+    ],
+    "itensIniciais": [
+      "Insígnia da Milícia",
+      "Apito"
+    ]
+  },
+  {
+    "id": "Herdeiro",
+    "periciasSugeridas": [
+      "mis",
+      "nob",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Símbolo de Herança"
+    ]
+  },
+  {
+    "id": "Herói Camponês",
+    "periciasSugeridas": [
+      "ade",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de ofício",
+      "Traje de Plebeu"
+    ]
+  },
+  {
+    "id": "Marujo",
+    "periciasSugeridas": [
+      "atl",
+      "jog",
+      "pil"
+    ],
+    "itensIniciais": [
+      "Corda"
+    ]
+  },
+  {
+    "id": "Mateiro",
+    "periciasSugeridas": [
+      "atl",
+      "fur",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Barraca",
+      "Equipamento de viagem"
+    ]
+  },
+  {
+    "id": "Membro de Guilda",
+    "periciasSugeridas": [
+      "dip",
+      "eng",
+      "mis",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Instrumentos de ofício"
+    ]
+  },
+  {
+    "id": "Mercador",
+    "periciasSugeridas": [
+      "dip",
+      "intu",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Carroça",
+      "Trobo",
+      "Mercadoria no valor de T$ 100"
+    ]
+  },
+  {
+    "id": "Minerador",
+    "periciasSugeridas": [
+      "atl",
+      "for",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Gemas preciosas no valor de T$ 100"
+    ]
+  },
+  {
+    "id": "Nômade",
+    "periciasSugeridas": [
+      "cav",
+      "pil",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Equipamento de viagem"
+    ]
+  },
+  {
+    "id": "Pivete",
+    "periciasSugeridas": [
+      "fur",
+      "ini",
+      "lad"
+    ],
+    "itensIniciais": [
+      "Gazua",
+      "Traje de Plebeu",
+      "Animal urbano (como um cão, gato, rato ou pombo)"
+    ]
+  },
+  {
+    "id": "Refugiado",
+    "periciasSugeridas": [
+      "for",
+      "ref",
+      "von"
+    ],
+    "itensIniciais": [
+      "Um estrangeiro de até T$ 100."
+    ]
+  },
+  {
+    "id": "Seguidor",
+    "periciasSugeridas": [
+      "ade",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Um recebido de seu mestre de até T$ 100."
+    ]
+  },
+  {
+    "id": "Selvagem",
+    "periciasSugeridas": [
+      "per",
+      "ref",
+      "sob"
+    ],
+    "itensIniciais": [
+      "Pequeno animal de estimação como um pássaro ou esquilo"
+    ]
+  },
+  {
+    "id": "Soldado",
+    "periciasSugeridas": [
+      "for",
+      "gue",
+      "lut",
+      "pon"
+    ],
+    "itensIniciais": [
+      "Uniforme militar",
+      "Insígnia de seu exército"
+    ]
+  },
+  {
+    "id": "Taverneiro",
+    "periciasSugeridas": [
+      "dip",
+      "jog",
+      "ofi"
+    ],
+    "itensIniciais": [
+      "Rolo de macarrão ou martelo de carne (mesmas estatísticas de uma clava)",
+      "Panela",
+      "Avental",
+      "Caneca",
+      "Pano Sujo"
+    ]
+  },
+  {
+    "id": "Trabalhador",
+    "periciasSugeridas": [
+      "atl",
+      "for"
+    ],
+    "itensIniciais": [
+      "Uma ferramenta pesada (mesmas estatísticas de uma maça ou lança, a sua escolha)."
+    ]
+  }
 ]

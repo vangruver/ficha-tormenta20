@@ -6,6 +6,21 @@ equipamentos, ameaças (bestiário) e panteão. Roda 100% no navegador — publi
 **GitHub Pages** sem back-end. Feita no mesmo esquema da [ficha de D&D 5e](https://github.com/vangruver/dnd-sheet),
 adaptado para as regras de Tormenta 20.
 
+## Aviso: projeto de fã, sem fins lucrativos
+
+Esta ficha é um **projeto de fã, não-oficial e sem fins lucrativos**. Não tem anúncio, cobrança,
+assinatura nem qualquer monetização — o código é aberto e ela roda de graça no navegador.
+
+**Tormenta 20** e tudo de Arton (raças, classes, poderes, magias, ameaças, divindades) pertencem à
+**Jambô Editora** e aos autores do sistema. Este projeto **não é afiliado, endossado nem aprovado**
+por eles. O que fica versionado aqui são as *estatísticas* do sistema — números e listas, que são
+fatos de regra — nunca o texto dos livros: as descrições da ficha são resumos mecânicos curtos
+escritos para ela.
+
+**Se você joga Tormenta 20, compre os livros.** A ficha não substitui nenhum deles; ela só organiza
+o personagem de quem já joga. Se você tem direito sobre algum conteúdo aqui e quer que saia, abra
+uma Issue no repositório explicando o pedido.
+
 ## O que ela faz
 
 - **Assistente guiado de criação** (aba Construção → "Assistente guiado"): dez passos na ordem em
@@ -130,10 +145,23 @@ adaptado para as regras de Tormenta 20.
   (480 páginas) foi coberto.
 - **Raças, classes, perícias, atributos e origens (`data/core/*.json`)**: digitados à mão a partir
   do livro Tormenta 20 - Jogo Básico, porque não existe uma fonte de dados aberta e "viva" como o
-  5etools para D&D. As **perícias iniciais das 14 classes** (as fixas, o "uma ou outra" e quantas
-  ficam à escolha) e os **PV/PM por nível** foram conferidos contra o SRD de T20; ainda assim vale
-  revisar contra o livro antes de usar em mesa. Os campos de perícias sugeridas por origem são um
-  palpite razoável, não a lista oficial exata.
+  5etools para D&D, e depois **conferidos contra o [Fichas de Nimb](https://github.com/YuriAlessandro/gerador-ficha-tormenta20)**
+  (Yuri Alessandro Martins, código sob licença MIT), outro projeto de fã de T20 que mantém essas
+  tabelas. A conferência é feita pelo script [`sync-core.mjs`](sync-core.mjs), que lê um checkout do
+  Nimb, aponta divergência campo a campo e nunca sobrescreve nada em silêncio. O resultado:
+  - **PV, PM e número de perícias treinadas das 14 classes batem integralmente** entre os dois
+    projetos — só o Arcanista diverge (1 perícia à escolha aqui, 2 no Nimb) e continua marcado
+    abaixo como pendente de conferência no livro;
+  - **as perícias sugeridas por origem, que este README chamava de "palpite temático", batem uma a
+    uma com o Nimb nas 35 origens** — deixaram de ser palpite;
+  - quatro classes ganharam perícias de classe que faltavam aqui (Bucaneiro, Caçador, Cavaleiro e
+    Clérigo);
+  - entraram campos que não existiam: **proficiências de armadura/arma e prioridade de atributos**
+    por classe, e o **equipamento inicial** de cada origem.
+
+  Só entram números e listas — estatísticas do sistema, que são fatos de regra. O texto descritivo
+  de cada traço continua sendo um resumo mecânico curto escrito para esta ficha; nem a prosa dos
+  livros nem a redação do Nimb é copiada.
 - **Escala de atributos**: a ficha usa a escala de Tormenta 20, em que **o valor do atributo já é o
   modificador** (Força 2 soma +2) — não existe a conversão `(valor − 10) ÷ 2` do d20. Fichas salvas
   antes dessa correção são convertidas automaticamente na primeira vez que abrem.
@@ -188,6 +216,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `src/app.js` | interface, abas, assistente guiado, painel de automação, gerador de personagem, equipamento, rolagens e sala |
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
+| `sync-core.mjs` | confere `data/core/*.json` contra o Fichas de Nimb e completa os campos que faltam |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens e escolhas obrigatórias de classe — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
@@ -196,7 +225,12 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 
 - Os traços raciais em `data/core/racas.json` foram digitados a partir do livro básico — revise
   antes de usar em mesa (veja "Fonte dos dados" acima).
-- Perícias sugeridas por origem são um palpite temático, não a lista oficial fixa do livro.
+- **Arcanista**: aqui a classe treina 1 perícia à escolha (mais Inteligência) e no Fichas de Nimb
+  são 2. Não deu para resolver sem o livro à mão — se você conferir, o valor fica em
+  `treinosIniciais` no `data/core/classes.json`.
+- Três classes listam perícias de classe que o Fichas de Nimb não lista (Bucaneiro: Diplomacia,
+  Intuição e Ladinagem; Caçador: Investigação e Vontade; Clérigo: Intimidação). Ficaram como estão,
+  porque o script só acrescenta o que falta e nunca remove — vale conferir no livro.
 - Equipamento inicial de classe/origem não é adicionado automaticamente ao inventário quando você
   monta o personagem à mão — só o **gerador** veste armadura, escudo e arma sozinho.
 - **Traços raciais condicionais** (o +2 do anão só no subterrâneo, o +5 de Furtividade do trog só

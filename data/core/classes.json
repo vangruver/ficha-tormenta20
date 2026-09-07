@@ -31,7 +31,14 @@
     "conjuracao": "arcana",
     "iniciais": "Escolha um Caminho do Arcanista (bruxo, feiticeiro ou mago); conhece truques e magias arcanas de 1º círculo.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "int"
+    ]
   },
   {
     "id": "barbaro",
@@ -63,7 +70,17 @@
     ],
     "iniciais": "Fúria: 2 PM, +2 em ataque e dano corpo a corpo por uma cena; escala com o nível.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "con"
+    ]
   },
   {
     "id": "bardo",
@@ -103,7 +120,15 @@
     "conjuracao": "arcana",
     "iniciais": "Inspiração (2 PM: +1 em testes de perícia de aliados em alcance curto); escolhe três escolas e conhece magias arcanas de 1º círculo delas.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Marciais",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "car"
+    ]
   },
   {
     "id": "bucaneiro",
@@ -131,11 +156,13 @@
       "eng",
       "for",
       "fur",
+      "ini",
       "int",
       "intu",
       "jog",
       "lad",
       "lut",
+      "ofi",
       "per",
       "pil",
       "pon",
@@ -143,7 +170,18 @@
     ],
     "iniciais": "Luta suja e manobras de abordagem; bônus em combate com armas leves e à distância.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Marciais",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "des",
+      "car",
+      "int"
+    ]
   },
   {
     "id": "cacador",
@@ -166,10 +204,15 @@
     "periciasDeClasse": [
       "ade",
       "atl",
+      "cav",
+      "cur",
       "for",
       "fur",
+      "ini",
       "int",
+      "inv",
       "lut",
+      "ofi",
       "per",
       "pon",
       "ref",
@@ -179,7 +222,18 @@
     "conjuracao": "divina",
     "iniciais": "Inimigo predileto e terreno favorito; conhece magias divinas de 1º círculo.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "des",
+      "sab",
+      "for"
+    ]
   },
   {
     "id": "cavaleiro",
@@ -202,14 +256,27 @@
       "dip",
       "for",
       "gue",
+      "ini",
       "int",
       "lut",
       "nob",
+      "per",
       "von"
     ],
     "iniciais": "Código de conduta (ordem escolhida) e desafio ao inimigo.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armaduras Pesadas",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "con"
+    ]
   },
   {
     "id": "clerigo",
@@ -230,10 +297,14 @@
       "cur",
       "dip",
       "for",
+      "ini",
       "int",
       "intu",
+      "lut",
       "mis",
       "nob",
+      "ofi",
+      "per",
       "rel",
       "von"
     ],
@@ -241,7 +312,16 @@
     "iniciais": "Escolha uma divindade e uma esfera de milagres; conhece magias divinas de 1º círculo.",
     "fonte": "Tormenta 20 - Jogo Básico",
     "divindadeObrigatoria": true,
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armaduras Pesadas",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "sab"
+    ]
   },
   {
     "id": "druida",
@@ -277,7 +357,15 @@
     "conjuracao": "divina",
     "iniciais": "Forma selvagem e comunhão com a natureza; conhece magias divinas de 1º círculo.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "sab"
+    ]
   },
   {
     "id": "guerreiro",
@@ -313,7 +401,19 @@
     ],
     "iniciais": "Treinamento marcial completo; ganha um talento/poder de combate bônus no 1º nível.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armaduras Pesadas",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "des",
+      "con"
+    ]
   },
   {
     "id": "inventor",
@@ -346,7 +446,14 @@
     ],
     "iniciais": "Engenhosidade e protótipo: engenhocas com efeitos variados, alimentadas por PM.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "int"
+    ]
   },
   {
     "id": "ladino",
@@ -386,7 +493,14 @@
     ],
     "iniciais": "Ataque furtivo: dano extra contra alvos desprevenidos ou flanqueados.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "des"
+    ]
   },
   {
     "id": "lutador",
@@ -419,7 +533,15 @@
     ],
     "iniciais": "Combate desarmado aprimorado; dano desarmado escala com o nível.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armas Simples"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "con"
+    ]
   },
   {
     "id": "nobre",
@@ -458,7 +580,17 @@
     ],
     "iniciais": "Liderança: pode conceder bônus a aliados usando testes sociais.",
     "fonte": "Tormenta 20 - Jogo Básico",
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armaduras Pesadas",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "car"
+    ]
   },
   {
     "id": "paladino",
@@ -494,6 +626,18 @@
     "iniciais": "Código de conduta e imposição de mãos (cura por PM); conhece magias divinas de 1º círculo.",
     "fonte": "Tormenta 20 - Jogo Básico",
     "divindadeObrigatoria": true,
-    "dinheiroInicial": 60
+    "dinheiroInicial": 60,
+    "proficiencias": [
+      "Armaduras Leves",
+      "Armaduras Pesadas",
+      "Armas Marciais",
+      "Armas Simples",
+      "Escudos"
+    ],
+    "atributosPrioritarios": [
+      "for",
+      "con",
+      "car"
+    ]
   }
 ]

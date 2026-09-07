@@ -3221,6 +3221,13 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-10", items: [
+    "<b>Dados de raça, classe e origem conferidos</b> contra o <a href=\"https://github.com/YuriAlessandro/gerador-ficha-tormenta20\" target=\"_blank\" rel=\"noopener\">Fichas de Nimb</a>, outro projeto de fã de T20. PV, PM e número de perícias das 14 classes batem integralmente entre os dois.",
+    "<b>As perícias de origem deixaram de ser palpite</b>: as 35 origens batem uma a uma com a lista do Nimb — o aviso de \"palpite temático\" saiu do README.",
+    "<b>Equipamento inicial de origem</b>: cada origem agora traz o que ela concede na criação, com um botão pra jogar tudo no inventário.",
+    "<b>Proficiências por classe</b>: o gerador parou de vestir armadura pesada em Arcanista — cada classe só usa o que é proficiente, e escudo só pra quem tem.",
+    "Quatro classes ganharam perícias de classe que faltavam (Bucaneiro, Caçador, Cavaleiro e Clérigo), e a distribuição de atributos do gerador segue a prioridade declarada pela classe.",
+  ] },
   { date: "2026-09-09", items: [
     "<b>PM gasto de verdade</b>: botão <b>Conjurar</b> em cada magia e <b>Usar</b> nos 174 poderes com custo (Fúria, Aparar, Inspiração…). Desconta a mana, recusa quando falta e registra no histórico. Antes o custo era só um rótulo.",
     "<b>Círculo máximo por nível</b>: 1º círculo no 1º nível e um novo a cada quatro. Magia acima disso fica marcada com o nível em que libera e não dá pra conjurar.",
@@ -3284,7 +3291,8 @@ function renderDisclaimerModal() {
     <div class="modal-body">
       <p><strong>Este é um projeto de fã, não-oficial e sem fins lucrativos.</strong> Não há anúncios, cobrança, assinatura ou qualquer forma de monetização — o código é aberto e a ficha roda de graça direto do navegador.</p>
       <p><strong>Tormenta 20</strong> (Tormenta RPG), seus logos, nomes de raças, classes, poderes, magias, ameaças, divindades e demais elementos de regra e ambientação de Arton são marcas e propriedade dos respectivos detentores de direitos autorais do sistema. Este site, seu autor e seus colaboradores <strong>não são afiliados, endossados, patrocinados ou aprovados</strong> pelos editores/detentores de direitos de Tormenta 20.</p>
-      <p>O conteúdo de regras exibido na ficha (raças, classes, poderes, magias, equipamentos, ameaças, panteão) é lido em tempo de execução, direto do navegador de quem usa, a partir do compêndio comunitário <a href="https://github.com/Kull4ck/tormenta20-compendium" target="_blank" rel="noopener">tormenta20-compendium</a> (Kull4ck) — <strong>nenhum arquivo de conteúdo oficial é copiado ou distribuído por este repositório</strong>, só o código da ficha em si.</p>
+      <p>Os dados de regra que a ficha usa vêm de duas fontes comunitárias, ambas projetos de fã de código aberto, e ficam versionados no repositório em formato de tabela (números e listas), não como reprodução dos livros: o compêndio <a href="https://github.com/Kull4ck/tormenta20-compendium" target="_blank" rel="noopener">tormenta20-compendium</a> (Kull4ck), de onde saem poderes, magias, equipamentos, ameaças e panteão; e o <a href="https://github.com/YuriAlessandro/gerador-ficha-tormenta20" target="_blank" rel="noopener">Fichas de Nimb</a> (Yuri Alessandro Martins), usado para conferir e completar raças, classes e origens. <strong>Nenhum texto dos livros é reproduzido aqui</strong>: as descrições são resumos mecânicos curtos escritos para esta ficha, e o que se guarda são as estatísticas do sistema — que são fatos de regra, não a prosa dos livros.</p>
+      <p>Se você quer as regras completas, com o texto, as ilustrações e a ambientação, <strong>compre os livros</strong>: eles são o produto da Jambô, e esta ficha não substitui nenhum deles — ela só organiza a ficha de quem já joga.</p>
       <p>Esta ficha existe pra uso pessoal em mesas de RPG. Se você é detentor de direitos sobre algum conteúdo aqui e quer que algo seja removido, abra uma Issue no repositório do GitHub (veja o botão "🐛 Relatar bug") explicando o pedido.</p>
       <p>A ficha é fornecida "como está", sem garantias de qualquer tipo. Os personagens que você cria ficam salvos só no seu próprio navegador (ou no arquivo que você exportar) — ninguém além de você tem acesso a eles.</p>
     </div>`);
@@ -4011,6 +4019,26 @@ function blocosDeAutomacao() {
     }));
   }
 
+  // --- Origem: equipamento inicial ---
+  // A origem concede itens na criação. Eles são texto do livro ("Símbolo
+  // sagrado", "Cão de guarda, cavalo, pônei ou trobo (escolha um)"), então a
+  // ficha oferece o botão de jogar tudo no inventário como itens avulsos, em
+  // vez de tentar casar cada frase com uma linha do catálogo.
+  const itensDaOrigem = origemAtual()?.itensIniciais || [];
+  if (itensDaOrigem.length && !auto.semOrigem) {
+    const jaTem = itensDaOrigem.every((nome) => personagem.equipamentos.some((i) => i.nome === nome));
+    blocos.push(blocoHtml({
+      id: "itens-origem",
+      titulo: `Equipamento de ${personagem.origem}`,
+      fonte: "Origem",
+      estado: jaTem ? "ok" : "info",
+      texto: `A origem começa com: ${itensDaOrigem.map((x) => `<b>${esc(x)}</b>`).join(" · ")}.`,
+      corpo: jaTem
+        ? '<div class="chip-lista"><span class="chip travado">já no inventário<small>✓</small></span></div>'
+        : '<div class="chip-lista"><button type="button" class="chip acao" data-add-itens-origem="1">+ Adicionar ao inventário</button></div>',
+    }));
+  }
+
   // --- Classe: escolhas obrigatórias de nível (Caminho do Arcanista etc.) ---
   // A ficha não guarda a lista de opções: ela pergunta ao compêndio quais
   // poderes pertencem à família declarada em data/core/escolhas-classe.json.
@@ -4172,6 +4200,15 @@ function registrarEventosAutomacao() {
       else delete e.escolhasClasse[dataset.autoEscolhaClasse];
       return salvarERenderizar();
     }
+    if (dataset.addItensOrigem) {
+      for (const nome of origemAtual()?.itensIniciais || []) {
+        if (!personagem.equipamentos.some((i) => i.nome === nome)) {
+          personagem.equipamentos.push({ id: `origem-${nome}`, nome, peso: 0, qtd: 1, equipado: false });
+        }
+      }
+      toast("Equipamento da origem adicionado ao inventário.");
+      return salvarERenderizar();
+    }
     if (dataset.abrirPicker) return openPickerModal(dataset.abrirPicker);
     if (dataset.autoLegado) { e.legadoRacial = dataset.autoLegado; return salvarERenderizar(); }
     if (dataset.autoPoderOrigem !== undefined) {
@@ -4272,8 +4309,12 @@ function sorteiaVarios(lista, n) {
 // Constituição e Destreza (que todo mundo usa: PV, Defesa e iniciativa).
 function distribuirArranjo(valores, classe) {
   const ordem = valores.slice().sort((a, b) => b - a);
+  // A classe declara a ordem de atributos que interessa a ela; o
+  // atributo-chave abre a fila, e Constituição/Destreza fecham o resto
+  // (todo mundo usa PV, Defesa e iniciativa).
   const chave = classe?.atributoChave;
-  const prioridade = [chave, "con", "des", "sab", "int", "car", "for"].filter(Boolean);
+  const daClasse = classe?.atributosPrioritarios || [];
+  const prioridade = [...new Set([chave, ...daClasse, "con", "des", "sab", "int", "car", "for"].filter(Boolean))];
   const restantes = db.atributos.map((a) => a.id).filter((id) => !prioridade.includes(id));
   const alvo = [...new Set([...prioridade, ...restantes])].slice(0, valores.length);
   const out = {};
@@ -4332,9 +4373,15 @@ function equiparInicialAleatorio(classe) {
   personagem.equipamentos = [];
   personagem.ataques = [];
 
+  // A classe agora declara em que armaduras é proficiente — um Arcanista, que
+  // só tem "Armaduras Leves", não pode sair de armadura completa.
+  const prof = (classe?.proficiencias || []).map((x) => x.toLowerCase());
+  const podePesada = prof.some((x) => x.includes("pesada"));
+  const podeLeve = prof.some((x) => x.includes("leve")) || podePesada;
   const armaduras = catalogoPorFuncao("armadura")
     .map((rec) => ({ rec, info: regras.lerArmadura(rec) }))
     .filter((x) => x.info)
+    .filter((x) => (x.info.tipo === "armadura pesada" ? podePesada : podeLeve))
     .sort((a, b) => b.info.defesa - a.info.defesa);
   // Classe sem treino em armadura pesada é castigada pela penalidade; como a
   // ficha não modela proficiências, o limite usado é a penalidade máxima que
@@ -4357,7 +4404,7 @@ function equiparInicialAleatorio(classe) {
     personagem.ataques.push(ataqueDaArma(arma));
   }
   // Escudo só pra quem luta corpo a corpo e não usa arma de duas mãos óbvia.
-  if (!usaDistancia) {
+  if (!usaDistancia && prof.some((x) => x.includes("escudo"))) {
     const escudo = catalogoPorFuncao("escudo").find((x) => /leve/i.test(x.nome));
     if (escudo) equiparNaVaga(escudo, "escudo");
   }
@@ -4415,6 +4462,13 @@ function gerarPersonagem(opcoes = {}) {
 
   aplicarAutomacaoAleatoria(raca, classe, origem);
   if (opcoes.equipar !== false) equiparInicialAleatorio(classe);
+
+  // Equipamento que a origem concede, junto do que o gerador equipou.
+  for (const nome of (origem?.itensIniciais) || []) {
+    if (!personagem.equipamentos.some((i) => i.nome === nome)) {
+      personagem.equipamentos.push({ id: `origem-${nome}`, nome, peso: 0, qtd: 1, equipado: false });
+    }
+  }
 
   // Dinheiro inicial da criação (o que sobra depois do equipamento fica no
   // bolso — a ficha não cobra o preço dos itens, então é um valor de partida).
