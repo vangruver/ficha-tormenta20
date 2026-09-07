@@ -974,3 +974,20 @@ body.view-only .toolbar>button:not(#btn-pdf-topo):not(.link-btn),body.view-only 
   background:var(--inset);border:1px dashed var(--border-2);border-radius:20px
 }
 .pericia-especialidade:focus{border-style:solid;border-color:var(--red)}
+
+/* ---------- Multiclasse ---------- */
+.multiclasse-secao{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.multiclasse-secao:empty{display:none}
+.multiclasse-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.multiclasse-head>div{display:flex;flex-direction:column;gap:3px}
+.multiclasse-head span{font:700 11px var(--font-head);letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+.multiclasse-head small{font-size:10px;color:var(--text-mut)}
+.multiclasse-dist{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.multiclasse-lista{display:flex;flex-direction:column;gap:8px}
+.multiclasse-linha{
+  display:grid;grid-template-columns:1fr 84px 34px;gap:8px;align-items:center;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 10px
+}
+.multiclasse-linha select,.multiclasse-linha input{width:100%;min-width:0}
+.multiclasse-linha input{text-align:center}
+@media(max-width:520px){.multiclasse-linha{grid-template-columns:1fr 70px 30px}}

@@ -43,6 +43,9 @@ export function novoPersonagem(nome = "Novo Herói") {
     nome,
     jogador: "",
     raca: "", classe: "", origem: "", divindade: "",
+    // Classes adicionais além da inicial (`classe`), cada uma com quantos
+    // níveis do total foram gastos nela: [{ classeId, niveis }].
+    multiclasses: [],
     nivel: 1,
     escolhas: escolhasVazias(),
     // Escala de T20: o valor do atributo já é o modificador e começa em 0.
@@ -118,7 +121,7 @@ export function migrarPersonagem(p) {
   if (!p.especializacoes || typeof p.especializacoes !== "object") p.especializacoes = {};
   if (!p.atributosSlots || typeof p.atributosSlots !== "object") p.atributosSlots = {};
   p.periciasOutros = p.periciasOutros || {};
-  for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp"]) {
+  for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp", "multiclasses"]) {
     if (!Array.isArray(p[k])) p[k] = [];
   }
   for (const item of p.equipamentos) if (item && item.equipado === undefined) item.equipado = false;

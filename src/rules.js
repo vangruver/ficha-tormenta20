@@ -217,3 +217,57 @@ export function custoDaMagia(magia) {
   if (Number.isFinite(c) && c > 0) return c;
   return CUSTO_POR_CIRCULO[Number(magia?.circulo)] ?? 1;
 }
+
+// ==============================================================
+// Multiclasse.
+//
+// Em Tormenta 20 o personagem tem um nível TOTAL, repartido entre classes.
+// Só a classe inicial dá os PV/PM "iniciais" (o pacote cheio do 1º nível);
+// cada nível seguinte — na classe original ou numa nova — soma os valores
+// "por nível" da classe em que o nível foi ganho. A classe nova também
+// concede as perícias treinadas dela, mas o livro reduz a lista: só as
+// fixas, não as escolhas livres do 1º nível.
+//
+// `classesDoPersonagem` chega como:
+//   [{ classe, niveis }, ...]  — o primeiro item é a classe inicial.
+// ==============================================================
+
+// Distribui o nível total entre as classes, garantindo pelo menos 1 na
+// inicial e nunca passando do total.
+export function niveisPorClasse(entradas, nivelTotal) {
+  const total = Math.max(1, Number(nivelTotal) || 1);
+  const lista = (entradas || []).filter((x) => x && x.classe);
+  if (!lista.length) return [];
+  const extras = lista.slice(1).map((x) => ({ ...x, niveis: Math.max(1, Number(x.niveis) || 1) }));
+  // Os níveis das classes extras não podem somar mais que total − 1.
+  let disponivel = total - 1;
+  const usados = [];
+  for (const x of extras) {
+    const n = Math.max(0, Math.min(x.niveis, disponivel));
+    if (n > 0) { usados.push({ ...x, niveis: n }); disponivel -= n; }
+  }
+  return [{ ...lista[0], niveis: total - usados.reduce((a, b) => a + b.niveis, 0) }, ...usados];
+}
+
+export function pvMaximoMulticlasse({ classes, nivel, modCon, extraNivel1 = 0, extraPorNivel = 0, extra = 0 }) {
+  const dist = niveisPorClasse(classes, nivel);
+  if (!dist.length) return null;
+  const [inicial, ...outras] = dist;
+  // 1º nível: pacote inicial da classe de origem.
+  let pv = (inicial.classe.pvInicial ?? 0) + modCon + extraNivel1;
+  // Demais níveis da classe inicial.
+  pv += ((inicial.classe.pvPorNivel ?? 0) + modCon + extraPorNivel) * Math.max(0, inicial.niveis - 1);
+  // Níveis ganhos em outras classes.
+  for (const o of outras) pv += ((o.classe.pvPorNivel ?? 0) + modCon + extraPorNivel) * o.niveis;
+  return Math.max(1, pv + extra);
+}
+
+export function pmMaximoMulticlasse({ classes, nivel, extraPorNivel = 0, extra = 0 }) {
+  const dist = niveisPorClasse(classes, nivel);
+  if (!dist.length) return extra;
+  const [inicial, ...outras] = dist;
+  let pm = (inicial.classe.pmInicial ?? 0) + extraPorNivel;
+  pm += ((inicial.classe.pmPorNivel ?? 0) + extraPorNivel) * Math.max(0, inicial.niveis - 1);
+  for (const o of outras) pm += ((o.classe.pmPorNivel ?? 0) + extraPorNivel) * o.niveis;
+  return Math.max(0, pm + extra);
+}

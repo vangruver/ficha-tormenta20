@@ -113,6 +113,34 @@ function preencherSelectsEstáticos() {
 
 function racaAtual() { return porId(db.racas, personagem.raca); }
 function classeAtual() { return porId(db.classes, personagem.classe); }
+
+// ==============================================================
+// Multiclasse — a classe inicial (`personagem.classe`) mais as extras de
+// `personagem.multiclasses`. A distribuição de níveis é sempre derivada do
+// nível total: a inicial fica com o que sobra depois das extras, e nunca
+// com menos de 1.
+// ==============================================================
+function classesDoPersonagem() {
+  const inicial = classeAtual();
+  if (!inicial) return [];
+  const extras = (personagem.multiclasses || [])
+    .map((m) => ({ classe: porId(db.classes, m.classeId), niveis: Math.max(1, Number(m.niveis) || 1) }))
+    .filter((x) => x.classe && x.classe.id !== inicial.id);
+  return regras.niveisPorClasse([{ classe: inicial, niveis: 1 }, ...extras], personagem.nivel || 1);
+}
+function temMulticlasse() { return classesDoPersonagem().length > 1; }
+// Rótulo "Arcanista 3 / Guerreiro 2".
+function rotuloDeClasses() {
+  return classesDoPersonagem().map((x) => `${x.classe.nome} ${x.niveis}`).join(" / ");
+}
+// Perícias que a classe extra concede: o livro dá só as fixas da classe
+// nova, não as escolhas livres do 1º nível.
+function periciasDeMulticlasse() {
+  const [, ...extras] = classesDoPersonagem();
+  const out = new Map();
+  for (const x of extras) for (const id of x.classe.periciasFixas || []) out.set(id, `Multiclasse (${x.classe.nome})`);
+  return out;
+}
 function origemAtual() { return porId(db.origens, personagem.origem) || porId(db.origensRegionais, personagem.origem); }
 // Bloco "auto" da raça: tudo que a ficha consegue aplicar sozinha (bônus de
 // Defesa, PV/PM extras, perícias concedidas) ou precisa perguntar (atributos
@@ -298,11 +326,14 @@ function normalizarEscolhas() {
   }
 
   // Escolha de classe com uma opção só na família não é escolha.
-  for (const regra of escolhasDeClassePara(db, classe?.id, personagem.nivel || 1)) {
-    const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
-    if (opcoes.length === 1 && e.escolhasClasse?.[regra.id] !== opcoes[0].id) {
-      e.escolhasClasse = { ...(e.escolhasClasse || {}), [regra.id]: opcoes[0].id };
-      mudou = true;
+  for (const x of classesDoPersonagem()) {
+    for (const regra of escolhasDeClassePara(db, x.classe.id, x.niveis)) {
+      const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
+      const chave = `${regra.classe}.${regra.id}`;
+      if (opcoes.length === 1 && e.escolhasClasse?.[chave] !== opcoes[0].id) {
+        e.escolhasClasse = { ...(e.escolhasClasse || {}), [chave]: opcoes[0].id };
+        mudou = true;
+      }
     }
   }
 
@@ -343,6 +374,7 @@ function treinosAutomaticos() {
     (c.periciasFixasEscolha || []).forEach((_, i) => add(e.periciasClasseFixa?.[i], rotulo));
     for (const id of e.periciasClasse || []) if ((c.periciasDeClasse || []).includes(id)) add(id, rotulo);
   }
+  for (const [id, fonte] of periciasDeMulticlasse()) add(id, fonte);
   if (personagem.origem) for (const id of e.periciasOrigem || []) add(id, `Origem (${personagem.origem})`);
   const r = racaAtual();
   if (r) for (const id of e.periciasRaciais || []) add(id, `Raça (${r.nome})`);
@@ -393,11 +425,12 @@ function calcularDerivados() {
   const equip = defesaDoEquipamento();
   const efeitos = efeitosAtivos();
 
-  const pvMax = classe ? regras.pvMaximo({
-    classe, nivel, modCon: regras.mod(atrs.con),
+  const classes = classesDoPersonagem();
+  const pvMax = classe ? regras.pvMaximoMulticlasse({
+    classes, nivel, modCon: regras.mod(atrs.con),
     extraNivel1: auto.pvNivel1 || 0, extraPorNivel: auto.pvPorNivel || 0,
   }) : null;
-  const pmMax = classe ? regras.pmMaximo({ classe, nivel, extraPorNivel: auto.pmPorNivel || 0 }) : 0;
+  const pmMax = classe ? regras.pmMaximoMulticlasse({ classes, nivel, extraPorNivel: auto.pmPorNivel || 0 }) : 0;
   const defesaCalculada = regras.defesaTotal({
     modDes: regras.mod(atrs.des), armadura: equip.armadura, escudo: equip.escudo,
     outros: (personagem.defesaOutros || 0) + (auto.defesa || 0) + efeitos.defesa,
@@ -407,7 +440,7 @@ function calcularDerivados() {
   const defesa = efeitos.defesaFixa != null ? efeitos.defesaFixa : defesaCalculada;
   const cargaMax = regras.cargaMaxima(regras.mod(atrs.for));
 
-  const d = { classe, atrs, nivel, pvMax, pmMax, defesa, cargaMax, carga: cargaAtual(), treinos, bonusPericiasRacial, equip, penalidadeArmadura: equip.penalidade, efeitos };
+  const d = { classe, classes, atrs, nivel, pvMax, pmMax, defesa, cargaMax, carga: cargaAtual(), treinos, bonusPericiasRacial, equip, penalidadeArmadura: equip.penalidade, efeitos };
   // Iniciativa é uma perícia em T20: entra metade do nível e o bônus de treino.
   d.iniciativa = bonusDePericia(porId(db.pericias, "ini"), d);
   return d;
@@ -3164,9 +3197,65 @@ function renderConstrucao() {
     $(`choice-${kind}-meta`).textContent = opt ? opt.meta : (kind === "divindade" ? "Opcional" : "Nenhuma opção selecionada");
     $(`choice-${kind}-desc`).textContent = opt ? (opt.desc || "").replace(/<[^>]+>/g, "").slice(0, 240) : CHOICE_DESC_VAZIO[kind];
   }
+  renderMulticlasse();
   const feitas = ["raca", "classe"].filter((k) => valorAtualDoCampo(k)).length;
   $("auto-status").textContent = feitas === 2 ? "Construção completa" : `${feitas}/2 escolhas principais feitas`;
   $("auto-empty")?.classList.toggle("hidden", feitas > 0);
+}
+
+// ==============================================================
+// Painel de multiclasse — vive na aba Construção (modo livre) e é
+// emprestado pelo passo "Classe" do assistente, como os demais painéis.
+// ==============================================================
+function renderMulticlasse(alvoId = "multiclasse-secao") {
+  const box = document.getElementById(alvoId);
+  if (!box) return;
+  const inicial = classeAtual();
+  if (!inicial) { box.innerHTML = ""; return; }
+  const nivelTotal = personagem.nivel || 1;
+  const dist = classesDoPersonagem();
+  const extras = personagem.multiclasses || [];
+  const usadosExtras = dist.slice(1).reduce((a, b) => a + b.niveis, 0);
+
+  box.innerHTML = `
+    <div class="multiclasse-head">
+      <div><span>Multiclasse</span><small>Reparta o nível <b>${nivelTotal}</b> entre classes. A inicial fica com o que sobra e nunca com menos de 1.</small></div>
+      <button type="button" class="add-btn" id="btn-add-multiclasse" ${nivelTotal < 2 ? "disabled title='Precisa de nível 2 ou mais'" : ""}>+ Adicionar classe</button>
+    </div>
+    <div class="multiclasse-dist">${dist.map((x, i) => `<span class="chip ${i === 0 ? "ativo" : ""}">${esc(x.classe.nome)}<small>nível ${x.niveis}</small></span>`).join("")}</div>
+    <div class="multiclasse-lista">${extras.map((m, i) => `
+      <div class="multiclasse-linha">
+        <select data-mc-classe="${i}">
+          <option value="">— escolher classe —</option>
+          ${db.classes.filter((c) => c.id !== inicial.id).map((c) => `<option value="${c.id}"${c.id === m.classeId ? " selected" : ""}>${esc(c.nome)}</option>`).join("")}
+        </select>
+        <input type="number" min="1" max="${Math.max(1, nivelTotal - 1)}" value="${m.niveis || 1}" data-mc-niveis="${i}" title="Níveis nesta classe" />
+        <button type="button" class="perigo" data-mc-remover="${i}">✕</button>
+      </div>`).join("")}</div>
+    ${usadosExtras >= nivelTotal
+      ? '<div class="alerta-automacao">As classes extras pediram mais níveis do que o personagem tem — a ficha cortou no que cabia. Suba o nível ou reduza os números.</div>'
+      : ""}
+    ${dist.length > 1
+      ? `<p class="dica">PV e PM já contam a repartição: o pacote inicial vem de <b>${esc(inicial.nome)}</b> e cada nível seguinte usa o valor por nível da classe em que foi ganho. As perícias <b>fixas</b> das classes novas entram sozinhas (o livro não repete as escolhas livres do 1º nível).</p>`
+      : '<p class="dica">Sem classes extras — o personagem é de classe única.</p>'}`;
+
+  document.getElementById("btn-add-multiclasse")?.addEventListener("click", () => {
+    if ((personagem.nivel || 1) < 2) { toast("Multiclasse só a partir do 2º nível."); return; }
+    personagem.multiclasses = [...extras, { classeId: "", niveis: 1 }];
+    salvarERenderizar();
+  });
+  box.querySelectorAll("[data-mc-classe]").forEach((sel) => sel.addEventListener("change", () => {
+    personagem.multiclasses[Number(sel.dataset.mcClasse)].classeId = sel.value;
+    salvarERenderizar();
+  }));
+  box.querySelectorAll("[data-mc-niveis]").forEach((inp) => inp.addEventListener("change", () => {
+    personagem.multiclasses[Number(inp.dataset.mcNiveis)].niveis = Math.max(1, Number(inp.value) || 1);
+    salvarERenderizar();
+  }));
+  box.querySelectorAll("[data-mc-remover]").forEach((b) => b.addEventListener("click", () => {
+    personagem.multiclasses.splice(Number(b.dataset.mcRemover), 1);
+    salvarERenderizar();
+  }));
 }
 
 function openPickerModal(kind) {
@@ -3338,7 +3427,7 @@ function renderWizardPassoRevisao(body) {
   const d = calcularDerivados();
   const linhas = [
     ["Raça", racaAtual()?.nome],
-    ["Classe", classeAtual()?.nome],
+    ["Classe", temMulticlasse() ? rotuloDeClasses() : classeAtual()?.nome],
     ["Origem", personagem.origem],
     ["Divindade", personagem.divindade],
     ["Nível", String(d.nivel)],
@@ -3404,7 +3493,15 @@ function renderWizard() {
   body.innerHTML = `<p class="wizard-hint">${esc(passo.dica)}</p><div id="wizard-passo-corpo"></div>`;
   const corpo = document.getElementById("wizard-passo-corpo");
 
-  if (passo.tipo) renderWizardPassoEscolha(passo, corpo);
+  if (passo.tipo) {
+    renderWizardPassoEscolha(passo, corpo);
+    // O passo da classe também é onde se decide multiclasse — empresta o
+    // mesmo painel do modo livre em vez de duplicá-lo.
+    if (passo.tipo === "classe" && classeAtual()) {
+      corpo.insertAdjacentHTML("beforeend", '<div class="multiclasse-secao" id="wizard-multiclasse"></div>');
+      renderMulticlasse("wizard-multiclasse");
+    }
+  }
   else if (passo.key === "nivel") renderWizardPassoNivel(corpo);
   else if (passo.key === "atributos") emprestarPainel("cartao-atributos", corpo);
   else if (passo.key === "pericias") emprestarPainel("auto-panel", corpo);
@@ -3764,23 +3861,27 @@ function blocosDeAutomacao() {
   if (classe) {
     // `regra` e não `esc`: `esc` é a função global de escapar HTML, e uma
     // variável de laço com esse nome a apagaria dentro do bloco.
-    for (const regra of escolhasDeClassePara(db, classe.id, d.nivel)) {
+    // Numa multiclasse cada classe traz as escolhas dela, contadas pelos
+    // níveis gastos naquela classe (não pelo nível total do personagem).
+    const regrasDeEscolha = d.classes.flatMap((x) => escolhasDeClassePara(db, x.classe.id, x.niveis));
+    for (const regra of regrasDeEscolha) {
       const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
       if (!opcoes.length) continue;
-      const escolhidoId = e.escolhasClasse?.[regra.id] || "";
+      const chave = `${regra.classe}.${regra.id}`;
+      const escolhidoId = e.escolhasClasse?.[chave] || "";
       const escolhido = opcoes.find((o) => o.id === escolhidoId);
       const forcada = opcoes.length === 1;
       blocos.push(blocoHtml({
-        id: `escolha-classe-${regra.id}`,
-        titulo: regra.nome,
+        id: `escolha-classe-${chave}`,
+        titulo: d.classes.length > 1 ? `${regra.nome} (${porId(db.classes, regra.classe)?.nome || regra.classe})` : regra.nome,
         fonte: forcada ? "Classe · automático" : `Classe · ${regra.nivel}º nível`,
         estado: forcada ? "info" : escolhido ? "ok" : regra.obrigatorio ? "pendente" : "info",
         texto: escolhido
           ? `Escolhido: <b>${esc(escolhido.rotulo)}</b>. <em>${esc((escolhido.descricao || "").replace(/<[^>]+>/g, "").slice(0, 220))}</em>`
           : `${esc(regra.descricao || "")} <b>${opcoes.length}</b> opções.`,
         corpo: `<div class="chip-lista">${opcoes.map((o) => `
-          <button type="button" class="chip${o.id === escolhidoId ? " ativo" : ""}" data-auto-escolha-classe="${esc(regra.id)}" data-valor="${esc(o.id)}" title="${esc((o.descricao || "").replace(/<[^>]+>/g, "").slice(0, 240))}">${esc(o.rotulo)}</button>`).join("")}
-          ${escolhidoId ? `<button type="button" class="chip limpar" data-auto-escolha-classe="${esc(regra.id)}" data-valor="">✕ limpar</button>` : ""}</div>`,
+          <button type="button" class="chip${o.id === escolhidoId ? " ativo" : ""}" data-auto-escolha-classe="${esc(chave)}" data-valor="${esc(o.id)}" title="${esc((o.descricao || "").replace(/<[^>]+>/g, "").slice(0, 240))}">${esc(o.rotulo)}</button>`).join("")}
+          ${escolhidoId ? `<button type="button" class="chip limpar" data-auto-escolha-classe="${esc(chave)}" data-valor="">✕ limpar</button>` : ""}</div>`,
       }));
     }
 
@@ -3832,13 +3933,21 @@ function blocosDeAutomacao() {
 
   // --- Progressão do nível ---
   if (classe) {
+    const modCon = formatarMod(regras.mod(d.atrs.con));
+    const [inicialDist, ...extrasDist] = d.classes;
+    const contaPV = extrasDist.length
+      ? `${classe.pvInicial}${modCon} no 1º nível de ${esc(classe.nome)}, ${classe.pvPorNivel}${modCon} nos outros ${Math.max(0, inicialDist.niveis - 1)}, ${extrasDist.map((x) => `${x.classe.pvPorNivel}${modCon} × ${x.niveis} de ${esc(x.classe.nome)}`).join(", ")}`
+      : `${classe.pvInicial}${modCon} no 1º nível, ${classe.pvPorNivel}${modCon} por nível`;
+    const contaPM = extrasDist.length
+      ? `${classe.pmInicial} inicial de ${esc(classe.nome)}, ${classe.pmPorNivel} × ${Math.max(0, inicialDist.niveis - 1)}, ${extrasDist.map((x) => `${x.classe.pmPorNivel} × ${x.niveis} de ${esc(x.classe.nome)}`).join(", ")}`
+      : `${classe.pmPorNivel} por nível`;
     blocos.push(blocoHtml({
       id: "progressao",
-      titulo: `Progressão até o nível ${d.nivel}`,
+      titulo: `Progressão até o nível ${d.nivel}${extrasDist.length ? ` — ${esc(rotuloDeClasses())}` : ""}`,
       fonte: "Nível · automático",
       estado: "info",
-      texto: `PV <b>${d.pvMax}</b> (${classe.pvInicial}${formatarMod(regras.mod(d.atrs.con))} no 1º nível, ${classe.pvPorNivel}${formatarMod(regras.mod(d.atrs.con))} por nível${auto.pvNivel1 || auto.pvPorNivel ? " + traço racial" : ""}) ·
-        PM <b>${d.pmMax}</b> (${classe.pmPorNivel} por nível${auto.pmPorNivel ? " + traço racial" : ""}) ·
+      texto: `PV <b>${d.pvMax}</b> (${contaPV}${auto.pvNivel1 || auto.pvPorNivel ? " + traço racial" : ""}) ·
+        PM <b>${d.pmMax}</b> (${contaPM}${auto.pmPorNivel ? " + traço racial" : ""}) ·
         bônus de treino atual <b>${formatarMod(regras.bonusTreino(d.nivel, true))}</b>${d.nivel < 7 ? " (vira +4 no 7º nível)" : d.nivel < 15 ? " (vira +6 no 15º nível)" : " (máximo)"} ·
         metade do nível <b>${formatarMod(regras.metadeNivel(d.nivel))}</b> em toda perícia.`,
     }));
@@ -4044,7 +4153,7 @@ function aplicarAutomacaoAleatoria(raca, classe, origem) {
     e.escolhasClasse = {};
     for (const regra of escolhasDeClassePara(db, classe.id, personagem.nivel || 1)) {
       const opcoes = opcoesDaEscolhaDeClasse(db, regra.familia);
-      if (opcoes.length) e.escolhasClasse[regra.id] = sorteia(opcoes).id;
+      if (opcoes.length) e.escolhasClasse[`${regra.classe}.${regra.id}`] = sorteia(opcoes).id;
     }
   }
   // Ofício e Conhecimento pedem especialidade — o gerador escolhe uma temática.
