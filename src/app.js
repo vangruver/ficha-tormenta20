@@ -3,28 +3,33 @@ import * as regras from "./rules.js";
 import * as storage from "./storage.js";
 import { applyI18n, setLang, getLang, t } from "./i18n.js";
 
+// As condições oficiais de T20. Além do texto, cada uma declara os efeitos
+// NUMÉRICOS que a ficha sabe aplicar sozinha (`efeitos`) — antes a lista era
+// só descritiva e aplicar "Abalado" não mexia em nada. Condição sem `efeitos`
+// é comportamental (Apavorado, Confuso) ou depende do caso (Envenenado,
+// Vulnerável), então continua valendo como lembrete escrito.
 const CONDICOES = [
-  { id: "abalado", nome: "Abalado", efeito: "-2 em testes de perícia, de resistência e de ataque." },
+  { id: "abalado", nome: "Abalado", efeito: "-2 em testes de perícia, de resistência e de ataque.", efeitos: { pericias: -2, ataque: -2 } },
   { id: "acuado", nome: "Acuado", efeito: "Não pode atacar corpo a corpo, apenas se defender ou fugir." },
-  { id: "alquebrado", nome: "Alquebrado", efeito: "-5 em testes de perícia, resistência e ataque; sofre o dobro de dano crítico." },
+  { id: "alquebrado", nome: "Alquebrado", efeito: "-5 em testes de perícia, resistência e ataque; sofre o dobro de dano crítico.", efeitos: { pericias: -5, ataque: -5 } },
   { id: "apavorado", nome: "Apavorado", efeito: "Deve fugir da fonte do medo por 1d4 rodadas." },
-  { id: "atordoado", nome: "Atordoado", efeito: "Perde a ação padrão e de movimento; -2 na Defesa." },
-  { id: "caido", nome: "Caído", efeito: "-2 de ataque corpo a corpo, +2 de ataque à distância contra o alvo caído." },
-  { id: "cego", nome: "Cego", efeito: "-5 em testes de Luta/Pontaria e Percepção baseada em visão; 50% de falha em ataques." },
+  { id: "atordoado", nome: "Atordoado", efeito: "Perde a ação padrão e de movimento; -2 na Defesa.", efeitos: { defesa: -2 } },
+  { id: "caido", nome: "Caído", efeito: "-2 de ataque corpo a corpo, +2 de ataque à distância contra o alvo caído.", efeitos: { ataqueCorpo: -2 } },
+  { id: "cego", nome: "Cego", efeito: "-5 em testes de Luta/Pontaria e Percepção baseada em visão; 50% de falha em ataques.", efeitos: { periciasEspecificas: { lut: -5, pon: -5, per: -5 } } },
   { id: "confuso", nome: "Confuso", efeito: "Ação determinada aleatoriamente pelo mestre." },
-  { id: "desprevenido", nome: "Desprevenido", efeito: "Sofre ataque furtivo e -2 na Defesa contra o atacante." },
+  { id: "desprevenido", nome: "Desprevenido", efeito: "Sofre ataque furtivo e -2 na Defesa contra o atacante.", efeitos: { defesa: -2 } },
   { id: "enjoado", nome: "Enjoado", efeito: "Só pode realizar uma ação padrão ou de movimento por rodada." },
   { id: "envenenado", nome: "Envenenado", efeito: "Sofre os efeitos do veneno aplicado (dano ou penalidades)." },
-  { id: "fatigado", nome: "Fatigado", efeito: "-2 em For e Des; não pode correr nem investir." },
-  { id: "exausto", nome: "Exausto", efeito: "-6 em For e Des; desloca-se à metade." },
+  { id: "fatigado", nome: "Fatigado", efeito: "-2 em For e Des; não pode correr nem investir.", efeitos: { atributos: { for: -2, des: -2 } } },
+  { id: "exausto", nome: "Exausto", efeito: "-6 em For e Des; desloca-se à metade.", efeitos: { atributos: { for: -6, des: -6 }, deslocamentoMetade: true } },
   { id: "imóvel", nome: "Imóvel", efeito: "Não pode se mover, mas pode agir normalmente." },
-  { id: "indefeso", nome: "Indefeso", efeito: "Defesa 5; sofre ataque furtivo." },
-  { id: "inconsciente", nome: "Inconsciente", efeito: "Indefeso e incapaz de agir." },
-  { id: "ofuscado", nome: "Ofuscado", efeito: "-2 em testes de Luta/Pontaria e Percepção baseada em visão." },
-  { id: "paralisado", nome: "Paralisado", efeito: "Não pode agir nem se mover; Destreza tratada como 0." },
-  { id: "petrificado", nome: "Petrificado", efeito: "Transformado em pedra; indefeso e inconsciente dos sentidos." },
+  { id: "indefeso", nome: "Indefeso", efeito: "Defesa 5; sofre ataque furtivo.", efeitos: { defesaFixa: 5 } },
+  { id: "inconsciente", nome: "Inconsciente", efeito: "Indefeso e incapaz de agir.", efeitos: { defesaFixa: 5 } },
+  { id: "ofuscado", nome: "Ofuscado", efeito: "-2 em testes de Luta/Pontaria e Percepção baseada em visão.", efeitos: { periciasEspecificas: { lut: -2, pon: -2, per: -2 } } },
+  { id: "paralisado", nome: "Paralisado", efeito: "Não pode agir nem se mover; Destreza tratada como 0.", efeitos: { destrezaZero: true } },
+  { id: "petrificado", nome: "Petrificado", efeito: "Transformado em pedra; indefeso e inconsciente dos sentidos.", efeitos: { defesaFixa: 5 } },
   { id: "sangrando", nome: "Sangrando", efeito: "Perde 5 PV no início de cada turno até ser curado ou estabilizado." },
-  { id: "surdo", nome: "Surdo", efeito: "-4 em Percepção e testes de iniciativa baseados em audição." },
+  { id: "surdo", nome: "Surdo", efeito: "-4 em Percepção e testes de iniciativa baseados em audição.", efeitos: { periciasEspecificas: { per: -4, ini: -4 } } },
   { id: "surpreendido", nome: "Surpreendido", efeito: "Não age na primeira rodada de combate." },
   { id: "vulneravel", nome: "Vulnerável", efeito: "Sofre +50% de dano de um tipo específico." },
 ];
@@ -90,7 +95,10 @@ function preencherSelectsEstáticos() {
     + (regionais.length ? `<optgroup label="Origens regionais (Atlas de Arton)">${regionais.map((o) => `<option value="${esc(o.id)}">${esc(o.id)} — ${esc(o.regiao || "")}</option>`).join("")}</optgroup>` : "");
 
   const condSel = document.getElementById("condicao-select");
-  condSel.innerHTML = CONDICOES.map((c) => `<option value="${c.id}">${c.nome}</option>`).join("");
+  condSel.innerHTML = CONDICOES.map((c) => `<option value="${c.id}">${c.nome}${c.efeitos ? "" : " (só lembrete)"}</option>`).join("");
+
+  const modAlvo = document.getElementById("mod-alvo");
+  if (modAlvo) modAlvo.innerHTML = ALVOS_MODIFICADOR.map((a) => `<option value="${a.id}">${esc(a.nome)}</option>`).join("");
 
   const circuloSel = document.getElementById("magias-filtro-circulo");
   for (const c of regras.CIRCULOS_MAGIA) {
@@ -134,15 +142,81 @@ function bonusRacial(atributoId) {
   return total;
 }
 
-function atributoFinal(id) {
+// ==============================================================
+// Efeitos ativos — condições + modificadores temporários.
+//
+// `personagem.condicoes` guarda as condições aplicadas e
+// `personagem.modificadoresTemp` os ajustes que o jogador cria à mão
+// (um "+2 em tudo" de uma magia de bênção, um "−1 na Defesa" de um item).
+// efeitosAtivos() soma os dois num único objeto que as contas da ficha
+// consultam — perícias, ataque, Defesa, atributos e deslocamento.
+//
+// Um modificador temporário tem a forma
+//   { nome, alvo, valor, pericia }
+// com `alvo` em: "pericias" | "ataque" | "defesa" | "atributo" | "pericia".
+// ==============================================================
+const ALVOS_MODIFICADOR = [
+  { id: "pericias", nome: "Todas as perícias (inclui resistências)" },
+  { id: "pericia", nome: "Uma perícia específica" },
+  { id: "ataque", nome: "Testes de ataque" },
+  { id: "defesa", nome: "Defesa" },
+  { id: "atributo", nome: "Um atributo" },
+];
+
+function condicoesAtivas() {
+  return (personagem.condicoes || []).map((id) => CONDICOES.find((c) => c.id === id)).filter(Boolean);
+}
+
+function efeitosAtivos() {
+  const out = {
+    pericias: 0, ataque: 0, ataqueCorpo: 0, defesa: 0,
+    periciasEspecificas: {}, atributos: {},
+    defesaFixa: null, destrezaZero: false, deslocamentoMetade: false,
+    fontes: [],
+  };
+  for (const c of condicoesAtivas()) {
+    const e = c.efeitos;
+    if (!e) continue;
+    out.fontes.push(c.nome);
+    out.pericias += e.pericias || 0;
+    out.ataque += e.ataque || 0;
+    out.ataqueCorpo += e.ataqueCorpo || 0;
+    out.defesa += e.defesa || 0;
+    for (const [k, v] of Object.entries(e.periciasEspecificas || {})) out.periciasEspecificas[k] = (out.periciasEspecificas[k] || 0) + v;
+    for (const [k, v] of Object.entries(e.atributos || {})) out.atributos[k] = (out.atributos[k] || 0) + v;
+    // A Defesa mais baixa vence: estar Indefeso e Atordoado ao mesmo tempo
+    // não deixa a Defesa acima de 5.
+    if (e.defesaFixa != null) out.defesaFixa = out.defesaFixa == null ? e.defesaFixa : Math.min(out.defesaFixa, e.defesaFixa);
+    if (e.destrezaZero) out.destrezaZero = true;
+    if (e.deslocamentoMetade) out.deslocamentoMetade = true;
+  }
+  for (const m of personagem.modificadoresTemp || []) {
+    const v = Number(m.valor) || 0;
+    if (!v) continue;
+    out.fontes.push(m.nome || "modificador");
+    if (m.alvo === "pericias") out.pericias += v;
+    else if (m.alvo === "ataque") out.ataque += v;
+    else if (m.alvo === "defesa") out.defesa += v;
+    else if (m.alvo === "pericia" && m.pericia) out.periciasEspecificas[m.pericia] = (out.periciasEspecificas[m.pericia] || 0) + v;
+    else if (m.alvo === "atributo" && m.atributo) out.atributos[m.atributo] = (out.atributos[m.atributo] || 0) + v;
+  }
+  return out;
+}
+
+function atributoFinal(id, efeitos = null) {
   const base = personagem.atributos[id] ?? 0;
   const temp = personagem.atributosTemp?.[id] ?? 0;
-  return base + bonusRacial(id) + temp;
+  const ef = efeitos || efeitosAtivos();
+  // Paralisado trata a Destreza como 0 — não é uma penalidade que soma, é
+  // uma substituição, então vem antes de qualquer outro ajuste.
+  if (id === "des" && ef.destrezaZero) return 0;
+  return base + bonusRacial(id) + temp + (ef.atributos[id] || 0);
 }
 
 function atributosFinais() {
+  const ef = efeitosAtivos();
   const out = {};
-  for (const a of db.atributos) out[a.id] = atributoFinal(a.id);
+  for (const a of db.atributos) out[a.id] = atributoFinal(a.id, ef);
   return out;
 }
 
@@ -308,19 +382,23 @@ function calcularDerivados() {
   const treinos = treinosAutomaticos();
   const bonusPericiasRacial = bonusRacialPericias();
   const equip = defesaDoEquipamento();
+  const efeitos = efeitosAtivos();
 
   const pvMax = classe ? regras.pvMaximo({
     classe, nivel, modCon: regras.mod(atrs.con),
     extraNivel1: auto.pvNivel1 || 0, extraPorNivel: auto.pvPorNivel || 0,
   }) : null;
   const pmMax = classe ? regras.pmMaximo({ classe, nivel, extraPorNivel: auto.pmPorNivel || 0 }) : 0;
-  const defesa = regras.defesaTotal({
+  const defesaCalculada = regras.defesaTotal({
     modDes: regras.mod(atrs.des), armadura: equip.armadura, escudo: equip.escudo,
-    outros: (personagem.defesaOutros || 0) + (auto.defesa || 0),
+    outros: (personagem.defesaOutros || 0) + (auto.defesa || 0) + efeitos.defesa,
   });
+  // Indefeso/inconsciente/petrificado fixam a Defesa num valor, ignorando
+  // armadura e Destreza.
+  const defesa = efeitos.defesaFixa != null ? efeitos.defesaFixa : defesaCalculada;
   const cargaMax = regras.cargaMaxima(regras.mod(atrs.for));
 
-  const d = { classe, atrs, nivel, pvMax, pmMax, defesa, cargaMax, carga: cargaAtual(), treinos, bonusPericiasRacial, equip, penalidadeArmadura: equip.penalidade };
+  const d = { classe, atrs, nivel, pvMax, pmMax, defesa, cargaMax, carga: cargaAtual(), treinos, bonusPericiasRacial, equip, penalidadeArmadura: equip.penalidade, efeitos };
   // Iniciativa é uma perícia em T20: entra metade do nível e o bônus de treino.
   d.iniciativa = bonusDePericia(porId(db.pericias, "ini"), d);
   return d;
@@ -332,7 +410,9 @@ function estaTreinado(id, d) {
 
 function bonusDePericia(p, d) {
   if (!p) return 0;
-  const outros = (personagem.periciasOutros?.[p.id] ?? 0) + (d.bonusPericiasRacial[p.id] || 0);
+  const ef = d.efeitos || efeitosAtivos();
+  const outros = (personagem.periciasOutros?.[p.id] ?? 0) + (d.bonusPericiasRacial[p.id] || 0)
+    + ef.pericias + (ef.periciasEspecificas[p.id] || 0);
   return regras.bonusPericia({
     nivel: d.nivel,
     treinado: estaTreinado(p.id, d),
@@ -602,7 +682,15 @@ function renderDashboard() {
   if (personagem.defesaOutros) partesDefesa.push(`${formatarMod(personagem.defesaOutros)} outros`);
   dashDefesa.title = partesDefesa.join(" · ");
   document.getElementById("dash-iniciativa").textContent = formatarMod(d.iniciativa);
-  document.getElementById("dash-deslocamento").textContent = (racaAtual()?.deslocamento || "9m") + (personagem.deslocamentoExtra ? ` (${personagem.deslocamentoExtra})` : "");
+  // Exausto anda pela metade — o deslocamento vem como texto ("9m"), então
+  // o número é extraído, dividido e recomposto.
+  const deslocBase = racaAtual()?.deslocamento || "9m";
+  const desloc = d.efeitos.deslocamentoMetade
+    ? deslocBase.replace(/(\d+([.,]\d+)?)/, (n) => String(Math.floor(Number(String(n).replace(",", ".")) / 2)))
+    : deslocBase;
+  const deslocEl = document.getElementById("dash-deslocamento");
+  deslocEl.textContent = desloc + (personagem.deslocamentoExtra ? ` (${personagem.deslocamentoExtra})` : "");
+  deslocEl.title = d.efeitos.deslocamentoMetade ? `Metade de ${deslocBase} por estar exausto` : "";
   const cargaEl = document.getElementById("carga-max");
   if (cargaEl) {
     cargaEl.textContent = `${(Math.round(d.carga * 10) / 10)} / ${d.cargaMax} kg`;
@@ -743,16 +831,25 @@ function renderPoderes() {
   const poderOrigem = e.poderOrigem ? db.poderes.find((x) => x.id === e.poderOrigem) : null;
 
   const listaEsc = document.getElementById("lista-poderes-personagem");
+  // 174 dos 709 poderes do compêndio custam PM (Fúria 2 PM, Aparar 1 PM...).
+  // Esses ganham botão de usar, que desconta a mana igual ao "Conjurar" das
+  // magias — antes o custo era só um rótulo e a conta ficava com o jogador.
+  const botaoUsar = (poder) => {
+    const custo = Number(poder.custo) || 0;
+    if (!custo) return "";
+    const temPM = (personagem.pm.atual ?? 0) >= custo;
+    return `<button class="${temPM ? "primary" : "secundario"}" data-usar-poder="${poder.id}" ${temPM ? "" : "disabled"} title="${temPM ? `Gasta ${custo} PM` : "PM insuficiente"}">⚡ Usar</button>`;
+  };
   const linhaOrigem = poderOrigem
-    ? `<li class="poder-auto" data-abrir-poder="${poderOrigem.id}"><span>${esc(poderOrigem.nome)} <span class="tag">${esc(poderOrigem.subtipo)}</span> <span class="tag auto">da origem</span></span><span class="dica-inline">escolhido na automação</span></li>`
+    ? `<li class="poder-auto"><span data-abrir-poder="${poderOrigem.id}">${esc(poderOrigem.nome)} <span class="tag">${esc(poderOrigem.subtipo)}</span>${poderOrigem.custo ? ` <span class="tag magia">${poderOrigem.custo} PM</span>` : ""} <span class="tag auto">da origem</span></span><span class="col-rolagens">${botaoUsar(poderOrigem)}<span class="dica-inline">escolhido na automação</span></span></li>`
     : "";
   listaEsc.innerHTML = linhaOrigem + (personagem.poderes.map((id) => {
     const poder = db.poderes.find((x) => x.id === id);
     if (!poder) return "";
     const requisitoOk = requisitoAtendido(poder, d);
-    return `<li data-abrir-poder="${poder.id}">
-      <span>${esc(poder.nome)} <span class="tag">${esc(poder.subtipo)}</span>${poder.custo ? ` <span class="tag">${poder.custo} PM</span>` : ""}${requisitoOk === false ? ' <span class="tag alerta" title="Requisito do poder não parece atendido">requisito?</span>' : ""}</span>
-      <button class="perigo" data-remover-poder="${poder.id}">Remover</button></li>`;
+    return `<li>
+      <span data-abrir-poder="${poder.id}">${esc(poder.nome)} <span class="tag">${esc(poder.subtipo)}</span>${poder.custo ? ` <span class="tag magia">${poder.custo} PM</span>` : ""}${requisitoOk === false ? ' <span class="tag alerta" title="Requisito do poder não parece atendido">requisito?</span>' : ""}</span>
+      <span class="col-rolagens">${botaoUsar(poder)}<button class="perigo" data-remover-poder="${poder.id}">✕</button></span></li>`;
   }).join("") || (linhaOrigem ? "" : "<li>Nenhum poder escolhido ainda.</li>"));
 
   const escolhidos = personagem.poderes.length;
@@ -823,6 +920,50 @@ function renderCatalogoPoderes() {
 
 // ---------- Magias ----------
 
+// ==============================================================
+// Gasto de PM — o recurso central de Tormenta 20.
+//
+// Em T20 não existe "espaço de magia": toda magia e boa parte dos poderes
+// (Fúria 2 PM, Inspiração 2 PM, Aparar 1 PM...) são pagos em Pontos de
+// Mana, e o custo já vem no compêndio. Antes a ficha só *mostrava* esse
+// número — quem jogava tinha que abrir a caixa de PM e digitar o novo
+// total a cada uso. gastarPM() centraliza isso: desconta, recusa quando
+// não há mana suficiente, registra no histórico de rolagens e avisa a sala.
+// ==============================================================
+function gastarPM(custo, rotulo) {
+  const n = Math.max(0, Math.round(Number(custo) || 0));
+  if (!n) { toast(`${rotulo} não custa PM.`); return true; }
+  const atual = personagem.pm.atual ?? 0;
+  if (atual < n) {
+    toast(`PM insuficiente: ${rotulo} custa ${n} PM e você tem ${atual}.`);
+    return false;
+  }
+  personagem.pm.atual = atual - n;
+  salvarERenderizar();
+  const detalhe = `${n} PM · restam ${personagem.pm.atual}`;
+  registrarNoHistorico(rotulo, detalhe, personagem.pm.atual);
+  broadcastRoll(`${personagem.nome || "Personagem"} usou ${rotulo}`, detalhe, personagem.pm.atual, { type: "outro" });
+  toast(`${rotulo}: −${n} PM (restam ${personagem.pm.atual}).`);
+  return true;
+}
+
+// Recupera PM (item, poder, descanso parcial), sem passar do máximo.
+function recuperarPM(quanto) {
+  const d = calcularDerivados();
+  personagem.pm.atual = Math.min(d.pmMax ?? Infinity, (personagem.pm.atual ?? 0) + Math.max(0, Number(quanto) || 0));
+  salvarERenderizar();
+}
+
+// ---------- Magias ----------
+
+// Um conjurador só alcança um círculo novo a cada quatro níveis. Magias
+// acima disso continuam podendo ficar guardadas na ficha (o jogador pode
+// estar planejando a subida de nível), mas aparecem marcadas e o botão de
+// conjurar fica travado.
+function magiaLiberada(m, nivel) {
+  return Number(m?.circulo || 1) <= regras.circuloMaximo(nivel);
+}
+
 function renderMagias() {
   const c = classeAtual();
   const semConjuracao = !c || !c.conjuracao;
@@ -830,15 +971,36 @@ function renderMagias() {
   document.getElementById("magias-conteudo").style.display = semConjuracao ? "none" : "";
   if (semConjuracao) return;
 
-  const conhecidas = personagem.magias;
+  const d = calcularDerivados();
+  const maxCirculo = regras.circuloMaximo(d.nivel);
+  const conhecidas = personagem.magias.map((id) => db.magias.find((x) => x.id === id)).filter(Boolean);
+
+  const resumo = document.getElementById("resumo-magias");
+  if (resumo) {
+    const porCirculo = [1, 2, 3, 4, 5].map((n) => ({ n, qtd: conhecidas.filter((m) => Number(m.circulo) === n).length }));
+    const acima = conhecidas.filter((m) => !magiaLiberada(m, d.nivel));
+    resumo.innerHTML = `
+      <div class="resumo-treinos-linha">Conjuração <b>${esc(c.conjuracao)}</b> · no nível <b>${d.nivel}</b> você alcança até o <b>${maxCirculo}º círculo</b>${maxCirculo < 5 ? ` (o ${maxCirculo + 1}º chega no ${regras.nivelDoCirculo(maxCirculo + 1)}º nível)` : " (máximo)"}.</div>
+      <div class="resumo-treinos-conta">Magias conhecidas: ${porCirculo.map((x) => `<b>${x.qtd}</b> de ${x.n}º`).join(" · ")} · total <b>${conhecidas.length}</b> · PM disponível <b>${personagem.pm.atual ?? 0}</b>/${d.pmMax ?? 0}.</div>
+      ${acima.length
+        ? `<div class="alerta-automacao">${acima.length} magia(s) acima do seu círculo máximo (${acima.map((m) => esc(m.nome)).join(", ")}) — ficam guardadas, mas não dá pra conjurar ainda.</div>`
+        : ""}
+      <p class="dica">Em T20 magia não tem "espaço": você paga o custo em PM (${Object.entries(regras.CUSTO_POR_CIRCULO).map(([k, v]) => `${k}º = ${v} PM`).join(", ")}). O botão <b>Conjurar</b> desconta sozinho e avisa quando falta mana.</p>`;
+  }
+
   const listaConh = document.getElementById("lista-magias-personagem");
-  listaConh.innerHTML = conhecidas.map((id) => {
-    const m = db.magias.find((x) => x.id === id);
-    if (!m) return "";
-    const preparada = personagem.magiasPreparadas.includes(id);
-    return `<li data-abrir-magia="${m.id}"><span>${m.nome} <span class="tag">${m.circulo}º círc.</span> <span class="tag">${m.custo ?? "?"} PM</span></span>
-      <span><button data-preparar-magia="${m.id}">${preparada ? "★ preparada" : "☆ preparar"}</button>
-      <button class="perigo" data-remover-magia="${m.id}">Remover</button></span></li>`;
+  listaConh.innerHTML = conhecidas.map((m) => {
+    const custo = regras.custoDaMagia(m);
+    const liberada = magiaLiberada(m, d.nivel);
+    const temPM = (personagem.pm.atual ?? 0) >= custo;
+    const favorita = personagem.magiasPreparadas.includes(m.id);
+    return `<li class="${liberada ? "" : "requisito-nao-atendido"}">
+      <span data-abrir-magia="${m.id}">${esc(m.nome)} <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${custo} PM</span>${liberada ? "" : ` <span class="tag alerta" title="Você alcança o ${m.circulo}º círculo no ${regras.nivelDoCirculo(m.circulo)}º nível">${regras.nivelDoCirculo(m.circulo)}º nível</span>`}</span>
+      <span class="col-rolagens">
+        <button class="${liberada && temPM ? "primary" : "secundario"}" data-conjurar-magia="${m.id}" ${liberada && temPM ? "" : "disabled"} title="${liberada ? (temPM ? `Gasta ${custo} PM` : "PM insuficiente") : "Círculo acima do seu nível"}">✨ Conjurar</button>
+        <button data-preparar-magia="${m.id}" title="Marca como favorita para achar rápido no combate">${favorita ? "★" : "☆"}</button>
+        <button class="perigo" data-remover-magia="${m.id}">✕</button>
+      </span></li>`;
   }).join("") || "<li>Nenhuma magia conhecida ainda.</li>";
 
   renderCatalogoMagias(c);
@@ -853,11 +1015,15 @@ function renderCatalogoMagias(classe) {
     busca: busca || undefined,
   }).slice(0, 200);
   const catalogo = document.getElementById("lista-magias-catalogo");
-  catalogo.innerHTML = lista.map((m) => `
-    <li data-abrir-magia="${m.id}">
-      <span>${m.nome} <span class="tag">${m.tipo}</span> <span class="tag">${m.circulo}º círc.</span></span>
+  const nivel = personagem.nivel || 1;
+  catalogo.innerHTML = lista.map((m) => {
+    const liberada = magiaLiberada(m, nivel);
+    return `
+    <li data-abrir-magia="${m.id}" class="${liberada ? "" : "requisito-nao-atendido"}">
+      <span>${esc(m.nome)} <span class="tag">${esc(m.tipo)}</span> <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${regras.custoDaMagia(m)} PM</span>${liberada ? "" : ` <span class="tag alerta">${regras.nivelDoCirculo(m.circulo)}º nível</span>`}</span>
       <button data-add-magia="${m.id}">${personagem.magias.includes(m.id) ? "✓" : "➕"}</button>
-    </li>`).join("");
+    </li>`;
+  }).join("") || '<li class="dica">Nenhuma magia com esse filtro.</li>';
 }
 
 // ---------- Combate ----------
@@ -900,13 +1066,60 @@ function renderCombate() {
   listaCond.innerHTML = personagem.condicoes.map((cid, i) => {
     const c = CONDICOES.find((x) => x.id === cid);
     if (!c) return "";
-    return `<li><strong>${esc(c.nome)}</strong> — ${esc(c.efeito)} <button class="perigo" data-remover-condicao="${i}">remover</button></li>`;
-  }).join("") || "<li>Nenhuma condição ativa.</li>";
+    return `<li><span><strong>${esc(c.nome)}</strong> ${c.efeitos ? '<span class="tag auto">aplicada</span>' : '<span class="tag" title="Efeito comportamental ou variável — a ficha mantém como lembrete, mas não mexe nos números">só lembrete</span>'}<br><small class="dica">${esc(c.efeito)}</small></span>
+      <button class="perigo" data-remover-condicao="${i}">✕</button></li>`;
+  }).join("") || '<li class="dica">Nenhuma condição ativa.</li>';
+
+  renderModificadores(d);
+}
+
+// ==============================================================
+// Modificadores temporários — o "+2 em tudo" da bênção, o "−1 na Defesa"
+// do item amaldiçoado. O campo já existia salvo na ficha
+// (personagem.modificadoresTemp) mas nada lia ele; agora ele é editável e
+// entra nas mesmas contas das condições.
+// ==============================================================
+function renderModificadores(d) {
+  const box = document.getElementById("lista-modificadores");
+  if (!box) return;
+  const lista = personagem.modificadoresTemp || [];
+  box.innerHTML = lista.map((m, i) => {
+    const alvo = ALVOS_MODIFICADOR.find((a) => a.id === m.alvo);
+    const detalhe = m.alvo === "pericia" ? nomePericia(m.pericia)
+      : m.alvo === "atributo" ? (db.atributos.find((a) => a.id === m.atributo)?.nome || m.atributo)
+      : alvo?.nome || m.alvo;
+    return `<li><span><strong>${esc(m.nome || "Modificador")}</strong> <span class="tag ${Number(m.valor) >= 0 ? "auto" : "alerta"}">${formatarMod(Number(m.valor) || 0)}</span> <small class="dica">${esc(detalhe)}</small></span>
+      <button class="perigo" data-remover-modificador="${i}">✕</button></li>`;
+  }).join("") || '<li class="dica">Nenhum modificador temporário.</li>';
+
+  const ef = d.efeitos;
+  const resumo = document.getElementById("resumo-efeitos");
+  if (resumo) {
+    const partes = [];
+    if (ef.pericias) partes.push(`${formatarMod(ef.pericias)} em todas as perícias`);
+    if (ef.ataque) partes.push(`${formatarMod(ef.ataque)} nos ataques`);
+    if (ef.ataqueCorpo) partes.push(`${formatarMod(ef.ataqueCorpo)} em ataques corpo a corpo`);
+    if (ef.defesa) partes.push(`${formatarMod(ef.defesa)} na Defesa`);
+    for (const [k, v] of Object.entries(ef.periciasEspecificas)) partes.push(`${formatarMod(v)} em ${nomePericia(k)}`);
+    for (const [k, v] of Object.entries(ef.atributos)) partes.push(`${formatarMod(v)} em ${db.atributos.find((a) => a.id === k)?.nome || k}`);
+    if (ef.destrezaZero) partes.push("Destreza tratada como 0");
+    if (ef.defesaFixa != null) partes.push(`Defesa fixada em ${ef.defesaFixa}`);
+    if (ef.deslocamentoMetade) partes.push("deslocamento pela metade");
+    resumo.innerHTML = partes.length
+      ? `<div class="alerta-automacao">Em efeito agora: ${partes.join(" · ")}. <small>(de ${listaLegivel([...new Set(ef.fontes)])})</small></div>`
+      : '<div class="ok-automacao">✓ Nenhum efeito ativo mexendo nos números.</div>';
+  }
 }
 
 function bonusDeAtaque(at, d) {
   const pericia = db.pericias.find((p) => p.id === at.pericia);
-  return pericia ? bonusDePericiaSeguro(pericia, d) + (Number(at.bonusExtra) || 0) : 0;
+  if (!pericia) return 0;
+  const ef = d.efeitos || efeitosAtivos();
+  // O penalidade geral de perícia já entrou em bonusDePericia; aqui somam só
+  // os que valem exclusivamente para ataque (e o de corpo a corpo, que não
+  // atinge Pontaria).
+  const extraAtaque = ef.ataque + (at.pericia === "lut" ? ef.ataqueCorpo : 0);
+  return bonusDePericiaSeguro(pericia, d) + (Number(at.bonusExtra) || 0) + extraAtaque;
 }
 
 // "19/x3" → { margem: 19, multiplicador: 3 }. Um campo vazio ou estranho cai
@@ -1434,6 +1647,12 @@ function registrarEventos() {
     if (abrir) abrirDetalhePoder(db.poderes.find((p) => p.id === abrir));
   });
   document.getElementById("lista-poderes-personagem").addEventListener("click", (e) => {
+    const usar = e.target.dataset.usarPoder;
+    if (usar) {
+      const poder = db.poderes.find((x) => x.id === usar);
+      if (poder) gastarPM(poder.custo, poder.nome);
+      return;
+    }
     const rem = e.target.dataset.removerPoder;
     if (rem) { personagem.poderes = personagem.poderes.filter((x) => x !== rem); salvarERenderizar(); return; }
     const abrir = e.target.closest("[data-abrir-poder]")?.dataset.abrirPoder;
@@ -1450,6 +1669,12 @@ function registrarEventos() {
     if (abrir) abrirDetalheMagia(db.magias.find((m) => m.id === abrir));
   });
   document.getElementById("lista-magias-personagem").addEventListener("click", (e) => {
+    const conjurar = e.target.dataset.conjurarMagia;
+    if (conjurar) {
+      const m = db.magias.find((x) => x.id === conjurar);
+      if (m) gastarPM(regras.custoDaMagia(m), `Magia: ${m.nome}`);
+      return;
+    }
     const rem = e.target.dataset.removerMagia;
     if (rem) { personagem.magias = personagem.magias.filter((x) => x !== rem); personagem.magiasPreparadas = personagem.magiasPreparadas.filter((x) => x !== rem); salvarERenderizar(); return; }
     const prep = e.target.dataset.prepararMagia;
@@ -1513,6 +1738,37 @@ function registrarEventos() {
   document.getElementById("lista-condicoes").addEventListener("click", (e) => {
     const rem = e.target.dataset.removerCondicao;
     if (rem !== undefined) { personagem.condicoes.splice(Number(rem), 1); salvarERenderizar(); }
+  });
+
+  // Modificadores temporários: o segundo <select> só aparece quando o alvo
+  // precisa de detalhe (qual perícia, qual atributo).
+  const modAlvoSel = document.getElementById("mod-alvo");
+  const modDetalhe = document.getElementById("mod-detalhe");
+  const atualizarDetalhe = () => {
+    const alvo = modAlvoSel.value;
+    const precisa = alvo === "pericia" || alvo === "atributo";
+    modDetalhe.classList.toggle("hidden", !precisa);
+    if (!precisa) { modDetalhe.innerHTML = ""; return; }
+    modDetalhe.innerHTML = alvo === "pericia"
+      ? db.pericias.map((x) => `<option value="${x.id}">${esc(x.nome)}</option>`).join("")
+      : db.atributos.map((a) => `<option value="${a.id}">${esc(a.nome)}</option>`).join("");
+  };
+  modAlvoSel?.addEventListener("change", atualizarDetalhe);
+  atualizarDetalhe();
+  document.getElementById("btn-add-modificador")?.addEventListener("click", () => {
+    const alvo = modAlvoSel.value;
+    const valor = Number(document.getElementById("mod-valor").value) || 0;
+    if (!valor) { toast("Dê um valor diferente de zero ao modificador."); return; }
+    const mod = { nome: document.getElementById("mod-nome").value.trim() || "Modificador", alvo, valor };
+    if (alvo === "pericia") mod.pericia = modDetalhe.value;
+    if (alvo === "atributo") mod.atributo = modDetalhe.value;
+    personagem.modificadoresTemp = [...(personagem.modificadoresTemp || []), mod];
+    document.getElementById("mod-nome").value = "";
+    salvarERenderizar();
+  });
+  document.getElementById("lista-modificadores")?.addEventListener("click", (e) => {
+    const rem = e.target.dataset.removerModificador;
+    if (rem !== undefined) { personagem.modificadoresTemp.splice(Number(rem), 1); salvarERenderizar(); }
   });
 
   // Equipamentos

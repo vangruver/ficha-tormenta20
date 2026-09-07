@@ -318,6 +318,7 @@
     <div id="magias-conteudo">
       <div class="cartao">
         <h2>Magias conhecidas</h2>
+        <div id="resumo-magias" class="resumo-automacao"></div>
         <ul id="lista-magias-personagem" class="lista-poderes"></ul>
       </div>
       <div class="cartao">
@@ -351,12 +352,24 @@
       </table>
     </div>
     <div class="cartao">
-      <h2>Condições</h2>
+      <h2>Condições e efeitos</h2>
+      <div id="resumo-efeitos" class="resumo-automacao"></div>
       <div class="filtro-linha">
         <select id="condicao-select"></select>
-        <button id="btn-add-condicao">Aplicar</button>
+        <button id="btn-add-condicao">Aplicar condição</button>
       </div>
-      <ul id="lista-condicoes"></ul>
+      <ul id="lista-condicoes" class="lista-poderes"></ul>
+
+      <h3>Modificadores temporários</h3>
+      <p class="dica">O “+2 em tudo” de uma bênção, o “−1 na Defesa” de um item. Entram nas mesmas contas das condições.</p>
+      <div class="filtro-linha">
+        <input id="mod-nome" type="text" placeholder="Nome (ex.: Bênção)" />
+        <select id="mod-alvo"></select>
+        <select id="mod-detalhe" class="hidden"></select>
+        <input id="mod-valor" type="number" value="2" step="1" style="width:5em" />
+        <button id="btn-add-modificador">Adicionar</button>
+      </div>
+      <ul id="lista-modificadores" class="lista-poderes"></ul>
     </div>
   </section>
 

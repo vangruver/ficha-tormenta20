@@ -187,3 +187,33 @@ export function rolarPiscinaDeAtributos() {
   return Array.from({ length: 6 }, () => rolar4d6MenorDescartado())
     .sort((a, b) => b.totalD20 - a.totalD20);
 }
+
+// ==============================================================
+// Magia — círculo máximo por nível e gasto de PM.
+//
+// Em Tormenta 20 não existe "espaço de magia" do d20: toda magia é paga
+// em PM (1/3/6/10/15 PM do 1º ao 5º círculo, valor que vem do próprio
+// compêndio). O que o nível limita é o CÍRCULO que o conjurador alcança:
+// 1º círculo no 1º nível e um círculo novo a cada quatro níveis (5º, 9º,
+// 13º e 17º).
+// ==============================================================
+export function circuloMaximo(nivel) {
+  const n = Math.max(1, Number(nivel) || 1);
+  return Math.max(1, Math.min(5, Math.floor((n + 3) / 4)));
+}
+
+// Nível mínimo em que um conjurador alcança determinado círculo — o inverso
+// da conta acima, usado nas mensagens ("o 3º círculo chega no 9º nível").
+export function nivelDoCirculo(circulo) {
+  const c = Math.max(1, Math.min(5, Number(circulo) || 1));
+  return (c - 1) * 4 + 1;
+}
+
+// Custo padrão do círculo, usado quando o registro do compêndio não traz
+// `custo` (acontece em uma magia solta).
+export const CUSTO_POR_CIRCULO = { 1: 1, 2: 3, 3: 6, 4: 10, 5: 15 };
+export function custoDaMagia(magia) {
+  const c = Number(magia?.custo);
+  if (Number.isFinite(c) && c > 0) return c;
+  return CUSTO_POR_CIRCULO[Number(magia?.circulo)] ?? 1;
+}
