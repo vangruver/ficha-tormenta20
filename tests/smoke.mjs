@@ -122,6 +122,41 @@ async function main() {
   const origensSemEscolha = origens.filter((o) => (o.periciasSugeridas || []).length && (o.periciasSugeridas || []).length <= 2);
   assert(origensSemEscolha.length > 0, `origens que treinam a lista inteira, sem escolha (${origensSemEscolha.length})`);
 
+  // ---- magia: círculo por nível e custo em PM ----
+  assert([1, 4].every((n) => regras.circuloMaximo(n) === 1) && regras.circuloMaximo(5) === 2
+    && regras.circuloMaximo(9) === 3 && regras.circuloMaximo(13) === 4 && regras.circuloMaximo(17) === 5
+    && regras.circuloMaximo(20) === 5,
+    "círculo máximo: 1º no 1º nível e um novo a cada quatro (5º, 9º, 13º, 17º)");
+  assert([1, 2, 3, 4, 5].every((c) => regras.nivelDoCirculo(c) === (c - 1) * 4 + 1),
+    "nivelDoCirculo é o inverso de circuloMaximo");
+  const semCusto = magias.filter((m) => !Number(m.custo));
+  assert(semCusto.every((m) => regras.custoDaMagia(m) === regras.CUSTO_POR_CIRCULO[Number(m.circulo)]),
+    `magia sem custo no compêndio cai no padrão do círculo (${semCusto.length} caso(s))`);
+  assert(magias.filter((m) => Number(m.custo)).every((m) => regras.custoDaMagia(m) === Number(m.custo)),
+    "quando o compêndio traz custo, é ele que vale");
+
+  // ---- multiclasse ----
+  const arc = classes.find((c) => c.id === "arcanista");
+  const soArc = regras.pvMaximo({ classe: arc, nivel: 5, modCon: 1 });
+  const mcIgual = regras.pvMaximoMulticlasse({ classes: [{ classe: arc, niveis: 5 }], nivel: 5, modCon: 1 });
+  assert(soArc === mcIgual, "multiclasse de uma classe só dá o mesmo PV do cálculo simples");
+  const mcMisto = regras.pvMaximoMulticlasse({ classes: [{ classe: arc, niveis: 3 }, { classe: guerreiro, niveis: 2 }], nivel: 5, modCon: 1 });
+  const esperado = (arc.pvInicial + 1) + (arc.pvPorNivel + 1) * 2 + (guerreiro.pvPorNivel + 1) * 2;
+  assert(mcMisto === esperado, `PV multiclasse soma o por-nível da classe de cada nível (${mcMisto})`);
+  const dist = regras.niveisPorClasse([{ classe: arc, niveis: 1 }, { classe: guerreiro, niveis: 9 }], 5);
+  assert(dist[0].niveis === 1 && dist.reduce((a, b) => a + b.niveis, 0) === 5,
+    "classes extras nunca tomam o último nível da inicial nem estouram o total");
+
+  // ---- escolhas obrigatórias de classe ----
+  const escolhasClasse = await lerJSON("data/core/escolhas-classe.json");
+  for (const regra of escolhasClasse) {
+    assert(classes.some((c) => c.id === regra.classe), `escolha "${regra.id}" aponta para uma classe existente (${regra.classe})`);
+    const opcoes = poderes.filter((x) => String(x.nome).replace(/\s+/g, " ").split(":")[0].trim().toLowerCase() === regra.familia.toLowerCase());
+    assert(opcoes.length >= 2, `"${regra.nome}" tem opções no compêndio (${opcoes.length})`);
+  }
+  assert(classes.filter((c) => c.divindadeObrigatoria).length === 2, "Clérigo e Paladino exigem divindade");
+  assert(classes.every((c) => Number(c.dinheiroInicial) > 0), "toda classe tem dinheiro inicial");
+
   console.log("\nTudo certo!");
 }
 

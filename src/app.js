@@ -497,6 +497,9 @@ function renderizarTudo() {
 function renderIdentidade() {
   document.getElementById("nome").value = personagem.nome || "";
   document.getElementById("jogador").value = personagem.jogador || "";
+  const campoXp = document.getElementById("xp");
+  if (campoXp) campoXp.value = personagem.xp ?? 0;
+  renderAvatar();
   document.getElementById("raca").value = personagem.raca || "";
   document.getElementById("classe").value = personagem.classe || "";
   document.getElementById("origem").value = personagem.origem || "";
@@ -648,6 +651,47 @@ function renderAtribModos() {
         <span class="atrib-pool-valor${usados.has(i) ? " usado" : ""}" title="${v.d20 ? esc(`4d6 = ${v.dados.join(", ")} (descartou o ${v.descartado}) → ${v.d20} na escala d20`) : "Valor do arranjo"}">${formatarMod(v.valor)}${v.d20 ? `<span class="atrib-pool-valor d20" style="border:0;padding:0 0 0 5px">d20 ${v.d20}</span>` : ""}</span>`).join("")}
       <span class="atrib-pool-legenda">${usados.size}/${lista.length} distribuídos</span>`
     : "";
+}
+
+// Retrato do personagem: guardado como data URL na própria ficha (assim
+// viaja no export/import e no link somente-leitura), reduzido antes de
+// salvar porque o localStorage é pequeno.
+function renderAvatar() {
+  const img = document.getElementById("avatar-img");
+  const vazio = document.getElementById("avatar-vazio");
+  const remover = document.getElementById("avatar-remover");
+  if (!img || !vazio) return;
+  const tem = !!personagem.avatar;
+  img.classList.toggle("hidden", !tem);
+  vazio.classList.toggle("hidden", tem);
+  remover?.classList.toggle("hidden", !tem);
+  if (tem) img.src = personagem.avatar;
+  else img.removeAttribute("src");
+}
+
+// Reduz a imagem escolhida a no máximo 320px no maior lado antes de virar
+// data URL — um retrato de câmera inteiro estouraria a cota do navegador.
+function redimensionarAvatar(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error);
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("Não consegui ler essa imagem."));
+      img.onload = () => {
+        const max = 320;
+        const escala = Math.min(1, max / Math.max(img.width, img.height));
+        const w = Math.max(1, Math.round(img.width * escala));
+        const h = Math.max(1, Math.round(img.height * escala));
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL("image/jpeg", 0.82));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 function renderAtributos() {
@@ -1116,6 +1160,66 @@ function renderCombate() {
   }).join("") || '<li class="dica">Nenhuma condição ativa.</li>';
 
   renderModificadores(d);
+  renderParceiros();
+}
+
+// ==============================================================
+// Parceiros — aliados e montarias.
+//
+// Em T20 os poderes "Aliado: X" e "Montaria: X" dão um parceiro que luta
+// junto e tem PV próprios. A ficha não recalcula o bloco de regras dele (o
+// texto está no compêndio); ela acompanha o que muda em jogo: PV atual,
+// tipo e anotações. Os poderes dessas famílias que o personagem já tem
+// viram atalhos de "adicionar parceiro".
+// ==============================================================
+const FAMILIAS_DE_PARCEIRO = ["Aliado", "Montaria"];
+
+function poderesDeParceiroEscolhidos() {
+  return personagem.poderes
+    .map((id) => db.poderes.find((x) => x.id === id))
+    .filter((p) => p && FAMILIAS_DE_PARCEIRO.includes(String(p.nome).split(":")[0].trim()))
+    .map((p) => ({
+      id: p.id,
+      familia: String(p.nome).split(":")[0].trim(),
+      tipo: String(p.nome).split(":").slice(1).join(":").trim(),
+    }));
+}
+
+function renderParceiros() {
+  const sug = document.getElementById("parceiros-sugestoes");
+  const lista = document.getElementById("lista-parceiros");
+  if (!lista) return;
+
+  const doPoder = poderesDeParceiroEscolhidos();
+  if (sug) {
+    const jaTem = new Set((personagem.parceiros || []).map((x) => x.poderId).filter(Boolean));
+    sug.innerHTML = doPoder.length
+      ? doPoder.map((p) => `<button type="button" class="chip${jaTem.has(p.id) ? " travado" : " acao"}" ${jaTem.has(p.id) ? "disabled" : `data-add-parceiro-poder="${esc(p.id)}"`}>${esc(p.familia)}: ${esc(p.tipo)}<small>${jaTem.has(p.id) ? "já na lista" : "adicionar"}</small></button>`).join("")
+      : '<span class="dica">Nenhum poder de Aliado ou Montaria escolhido ainda — dá pra adicionar um parceiro à mão abaixo.</span>';
+  }
+
+  lista.innerHTML = (personagem.parceiros || []).map((p, i) => `
+    <div class="parceiro-card">
+      <div class="parceiro-topo">
+        <input type="text" data-parceiro-campo="nome" data-parceiro-idx="${i}" value="${esc(p.nome || "")}" placeholder="Nome" />
+        <input type="text" data-parceiro-campo="tipo" data-parceiro-idx="${i}" value="${esc(p.tipo || "")}" placeholder="Tipo" />
+        <button class="perigo" data-remover-parceiro="${i}">✕</button>
+      </div>
+      <div class="parceiro-pv">
+        <label>PV <input type="number" data-parceiro-campo="pvAtual" data-parceiro-idx="${i}" value="${Number(p.pvAtual) || 0}" /></label>
+        <span>/</span>
+        <label>máx <input type="number" data-parceiro-campo="pvMax" data-parceiro-idx="${i}" value="${Number(p.pvMax) || 0}" /></label>
+        <div class="dash-barra"><div class="dash-barra-fill ${regras.faixaPV(Number(p.pvAtual) || 0, Number(p.pvMax) || 1)}" style="width:${p.pvMax ? Math.max(0, Math.min(100, ((Number(p.pvAtual) || 0) / Number(p.pvMax)) * 100)) : 0}%"></div></div>
+      </div>
+      <textarea data-parceiro-campo="notas" data-parceiro-idx="${i}" rows="2" placeholder="Ataques, habilidades, anotações…">${esc(p.notas || "")}</textarea>
+    </div>`).join("") || '<p class="dica">Nenhum parceiro.</p>';
+
+  sug?.querySelectorAll("[data-add-parceiro-poder]").forEach((b) => b.addEventListener("click", () => {
+    const p = doPoder.find((x) => x.id === b.dataset.addParceiroPoder);
+    if (!p) return;
+    personagem.parceiros = [...(personagem.parceiros || []), { nome: p.tipo, tipo: p.familia, poderId: p.id, pvAtual: 0, pvMax: 0, notas: "" }];
+    salvarERenderizar();
+  }));
 }
 
 // ==============================================================
@@ -1602,6 +1706,25 @@ function registrarEventos() {
   document.getElementById("biografia").addEventListener("input", (e) => { personagem.biografia = e.target.value; salvar(); });
   document.getElementById("aparencia").addEventListener("input", (e) => { personagem.aparencia = e.target.value; salvar(); });
   document.getElementById("nivel").addEventListener("input", (e) => { personagem.nivel = Math.max(1, Math.min(20, Number(e.target.value) || 1)); salvarERenderizar(); });
+  document.getElementById("xp")?.addEventListener("input", (e) => { personagem.xp = Math.max(0, Number(e.target.value) || 0); salvar(); });
+
+  // Retrato
+  const avatarInput = document.getElementById("avatar-input");
+  document.getElementById("avatar-bloco")?.addEventListener("click", (e) => {
+    if (e.target.id === "avatar-remover") { personagem.avatar = null; salvarERenderizar(); return; }
+    avatarInput?.click();
+  });
+  avatarInput?.addEventListener("change", async () => {
+    const file = avatarInput.files?.[0];
+    avatarInput.value = "";
+    if (!file) return;
+    try {
+      personagem.avatar = await redimensionarAvatar(file);
+      salvarERenderizar();
+    } catch (err) {
+      toast(err.message || "Não consegui usar essa imagem.");
+    }
+  });
 
   for (const id of ["tt", "to", "tp", "tc"]) {
     document.getElementById(`dinheiro-${id}`).addEventListener("input", (e) => {
@@ -1792,6 +1915,28 @@ function registrarEventos() {
   document.getElementById("lista-condicoes").addEventListener("click", (e) => {
     const rem = e.target.dataset.removerCondicao;
     if (rem !== undefined) { personagem.condicoes.splice(Number(rem), 1); salvarERenderizar(); }
+  });
+
+  // Parceiros
+  document.getElementById("btn-add-parceiro")?.addEventListener("click", () => {
+    const nome = document.getElementById("parceiro-nome").value.trim();
+    const tipo = document.getElementById("parceiro-tipo").value.trim();
+    if (!nome && !tipo) { toast("Dê um nome ou um tipo ao parceiro."); return; }
+    personagem.parceiros = [...(personagem.parceiros || []), { nome, tipo, pvAtual: 0, pvMax: 0, notas: "" }];
+    document.getElementById("parceiro-nome").value = "";
+    document.getElementById("parceiro-tipo").value = "";
+    salvarERenderizar();
+  });
+  document.getElementById("lista-parceiros")?.addEventListener("input", (e) => {
+    const campo = e.target.dataset.parceiroCampo, idx = e.target.dataset.parceiroIdx;
+    if (!campo || idx === undefined) return;
+    const valor = e.target.type === "number" ? Number(e.target.value) || 0 : e.target.value;
+    personagem.parceiros[Number(idx)][campo] = valor;
+    salvar();
+  });
+  document.getElementById("lista-parceiros")?.addEventListener("click", (e) => {
+    const rem = e.target.dataset.removerParceiro;
+    if (rem !== undefined) { personagem.parceiros.splice(Number(rem), 1); salvarERenderizar(); }
   });
 
   // Modificadores temporários: o segundo <select> só aparece quando o alvo
@@ -3076,6 +3221,17 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-09", items: [
+    "<b>PM gasto de verdade</b>: botão <b>Conjurar</b> em cada magia e <b>Usar</b> nos 174 poderes com custo (Fúria, Aparar, Inspiração…). Desconta a mana, recusa quando falta e registra no histórico. Antes o custo era só um rótulo.",
+    "<b>Círculo máximo por nível</b>: 1º círculo no 1º nível e um novo a cada quatro. Magia acima disso fica marcada com o nível em que libera e não dá pra conjurar.",
+    "<b>Condições mexem nos números</b>: Abalado tira −2 de perícias e ataques, Exausto tira −6 de For/Des e corta o deslocamento, Indefeso fixa a Defesa em 5, Paralisado zera a Destreza. As condições sem efeito numérico continuam como lembrete, agora marcadas como tal.",
+    "<b>Modificadores temporários</b>: crie o \"+2 em tudo\" de uma bênção ou o \"−1 na Defesa\" de um item e ele entra nas mesmas contas das condições.",
+    "<b>Multiclasse</b>: reparta o nível entre classes — PV e PM contam a repartição e as perícias fixas das classes novas entram sozinhas.",
+    "<b>Escolhas obrigatórias de classe</b>: Caminho do Arcanista e Caminho do Cavaleiro viram pendência no painel de automação, com as opções vindas do próprio compêndio. Clérigo e Paladino passam a exigir divindade.",
+    "<b>Ficha em PDF de duas páginas</b>, num layout A4 de papel — não é mais a página do app impressa. Tem pré-visualização em tela no menu Arquivo.",
+    "<b>Retrato do personagem, XP e parceiros</b> (aliados e montarias com PV e anotações), além de especialidade em Ofício e Conhecimento.",
+    "O <b>gerador</b> agora também escolhe magias pra conjuradores, dinheiro inicial e a especialidade das perícias.",
+  ] },
   { date: "2026-09-08", items: [
     "<b>Visual novo</b>: a ficha inteira foi repaginada — superfícies escuras empilhadas, tipografia condensada nos rótulos e acento escarlate de Arton, na mesma linguagem visual da ficha de D&D 5e. Agora são quatro temas: Noite (padrão), Mesa (escuro e compacto pra jogar), Papel Branco e Pergaminho.",
     "<b>Perícias treinadas legíveis em qualquer tema</b>: a linha destacada usava um creme fixo que, no tema escuro, deixava texto claro sobre fundo claro — impossível de ler. Agora o realce sai da cor de acento do tema, com uma faixa vermelha na margem e o bônus em pílula.",
@@ -4259,6 +4415,24 @@ function gerarPersonagem(opcoes = {}) {
 
   aplicarAutomacaoAleatoria(raca, classe, origem);
   if (opcoes.equipar !== false) equiparInicialAleatorio(classe);
+
+  // Dinheiro inicial da criação (o que sobra depois do equipamento fica no
+  // bolso — a ficha não cobra o preço dos itens, então é um valor de partida).
+  personagem.dinheiro = { tt: Number(classe.dinheiroInicial) || 0, to: 0, tp: 0, tc: 0 };
+
+  // Conjurador começa com magias: as do tipo da classe, dentro do círculo que
+  // o nível alcança. Sem isso um Arcanista saía do gerador sem uma magia.
+  personagem.magias = [];
+  personagem.magiasPreparadas = [];
+  if (classe.conjuracao) {
+    const tipo = classe.conjuracao[0].toUpperCase() + classe.conjuracao.slice(1);
+    const max = regras.circuloMaximo(personagem.nivel);
+    const disponiveis = db.magias.filter((m) => (m.tipo === tipo || m.tipo === "Universal") && Number(m.circulo) <= max);
+    // Uma folga confortável: duas magias do 1º círculo mais uma por círculo
+    // acima — o suficiente pra jogar, sem inventar a tabela de conhecidas.
+    const quantas = Math.min(disponiveis.length, 2 + (max - 1));
+    personagem.magias = sorteiaVarios(disponiveis, quantas).map((m) => m.id);
+  }
 
   normalizarEscolhas();
   const d = calcularDerivados();

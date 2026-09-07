@@ -56,6 +56,26 @@ adaptado para as regras de Tormenta 20.
   - **Perícias** (as 29 do sistema, incluindo Fortitude/Reflexos/Vontade) com o bônus do livro:
     *metade do nível + atributo + treino (+2, +4 no 7º nível, +6 no 15º)*;
   - **Compra de atributos**: mostra quantos dos 10 pontos iniciais você usou.
+- **PM gasto de verdade**: em T20 não existe "espaço de magia" — tudo se paga em Pontos de Mana.
+  O botão **Conjurar** de cada magia e o **Usar** dos 174 poderes com custo (Fúria, Aparar,
+  Inspiração…) descontam a mana sozinhos, recusam quando falta e registram no histórico de rolagens.
+  O **círculo máximo por nível** (1º no 1º nível e um novo a cada quatro) trava as magias que ainda
+  não liberaram, marcando em que nível cada uma entra.
+- **Condições que mexem nos números**: aplicar *Abalado* tira −2 de perícias e ataques, *Exausto*
+  tira −6 de Força e Destreza e corta o deslocamento pela metade, *Indefeso* fixa a Defesa em 5,
+  *Paralisado* trata Destreza como 0. Condição sem efeito numérico (Apavorado, Confuso) continua
+  valendo como lembrete e aparece marcada como tal. Junto delas há **modificadores temporários**
+  criados à mão (o "+2 em tudo" de uma bênção, o "−1 na Defesa" de um item), que entram nas mesmas
+  contas.
+- **Multiclasse**: reparta o nível total entre classes. PV e PM contam a repartição — só a classe
+  inicial dá o pacote do 1º nível, e cada nível seguinte usa o valor por nível da classe em que foi
+  ganho. As perícias fixas das classes novas entram sozinhas.
+- **Ficha em PDF de duas páginas**: um layout A4 de papel de verdade (identidade, atributos,
+  Defesa/PV/PM, as 29 perícias em duas colunas, ataques na página 1; poderes, magias, equipamento,
+  condições e anotações na página 2), com pré-visualização em tela antes de imprimir.
+- **Retrato, XP e parceiros**: foto do personagem guardada na própria ficha, campo de experiência e
+  um acompanhamento de aliados e montarias (PV e anotações de cada um), com atalho a partir dos
+  poderes *Aliado:* e *Montaria:* que o personagem tiver.
 - **Rolagens**: perícias, atributos, testes de resistência, ataques (com margem de crítico da arma) e
   **dano** (com o multiplicador aplicado no crítico), além de um **rolador de dados** no menu
   Ferramentas — expressões livres (`2d6+3`) e os testes da ficha a um clique, com ou sem sala.
@@ -168,7 +188,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `src/app.js` | interface, abas, assistente guiado, painel de automação, gerador de personagem, equipamento, rolagens e sala |
 | `src/storage.js` | personagens em `localStorage` (múltiplos slots + ativo), importar/exportar |
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
-| `data/core/*.json` | raças, classes, perícias, atributos, origens — regras centrais digitadas à mão |
+| `data/core/*.json` | raças, classes, perícias, atributos, origens e escolhas obrigatórias de classe — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
 
@@ -177,16 +197,26 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 - Os traços raciais em `data/core/racas.json` foram digitados a partir do livro básico — revise
   antes de usar em mesa (veja "Fonte dos dados" acima).
 - Perícias sugeridas por origem são um palpite temático, não a lista oficial fixa do livro.
-- Equipamento inicial de classe/origem não é adicionado automaticamente ao inventário.
+- Equipamento inicial de classe/origem não é adicionado automaticamente ao inventário quando você
+  monta o personagem à mão — só o **gerador** veste armadura, escudo e arma sozinho.
 - **Traços raciais condicionais** (o +2 do anão só no subterrâneo, o +5 de Furtividade do trog só
   sem armadura, o +2 num Ofício à escolha do kliren) não entram sozinhos — o painel de automação
   avisa e você soma no campo "outros" da perícia quando valer.
 - **Requisitos de poder** são texto livre no compêndio: a ficha só consegue conferir requisito de
   nível, de atributo e de "treinado em X"; o resto passa sem checagem.
-- **Limite de magias conhecidas/preparadas por círculo e nível** ainda não é calculado — a aba
-  Magias deixa escolher livremente.
-- Escolhas específicas (ex.: esfera de milagres do Clérigo, caminho do Arcanista, forma selvagem do
-  Druida) ainda não têm seletor dedicado — use as Notas ou o campo de biografia.
+- **Quantas magias você conhece** continua livre: o círculo máximo por nível é aplicado (magia
+  acima dele não pode ser conjurada), mas a tabela de *magias conhecidas* por classe e nível não
+  está digitada, então a ficha não limita o número — só mostra a contagem por círculo.
+- **Escolhas obrigatórias de classe** têm seletor para o Caminho do Arcanista e o Caminho do
+  Cavaleiro, declarados em `data/core/escolhas-classe.json`. As demais famílias do compêndio
+  (Postura de Combate, Missa, Forma Selvagem, Julgamento Divino…) **não** são escolhas de nível —
+  são poderes pegos com as vagas normais e já aparecem na aba Poderes. Se você conferir no livro
+  que alguma outra classe tem escolha obrigatória, basta acrescentar a entrada no arquivo: não
+  precisa de código novo.
+- **Dinheiro inicial** é o mesmo para todas as classes (T$ 60) porque a tabela por classe não foi
+  conferida contra o livro; ajuste à mão se a sua mesa usar valores diferentes.
+- O **bloco de regras dos parceiros** (ataques e habilidades do aliado/montaria por nível) não é
+  calculado — a ficha acompanha PV e anotações, e o texto fica no compêndio.
 - **Bestiário do compêndio na escala d20**: PV, Defesa e atributos das ameaças vêm do material
   antigo e não batem com a escala de T20; a ficha mostra o modificador equivalente, mas não
   reescreve as fichas de ameaça.

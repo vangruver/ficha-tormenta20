@@ -224,9 +224,18 @@
   <section id="aba-ficha" class="aba">
     <div class="cartao">
       <h2>Identidade</h2>
-      <div class="grade-campos">
-        <label>Nome <input id="nome" type="text" placeholder="Nome do personagem" /></label>
-        <label>Jogador <input id="jogador" type="text" /></label>
+      <div class="identidade-linha">
+        <div class="avatar-bloco" id="avatar-bloco" title="Clique para escolher um retrato">
+          <img id="avatar-img" class="hidden" alt="Retrato do personagem" />
+          <div id="avatar-vazio" class="avatar-vazio">🖼️<span>retrato</span></div>
+          <button type="button" id="avatar-remover" class="avatar-remover hidden" title="Remover retrato">✕</button>
+          <input type="file" id="avatar-input" accept="image/*" hidden />
+        </div>
+        <div class="grade-campos identidade-campos">
+          <label>Nome <input id="nome" type="text" placeholder="Nome do personagem" /></label>
+          <label>Jogador <input id="jogador" type="text" /></label>
+          <label>Experiência (XP) <input id="xp" type="number" min="0" step="1" value="0" /></label>
+        </div>
       </div>
       <div class="grade-campos hidden" aria-hidden="true">
         <label>Raça <select id="raca"></select></label>
@@ -353,6 +362,18 @@
         <tbody id="lista-ataques"></tbody>
       </table>
     </div>
+    <div class="cartao">
+      <h2>Parceiros</h2>
+      <p class="dica">Aliados e montarias que os poderes <b>Aliado:</b> e <b>Montaria:</b> concedem. A ficha acompanha PV e anotações de cada um — o bloco de regras fica no compêndio.</p>
+      <div id="parceiros-sugestoes" class="chip-lista"></div>
+      <div class="filtro-linha">
+        <input id="parceiro-nome" type="text" placeholder="Nome do parceiro" />
+        <input id="parceiro-tipo" type="text" placeholder="Tipo (ex.: Lobo, Grifo)" />
+        <button id="btn-add-parceiro">➕ Adicionar parceiro</button>
+      </div>
+      <div id="lista-parceiros" class="parceiros-lista"></div>
+    </div>
+
     <div class="cartao">
       <h2>Condições e efeitos</h2>
       <div id="resumo-efeitos" class="resumo-automacao"></div>

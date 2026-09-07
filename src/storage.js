@@ -42,6 +42,12 @@ export function novoPersonagem(nome = "Novo Herói") {
     id: crypto.randomUUID(),
     nome,
     jogador: "",
+    // Retrato do personagem, guardado como data URL redimensionado (o
+    // localStorage tem poucos MB, então a imagem entra reduzida).
+    avatar: null,
+    // Experiência: T20 usa XP pra subir de nível, mas muitas mesas jogam por
+    // marco. O campo é livre e não força nada — só acompanha.
+    xp: 0,
     raca: "", classe: "", origem: "", divindade: "",
     // Classes adicionais além da inicial (`classe`), cada uma com quantos
     // níveis do total foram gastos nela: [{ classeId, niveis }].
@@ -75,6 +81,9 @@ export function novoPersonagem(nome = "Novo Herói") {
     ataques: [],
     condicoes: [],
     modificadoresTemp: [],
+    // Parceiros: aliados e montarias concedidos pelos poderes "Aliado: X" e
+    // "Montaria: X" do compêndio, cada um com PV e anotações próprios.
+    parceiros: [],
     notas: [],
     biografia: "",
     aparencia: "",
@@ -119,9 +128,11 @@ export function migrarPersonagem(p) {
   if (typeof p.atributosArranjo !== "string") p.atributosArranjo = "";
   if (!Array.isArray(p.atributosPool)) p.atributosPool = [];
   if (!p.especializacoes || typeof p.especializacoes !== "object") p.especializacoes = {};
+  if (p.avatar === undefined) p.avatar = null;
+  if (typeof p.xp !== "number") p.xp = Number(p.xp) || 0;
   if (!p.atributosSlots || typeof p.atributosSlots !== "object") p.atributosSlots = {};
   p.periciasOutros = p.periciasOutros || {};
-  for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp", "multiclasses"]) {
+  for (const k of ["periciasTreinadas", "poderes", "magias", "magiasPreparadas", "equipamentos", "ataques", "condicoes", "notas", "modificadoresTemp", "multiclasses", "parceiros"]) {
     if (!Array.isArray(p[k])) p[k] = [];
   }
   for (const item of p.equipamentos) if (item && item.equipado === undefined) item.equipado = false;
