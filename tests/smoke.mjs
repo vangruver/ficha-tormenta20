@@ -157,6 +157,41 @@ async function main() {
   assert(classes.filter((c) => c.divindadeObrigatoria).length === 2, "Clérigo e Paladino exigem divindade");
   assert(classes.every((c) => Number(c.dinheiroInicial) > 0), "toda classe tem dinheiro inicial");
 
+  // ---- tabelas de progressão ----
+  const conj = await lerJSON("data/core/conjuracao.json");
+  assert(conj.length >= 4, `existem tabelas de conjuração (${conj.length})`);
+  for (const t of conj) {
+    assert(t.progressao.length === 20, `${t.nome}: tabela cobre os 20 níveis`);
+    assert(t.progressao.every((l, i) => i === 0 || l.conhecidas >= t.progressao[i - 1].conhecidas),
+      `${t.nome}: magias conhecidas nunca diminuem ao subir de nível`);
+    assert(t.progressao.every((l, i) => i === 0 || l.circuloMaximo >= t.progressao[i - 1].circuloMaximo),
+      `${t.nome}: o círculo alcançado nunca regride`);
+  }
+  const bardo = conj.find((t) => t.classe === "bardo");
+  const clerigo = conj.find((t) => t.classe === "clerigo");
+  assert(bardo && bardo.progressao.at(-1).circuloMaximo === 4, "Bardo é meio-conjurador: para no 4º círculo");
+  assert(clerigo && clerigo.progressao.at(-1).circuloMaximo === 5, "Clérigo é conjurador pleno: chega ao 5º círculo");
+  assert(regras.circuloMaximoDaClasse(bardo, 20) === 4 && regras.circuloMaximoDaClasse(null, 20) === 5,
+    "a tabela da classe manda; sem tabela vale a fórmula do conjurador pleno");
+  assert(regras.magiasConhecidasNoNivel(clerigo, 1) === clerigo.magiasIniciais,
+    "no 1º nível o conjurador conhece exatamente as magias iniciais");
+
+  const habs = await lerJSON("data/core/habilidades-classe.json");
+  assert(habs.length === classes.length, `todas as ${classes.length} classes do básico têm habilidades tabeladas`);
+  assert(habs.every((h) => h.habilidades.every((a) => a.nivel >= 1 && a.nivel <= 20 && a.nome)),
+    "toda habilidade tem nome e um nível entre 1 e 20");
+  assert(habs.every((h) => h.habilidades.every((a) => !("texto" in a) && !("text" in a))),
+    "as habilidades guardam só nome e nível — nenhum texto de livro");
+
+  // ---- suplementos ----
+  const racasSup = await lerJSON("data/core/racas-suplementos.json");
+  const classesSup = await lerJSON("data/core/classes-suplementos.json");
+  const nomesBase = new Set(racas.map((r) => r.nome.toLowerCase()));
+  assert(racasSup.length > 20, `raças de suplemento carregadas (${racasSup.length})`);
+  assert(racasSup.every((r) => r.suplemento && r.fonte), "toda raça de suplemento declara fonte e marcação");
+  assert(!racasSup.some((r) => nomesBase.has(r.nome.toLowerCase())), "nenhuma raça de suplemento duplica uma do básico");
+  assert(classesSup.every((c) => c.pvInicial > 0 && c.pmInicial >= 0), "classes de suplemento têm PV/PM");
+
   console.log("\nTudo certo!");
 }
 

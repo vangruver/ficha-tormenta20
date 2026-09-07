@@ -271,3 +271,30 @@ export function pmMaximoMulticlasse({ classes, nivel, extraPorNivel = 0, extra =
   for (const o of outras) pm += ((o.classe.pmPorNivel ?? 0) + extraPorNivel) * o.niveis;
   return Math.max(0, pm + extra);
 }
+
+// ==============================================================
+// Progressão de conjuração por classe (data/core/conjuracao.json).
+//
+// circuloMaximo() acima é a progressão do conjurador PLENO (Arcanista,
+// Clérigo): um círculo novo a cada quatro níveis, até o 5º. Mas Bardo e
+// Druida são meio-conjuradores — alcançam o 2º círculo só no 9º nível e
+// param no 4º. Quando a classe tem tabela, é ela que manda; a fórmula
+// genérica fica de reserva para classe sem tabela (as de suplemento).
+// ==============================================================
+export function linhaDeConjuracao(tabela, nivel) {
+  if (!tabela?.progressao?.length) return null;
+  const n = Math.max(1, Math.min(20, Number(nivel) || 1));
+  return tabela.progressao.find((l) => l.nivel === n) ?? tabela.progressao.at(-1);
+}
+export function circuloMaximoDaClasse(tabela, nivel) {
+  return linhaDeConjuracao(tabela, nivel)?.circuloMaximo ?? circuloMaximo(nivel);
+}
+export function magiasConhecidasNoNivel(tabela, nivel) {
+  return linhaDeConjuracao(tabela, nivel)?.conhecidas ?? null;
+}
+// Em que nível a classe alcança determinado círculo, segundo a tabela dela.
+export function nivelDoCirculoDaClasse(tabela, circulo) {
+  const c = Math.max(1, Math.min(5, Number(circulo) || 1));
+  const linha = tabela?.progressao?.find((l) => l.circuloMaximo >= c);
+  return linha ? linha.nivel : nivelDoCirculo(c);
+}

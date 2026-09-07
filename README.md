@@ -133,6 +133,17 @@ uma Issue no repositório explicando o pedido.
   encontrou nenhum stat block faltando, então nenhuma entrada nova precisou ser adicionada a partir
   dele. Como de costume neste arquivo, os campos `descricao` ficam vazios — o texto de lore dos
   livros é conteúdo comercial protegido, então só os números e habilidades mecânicas são mantidos.
+- **Progressão por nível (`data/core/conjuracao.json`, `data/core/habilidades-classe.json`)**:
+  quantas magias cada classe conjuradora conhece em cada nível, até que círculo ela alcança, e as
+  habilidades que a classe concede sozinha ao subir. Geradas pelo
+  [`sync-tabelas.mjs`](sync-tabelas.mjs), que **chama** as funções de progressão do Fichas de Nimb
+  para os níveis 1 a 20 e anota o resultado — são funções puras do nível, então o que sai é a tabela
+  do livro, não a implementação dele.
+
+  Isso corrigiu um erro real da ficha: a fórmula genérica tratava todo mundo como conjurador pleno,
+  e **Bardo e Druida são meio-conjuradores** — só alcançam o 2º círculo no 9º nível e param no 4º,
+  enquanto Arcanista e Clérigo chegam ao 5º. O Arcanista ainda tem uma tabela por Caminho: Mago,
+  Bruxo e Feiticeiro aprendem quantidades diferentes de magias.
 - **Suplementos (`data/core/*-suplementos.json`, `data/raw/deuses-menores.json`)**: raças, classes,
   origens e divindades de **Heróis de Arton**, **Ameaças de Arton** e **Deuses de Arton**, geradas
   pelo script [`sync-suplementos.mjs`](sync-suplementos.mjs) a partir do mesmo checkout do Fichas de
@@ -230,6 +241,7 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
 | `sync-data.mjs` | baixa o Tormenta20 Compendium e gera `data/raw/*.json` + `data/version.json` |
 | `sync-core.mjs` | confere `data/core/*.json` contra o Fichas de Nimb e completa os campos que faltam |
 | `sync-suplementos.mjs` | gera as raças, classes, origens e deuses dos suplementos a partir do mesmo checkout |
+| `sync-tabelas.mjs` | tabela a progressão de magias e as habilidades de classe por nível |
 | `data/core/*.json` | raças, classes, perícias, atributos, origens e escolhas obrigatórias de classe — regras centrais digitadas à mão |
 | `data/raw/*.json` | poderes, magias, equipamentos, panteão, ameaças — gerado pelo `sync-data.mjs` |
 | `data/raw/golem-*.json` | conteúdo de fã (não-oficial) para a raça Golem — veja "Conteúdo de fã (opcional)" acima |
@@ -251,9 +263,8 @@ node tests/smoke.mjs   # confere se os números batem com o esperado
   avisa e você soma no campo "outros" da perícia quando valer.
 - **Requisitos de poder** são texto livre no compêndio: a ficha só consegue conferir requisito de
   nível, de atributo e de "treinado em X"; o resto passa sem checagem.
-- **Quantas magias você conhece** continua livre: o círculo máximo por nível é aplicado (magia
-  acima dele não pode ser conjurada), mas a tabela de *magias conhecidas* por classe e nível não
-  está digitada, então a ficha não limita o número — só mostra a contagem por círculo.
+- **Habilidades de classe** (`data/core/habilidades-classe.json`) entram como *nome e nível* — a
+  ficha mostra o que já liberou e o que vem a seguir, mas o texto de cada uma está no livro.
 - **Escolhas obrigatórias de classe** têm seletor para o Caminho do Arcanista e o Caminho do
   Cavaleiro, declarados em `data/core/escolhas-classe.json`. As demais famílias do compêndio
   (Postura de Combate, Missa, Forma Selvagem, Julgamento Divino…) **não** são escolhas de nível —

@@ -14,7 +14,7 @@ let cache = null;
 
 export async function carregarBanco() {
   if (cache) return cache;
-  const [atributos, pericias, classes, racas, origens, escolhasClasse, racasSup, classesSup, origensSup, deusesMenores, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
+  const [atributos, pericias, classes, racas, origens, escolhasClasse, racasSup, classesSup, origensSup, deusesMenores, conjuracao, habilidadesClasse, poderes, magias, equipamentos, panteao, ameacas, ameacasExtra, golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version] =
     await Promise.all([
       carregarJSON("data/core/atributos.json"),
       carregarJSON("data/core/pericias.json"),
@@ -34,6 +34,10 @@ export async function carregarBanco() {
       carregarJSON("data/core/classes-suplementos.json").catch(() => []),
       carregarJSON("data/core/origens-suplementos.json").catch(() => []),
       carregarJSON("data/raw/deuses-menores.json").catch(() => []),
+      // Tabelas de progressão por nível (sync-tabelas.mjs): quantas magias
+      // cada classe conhece e quais habilidades ela ganha em cada nível.
+      carregarJSON("data/core/conjuracao.json").catch(() => []),
+      carregarJSON("data/core/habilidades-classe.json").catch(() => []),
       carregarJSON("data/raw/poderes.json"),
       carregarJSON("data/raw/magias.json"),
       carregarJSON("data/raw/equipamentos.json"),
@@ -61,7 +65,7 @@ export async function carregarBanco() {
     classes: [...classes, ...classesSup],
     racas: [...racas, ...racasSup],
     origens: [...origens, ...origensSup],
-    escolhasClasse, deusesMenores, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
+    escolhasClasse, deusesMenores, conjuracao, habilidadesClasse, poderes, magias, equipamentos, panteao, ameacas: [...ameacas, ...ameacasExtra], golemChassis, golemPoderesFa, golemOrigensFa, origensRegionais, version };
   return cache;
 }
 
@@ -167,4 +171,22 @@ export function opcoesDaEscolhaDeClasse(db, familia) {
 // As escolhas de classe que já valem no nível atual do personagem.
 export function escolhasDeClassePara(db, classeId, nivel) {
   return (db.escolhasClasse || []).filter((e) => e.classe === classeId && (Number(e.nivel) || 1) <= (Number(nivel) || 1));
+}
+
+// Tabela de conjuração da classe. O Arcanista tem uma por Caminho (Bruxo,
+// Feiticeiro, Mago); sem Caminho escolhido cai na entrada genérica da classe.
+export function conjuracaoDaClasse(db, classeId, subtipo) {
+  const tabelas = (db.conjuracao || []).filter((c) => c.classe === classeId);
+  if (!tabelas.length) return null;
+  if (subtipo) {
+    const exata = tabelas.find((c) => c.subtipo && c.subtipo.toLowerCase() === String(subtipo).toLowerCase());
+    if (exata) return exata;
+  }
+  return tabelas.find((c) => !c.subtipo) ?? tabelas[0];
+}
+
+export function habilidadesDaClasse(db, classeId, nivel) {
+  const reg = (db.habilidadesClasse || []).find((h) => h.classe === classeId);
+  if (!reg) return [];
+  return reg.habilidades.filter((a) => a.nivel <= (Number(nivel) || 1));
 }

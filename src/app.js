@@ -1,4 +1,4 @@
-import { carregarBanco, porId, poderesDe, poderesDaClasse, poderesDaRaca, poderesDaOrigem, poderesGerais, magiasFiltradas, equipamentosFiltrados, ameacasFiltradas, panteaoFiltrado, opcoesDaEscolhaDeClasse, escolhasDeClassePara } from "./database.js";
+import { carregarBanco, porId, poderesDe, poderesDaClasse, poderesDaRaca, poderesDaOrigem, poderesGerais, magiasFiltradas, equipamentosFiltrados, ameacasFiltradas, panteaoFiltrado, opcoesDaEscolhaDeClasse, escolhasDeClassePara, conjuracaoDaClasse, habilidadesDaClasse } from "./database.js";
 import * as regras from "./rules.js";
 import * as storage from "./storage.js";
 import { applyI18n, setLang, getLang, t } from "./i18n.js";
@@ -913,8 +913,33 @@ function poolPoderesDisponiveis() {
   return pool.filter((p) => (vistos.has(p.id) ? false : (vistos.add(p.id), true)));
 }
 
+// As habilidades que a classe concede sozinha ao subir de nível (Fúria no 1º,
+// Evasão no 2º...). Não ocupam vaga de poder — a ficha só mostra o que já
+// está liberado e o que vem a seguir, para não parecer que sumiu algo.
+function renderHabilidadesDeClasse(d) {
+  const box = document.getElementById("habilidades-classe");
+  if (!box) return;
+  const todas = d.classes.flatMap((x) => {
+    const reg = (db.habilidadesClasse || []).find((h) => h.classe === x.classe.id);
+    return (reg?.habilidades || []).map((a) => ({ ...a, classe: x.classe.nome, niveisNaClasse: x.niveis }));
+  });
+  if (!todas.length) {
+    box.innerHTML = '<p class="dica">Escolha uma classe na aba <b>Construção</b> — ou esta classe não tem habilidades tabeladas.</p>';
+    return;
+  }
+  const liberadas = todas.filter((a) => a.nivel <= a.niveisNaClasse).sort((a, b) => a.nivel - b.nivel);
+  const futuras = todas.filter((a) => a.nivel > a.niveisNaClasse).sort((a, b) => a.nivel - b.nivel);
+  const linha = (a, ativa) => `<span class="chip ${ativa ? "ativo" : "limpar"}" title="${esc(`${a.classe} · ${a.nivel}º nível`)}">${esc(a.nome)}<small>${a.nivel}º</small></span>`;
+  box.innerHTML = `
+    <div class="resumo-treinos-linha">Já liberadas: <b>${liberadas.length}</b>${futuras.length ? ` · ainda por vir: <b>${futuras.length}</b>` : ""}.</div>
+    <div class="chip-lista">${liberadas.map((a) => linha(a, true)).join("") || '<span class="dica">Nenhuma ainda.</span>'}</div>
+    ${futuras.length ? `<p class="dica" style="margin-top:10px">Próximos níveis:</p><div class="chip-lista">${futuras.slice(0, 12).map((a) => linha(a, false)).join("")}</div>` : ""}
+    <p class="dica" style="margin-top:10px">O texto de cada habilidade está no livro — a ficha guarda o nome e o nível para você saber o que já tem.</p>`;
+}
+
 function renderPoderes() {
   const d = calcularDerivados();
+  renderHabilidadesDeClasse(d);
   const esperados = poderesEsperados();
   const e = escolhas();
   const poderOrigem = e.poderOrigem ? db.poderes.find((x) => x.id === e.poderOrigem) : null;
@@ -1049,8 +1074,21 @@ function recuperarPM(quanto) {
 // acima disso continuam podendo ficar guardadas na ficha (o jogador pode
 // estar planejando a subida de nível), mas aparecem marcadas e o botão de
 // conjurar fica travado.
+// A tabela da classe (data/core/conjuracao.json) é quem decide: Bardo e
+// Druida são meio-conjuradores e param no 4º círculo, enquanto Arcanista e
+// Clérigo chegam ao 5º. Sem tabela (classe de suplemento), vale a fórmula
+// genérica do conjurador pleno.
+function tabelaDeConjuracao() {
+  const classe = classeAtual();
+  if (!classe) return null;
+  // O Caminho do Arcanista muda quantas magias ele aprende.
+  const escolhaCaminho = escolhas().escolhasClasse?.[`${classe.id}.caminho`];
+  const poder = escolhaCaminho ? db.poderes.find((p) => p.id === escolhaCaminho) : null;
+  const subtipo = poder ? String(poder.nome).split(":").slice(1).join(":").trim() : null;
+  return conjuracaoDaClasse(db, classe.id, subtipo);
+}
 function magiaLiberada(m, nivel) {
-  return Number(m?.circulo || 1) <= regras.circuloMaximo(nivel);
+  return Number(m?.circulo || 1) <= regras.circuloMaximoDaClasse(tabelaDeConjuracao(), nivel);
 }
 
 function renderMagias() {
@@ -1061,7 +1099,9 @@ function renderMagias() {
   if (semConjuracao) return;
 
   const d = calcularDerivados();
-  const maxCirculo = regras.circuloMaximo(d.nivel);
+  const tabela = tabelaDeConjuracao();
+  const maxCirculo = regras.circuloMaximoDaClasse(tabela, d.nivel);
+  const cota = regras.magiasConhecidasNoNivel(tabela, d.nivel);
   const conhecidas = personagem.magias.map((id) => db.magias.find((x) => x.id === id)).filter(Boolean);
 
   const resumo = document.getElementById("resumo-magias");
@@ -1069,8 +1109,13 @@ function renderMagias() {
     const porCirculo = [1, 2, 3, 4, 5].map((n) => ({ n, qtd: conhecidas.filter((m) => Number(m.circulo) === n).length }));
     const acima = conhecidas.filter((m) => !magiaLiberada(m, d.nivel));
     resumo.innerHTML = `
-      <div class="resumo-treinos-linha">Conjuração <b>${esc(c.conjuracao)}</b> · no nível <b>${d.nivel}</b> você alcança até o <b>${maxCirculo}º círculo</b>${maxCirculo < 5 ? ` (o ${maxCirculo + 1}º chega no ${regras.nivelDoCirculo(maxCirculo + 1)}º nível)` : " (máximo)"}.</div>
-      <div class="resumo-treinos-conta">Magias conhecidas: ${porCirculo.map((x) => `<b>${x.qtd}</b> de ${x.n}º`).join(" · ")} · total <b>${conhecidas.length}</b> · PM disponível <b>${personagem.pm.atual ?? 0}</b>/${d.pmMax ?? 0}.</div>
+      <div class="resumo-treinos-linha">Conjuração <b>${esc(tabela?.tipo || c.conjuracao)}</b>${tabela?.nome && tabela.subtipo ? ` (${esc(tabela.subtipo)})` : ""} · no nível <b>${d.nivel}</b> você alcança até o <b>${maxCirculo}º círculo</b>${maxCirculo < 5 ? ` (o ${maxCirculo + 1}º chega no ${regras.nivelDoCirculoDaClasse(tabela, maxCirculo + 1)}º nível)` : " (máximo)"}.</div>
+      <div class="resumo-treinos-conta">Magias conhecidas: ${porCirculo.map((x) => `<b>${x.qtd}</b> de ${x.n}º`).join(" · ")} · total <b>${conhecidas.length}</b>${cota != null ? ` de <b>${cota}</b> que o nível concede` : ""} · PM disponível <b>${personagem.pm.atual ?? 0}</b>/${d.pmMax ?? 0}.</div>
+      ${cota != null && conhecidas.length !== cota
+        ? `<div class="alerta-automacao">${conhecidas.length < cota
+            ? `Faltam <b>${cota - conhecidas.length}</b> magia(s) para o total do nível ${d.nivel}.`
+            : `Você tem <b>${conhecidas.length - cota}</b> magia(s) a mais do que o nível ${d.nivel} concede.`}</div>`
+        : cota != null ? '<div class="ok-automacao">✓ Você conhece exatamente as magias do seu nível.</div>' : ""}
       ${acima.length
         ? `<div class="alerta-automacao">${acima.length} magia(s) acima do seu círculo máximo (${acima.map((m) => esc(m.nome)).join(", ")}) — ficam guardadas, mas não dá pra conjurar ainda.</div>`
         : ""}
@@ -1084,7 +1129,7 @@ function renderMagias() {
     const temPM = (personagem.pm.atual ?? 0) >= custo;
     const favorita = personagem.magiasPreparadas.includes(m.id);
     return `<li class="${liberada ? "" : "requisito-nao-atendido"}">
-      <span data-abrir-magia="${m.id}">${esc(m.nome)} <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${custo} PM</span>${liberada ? "" : ` <span class="tag alerta" title="Você alcança o ${m.circulo}º círculo no ${regras.nivelDoCirculo(m.circulo)}º nível">${regras.nivelDoCirculo(m.circulo)}º nível</span>`}</span>
+      <span data-abrir-magia="${m.id}">${esc(m.nome)} <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${custo} PM</span>${liberada ? "" : ` <span class="tag alerta" title="Você alcança o ${m.circulo}º círculo no ${regras.nivelDoCirculoDaClasse(tabela, m.circulo)}º nível">${regras.nivelDoCirculoDaClasse(tabela, m.circulo)}º nível</span>`}</span>
       <span class="col-rolagens">
         <button class="${liberada && temPM ? "primary" : "secundario"}" data-conjurar-magia="${m.id}" ${liberada && temPM ? "" : "disabled"} title="${liberada ? (temPM ? `Gasta ${custo} PM` : "PM insuficiente") : "Círculo acima do seu nível"}">✨ Conjurar</button>
         <button data-preparar-magia="${m.id}" title="Marca como favorita para achar rápido no combate">${favorita ? "★" : "☆"}</button>
@@ -1105,11 +1150,12 @@ function renderCatalogoMagias(classe) {
   }).slice(0, 200);
   const catalogo = document.getElementById("lista-magias-catalogo");
   const nivel = personagem.nivel || 1;
+  const tabela = tabelaDeConjuracao();
   catalogo.innerHTML = lista.map((m) => {
     const liberada = magiaLiberada(m, nivel);
     return `
     <li data-abrir-magia="${m.id}" class="${liberada ? "" : "requisito-nao-atendido"}">
-      <span>${esc(m.nome)} <span class="tag">${esc(m.tipo)}</span> <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${regras.custoDaMagia(m)} PM</span>${liberada ? "" : ` <span class="tag alerta">${regras.nivelDoCirculo(m.circulo)}º nível</span>`}</span>
+      <span>${esc(m.nome)} <span class="tag">${esc(m.tipo)}</span> <span class="tag">${m.circulo}º círc.</span> <span class="tag magia">${regras.custoDaMagia(m)} PM</span>${liberada ? "" : ` <span class="tag alerta">${regras.nivelDoCirculoDaClasse(tabela, m.circulo)}º nível</span>`}</span>
       <button data-add-magia="${m.id}">${personagem.magias.includes(m.id) ? "✓" : "➕"}</button>
     </li>`;
   }).join("") || '<li class="dica">Nenhuma magia com esse filtro.</li>';
@@ -3221,6 +3267,12 @@ function renderHelpModal() {
 // Novidades — resumo das atualizações da ficha, mais recente primeiro.
 // ==============================================================
 const CHANGELOG = [
+  { date: "2026-09-12", items: [
+    "<b>Bardo e Druida são meio-conjuradores</b> — a ficha tratava todo mundo como conjurador pleno. Eles só alcançam o 2º círculo no 9º nível e param no 4º; Arcanista e Clérigo continuam chegando ao 5º.",
+    "<b>Magias conhecidas por nível</b>: a aba Magias agora mostra quantas magias o seu nível concede e avisa se faltam ou sobram. O Arcanista tem uma tabela por Caminho — Mago, Bruxo e Feiticeiro aprendem quantidades diferentes.",
+    "<b>Habilidades de classe por nível</b> na aba Poderes: o que a classe dá sozinho ao subir (Fúria no 1º, Evasão no 2º…), separado dos poderes que você escolhe, com o que ainda está por vir.",
+    "O gerador de personagem passa a escolher exatamente o número de magias do nível.",
+  ] },
   { date: "2026-09-11", items: [
     "<b>Conteúdo dos suplementos</b>: 34 raças novas (Centauro, Ogro, Orc, Tengu, Harpia, Duende, Galokk…), 2 classes (Treinador e Frade), 30 origens e 63 deuses menores, de <b>Heróis de Arton</b>, <b>Ameaças de Arton</b> e <b>Deuses de Arton</b>.",
     "Cada opção mostra de qual livro veio, e o filtro <b>\"Incluir suplementos\"</b> na aba Construção deixa jogar só com o Jogo Básico — o que o personagem já escolheu nunca some da ficha.",
@@ -4504,13 +4556,14 @@ function gerarPersonagem(opcoes = {}) {
   personagem.magias = [];
   personagem.magiasPreparadas = [];
   if (classe.conjuracao) {
+    // A cota agora vem da tabela de conjuração da classe (e do Caminho, no
+    // caso do Arcanista) em vez de um chute.
+    const tabela = tabelaDeConjuracao();
     const tipo = classe.conjuracao[0].toUpperCase() + classe.conjuracao.slice(1);
-    const max = regras.circuloMaximo(personagem.nivel);
+    const max = regras.circuloMaximoDaClasse(tabela, personagem.nivel);
     const disponiveis = db.magias.filter((m) => (m.tipo === tipo || m.tipo === "Universal") && Number(m.circulo) <= max);
-    // Uma folga confortável: duas magias do 1º círculo mais uma por círculo
-    // acima — o suficiente pra jogar, sem inventar a tabela de conhecidas.
-    const quantas = Math.min(disponiveis.length, 2 + (max - 1));
-    personagem.magias = sorteiaVarios(disponiveis, quantas).map((m) => m.id);
+    const cota = regras.magiasConhecidasNoNivel(tabela, personagem.nivel) ?? (2 + (max - 1));
+    personagem.magias = sorteiaVarios(disponiveis, Math.min(disponiveis.length, cota)).map((m) => m.id);
   }
 
   normalizarEscolhas();

@@ -1,0 +1,908 @@
+[
+  {
+    "classe": "arcanista",
+    "nome": "Arcanista",
+    "magiasIniciais": 3,
+    "tipo": "arcana",
+    "atributoChave": "car",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 3,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 0,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 0,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 6,
+        "novas": 0,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 0,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 10,
+        "novas": 0,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 0,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 14,
+        "novas": 0,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 0,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 18,
+        "novas": 0,
+        "conhecidas": 11,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 19,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 20,
+        "novas": 0,
+        "conhecidas": 12,
+        "circuloMaximo": 5
+      }
+    ]
+  },
+  {
+    "classe": "bardo",
+    "nome": "Bardo",
+    "magiasIniciais": 2,
+    "tipo": "arcana",
+    "atributoChave": "car",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 2,
+        "conhecidas": 2,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 1,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 0,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 0,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 6,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 0,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 0,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 10,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 0,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 0,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 14,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 0,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 0,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 18,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 19,
+        "novas": 0,
+        "conhecidas": 11,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 20,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 4
+      }
+    ]
+  },
+  {
+    "classe": "clerigo",
+    "nome": "Clérigo",
+    "magiasIniciais": 3,
+    "tipo": "divina",
+    "atributoChave": "sab",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 3,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 6,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 10,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 1,
+        "conhecidas": 13,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 1,
+        "conhecidas": 14,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 1,
+        "conhecidas": 15,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 14,
+        "novas": 1,
+        "conhecidas": 16,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 1,
+        "conhecidas": 17,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 1,
+        "conhecidas": 18,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 1,
+        "conhecidas": 19,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 18,
+        "novas": 1,
+        "conhecidas": 20,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 19,
+        "novas": 1,
+        "conhecidas": 21,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 20,
+        "novas": 1,
+        "conhecidas": 22,
+        "circuloMaximo": 5
+      }
+    ]
+  },
+  {
+    "classe": "druida",
+    "nome": "Druida",
+    "magiasIniciais": 2,
+    "tipo": "divina",
+    "atributoChave": "sab",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 2,
+        "conhecidas": 2,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 1,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 0,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 0,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 6,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 0,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 0,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 10,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 0,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 0,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 14,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 0,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 0,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 18,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 19,
+        "novas": 0,
+        "conhecidas": 11,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 20,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 4
+      }
+    ]
+  },
+  {
+    "classe": "arcanista",
+    "nome": "Arcanista (Bruxo)",
+    "subtipo": "Bruxo",
+    "magiasIniciais": 3,
+    "tipo": "arcana",
+    "atributoChave": "int",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 3,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 6,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 10,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 1,
+        "conhecidas": 13,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 1,
+        "conhecidas": 14,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 1,
+        "conhecidas": 15,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 14,
+        "novas": 1,
+        "conhecidas": 16,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 1,
+        "conhecidas": 17,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 1,
+        "conhecidas": 18,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 1,
+        "conhecidas": 19,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 18,
+        "novas": 1,
+        "conhecidas": 20,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 19,
+        "novas": 1,
+        "conhecidas": 21,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 20,
+        "novas": 1,
+        "conhecidas": 22,
+        "circuloMaximo": 5
+      }
+    ]
+  },
+  {
+    "classe": "arcanista",
+    "nome": "Arcanista (Mago)",
+    "subtipo": "Mago",
+    "magiasIniciais": 4,
+    "tipo": "arcana",
+    "atributoChave": "int",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 4,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 2,
+        "conhecidas": 9,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 6,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 2,
+        "conhecidas": 14,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 10,
+        "novas": 1,
+        "conhecidas": 15,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 1,
+        "conhecidas": 16,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 1,
+        "conhecidas": 17,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 2,
+        "conhecidas": 19,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 14,
+        "novas": 1,
+        "conhecidas": 20,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 1,
+        "conhecidas": 21,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 1,
+        "conhecidas": 22,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 2,
+        "conhecidas": 24,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 18,
+        "novas": 1,
+        "conhecidas": 25,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 19,
+        "novas": 1,
+        "conhecidas": 26,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 20,
+        "novas": 1,
+        "conhecidas": 27,
+        "circuloMaximo": 5
+      }
+    ]
+  },
+  {
+    "classe": "arcanista",
+    "nome": "Arcanista (Feiticeiro)",
+    "subtipo": "Feiticeiro",
+    "magiasIniciais": 3,
+    "tipo": "arcana",
+    "atributoChave": "car",
+    "progressao": [
+      {
+        "nivel": 1,
+        "novas": 3,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 2,
+        "novas": 0,
+        "conhecidas": 3,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 3,
+        "novas": 1,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 4,
+        "novas": 0,
+        "conhecidas": 4,
+        "circuloMaximo": 1
+      },
+      {
+        "nivel": 5,
+        "novas": 1,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 6,
+        "novas": 0,
+        "conhecidas": 5,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 7,
+        "novas": 1,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 8,
+        "novas": 0,
+        "conhecidas": 6,
+        "circuloMaximo": 2
+      },
+      {
+        "nivel": 9,
+        "novas": 1,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 10,
+        "novas": 0,
+        "conhecidas": 7,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 11,
+        "novas": 1,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 12,
+        "novas": 0,
+        "conhecidas": 8,
+        "circuloMaximo": 3
+      },
+      {
+        "nivel": 13,
+        "novas": 1,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 14,
+        "novas": 0,
+        "conhecidas": 9,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 15,
+        "novas": 1,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 16,
+        "novas": 0,
+        "conhecidas": 10,
+        "circuloMaximo": 4
+      },
+      {
+        "nivel": 17,
+        "novas": 1,
+        "conhecidas": 11,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 18,
+        "novas": 0,
+        "conhecidas": 11,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 19,
+        "novas": 1,
+        "conhecidas": 12,
+        "circuloMaximo": 5
+      },
+      {
+        "nivel": 20,
+        "novas": 0,
+        "conhecidas": 12,
+        "circuloMaximo": 5
+      }
+    ]
+  }
+]

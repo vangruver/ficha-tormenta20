@@ -1,0 +1,390 @@
+[
+  {
+    "classe": "arcanista",
+    "nome": "Arcanista",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 20,
+        "nome": "Alta Arcana"
+      }
+    ]
+  },
+  {
+    "classe": "barbaro",
+    "nome": "Bárbaro",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Fúria"
+      },
+      {
+        "nivel": 3,
+        "nome": "Instinto Selvagem"
+      },
+      {
+        "nivel": 5,
+        "nome": "Resistência a Dano"
+      },
+      {
+        "nivel": 20,
+        "nome": "Fúria Titânica"
+      }
+    ]
+  },
+  {
+    "classe": "bardo",
+    "nome": "Bardo",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Inspiração"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 2,
+        "nome": "Eclético"
+      },
+      {
+        "nivel": 20,
+        "nome": "Artista Completo"
+      }
+    ]
+  },
+  {
+    "classe": "bucaneiro",
+    "nome": "Bucaneiro",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Audácia"
+      },
+      {
+        "nivel": 1,
+        "nome": "Insolência"
+      },
+      {
+        "nivel": 2,
+        "nome": "Evasão"
+      },
+      {
+        "nivel": 3,
+        "nome": "Esquiva Sagaz"
+      },
+      {
+        "nivel": 5,
+        "nome": "Panache"
+      },
+      {
+        "nivel": 10,
+        "nome": "Evasão Aprimorada"
+      },
+      {
+        "nivel": 20,
+        "nome": "Sorte de Nimb"
+      }
+    ]
+  },
+  {
+    "classe": "cacador",
+    "nome": "Caçador",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Marca da Presa"
+      },
+      {
+        "nivel": 1,
+        "nome": "Rastreador"
+      },
+      {
+        "nivel": 3,
+        "nome": "Explorador"
+      },
+      {
+        "nivel": 5,
+        "nome": "Caminho do Explorador"
+      },
+      {
+        "nivel": 20,
+        "nome": "Mestre Caçador"
+      }
+    ]
+  },
+  {
+    "classe": "cavaleiro",
+    "nome": "Cavaleiro",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Baluarte"
+      },
+      {
+        "nivel": 1,
+        "nome": "Código de Honra"
+      },
+      {
+        "nivel": 2,
+        "nome": "Duelo"
+      },
+      {
+        "nivel": 5,
+        "nome": "Caminho do Cavaleiro"
+      },
+      {
+        "nivel": 11,
+        "nome": "Resoluto"
+      },
+      {
+        "nivel": 20,
+        "nome": "Bravura Final"
+      }
+    ]
+  },
+  {
+    "classe": "clerigo",
+    "nome": "Clérigo",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Devoto Fiel"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 20,
+        "nome": "Mão da Divindade"
+      }
+    ]
+  },
+  {
+    "classe": "druida",
+    "nome": "Druida",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Devoto Fiel"
+      },
+      {
+        "nivel": 1,
+        "nome": "Empatia Selvagem"
+      },
+      {
+        "nivel": 1,
+        "nome": "Magias"
+      },
+      {
+        "nivel": 2,
+        "nome": "Caminho dos Ermos"
+      },
+      {
+        "nivel": 20,
+        "nome": "Força da Natureza"
+      }
+    ]
+  },
+  {
+    "classe": "guerreiro",
+    "nome": "Guerreiro",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Ataque Especial"
+      },
+      {
+        "nivel": 3,
+        "nome": "Durão"
+      },
+      {
+        "nivel": 6,
+        "nome": "Ataque Extra"
+      },
+      {
+        "nivel": 20,
+        "nome": "Campeão"
+      }
+    ]
+  },
+  {
+    "classe": "inventor",
+    "nome": "Inventor",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Engenhosidade"
+      },
+      {
+        "nivel": 1,
+        "nome": "Protótipo"
+      },
+      {
+        "nivel": 2,
+        "nome": "Fabricar Item Superior"
+      },
+      {
+        "nivel": 3,
+        "nome": "Comerciante"
+      },
+      {
+        "nivel": 7,
+        "nome": "Encontrar Fraqueza"
+      },
+      {
+        "nivel": 9,
+        "nome": "Fabricar Item Mágico"
+      },
+      {
+        "nivel": 11,
+        "nome": "Olho do Dragão"
+      },
+      {
+        "nivel": 20,
+        "nome": "Obra-Prima"
+      }
+    ]
+  },
+  {
+    "classe": "ladino",
+    "nome": "Ladino",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Ataque Furtivo"
+      },
+      {
+        "nivel": 1,
+        "nome": "Especialista"
+      },
+      {
+        "nivel": 2,
+        "nome": "Evasão"
+      },
+      {
+        "nivel": 4,
+        "nome": "Esquiva Sobrenatural"
+      },
+      {
+        "nivel": 8,
+        "nome": "Olhos nas Costas"
+      },
+      {
+        "nivel": 10,
+        "nome": "Evasão Aprimorada"
+      },
+      {
+        "nivel": 20,
+        "nome": "A Pessoa Certa para o Trabalho"
+      }
+    ]
+  },
+  {
+    "classe": "lutador",
+    "nome": "Lutador",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Briga"
+      },
+      {
+        "nivel": 1,
+        "nome": "Golpe Relâmpago"
+      },
+      {
+        "nivel": 3,
+        "nome": "Casca Grossa"
+      },
+      {
+        "nivel": 5,
+        "nome": "Golpe Cruel"
+      },
+      {
+        "nivel": 9,
+        "nome": "Golpe Violento"
+      },
+      {
+        "nivel": 20,
+        "nome": "Dono da Rua"
+      }
+    ]
+  },
+  {
+    "classe": "nobre",
+    "nome": "Nobre",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Autoconfiança"
+      },
+      {
+        "nivel": 1,
+        "nome": "Espólio"
+      },
+      {
+        "nivel": 1,
+        "nome": "Orgulho"
+      },
+      {
+        "nivel": 2,
+        "nome": "Palavras Afiadas"
+      },
+      {
+        "nivel": 3,
+        "nome": "Riqueza"
+      },
+      {
+        "nivel": 4,
+        "nome": "Gritar Ordens"
+      },
+      {
+        "nivel": 5,
+        "nome": "Presença Aristocrática"
+      },
+      {
+        "nivel": 20,
+        "nome": "Realeza"
+      }
+    ]
+  },
+  {
+    "classe": "paladino",
+    "nome": "Paladino",
+    "habilidades": [
+      {
+        "nivel": 1,
+        "nome": "Abençoado"
+      },
+      {
+        "nivel": 1,
+        "nome": "Código de Héroi"
+      },
+      {
+        "nivel": 1,
+        "nome": "Golpe Divino"
+      },
+      {
+        "nivel": 2,
+        "nome": "Cura pelas Mãos"
+      },
+      {
+        "nivel": 3,
+        "nome": "Aura Sagrada"
+      },
+      {
+        "nivel": 5,
+        "nome": "Bênção da Justiça"
+      },
+      {
+        "nivel": 20,
+        "nome": "Vingador Sagrado"
+      }
+    ]
+  }
+]

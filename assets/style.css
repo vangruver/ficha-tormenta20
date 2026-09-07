@@ -1100,3 +1100,7 @@ body.view-only .toolbar>button:not(#btn-pdf-topo):not(.link-btn),body.view-only 
 .parceiro-pv input{width:4.2em;text-align:center}
 .parceiro-pv .dash-barra{flex:1 1 100%;min-width:80px}
 .parceiro-card textarea{min-height:48px;font-size:11px}
+
+/* Habilidades de classe por nível (aba Poderes) */
+.habilidades-nivel .chip small{font-weight:700}
+.habilidades-nivel .chip.limpar{opacity:.65}
