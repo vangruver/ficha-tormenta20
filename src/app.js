@@ -113,6 +113,17 @@ function preencherSelectsEstáticos() {
 
 function racaAtual() { return porId(db.racas, personagem.raca); }
 function classeAtual() { return porId(db.classes, personagem.classe); }
+// Variante de classe escolhida (Heróis de Arton), se ainda bater com a classe
+// atual — evita mostrar habilidades de uma variante que ficou pra trás depois
+// de trocar de classe.
+function varianteClasseAtual() {
+  const id = escolhas().varianteClasse;
+  if (!id) return null;
+  const base = classeAtual();
+  const v = (db.classesVariantes || []).find((x) => x.id === id);
+  if (!v || !base || semAcentoSimples(v.variantede) !== semAcentoSimples(base.nome)) return null;
+  return v;
+}
 
 // ==============================================================
 // Multiclasse — a classe inicial (`personagem.classe`) mais as extras de
@@ -131,7 +142,8 @@ function classesDoPersonagem() {
 function temMulticlasse() { return classesDoPersonagem().length > 1; }
 // Rótulo "Arcanista 3 / Guerreiro 2".
 function rotuloDeClasses() {
-  return classesDoPersonagem().map((x) => `${x.classe.nome} ${x.niveis}`).join(" / ");
+  const variante = varianteClasseAtual();
+  return classesDoPersonagem().map((x, i) => `${i === 0 && variante ? variante.nome : x.classe.nome} ${x.niveis}`).join(" / ");
 }
 // Perícias que a classe extra concede: o livro dá só as fixas da classe
 // nova, não as escolhas livres do 1º nível.
@@ -944,7 +956,12 @@ function poolPoderesDisponiveis() {
 function renderHabilidadesDeClasse(d) {
   const box = document.getElementById("habilidades-classe");
   if (!box) return;
-  const todas = d.classes.flatMap((x) => {
+  const variante = varianteClasseAtual();
+  const todas = d.classes.flatMap((x, i) => {
+    // A variante troca as habilidades da classe inicial, mantendo PV/PM dela.
+    if (i === 0 && variante) {
+      return variante.habilidades.map((a) => ({ ...a, classe: `${variante.nome} (variante de ${x.classe.nome})`, niveisNaClasse: x.niveis }));
+    }
     const reg = (db.habilidadesClasse || []).find((h) => h.classe === x.classe.id);
     return (reg?.habilidades || []).map((a) => ({ ...a, classe: x.classe.nome, niveisNaClasse: x.niveis }));
   });
@@ -1750,6 +1767,15 @@ function limparEscolhasInvalidas(oQueMudou) {
 function salvar() { storage.salvarPersonagem(personagem); }
 function salvarERenderizar() { salvar(); renderizarTudo(); }
 
+// Sai do Ambiente do Mestre (bestiário/listas de ameaças) de volta pra ficha
+// do personagem. Precisa ser chamado sempre que o personagem aberto muda
+// (trocar, criar, apagar ou importar) — senão a troca acontece por baixo do
+// painel do mestre e a ficha nunca volta a aparecer.
+function sairAmbienteMestre() {
+  document.getElementById("mestre-shell")?.classList.add("hidden");
+  document.querySelector("main.ficha-shell")?.classList.remove("hidden");
+}
+
 // ---------- Eventos ----------
 
 function registrarEventos() {
@@ -1781,7 +1807,7 @@ function registrarEventos() {
     limparEscolhasInvalidas("origem");
     salvarERenderizar();
   });
-  document.getElementById("divindade").addEventListener("change", (e) => { personagem.divindade = e.target.value; salvar(); });
+  document.getElementById("divindade").addEventListener("change", (e) => { personagem.divindade = e.target.value; salvarERenderizar(); });
   document.getElementById("biografia").addEventListener("input", (e) => { personagem.biografia = e.target.value; salvar(); });
   document.getElementById("aparencia").addEventListener("input", (e) => { personagem.aparencia = e.target.value; salvar(); });
   document.getElementById("nivel").addEventListener("input", (e) => { personagem.nivel = Math.max(1, Math.min(20, Number(e.target.value) || 1)); salvarERenderizar(); });
@@ -2122,7 +2148,7 @@ function registrarEventos() {
   document.getElementById("btn-personagens").addEventListener("click", () => { renderPersonagensSalvos(); abrirModal("modal-personagens"); });
   document.getElementById("lista-personagens-salvos").addEventListener("click", (e) => {
     const abrir = e.target.dataset.abrirPersonagem;
-    if (abrir) { personagem = storage.carregarPersonagem(abrir); storage.setPersonagemAtivoId(abrir); renderizarTudo(); fecharModal("modal-personagens"); return; }
+    if (abrir) { personagem = storage.carregarPersonagem(abrir); storage.setPersonagemAtivoId(abrir); sairAmbienteMestre(); renderizarTudo(); fecharModal("modal-personagens"); return; }
     const dup = e.target.dataset.duplicarPersonagem;
     if (dup) { storage.duplicarPersonagem(dup); renderPersonagensSalvos(); return; }
     const apagar = e.target.dataset.apagarPersonagem;
@@ -2133,6 +2159,7 @@ function registrarEventos() {
           personagem = storage.listarPersonagens()[0] || storage.novoPersonagem();
           storage.setPersonagemAtivoId(personagem.id);
           storage.salvarPersonagem(personagem);
+          sairAmbienteMestre();
           renderizarTudo();
         }
         renderPersonagensSalvos();
@@ -2145,6 +2172,7 @@ function registrarEventos() {
     personagem = storage.novoPersonagem();
     storage.setPersonagemAtivoId(personagem.id);
     storage.salvarPersonagem(personagem);
+    sairAmbienteMestre();
     renderizarTudo();
   });
 
@@ -2164,6 +2192,7 @@ function registrarEventos() {
     try {
       personagem = storage.importarJSON(texto);
       storage.setPersonagemAtivoId(personagem.id);
+      sairAmbienteMestre();
       renderizarTudo();
     } catch (err) {
       alert("Não foi possível importar este arquivo: " + err.message);
@@ -3718,7 +3747,7 @@ function renderWizardPassoRevisao(body) {
   const d = calcularDerivados();
   const linhas = [
     ["Raça", racaAtual()?.nome],
-    ["Classe", temMulticlasse() ? rotuloDeClasses() : classeAtual()?.nome],
+    ["Classe", temMulticlasse() ? rotuloDeClasses() : (varianteClasseAtual()?.nome || classeAtual()?.nome)],
     ["Origem", personagem.origem],
     ["Divindade", personagem.divindade],
     ["Nível", String(d.nivel)],
@@ -4766,7 +4795,7 @@ function caixaImpressa(titulo, corpo, classe = "") {
 function montarFichaImpressa() {
   const d = calcularDerivados();
   const raca = racaAtual();
-  const classeTexto = d.classes.length > 1 ? rotuloDeClasses() : (classeAtual()?.nome || "—");
+  const classeTexto = d.classes.length > 1 ? rotuloDeClasses() : (varianteClasseAtual()?.nome || classeAtual()?.nome || "—");
 
   // --- Atributos ---
   const atributos = db.atributos.map((a) => `
@@ -5342,10 +5371,7 @@ function registrarEventosExtra() {
     $("mestre-shell")?.classList.remove("hidden");
     renderMonsters();
   });
-  $("mestre-sair")?.addEventListener("click", () => {
-    $("mestre-shell")?.classList.add("hidden");
-    document.querySelector("main.ficha-shell")?.classList.remove("hidden");
-  });
+  $("mestre-sair")?.addEventListener("click", sairAmbienteMestre);
   document.querySelectorAll("#monster-view-tabs [data-monview]").forEach((b) => b.addEventListener("click", () => {
     document.querySelectorAll("#monster-view-tabs [data-monview]").forEach((x) => x.classList.remove("active"));
     b.classList.add("active");
