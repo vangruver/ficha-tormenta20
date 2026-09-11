@@ -4,97 +4,111 @@
     "nome": "aço rubi",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: ignora 10 pontos de redução de dano e a imunidade a crítico de lefeu. Armadura/escudo: chance de anular o dano extra de acerto crítico e ataque furtivo (25% em armadura leve/escudo, 50% em armadura pesada; cumulativo entre os dois)."
   },
   {
     "id": "adamante",
     "nome": "adamante",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: aumenta o dano em um passo. Armadura/escudo: dá redução de dano (RD 2 em leve/escudo, RD 5 em pesada)."
   },
   {
     "id": "gelo-eterno",
     "nome": "gelo eterno",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: causa +2 pontos de dano por frio. Armadura/escudo: dá resistência a fogo (5 em leve/escudo, 10 em pesada)."
   },
   {
     "id": "madeira-tollon",
     "nome": "madeira Tollon",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: conta como mágica para vencer redução de dano e reduz em 1 PM o custo de habilidades ativadas ao atacar. Escudo/item esotérico: +2 de resistência a magia."
   },
   {
     "id": "materia-vermelha",
     "nome": "matéria vermelha",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: causa +1d6 de dano extra, mas cada acerto custa 1 PV a quem ataca (lefeu é imune aos dois efeitos). Armadura/escudo: chance do ataque inimigo falhar (10% em leve/escudo, 25% em pesada, cumulativo; lefeu ignora o efeito)."
   },
   {
     "id": "mitral",
     "nome": "mitral",
     "arma": true,
     "armadura": true,
-    "fonte": "Tormenta 20 - Jogo Básico"
+    "fonte": "Tormenta 20 - Jogo Básico",
+    "efeito": "Arma: aumenta a margem de ameaça em 1. Armadura/escudo: reduz a penalidade de armadura em 2 (pesada de mitral permite aplicar até 2 pontos de Destreza na Defesa)."
   },
   {
     "id": "casco-de-monstro",
     "nome": "casco de monstro",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma: conta como arma primitiva para a magia Armamento da Natureza e efeitos parecidos. Armadura/escudo: reduz a penalidade de armadura em 1 (pesada permite aplicar 1 ponto de Destreza na Defesa)."
   },
   {
     "id": "couraca-de-kaiju",
     "nome": "couraça de kaiju",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma: aumenta o dano em um passo e permite gastar 2 PM para ignorar reduções de dano do alvo (não vale contra RD). Armadura/escudo: redução de dano mágico (RD 10 em leve/escudo, RD 20 em pesada)."
   },
   {
     "id": "couro-de-bulette",
     "nome": "couro de bulette",
     "arma": false,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Armadura: dá deslocamento de escavação (metade do normal) e resistência a ácido (5 em leve, 10 em pesada)."
   },
   {
     "id": "cristal-de-sol",
     "nome": "cristal de sol",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma (só corte ou perfuração): causa +2 pontos de dano por fogo. Armadura/escudo: rola dois dados e fica com o melhor em testes de resistência contra frio."
   },
   {
     "id": "lanajuste",
     "nome": "lanajuste",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma: ignora penalidades por combate submerso e pode ser usada por devotos do Oceano sem violar suas obrigações. Armadura/escudo: redução de corte (5 em leve/escudo, 10 em pesada)."
   },
   {
     "id": "pena-de-kraken",
     "nome": "pena de kraken",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma (exige uma peça): em acerto crítico, aumenta o dano em dois passos antes de multiplicar. Armadura/escudo: quando alguém erra um ataque corpo a corpo contra você, ela perde pontos de vida (5 se leve/escudo, 10 se pesada)."
   },
   {
     "id": "prata",
     "nome": "prata",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma: causa +2 pontos de dano em espíritos e mortos-vivos e conta como mágica contra eles. Armadura/escudo: redução do dano causado por espíritos e mortos-vivos (5 em leve/escudo, 10 em pesada)."
   },
   {
     "id": "quitina-razza",
     "nome": "quitina razza",
     "arma": true,
     "armadura": true,
-    "fonte": "Ameaças de Arton"
+    "fonte": "Ameaças de Arton",
+    "efeito": "Arma (exige uma peça): todo resultado máximo num dado de dano rola um dado extra (explode, repetindo a cada máximo). Armadura/escudo: bônus em Percepção e na Defesa (leve/escudo +2 Percepção/+1 Defesa; pesada +5 Percepção/+2 Defesa)."
   }
 ]

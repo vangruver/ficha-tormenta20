@@ -432,6 +432,7 @@ function bonusRacialPericias() {
 // ---------- Automação: equipamento vestido ----------
 
 function registroDoItem(item) { return db.equipamentos.find((e) => e.id === item.id) || item; }
+function materialPorId(id) { return (db.materiaisEspeciais || []).find((m) => m.id === id) || null; }
 
 // Defesa e penalidade de armadura da armadura/escudo efetivamente equipados.
 // Só a melhor armadura e o melhor escudo contam (não empilham).
@@ -1600,9 +1601,24 @@ function renderEquipamentos() {
     const marcadores = [];
     if (armadura) marcadores.push(`<span class="tag">${esc(armadura.tipo)} +${armadura.defesa} Defesa${armadura.penalidade ? ` / −${armadura.penalidade} penalidade` : ""}</span>`);
     if (arma) marcadores.push(`<span class="tag">${esc(rec.dano || "")} ${rec.criticoM || 20}/x${rec.criticoX || 2}</span>`);
+    // Material especial só faz sentido em algo que se empunha ou veste —
+    // tesouro, poção etc. não têm onde aplicar aço rubi ou prata.
+    const opcoesMaterial = arma
+      ? (db.materiaisEspeciais || []).filter((m) => m.arma)
+      : armadura
+        ? (db.materiaisEspeciais || []).filter((m) => m.armadura)
+        : [];
+    const materialAtual = item.materialEspecial ? materialPorId(item.materialEspecial) : null;
+    if (materialAtual) marcadores.push(`<span class="tag brew" data-ver-material="${esc(materialAtual.id)}" title="Ver efeito de ${esc(materialAtual.nome)}">✦ ${esc(materialAtual.nome)}</span>`);
+    const seletorMaterial = opcoesMaterial.length
+      ? `<select data-inv-material="${i}" title="Material especial" style="display:block;margin-top:4px;font-size:10px;padding:3px 6px">
+          <option value="">— sem material especial —</option>
+          ${opcoesMaterial.map((m) => `<option value="${esc(m.id)}"${m.id === item.materialEspecial ? " selected" : ""}>${esc(m.nome)}</option>`).join("")}
+        </select>`
+      : "";
     return `
     <tr class="${item.equipado ? "equipado" : ""}">
-      <td>${esc(item.nome)} ${marcadores.join(" ")}</td>
+      <td>${esc(item.nome)} ${marcadores.join(" ")}${seletorMaterial}</td>
       <td><input type="number" min="1" data-inv-qtd="${i}" value="${item.qtd || 1}" style="width:4em" /></td>
       <td>${rec.peso ?? "-"}</td>
       <td class="col-rolagens">
@@ -2096,7 +2112,16 @@ function registrarEventos() {
     personagem.equipamentos[idx].qtd = Number(e.target.value) || 1;
     salvar();
   });
+  document.getElementById("lista-inventario").addEventListener("change", (e) => {
+    const idx = e.target.dataset.invMaterial;
+    if (idx === undefined) return;
+    personagem.equipamentos[idx].materialEspecial = e.target.value || "";
+    salvarERenderizar();
+  });
   document.getElementById("lista-inventario").addEventListener("click", (e) => {
+    const verMaterial = e.target.closest("[data-ver-material]")?.dataset.verMaterial;
+    if (verMaterial) { const m = materialPorId(verMaterial); if (m) abrirDetalheTexto(`Material especial: ${m.nome}`, m.efeito); return; }
+
     const rem = e.target.dataset.removerItem;
     if (rem !== undefined) { personagem.equipamentos.splice(Number(rem), 1); salvarERenderizar(); return; }
 
@@ -4820,7 +4845,8 @@ function montarFichaImpressa() {
   // --- Equipamento ---
   const equipamento = personagem.equipamentos.map((it) => {
     const rec = registroDoItem(it);
-    return `<li>${it.equipado ? "<b>[equipado]</b> " : ""}${esc(it.nome)}${it.qtd > 1 ? ` ×${it.qtd}` : ""}${rec.peso ? ` <i>${rec.peso}kg</i>` : ""}</li>`;
+    const material = it.materialEspecial ? materialPorId(it.materialEspecial) : null;
+    return `<li>${it.equipado ? "<b>[equipado]</b> " : ""}${material ? `<b>${esc(material.nome)}</b> ` : ""}${esc(it.nome)}${it.qtd > 1 ? ` ×${it.qtd}` : ""}${rec.peso ? ` <i>${rec.peso}kg</i>` : ""}</li>`;
   }).join("") || "<li>—</li>";
 
   const dinheiro = ["tt", "to", "tp", "tc"].map((k) => `${k.toUpperCase()}$ ${personagem.dinheiro?.[k] ?? 0}`).join(" · ");
