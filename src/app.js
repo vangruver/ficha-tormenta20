@@ -1434,14 +1434,24 @@ function armaEhDistancia(rec) {
 // Monta a linha de ataque a partir do item do compêndio: perícia (Luta para
 // corpo a corpo, Pontaria para armas de ataque à distância), dano com o
 // modificador de atributo certo, margem e multiplicador de crítico.
-function ataqueDaArma(rec) {
+// Só o mitral tem um efeito de arma simples o bastante (margem de ameaça
+// +1) pra aplicar sem saber quem você está atacando ou sem mexer no dado de
+// dano — os outros materiais (aumentam o dano "um passo", só valem contra
+// certo tipo de criatura, só valem no crítico...) ficam de referência (a
+// tag ✦ no inventário) em vez de entrar direto na linha de ataque: um
+// cálculo errado de dano é pior do que nenhum cálculo.
+function criticoComMaterial(criticoM, materialId) {
+  const base = criticoM || 20;
+  return materialId === "mitral" ? Math.max(2, base - 1) : base;
+}
+function ataqueDaArma(rec, materialId) {
   const distancia = armaEhDistancia(rec);
   const dano = rec.dano ? `${rec.dano}${distancia ? "" : "+for"}` : "";
   return {
     nome: rec.nome,
     pericia: distancia ? "pon" : "lut",
     dano,
-    critico: `${rec.criticoM || 20}/x${rec.criticoX || 2}`,
+    critico: `${criticoComMaterial(rec.criticoM, materialId)}/x${rec.criticoX || 2}`,
     itemId: rec.id,
   };
 }
@@ -1506,14 +1516,14 @@ function equiparNaVaga(rec, vaga) {
 }
 // Empunhar uma arma = colocar no inventário e criar a linha de ataque.
 function empunharArma(rec) {
-  garantirNoInventario(rec);
+  const item = garantirNoInventario(rec);
   if (personagem.ataques.some((a) => a.itemId === rec.id)) {
     personagem.ataques = personagem.ataques.filter((a) => a.itemId !== rec.id);
     salvarERenderizar();
     toast(`${rec.nome} saiu da lista de ataques.`);
     return;
   }
-  personagem.ataques.push(ataqueDaArma(rec));
+  personagem.ataques.push(ataqueDaArma(rec, item.materialEspecial));
   salvarERenderizar();
   toast(`Ataque de ${rec.nome} criado.`);
 }
@@ -2115,8 +2125,16 @@ function registrarEventos() {
   document.getElementById("lista-inventario").addEventListener("change", (e) => {
     const idx = e.target.dataset.invMaterial;
     if (idx === undefined) return;
-    personagem.equipamentos[idx].materialEspecial = e.target.value || "";
+    const item = personagem.equipamentos[idx];
+    item.materialEspecial = e.target.value || "";
     salvarERenderizar();
+    // A linha de ataque é uma cópia tirada no momento em que foi criada (não
+    // acompanha o item ao vivo) — sem isso, trocar pra mitral não mudaria a
+    // margem de ameaça de um ataque já existente.
+    const rec = registroDoItem(item);
+    if (personagem.ataques.some((a) => a.itemId === rec.id)) {
+      toast(`Material atualizado. Recrie o ataque de ${rec.nome} (aba Combate) pra margem de crítico do mitral valer nele.`);
+    }
   });
   document.getElementById("lista-inventario").addEventListener("click", (e) => {
     const verMaterial = e.target.closest("[data-ver-material]")?.dataset.verMaterial;
@@ -2144,9 +2162,10 @@ function registrarEventos() {
 
     const criar = e.target.dataset.criarAtaque;
     if (criar !== undefined) {
-      const rec = registroDoItem(personagem.equipamentos[Number(criar)]);
+      const item = personagem.equipamentos[Number(criar)];
+      const rec = registroDoItem(item);
       if (personagem.ataques.some((a) => a.itemId === rec.id)) { toast(`${rec.nome} já está na lista de ataques.`); return; }
-      personagem.ataques.push(ataqueDaArma(rec));
+      personagem.ataques.push(ataqueDaArma(rec, item.materialEspecial));
       salvarERenderizar();
       toast(`Ataque de ${rec.nome} criado na aba Combate.`);
     }
