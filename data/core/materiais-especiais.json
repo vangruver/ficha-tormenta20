@@ -40,5 +40,61 @@
     "arma": true,
     "armadura": true,
     "fonte": "Tormenta 20 - Jogo Básico"
+  },
+  {
+    "id": "casco-de-monstro",
+    "nome": "casco de monstro",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "couraca-de-kaiju",
+    "nome": "couraça de kaiju",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "couro-de-bulette",
+    "nome": "couro de bulette",
+    "arma": false,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "cristal-de-sol",
+    "nome": "cristal de sol",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "lanajuste",
+    "nome": "lanajuste",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "pena-de-kraken",
+    "nome": "pena de kraken",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "prata",
+    "nome": "prata",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
+  },
+  {
+    "id": "quitina-razza",
+    "nome": "quitina razza",
+    "arma": true,
+    "armadura": true,
+    "fonte": "Ameaças de Arton"
   }
 ]
